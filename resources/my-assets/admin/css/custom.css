@@ -1,0 +1,14 @@
+.text-end{font-size:40px}
+body[data-leftbar-theme="dark"] .side-nav > .menuitem-active > a {
+	color: #fff !important;
+	background: #6a6d72;
+	border-left: 3px solid #0ACF97;
+}
+body[data-leftbar-theme="dark"] .side-nav .side-nav-link {
+	border-left: 3px solid transparent;
+}
+
+.table.small-padding > :not(caption) > * > * {
+	padding: 0.30rem .30rem;
+	
+}
