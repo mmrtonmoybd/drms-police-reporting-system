@@ -1,5 +1,8 @@
 <x-admin-header />
 <!-- start page title -->
+@php 
+use Illuminate\Support\Str;
+@endphp
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
@@ -85,7 +88,7 @@
                                                 
                                                 
                                                     </td>
-                                                    <td > {{$qrr->main_event}}</td>
+                                                    <td > {{ Str::limit($qrr->main_event, 20)}}</td>
                                                     <td > {{$qrr->event_type}}</td>
                                                     <td > {{$qrr->begening_of_event}}</td>
                                                     <td > {{$qrr->gd_no}}</td>
@@ -102,7 +105,7 @@
                                                     <td > {{$qrr->mobile_no}}</td>
                                                     <td > {{$qrr->image_video}}</td>
                                                     <td > {{$qrr->media_quality}}</td>
-                                                    <td > {{$qrr->comments}}</td>
+                                                    <td > {{Str::limit($qrr->comments, 20)}}</td>
                                                        
                                                     <td class="table-action">
                                                         
