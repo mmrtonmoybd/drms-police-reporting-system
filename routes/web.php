@@ -137,6 +137,8 @@ Route::prefix('admin')->group(function(){
         Route::post('/qrrs/edit/{id}',  [QrrsController::class, 'Update']);
         Route::get('/qrrs/details/{id}',  [QrrsController::class, 'View']);
         Route::get('/qrrs/print-details/{id}',  [QrrsController::class, 'PrintView']);
+        Route::get('/qrrs/charts', [QrrsController::class, 'chart']);
+        Route::get('/qrrs/report/{report}', [QrrsController::class, 'report']);
 
         
 

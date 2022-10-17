@@ -117,7 +117,8 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="main_event" class="form-label"> মূল ঘটনা  </label>
-                                                    <input type="text" name="main_event"  value="{{old('main_event')}}" id="main_event" class="form-control  @error('main_event') is-invalid @enderror" placeholder=" মূল ঘটনা" required>
+                                                    
+                                                    <textarea name="comments"  class="form-control  @error('main_event') is-invalid @enderror" id="main_event" rows="2" placeholder="মূল ঘটনা" required>{{old('main_event')}}</textarea>
                                                 </div>
                                             </div>
 
@@ -158,7 +159,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="number" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  " required>
+                                                    <input type="number" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -167,7 +168,7 @@
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  তারিখ   </label>
                                                     
-                                                    <input type="text" name="gd_date"  value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" required>
+                                                    <input type="text" name="gd_date"  value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
 
                                                 </div>
                                             </div>
@@ -175,7 +176,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="number" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
+                                                    <input type="number" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       
@@ -184,7 +185,7 @@
                                                 <div class="mb-3">
                                                     <label for="case_date" class="form-label">  তারিখ  </label>
                                            
-                                                    <input type="text" name="case_date"  value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" required>
+                                                    <input type="text" name="case_date"  value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
                                             </div>
       
@@ -193,7 +194,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="clause" class="form-label">ধারা </label>
-                                                    <input type="text" name="clause"  value="{{old('clause')}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা" required>
+                                                    <input type="text" name="clause"  value="{{old('clause')}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা">
                                                 </div>
                                             </div>
       
@@ -212,7 +213,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="plaintiff_mobile" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " required>
+                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " required>
                                                 </div>
                                             </div>
       
@@ -253,7 +254,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="number" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
+                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
                                                 </div>
                                             </div>
       
@@ -261,7 +262,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label">  মোবাইল নং    </label>
-                                                    <input type="text" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
+                                                    <input type="text"   minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
                                                 </div>
                                             </div>
       

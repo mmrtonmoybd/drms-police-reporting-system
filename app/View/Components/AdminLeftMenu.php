@@ -33,6 +33,7 @@ class AdminLeftMenu extends Component
         
         $template = '';
         $data['template'] = request()->segment(2);
+        $data['template2'] = request()->segment(3);
      
         return view('components.admin-left-menu', $data);
     }

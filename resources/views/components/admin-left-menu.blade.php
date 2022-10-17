@@ -41,10 +41,17 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item @if($template=='qrrs') menuitem-active @endif">
-                            <a href="{{url('admin/qrrs')}}" class="side-nav-link  @if($template=='qrrs') active @endif">
+                        <li class="side-nav-item ">
+                            <a href="{{url('admin/qrrs')}}" class="side-nav-link ">
                             <i class="mdi mdi-home-city-outline"></i>
                                 <span> QRR </span>
+                            </a>
+                        </li>
+
+                        <li class="side-nav-item ">
+                            <a href="{{url('admin/qrrs/charts')}}" class="side-nav-link  ">
+                            <i class="mdi mdi-home-city-outline"></i>
+                                <span> QRR Grph charts</span>
                             </a>
                         </li>
                         

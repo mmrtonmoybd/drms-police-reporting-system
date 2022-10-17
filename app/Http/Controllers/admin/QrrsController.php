@@ -30,6 +30,30 @@ class QrrsController extends Controller
 
         $data['disc'] = District::where('division_id', 1)->get();
         $mm = $data['disc'];
+        
+        return view('admin/qrr/qrrs', $data);
+    }
+
+    public function report(Request $request, $report)
+    {
+        $session_user = Session::get('user');
+        $query = Qrr::query();
+        $query->with(['district', 'thana']);
+        $data['qrrs'] = $query->where('event_type', $report)->paginate(20);
+        $data['request'] =  $request;
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+        $thana = Thana::get();
+        $data['ttn'] = $thana;
+
+        $data['disc'] = District::where('division_id', 1)->get();
+        $mm = $data['disc'];
+        
+        return view('admin/qrr/qrrsr', $data);
+    }
+
+    public function chart()
+    {
         $borgona = Qrr::where('districtID', 34)->count();
         $barisal = Qrr::where('districtID', 35)->count();
         $bhola = Qrr::where('districtID', 36)->count();
@@ -66,9 +90,7 @@ class QrrsController extends Controller
         $data['etrajnoi'] = Qrr::where('event_type', 'রাজনৈতিক')->count();
         $data['etonno'] = Qrr::where('event_type', 'অন্যান্য')->count();
 
-
-
-        return view('admin/qrr/qrrs', $data);
+        return view('admin/qrr/qrrsg', $data);
     }
 
 
@@ -84,16 +106,64 @@ class QrrsController extends Controller
         $session_user = Session::get('user');
 
        // $from = Carbon::parse();
-$to = Carbon::parse($request->input('to'))->toDateTimeString();
-$from = Carbon::parse($request->input('form'))->toDateTimeString();
+    $to = Carbon::parse($request->input('to'))->toDateTimeString();
+    $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
+    if (!empty($request->input('districtID'))) {
+        $dkey = '=';
+        $dvalue = $request->input('districtID');
+    } else {
+        $dkey = '!=';
+        $dvalue = 'Null';
+    }
+
+    if (!empty($request->input('thanaID'))) {
+        $tkey = '=';
+        $tvalue = $request->input('thanaID');
+    } else {
+        $tkey = '!=';
+        $tvalue = 'Null';
+    }
+
+    if (!empty($request->input('source_of_info'))) {
+        $skey = '=';
+        $svalue = $request->input('source_of_info');
+    } else {
+        $skey = '!=';
+        $svalue = 'Null';
+    }
+
+     if (!empty($request->input('form'))) {
+        $fkey = '=';
+        $fvalue = $request->input('form');
+    } else {
+        $fkey = '=';
+        $fvalue = '1971-01-01 11:45:00';
+    }
+
+     if (!empty($request->input('to'))) {
+        $tokey = '=';
+        $tovalue = $request->input('to');
+    } else {
+        $tokey = '=';
+        $tovalue = Carbon::now()->toDateTimeString();;
+    }
+
+
+
+    //\DB::enableQueryLog();
         $query = Qrr::query();
         $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->where('districtID', '=', $request->input('districtID'))
-        ->orWhere('thanaID', '=', $request->input('thanaID'))
-        ->orWhere('source_of_info', '=', $request->input('source_of_info'))
-        ->orWhereDate('date_time_of_police_news', '=', $request->input('form'))
-        ->get();
+        $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->get();
+
+       // dd(\DB::getQueryLog());
+
+        //$query->where('districtID', '=', $request->input('districtID'))
+        //->orWhere('thanaID', '=', $request->input('thanaID'))
+        //->orWhere('source_of_info', '=', $request->input('source_of_info'))->orWhereDate('date_time_of_police_news', '=', $request->input('form'))
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -171,7 +241,7 @@ $from = Carbon::parse($request->input('form'))->toDateTimeString();
         
         if(Qrr::insert($insertAttr)){
             $request->session()->flash('success_msg', 'Data updated successfully');
-            return redirect('admin/qrrs');
+            return redirect('admin/qrrs/add');
         }else{
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
