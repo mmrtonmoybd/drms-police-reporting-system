@@ -114,13 +114,7 @@
                                             </div>
 
                                             
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="main_event" class="form-label"> মূল ঘটনা  </label>
-                                                    
-                                                    <textarea name="comments"  class="form-control  @error('main_event') is-invalid @enderror" id="main_event" rows="2" placeholder="মূল ঘটনা" required>{{old('main_event')}}</textarea>
-                                                </div>
-                                            </div>
+
 
                                             
                                             
@@ -159,7 +153,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="number" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
+                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -176,7 +170,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="number" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
+                                                    <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       
@@ -303,6 +297,18 @@
                                                     <textarea name="comments"  class="form-control  @error('comments') is-invalid @enderror" id="address" rows="2" placeholder="মন্তব্য">{{old('comments')}}</textarea>
                                                 </div>
                                             </div>
+                                            
+                                            
+                                                <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="main_event" class="form-label"> মূল রিপোর্ট  </label>
+                                                    
+                                                    <textarea name="comments"  class="form-control  @error('main_event') is-invalid @enderror" id="main_event" rows="2" placeholder="মূল ঘটনা" required>{{old('main_event')}}</textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
                                             
                                             <div class="col-sm-12">
                                                 <div>
