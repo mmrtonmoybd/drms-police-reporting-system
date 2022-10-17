@@ -52,14 +52,97 @@ class QrrsController extends Controller
         return view('admin/qrr/qrrsr', $data);
     }
 
-    public function chart()
+    public function chart(Request $request)
     {
-        $borgona = Qrr::where('districtID', 34)->count();
-        $barisal = Qrr::where('districtID', 35)->count();
-        $bhola = Qrr::where('districtID', 36)->count();
-        $jalokhati = Qrr::where('districtID', 37)->count();
-        $patuakhali = Qrr::where('districtID', 38)->count();
-        $pirojpur = Qrr::where('districtID', 39)->count();
+
+         $session_user = Session::get('user');
+
+       // $from = Carbon::parse();
+    $to = Carbon::parse($request->input('to'))->toDateTimeString();
+    $from = Carbon::parse($request->input('form'))->toDateTimeString();
+
+    if (!empty($request->input('districtID'))) {
+        $dkey = '=';
+        $dvalue = $request->input('districtID');
+    } else {
+        $dkey = '!=';
+        $dvalue = 'ss';
+    }
+
+    if (!empty($request->input('thanaID'))) {
+        $tkey = '=';
+        $tvalue = $request->input('thanaID');
+    } else {
+        $tkey = '!=';
+        $tvalue = 'jj';
+    }
+
+    if (!empty($request->input('source_of_info'))) {
+        $skey = '=';
+        $svalue = $request->input('source_of_info');
+    } else {
+        $skey = '!=';
+        $svalue = 'gg';
+    }
+
+     if (!empty($request->input('form'))) {
+        $fkey = '=';
+        $fvalue = $request->input('form');
+    } else {
+        $fkey = '=';
+        $fvalue = '1971-01-01 11:45:00';
+    }
+
+     if (!empty($request->input('to'))) {
+        $tokey = '=';
+        $tovalue = $request->input('to');
+    } else {
+        $tokey = '=';
+        $tovalue = Carbon::now()->toDateTimeString();;
+    }
+
+
+
+    //\DB::enableQueryLog();
+        $query = Qrr::query();
+        $query->with(['district', 'thana']);
+        $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->paginate(20);
+
+        //dd(\DB::getQueryLog());
+
+        //$query->where('districtID', '=', $request->input('districtID'))
+        //->orWhere('thanaID', '=', $request->input('thanaID'))
+        //->orWhere('source_of_info', '=', $request->input('source_of_info'))->orWhereDate('date_time_of_police_news', '=', $request->input('form'))
+        $data['request'] =  $request;
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+        $thana = Thana::get();
+        $data['ttn'] = $thana;
+
+        //dd($data['qrrs']);
+      //  return view('admin/qrr/qrrs-s', $data);
+
+
+        $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $barisal = Qrr::where('districtID', 35)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $bhola = Qrr::where('districtID', 36)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $jalokhati = Qrr::where('districtID', 37)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $patuakhali = Qrr::where('districtID', 38)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
         $data['borgona'] = $borgona;
         $data['barisal'] = $barisal;
@@ -68,27 +151,100 @@ class QrrsController extends Controller
         $data['patuakhali'] = $patuakhali;
         $data['pirojpur'] = $pirojpur;
 
-        $data['tin'] = Qrr::count();
-        $data['tcat'] = Qrr::whereNotNull('case_no')->count();
+        $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $data['inscou'] = Qrr::where('source_of_info', 'কোর্ট')->count();
-        $data['ins99'] = Qrr::where('source_of_info', '৯৯৯')->count();
-        $data['insala'] = Qrr::where('source_of_info', 'এলাকা')->count();
-        $data['instha'] = Qrr::where('source_of_info', 'থানা')->count();
+        $data['tcat'] = Qrr::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->count();
 
-        $data['etmara'] = Qrr::where('event_type', 'মারামারি')->count();
-        $data['etkun'] = Qrr::where('event_type', 'খুন')->count();
-        $data['etchori'] = Qrr::where('event_type', 'চুরি')->count();
-        $data['etdakati'] = Qrr::where('event_type', 'ডাকাতি')->count();
-        $data['etsompds'] = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->count();
-        $data['etsorokd'] = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->count();
-        $data['etnarios'] = Qrr::where('event_type', 'নারী ও শিশু')->count();
-        $data['etagun'] = Qrr::where('event_type', 'অগ্নিকান্ড')->count();
-        $data['etmadok'] = Qrr::where('event_type', 'মাদক')->count();
-        $data['etcyber'] = Qrr::where('event_type', 'সাইবার')->count();
-        $data['etprota'] = Qrr::where('event_type', 'প্রতারণা')->count();
-        $data['etrajnoi'] = Qrr::where('event_type', 'রাজনৈতিক')->count();
-        $data['etonno'] = Qrr::where('event_type', 'অন্যান্য')->count();
+        $data['inscou'] = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['ins99'] = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['insala'] = Qrr::where('source_of_info', 'এলাকা')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['instha'] = Qrr::where('source_of_info', 'থানা')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+        $data['etmara'] = Qrr::where('event_type', 'মারামারি')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etkun'] = Qrr::where('event_type', 'খুন')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etchori'] = Qrr::where('event_type', 'চুরি')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etdakati'] = Qrr::where('event_type', 'ডাকাতি')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $data['etsompds'] = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etsorokd'] = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etnarios'] = Qrr::where('event_type', 'নারী ও শিশু')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etagun'] = Qrr::where('event_type', 'অগ্নিকান্ড')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+       
+        $data['etmadok'] = Qrr::where('event_type', 'মাদক')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $data['etcyber'] = Qrr::where('event_type', 'সাইবার')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $data['etprota'] = Qrr::where('event_type', 'প্রতারণা')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $data['etrajnoi'] = Qrr::where('event_type', 'রাজনৈতিক')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        
+        $data['etonno'] = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
         return view('admin/qrr/qrrsg', $data);
     }
@@ -99,6 +255,14 @@ class QrrsController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
         return view('admin/qrr/qrrs-add', $data);
+    }
+
+    public function srcs()
+    {
+        $data['districts'] = District::where('division_id', 1)->get();
+        $thana = Thana::get();
+        $data['ttn'] = $thana;
+        return view('admin/qrr/qrrsc', $data);
     }
 
     public function SearchSort(Request $request)
@@ -114,7 +278,7 @@ class QrrsController extends Controller
         $dvalue = $request->input('districtID');
     } else {
         $dkey = '!=';
-        $dvalue = 'Null';
+        $dvalue = 'ss';
     }
 
     if (!empty($request->input('thanaID'))) {
@@ -122,7 +286,7 @@ class QrrsController extends Controller
         $tvalue = $request->input('thanaID');
     } else {
         $tkey = '!=';
-        $tvalue = 'Null';
+        $tvalue = 'jj';
     }
 
     if (!empty($request->input('source_of_info'))) {
@@ -130,7 +294,7 @@ class QrrsController extends Controller
         $svalue = $request->input('source_of_info');
     } else {
         $skey = '!=';
-        $svalue = 'Null';
+        $svalue = 'gg';
     }
 
      if (!empty($request->input('form'))) {
@@ -159,7 +323,7 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->get();
 
-       // dd(\DB::getQueryLog());
+        //dd(\DB::getQueryLog());
 
         //$query->where('districtID', '=', $request->input('districtID'))
         //->orWhere('thanaID', '=', $request->input('thanaID'))

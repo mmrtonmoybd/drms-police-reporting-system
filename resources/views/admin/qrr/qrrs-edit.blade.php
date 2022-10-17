@@ -116,14 +116,9 @@
                                             
       
                                             
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="main_event" class="form-label"> মূল ঘটনা  </label>
-                                                    <input type="text" name="main_event"  value="{{$qrr->main_event}}" id="main_event" class="form-control  @error('main_event') is-invalid @enderror" placeholder=" মূল ঘটনা" required>
-                                                </div>
-                                            </div>
-
                                             
+
+                     
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
@@ -160,7 +155,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="number" name="gd_no"  value="{{$qrr->gd_no}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  " required>
+                                                    <input type="text" name="gd_no"  value="{{$qrr->gd_no}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  " required>
                                                 </div>
                                             </div>
       
@@ -177,7 +172,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="number" name="case_no"  value="{{$qrr->case_no}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
+                                                    <input type="text" name="case_no"  value="{{$qrr->case_no}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
                                                 </div>
                                             </div>
       
@@ -214,7 +209,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="plaintiff_mobile" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" name="plaintiff_mobile"  value="{{$qrr->plaintiff_mobile}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " required>
+                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{$qrr->plaintiff_mobile}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " required>
                                                 </div>
                                             </div>
       
@@ -255,7 +250,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="number" name="bp_no"  value="{{$qrr->bp_no}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
+                                                    <input type="text" name="bp_no"  value="{{$qrr->bp_no}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
                                                 </div>
                                             </div>
       
@@ -263,7 +258,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label">  মোবাইল নং    </label>
-                                                    <input type="text" name="mobile_no"  value="{{$qrr->mobile_no}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
+                                                    <input type="text" name="mobile_no" minlength="11" maxlength="11"  value="{{$qrr->mobile_no}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
                                                 </div>
                                             </div>
       
@@ -302,6 +297,13 @@
                                                 <div class="mb-3">
                                                     <label for="comments" class="form-label">মন্তব্য</label>
                                                     <textarea name="comments"  class="form-control  @error('comments') is-invalid @enderror" id="address" rows="2" placeholder="মন্তব্য">{{$qrr->comments}}</textarea>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                    <label for="comments" class="form-label">Mul gotona</label>
+                                                    <textarea name="main_event"  class="form-control  @error('main_event') is-invalid @enderror" id="address" rows="2" placeholder="Mul gotona">{{$qrr->main_event}}</textarea>
                                                 </div>
                                             </div>
                                             

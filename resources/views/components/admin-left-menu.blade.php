@@ -49,9 +49,9 @@
                         </li>
 
                         <li class="side-nav-item ">
-                            <a href="{{url('admin/qrrs/charts')}}" class="side-nav-link  ">
+                            <a href="{{url('admin/qrrs/srcs')}}" class="side-nav-link  ">
                             <i class="mdi mdi-home-city-outline"></i>
-                                <span> QRR Grph charts</span>
+                                <span> QRR search</span>
                             </a>
                         </li>
                         
