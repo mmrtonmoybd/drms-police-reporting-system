@@ -120,7 +120,7 @@
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="event_type" class="form-label">   ঘটনার ধরণ     </label>
+                                                    <label for="event_type" class="form-label">   মূল ঘটনা     </label>
                                                     <select name="event_type" id="event_type" class="form-select" required>
                                                         <option value="">Select</option>
                                                         <option value="মারামারি"> মারামারি </option>
