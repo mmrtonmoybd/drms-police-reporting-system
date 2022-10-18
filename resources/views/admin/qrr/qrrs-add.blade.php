@@ -120,7 +120,7 @@
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="event_type" class="form-label">   মূল ঘটনা     </label>
+                                                    <label for="event_type" class="form-label">   ঘটনার ধরণ     </label>
                                                     <select name="event_type" id="event_type" class="form-select" required>
                                                         <option value="">Select</option>
                                                         <option value="মারামারি"> মারামারি </option>
@@ -303,7 +303,7 @@
                                                 <div class="mb-3">
                                                     <label for="main_event" class="form-label"> মূল রিপোর্ট  </label>
                                                     
-                                                    <textarea name="comments"  class="form-control  @error('main_event') is-invalid @enderror" id="main_event" rows="2" placeholder="মূল ঘটনা" required>{{old('main_event')}}</textarea>
+                                                    <textarea name="main_event"  class="form-control  @error('main_event') is-invalid @enderror" id="main_event" rows="2" placeholder="মূল ঘটনা" required>{{old('main_event')}}</textarea>
                                                 </div>
                                             </div>
                                             

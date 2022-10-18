@@ -86,7 +86,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td colspan="3">
-                                                        <b>   মন্তব্য: </b>  {{$qrr->commetns}}
+                                                        <b>   মন্তব্য: </b>  {{$qrr->comments}}
                                                         </td>
                                                     </tr>
                                                 </table>

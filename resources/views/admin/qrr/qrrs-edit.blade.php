@@ -302,7 +302,7 @@
 
                                              <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    <label for="comments" class="form-label">Mul gotona</label>
+                                                    <label for="comments" class="form-label">মূল ঘটনা</label>
                                                     <textarea name="main_event"  class="form-control  @error('main_event') is-invalid @enderror" id="address" rows="2" placeholder="Mul gotona">{{$qrr->main_event}}</textarea>
                                                 </div>
                                             </div>
