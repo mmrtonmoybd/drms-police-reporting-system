@@ -337,7 +337,7 @@
                                                     </td>
                                                     <td > {{ Str::limit($qrr->main_event, 20)}}</td>
                                                     <td > {{$qrr->event_type}}</td>
-                                                    <td > {{$qrr->begening_of_event}}</td>
+                                                    <td > {{Str::limit($qrr->begening_of_event, 5)}}</td>
                                                     <td > {{$qrr->gd_no}}</td>
                                                     <td > @if($qrr->gd_date) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
                                                     <td > {{$qrr->case_no}}</td>
@@ -352,7 +352,7 @@
                                                     <td > {{$qrr->mobile_no}}</td>
                                                     <td > {{$qrr->image_video}}</td>
                                                     <td > {{$qrr->media_quality}}</td>
-                                                    <td > {{Str::limit($qrr->comments, 20)}}</td>
+                                                    <td > {{Str::limit($qrr->comments, 5)}}</td>
                                                        
                                                     <td class="table-action">
                                                         
