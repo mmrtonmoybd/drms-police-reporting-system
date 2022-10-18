@@ -42,16 +42,16 @@
                         </li>
 
                         <li class="side-nav-item ">
-                            <a href="{{url('admin/qrrs')}}" class="side-nav-link ">
+                            <a href="{{url('admin/qrrs/srcs')}}" class="side-nav-link  ">
                             <i class="mdi mdi-home-city-outline"></i>
-                                <span> QRR </span>
+                                <span> QRR Dashboard</span>
                             </a>
                         </li>
 
                         <li class="side-nav-item ">
-                            <a href="{{url('admin/qrrs/srcs')}}" class="side-nav-link  ">
+                            <a href="{{url('admin/qrrs')}}" class="side-nav-link ">
                             <i class="mdi mdi-home-city-outline"></i>
-                                <span> QRR search</span>
+                                <span> QRR </span>
                             </a>
                         </li>
                         

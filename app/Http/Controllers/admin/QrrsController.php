@@ -262,6 +262,44 @@ class QrrsController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
         $thana = Thana::get();
         $data['ttn'] = $thana;
+
+        $borgona = Qrr::where('districtID', 34)->count();
+        $barisal = Qrr::where('districtID', 35)->count();
+        $bhola = Qrr::where('districtID', 36)->count();
+        $jalokhati = Qrr::where('districtID', 37)->count();
+        $patuakhali = Qrr::where('districtID', 38)->count();
+        $pirojpur = Qrr::where('districtID', 39)->count();
+
+        $data['borgona'] = $borgona;
+        $data['barisal'] = $barisal;
+        $data['bhola'] = $bhola;
+        $data['jalokhati'] = $jalokhati;
+        $data['patuakhali'] = $patuakhali;
+        $data['pirojpur'] = $pirojpur;
+
+        $data['tin'] = Qrr::count();
+        $data['tcat'] = Qrr::whereNotNull('case_no')->count();
+
+        $data['inscou'] = Qrr::where('source_of_info', 'কোর্ট')->count();
+        $data['ins99'] = Qrr::where('source_of_info', '৯৯৯')->count();
+        $data['insala'] = Qrr::where('source_of_info', 'এলাকা')->count();
+        $data['instha'] = Qrr::where('source_of_info', 'থানা')->count();
+
+        $data['etmara'] = Qrr::where('event_type', 'মারামারি')->count();
+        $data['etkun'] = Qrr::where('event_type', 'খুন')->count();
+        $data['etchori'] = Qrr::where('event_type', 'চুরি')->count();
+        $data['etdakati'] = Qrr::where('event_type', 'ডাকাতি')->count();
+        $data['etsompds'] = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->count();
+        $data['etsorokd'] = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->count();
+        $data['etnarios'] = Qrr::where('event_type', 'নারী ও শিশু')->count();
+        $data['etagun'] = Qrr::where('event_type', 'অগ্নিকান্ড')->count();
+        $data['etmadok'] = Qrr::where('event_type', 'মাদক')->count();
+        $data['etcyber'] = Qrr::where('event_type', 'সাইবার')->count();
+        $data['etprota'] = Qrr::where('event_type', 'প্রতারণা')->count();
+        $data['etrajnoi'] = Qrr::where('event_type', 'রাজনৈতিক')->count();
+        $data['etonno'] = Qrr::where('event_type', 'অন্যান্য')->count();
+
+        
         return view('admin/qrr/qrrsc', $data);
     }
 
