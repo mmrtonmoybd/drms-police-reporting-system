@@ -77,7 +77,7 @@
                         </li>
                         
                         <li class="side-nav-item">
-                            <a href="{{url('admin/warrants')}}" class="side-nav-link">
+                            <a href="{{url('admin/warrant')}}" class="side-nav-link">
                             <i class="mdi mdi-home-city-outline"></i>
                                 <span> Warrant </span>
                             </a>

@@ -28,7 +28,7 @@
 
                             <!-- Logo -->
                             <div class="card-header pt-4 pb-4 text-center bg-primary">
-                                <h4 class="text-dark-50 text-center pb-0 fw-bold text-white">Digital Automated Reporting and Monitoring System</h4>
+                                <h4 class="text-dark-50 text-center pb-0 fw-bold text-white">DARMS| Management</h4>
                             </div>
 
                             <div class="card-body p-4">
