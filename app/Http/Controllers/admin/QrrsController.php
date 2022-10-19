@@ -8,7 +8,8 @@ use App\Models\Qrr;
 use App\Models\District;
 use App\Models\Thana;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class QrrsController extends Controller
 {
@@ -385,6 +386,10 @@ class QrrsController extends Controller
             'districtID' => 'required',
         ]);
 
+        $user = Session::get('user');
+
+        $uid = $user['id'];
+
         $insertAttr = [
             'divisionID'=>1,
             'districtID'=>$request->input('districtID'),
@@ -413,6 +418,7 @@ class QrrsController extends Controller
             'image_video'=>$request->input('image_video'),
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),
+            'user_id' => $uid,
             
         ];
 

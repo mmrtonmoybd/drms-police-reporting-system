@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\AreaController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\admin\QrrsController;
+use App\Http\Controllers\admin\WarrantController;
 use App\Http\Controllers\admin\GallerysController;
 use App\Http\Controllers\admin\BanglosController;
 use App\Http\Controllers\admin\ContactsController;
@@ -140,6 +141,10 @@ Route::prefix('admin')->group(function(){
         Route::post('/qrrs/charts', [QrrsController::class, 'chart']);
         Route::get('/qrrs/report/{report}', [QrrsController::class, 'report']);
         Route::get('/qrrs/srcs', [QrrsController::class, 'srcs']);
+
+        // Warrant router
+         Route::get('/warrant/add',  [WarrantController::class, 'addShow']);
+         Route::post('/warrant/add',  [WarrantController::class, 'addData']);
 
         
 
