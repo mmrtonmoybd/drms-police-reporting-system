@@ -146,6 +146,7 @@ Route::prefix('admin')->group(function(){
          Route::get('/warrant/add',  [WarrantController::class, 'addShow']);
          Route::post('/warrant/add',  [WarrantController::class, 'addData']);
          Route::get('/warrant',  [WarrantController::class, 'index']);
+         Route::get('/warrant/dashboard',  [WarrantController::class, 'dashs']);
          Route::get('/warrant/edit/{id}',  [WarrantController::class, 'editShow']);
          Route::post('/warrant/edit/{id}',  [WarrantController::class, 'editUpdate']);
          Route::get('/warrant/delete/{id}',  [WarrantController::class, 'delete']);

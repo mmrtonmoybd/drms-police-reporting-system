@@ -75,6 +75,13 @@
                                 <span> Women and children </span>
                             </a>
                         </li>
+
+                        <li class="side-nav-item">
+                            <a href="{{url('admin/warrant/dashboard')}}" class="side-nav-link">
+                            <i class="mdi mdi-home-city-outline"></i>
+                                <span> Warrant Dashboard</span>
+                            </a>
+                        </li>
                         
                         <li class="side-nav-item">
                             <a href="{{url('admin/warrant')}}" class="side-nav-link">

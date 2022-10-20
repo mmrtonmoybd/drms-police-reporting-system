@@ -79,7 +79,8 @@
         ]);
 
         var options = {
-          title: 'Source of information'
+          title: 'Source of information',
+          is3D: true,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
