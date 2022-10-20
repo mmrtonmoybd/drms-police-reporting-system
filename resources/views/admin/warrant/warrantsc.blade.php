@@ -81,7 +81,7 @@
         ]);
 
         var options = {
-          title: 'Source of information',
+          title: 'নিষ্পত্তি by District wise',
           is3D: true,
           pieSliceText: 'value',
         };
@@ -204,7 +204,7 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             
-                                            <li class="breadcrumb-item"><a href="{{url('admin/warrant')}}">Qrrs</a></li>
+                                            <li class="breadcrumb-item"><a href="{{url('admin/warrant')}}">Warrants</a></li>
                                             <li class="breadcrumb-item active">All Warrants</li>
                                         </ol>
                                     </div>
@@ -225,7 +225,7 @@
                                             
 
 <div> 
-                                                <form action="" method="POST">
+                                                <form action="{{url('/admin/warrant/search')}}" method="POST">
                                                     @csrf
                                                     <div class="col-sm-4">
                                                 <div class="mb-3">
@@ -243,7 +243,7 @@
 
 
                                             <div class="input-group" id="timepicker-input-group2">
-                                                <label for="source_of_info" class="form-label"> Date </label>
+                                                <label for="source_of_info" class="form-label"> তারিখ </label>
                                                         <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date start" >
                                                         <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date end" >
 
@@ -264,14 +264,54 @@
                                             <div id="piechart"></div>
                                             <div id="chart_div2"></div>
 
-                                            <h3>Total Recive: {{ $trecive[0]['total_sum'] }}</h3>
-                                            <h3>Total nispotti: {{ $tnis[0]['total_sum'] }}</h3>
+                                            <h3>মোট রিসিভ: {{ $trecive[0]['total_sum'] }}</h3>
+                                            <h3>মোট নিষ্পত্তি: {{ $tnis[0]['total_sum'] }}</h3>
 
-                                            <nav class="mt-3">
+                                            <table class="table table-bordered table-striped table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th > জেলা </th>
+                                                    <th > মোট রিসিভ  </th>
+                                                    <th > মোট নিষ্পত্তি</th>
+                                                    <th > মোট জিআর তামিল </th>
+                                                    <th > মোট সিআর তামিল </th>
+                                                    <th > মোট সাজা জিআর তামিল </th>
+                                                    <th > মোট সাজা সিআর তামিল </th>
+                                                    <th > মোট রিকল ও অন্যান্য </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+@php
+use App\Models\District;
 
-                            
-                                      
-                                        </nav>
+function disna($id) {
+    $get = District::find($id);
+    return $get->bn_name;
+}
+@endphp
+                                            @if($wars)
+                                            @foreach ($wars as $war)
+                                                <tr>
+
+                                                    <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif</td>
+                                                    
+                                                    <td > {{$war->total_recive}}</td>
+                                                    <td > {{$war->total_nispotti}}</td>
+                                                    <td > {{$war->total_gr_tamil}}</td>
+                                                    <td > {{$war->total_cr_tamil}}</td>
+                                                    <td > {{$war->total_saja_gr_tamil}}</td>
+                                                    <td > {{$war->total_saja_cr_tamil}}</td>
+                                                    <td > {{$war->total_recall}}</td>
+                                                </tr>
+
+                                            @endforeach
+                                            @endif
+
+
+                                            
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

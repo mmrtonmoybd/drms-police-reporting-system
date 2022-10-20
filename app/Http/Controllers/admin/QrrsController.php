@@ -22,7 +22,7 @@ class QrrsController extends Controller
         $session_user = Session::get('user');
         $query = Qrr::query();
         $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->paginate(20);
+        $data['qrrs'] = $query->orderBy('id', 'desc')->paginate(20);
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -40,7 +40,7 @@ class QrrsController extends Controller
         $session_user = Session::get('user');
         $query = Qrr::query();
         $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->where('event_type', $report)->paginate(20);
+        $data['qrrs'] = $query->orderBy('id', 'desc')->where('event_type', $report)->paginate(20);
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -110,7 +110,7 @@ class QrrsController extends Controller
         $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->paginate(20);
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
         //dd(\DB::getQueryLog());
 

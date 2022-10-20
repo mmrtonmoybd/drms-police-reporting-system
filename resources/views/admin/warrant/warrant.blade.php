@@ -38,19 +38,19 @@
                                                     <th > জেলা </th>
                                                     <th > থানা </th>
                                                     <th > তারিখ </th>
-                                                    <th > GR Recive </th>
-                                                    <th > CR Recive </th>
-                                                    <th > Saja GR Recive </th>
-                                                    <th > Saja CR Recive </th>
-                                                    <th > Total Recive  </th>
-                                                    <th > GR Tamil</th>
-                                                    <th > CR Tamil </th>
-                                                    <th > Saja GR Tamil </th>
-                                                    <th > Saja CR Tamil </th>
-                                                    <th > Recall and Other </th>
-                                                    <th > Total Tamil </th>
-                                                    <th > Total Nispotti </th>
-                                                    <th > Day end pending </th>
+                                                    <th > জিআর রিসিভ	 </th>
+                                                    <th > সিআর রিসিভ </th>
+                                                    <th > সাজা জিআর রিসিভ </th>
+                                                    <th > সাজা সিআর রিসিভ </th>
+                                                    <th > মোট রিসিভ  </th>
+                                                    <th > জিআর তামিল</th>
+                                                    <th > সিআর তামিল </th>
+                                                    <th > সাজা জিআর তামিল </th>
+                                                    <th > সাজা সিআর তামিল </th>
+                                                    <th > রিকল ও অন্যান্য </th>
+                                                    <th > মোট তামিল </th>
+                                                    <th > মোট নিষ্পত্তি </th>
+                                                    <th > দিনশেষে পেন্ডিং </th>
                                                     <th style="width: 86px">Action</th>
                                                 </tr>
                                             </thead>

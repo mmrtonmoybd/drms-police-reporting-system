@@ -32,32 +32,32 @@
                                                         <td> <b>থানা : </b> @if(isset($war->thana->name)){{$war->thana->name}}@endif</td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> Date : </b> {{date('d-M-Y', strtotime($war->date))}}</td>
-                                                        <td> <b>GR Recive : </b> {{$war->gr_recive}}</td>
-                                                        <td> <b>CR Recive : </b> {{$war->cr_recive}}</td>
+                                                        <td> <b> তারিখ : </b> {{date('d-M-Y', strtotime($war->date))}}</td>
+                                                        <td> <b>জিআর রিসিভ : </b> {{$war->gr_recive}}</td>
+                                                        <td> <b>সিআর রিসিভ : </b> {{$war->cr_recive}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> Saja GR Recive  : </b> {{$war->saja_gr_recive}}
+                                                        <td> <b> সাজা জিআর রিসিভ  : </b> {{$war->saja_gr_recive}}
                                                         </td>
-                                                        <td> <b>Saja CR Recive : </b> {{$war->saja_cr_recive}}
+                                                        <td> <b>সাজা সিআর রিসিভ : </b> {{$war->saja_cr_recive}}
                                                         </td>
-                                                        <td> <b>Total Recive : </b> {{$war->gr_recive + $war->cr_recive + $war->saja_gr_recive + $war->saja_cr_recive}} 
+                                                        <td> <b>মোট রিসিভ : </b> {{$war->gr_recive + $war->cr_recive + $war->saja_gr_recive + $war->saja_cr_recive}} 
                                                         
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b>GR Tamil: </b> {{$war->gr_tamil}}</td>
-                                                        <td> <b>CR Tamil: </b> {{$war->cr_tamil}}</td>
-                                                        <td>  <b>Saja GR Tamil: </b>  {{$war->saja_gr_tamil}}</td>
+                                                        <td> <b>জিআর তামিল: </b> {{$war->gr_tamil}}</td>
+                                                        <td> <b>সিআর তামিল: </b> {{$war->cr_tamil}}</td>
+                                                        <td>  <b>সাজা জিআর তামিল: </b>  {{$war->saja_gr_tamil}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> Saja CR Tamil: </b> {{$war->saja_cr_tamil}}</td>
-                                                        <td> <b>Recall and Other: </b>  {{$war->recall_other}}</td>
-                                                        <td>  <b> Total Tamil :  </b>  {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil}}</td>
+                                                        <td> <b> সাজা সিআর তামিল: </b> {{$war->saja_cr_tamil}}</td>
+                                                        <td> <b>রিকল ও অন্যান্য: </b>  {{$war->recall_other}}</td>
+                                                        <td>  <b> মোট তামিল :  </b>  {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> Toatl Nispotti: </b>  {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
-                                                        <td> <b>Day end pending: fun kra lgba</b> </td>
+                                                        <td> <b> মোট নিষ্পত্তি: </b>  {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
+                                                        <td> <b>দিনশেষে পেন্ডিং: fun kra lgba</b> </td>
                                                     </tr>
                                                 </table>
                                                 <a target="_blank" href="{{url('admin/warrant/print-details/'.$war->id)}}" class="btn btn-success"><i class="uil uil-print"></i> Print</a>
