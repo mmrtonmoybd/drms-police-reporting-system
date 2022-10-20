@@ -8,7 +8,7 @@
                                         <ol class="breadcrumb m-0">
                                             
                                             <li class="breadcrumb-item"><a href="{{url('admin/warrant')}}">Warrants</a></li>
-                                            <li class="breadcrumb-item active">Edit qrr</li>
+                                            <li class="breadcrumb-item active">Edit Warrant</li>
                                         </ol>
                                     </div>
                                     <h4 class="page-title"> <i class=" dripicons-document-edit "></i> Edit Warrant</h4>
@@ -23,7 +23,7 @@
                             <div class="col-sm-12 ">
                                 <div class="d-flex justify-content-between align-items-center breaking-news bg-white">
                 <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1 news"><span class="d-flex align-items-center">Danger Warning</span></div>
-                <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"> <span class="dot"><font color='red'>All input must be English</font></span>
+                <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"> <span class="dot"><font color='red'><h2> All Input Must Be English Character</h2></font></span>
                 </marquee>
             </div>
                                 <form action="{{url('admin/warrant/edit/'.$war->id)}}" method="POST" enctype="multipart/form-data">
@@ -68,63 +68,63 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  জিআর রিসিভ  </label>
-                                                    <input type="text" name="gr_recive"  value="{{$war->gr_recive}}" id="gr_recive" class="form-control  @error('gr_recive') is-invalid @enderror" placeholder="   GR Recive " required>
+                                                    <input type="text" name="gr_recive"  value="{{$war->gr_recive}}" id="gr_recive" class="form-control  @error('gr_recive') is-invalid @enderror" placeholder="   জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  সিআর রিসিভ  </label>
-                                                    <input type="text" name="cr_recive"  value="{{$war->cr_recive}}" id="cr_recive" class="form-control  @error('cr_recive') is-invalid @enderror" placeholder="   CR Recive " required>
+                                                    <input type="text" name="cr_recive"  value="{{$war->cr_recive}}" id="cr_recive" class="form-control  @error('cr_recive') is-invalid @enderror" placeholder="   সিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর রিসিভ  </label>
-                                                    <input type="text" name="saja_gr_recive"  value="{{$war->saja_gr_recive}}" id="saja_gr_recive" class="form-control  @error('saja_gr_recive') is-invalid @enderror" placeholder="   Saja GR Recive " required>
+                                                    <input type="text" name="saja_gr_recive"  value="{{$war->saja_gr_recive}}" id="saja_gr_recive" class="form-control  @error('saja_gr_recive') is-invalid @enderror" placeholder="   সাজা জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা সিআর রিসিভ  </label>
-                                                    <input type="text" name="saja_cr_recive"  value="{{$war->saja_cr_recive}}" id="saja_cr_recive" class="form-control  @error('saja_cr_recive') is-invalid @enderror" placeholder="   Saja CR Recive " required>
+                                                    <input type="text" name="saja_cr_recive"  value="{{$war->saja_cr_recive}}" id="saja_cr_recive" class="form-control  @error('saja_cr_recive') is-invalid @enderror" placeholder="   সাজা সিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  জিআর তামিল  </label>
-                                                    <input type="text" name="gr_tamil"  value="{{$war->gr_tamil}}" id="gr_tamil" class="form-control  @error('gr_tamil') is-invalid @enderror" placeholder="   GR Tamil " required>
+                                                    <input type="text" name="gr_tamil"  value="{{$war->gr_tamil}}" id="gr_tamil" class="form-control  @error('gr_tamil') is-invalid @enderror" placeholder="   জিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">   সিআর তামিল  </label>
-                                                    <input type="text" name="cr_tamil"  value="{{$war->cr_tamil}}" id="cr_tamil" class="form-control  @error('cr_tamil') is-invalid @enderror" placeholder="   CR Tamil " required>
+                                                    <input type="text" name="cr_tamil"  value="{{$war->cr_tamil}}" id="cr_tamil" class="form-control  @error('cr_tamil') is-invalid @enderror" placeholder="   সিআর তামিল " required>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর তামিল  </label>
-                                                    <input type="text" name="saja_gr_tamil"  value="{{$war->saja_gr_tamil}}" id="saja_gr_tamil" class="form-control  @error('saja_gr_tamil') is-invalid @enderror" placeholder="   Saja GR Tamil " required>
+                                                    <input type="text" name="saja_gr_tamil"  value="{{$war->saja_gr_tamil}}" id="saja_gr_tamil" class="form-control  @error('saja_gr_tamil') is-invalid @enderror" placeholder="  সাজা জিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা সিআর তামিল  </label>
-                                                    <input type="text" name="saja_cr_tamil"  value="{{$war->saja_cr_tamil}}" id="saja_cr_tamil" class="form-control  @error('saja_cr_tamil') is-invalid @enderror" placeholder="   Saja CR Tamil " required>
+                                                    <input type="text" name="saja_cr_tamil"  value="{{$war->saja_cr_tamil}}" id="saja_cr_tamil" class="form-control  @error('saja_cr_tamil') is-invalid @enderror" placeholder="   সাজা সিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> রিকল ও অন্যান্য  </label>
-                                                    <input type="text" name="recall_other"  value="{{$war->recall_other}}" id="recall_other" class="form-control  @error('recall_other') is-invalid @enderror" placeholder="   Recall and other " required>
+                                                    <input type="text" name="recall_other"  value="{{$war->recall_other}}" id="recall_other" class="form-control  @error('recall_other') is-invalid @enderror" placeholder="   রিকল ও অন্যান্য " required>
                                                 </div>
                                             </div>
                                             

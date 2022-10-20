@@ -23,7 +23,7 @@
                             <div class="col-sm-12 ">
                                 <div class="d-flex justify-content-between align-items-center breaking-news bg-white">
                 <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1 news"><span class="d-flex align-items-center">Danger Warning</span></div>
-                <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"> <span class="dot"><font color='red'>All input must be English</font></span>
+                <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"> <span class="dot"><font color='red'><h2> All Input Must Be English Character</h2></font></span>
                 </marquee>
             </div>
                                 <form action="{{url('admin/warrant/add')}}" method="POST" enctype="multipart/form-data">
@@ -68,63 +68,63 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  জিআর রিসিভ  </label>
-                                                    <input type="text" name="gr_recive"  value="" id="gr_recive" class="form-control  " placeholder="   GR Recive " required>
+                                                    <input type="text" name="gr_recive"  value="" id="gr_recive" class="form-control  " placeholder="   জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  সিআর রিসিভ  </label>
-                                                    <input type="text" name="cr_recive"  value="" id="cr_recive" class="form-control  " placeholder="   CR Recive " required>
+                                                    <input type="text" name="cr_recive"  value="" id="cr_recive" class="form-control  " placeholder="   সিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর রিসিভ  </label>
-                                                    <input type="text" name="saja_gr_recive"  value="" id="saja_gr_recive" class="form-control  " placeholder="   Saja GR Recive " required>
+                                                    <input type="text" name="saja_gr_recive"  value="" id="saja_gr_recive" class="form-control  " placeholder="   সাজা জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা সিআর রিসিভ  </label>
-                                                    <input type="text" name="saja_cr_recive"  value="" id="saja_cr_recive" class="form-control  " placeholder="   Saja CR Recive " required>
+                                                    <input type="text" name="saja_cr_recive"  value="" id="saja_cr_recive" class="form-control  " placeholder="   সাজা সিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  জিআর তামিল  </label>
-                                                    <input type="text" name="gr_tamil"  value="" id="gr_tamil" class="form-control  " placeholder="   GR Tamil " required>
+                                                    <input type="text" name="gr_tamil"  value="" id="gr_tamil" class="form-control  " placeholder="   জিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  সিআর তামিল  </label>
-                                                    <input type="text" name="cr_tamil"  value="" id="cr_tamil" class="form-control  " placeholder="   CR Tamil " required>
+                                                    <input type="text" name="cr_tamil"  value="" id="cr_tamil" class="form-control  " placeholder="   সিআর তামিল " required>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর তামিল  </label>
-                                                    <input type="text" name="saja_gr_tamil"  value="" id="saja_gr_tamil" class="form-control  " placeholder="   Saja GR Tamil " required>
+                                                    <input type="text" name="saja_gr_tamil"  value="" id="saja_gr_tamil" class="form-control  " placeholder="   সাজা জিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা সিআর তামিল  </label>
-                                                    <input type="text" name="saja_cr_tamil"  value="" id="saja_cr_tamil" class="form-control  " placeholder="   Saja CR Tamil " required>
+                                                    <input type="text" name="saja_cr_tamil"  value="" id="saja_cr_tamil" class="form-control  " placeholder="   সাজা সিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> রিকল ও অন্যান্য  </label>
-                                                    <input type="text" name="recall_other"  value="" id="recall_other" class="form-control  " placeholder="   Recall and other " required>
+                                                    <input type="text" name="recall_other"  value="" id="recall_other" class="form-control  " placeholder="   রিকল ও অন্যান্য " required>
                                                 </div>
                                             </div>
 
