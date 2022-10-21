@@ -243,6 +243,26 @@ class WarrantController extends Controller
         districtID
         ")->orderBy('districtID','ASC')->groupBy('districtID')->get();
 
+         $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 34)->get();
+        $barisalp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 35)->get();
+        $bholap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 36)->get();
+        $jalokhatip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 37)->get();
+        $patuakhalip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 38)->get();
+        $pirojpurp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 39)->get();
+
+        $data['borgonap'] = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
+        $data['barisalp'] = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
+        $data['bholap'] = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
+        $data['jalokhatip'] = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
+        $data['patuakhalip'] = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
+        $data['pirojpurp'] = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
+
                 //dd($mm);
 
 
@@ -344,6 +364,26 @@ class WarrantController extends Controller
 
                 //dd($mm);
         $data['dis'] = District::find($dvalue);
+
+        $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 34)->get();
+        $barisalp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 35)->get();
+        $bholap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 36)->get();
+        $jalokhatip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 37)->get();
+        $patuakhalip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 38)->get();
+        $pirojpurp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                ->where('districtID', 39)->get();
+
+        $data['borgonap'] = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
+        $data['barisalp'] = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
+        $data['bholap'] = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
+        $data['jalokhatip'] = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
+        $data['patuakhalip'] = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
+        $data['pirojpurp'] = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
 
 
                return view('admin/warrant/warrantsr', $data);

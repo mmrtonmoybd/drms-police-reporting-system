@@ -91,6 +91,42 @@
         chart.draw(data, options);
       }
 
+       // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart3);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart3() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'পেন্ডিং', { role: 'style' }],
+         ['বরগুনা', {{$borgonap}}, '#b87333'],            // RGB value
+         ['বরিশাল', {{$barisalp}}, 'silver'],            // English color name
+         ['ভোলা', {{$bholap}}, 'gold'],
+         ['ঝালকাঠি', {{$jalokhatip}}, 'color: #e5e4e2' ], // CSS-style declaration
+         ['পটুয়াখালী', {{$patuakhalip}}, 'color: #b87333' ],
+         ['পিরোজপুর', {{$pirojpurp}}, 'color: Romance' ],
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "District wise পেন্ডিং",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+      }
+
       
 
      
@@ -260,9 +296,10 @@
 
                                             </div>
 
+                                            <div id="chart_div3"></div>
                                             <div id="chart_div"></div>
                                             <div id="piechart"></div>
-                                            <div id="chart_div2"></div>
+                                            
 
                                             <h3>মোট রিসিভ: {{ $trecive[0]['total_sum'] }}</h3>
                                             <h3>মোট নিষ্পত্তি: {{ $tnis[0]['total_sum'] }}</h3>

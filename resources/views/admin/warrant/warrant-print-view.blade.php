@@ -20,7 +20,16 @@ body{
     </style>
   </head>
   <body>
-    
+    @php
+use App\Models\Warrant;
+
+function dayend($id, $dis) {
+    $get = Warrant::selectRaw("((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS day_endp")
+    ->where('districtID', $dis)
+    ->where('id', '<=', $id)->first();
+    return intval($get->day_endp);
+}
+@endphp
 
   <div class="container" style="margin-top:170px">
   <div class="row">
@@ -61,7 +70,7 @@ body{
                                                     </tr>
                                                     <tr>
                                                         <td> <b> মোট নিষ্পত্তি: </b>  {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
-                                                        <td> <b>দিনশেষে পেন্ডিং: fun kra lgba</b> </td>
+                                                        <td> <b>দিনশেষে পেন্ডিং: @if (dayend($war->id, $war->districtID) >= 0) {{dayend($war->id, $war->districtID)}} @else {{0}} @endif</b> </td>
                                                     </tr>
                                                 </table>
                                             </div>

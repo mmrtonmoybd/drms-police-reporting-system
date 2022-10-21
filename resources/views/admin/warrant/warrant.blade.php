@@ -55,13 +55,37 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+@php
+use App\Models\District;
+use App\Models\Thana;
+use App\Models\Warrant;
+
+function dayend($id, $dis) {
+    $get = Warrant::selectRaw("((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS day_endp")
+    ->where('districtID', $dis)
+    ->where('id', '<=', $id)->first();
+    return intval($get->day_endp);
+}
+
+function disna($id) {
+    $get = District::find($id);
+    return $get->bn_name;
+}
+
+function thana($id) {
+    $get = Thana::find($id);
+    return $get->name;
+}
+
+
+@endphp
 
                                             @if($wars)
                                             @foreach ($wars as $war)
                                                 <tr>
                                                     <td > {{$war->id}}</td>
-                                                    <td > @if(isset($war->district->name)) {{$war->district->bn_name}} @endif</td>
-                                                    <td > @if(isset($war->thana->name)) {{$war->thana->name}} @endif</td>
+                                                    <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif </td>
+                                                    <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif </td>
                                                     <td > {{date('d-M-Y', strtotime($war->date))}}</td>
                                                     <td > {{$war->gr_recive}}</td>
                                                     <td > {{$war->cr_recive}}</td>
@@ -75,7 +99,7 @@
                                                     <td > {{$war->recall_other}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
-                                                    <td > Day end pending need fun</td>
+                                                    <td > @if (dayend($war->id, $war->districtID) >= 0) {{dayend($war->id, $war->districtID)}} @else {{0}} @endif</td>
                                                        
                                                     <td class="table-action">
                                                         
