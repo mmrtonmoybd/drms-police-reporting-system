@@ -22,19 +22,15 @@
 
                         <div class="row">
                             <div class="col-sm-12 ">
-                                <div class="card">
-                                    <div class="card-body table-responsive">
-                                        
-                                        <div class="row">
-                                            
 
-<div> 
-                                                <form action="{{url('admin/qrrs/charts')}}" method="POST">
-                                                    @csrf
-                                                    <div class="col-sm-4">
+                            <form action="{{url('admin/qrrs/charts')}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="card card-body" id="app">
+                                        <div class="row">
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id">
+                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -44,17 +40,15 @@
                                                         @endif
                                                     </select>
                                                 </div>
+                                            </div>
 
-                                                 <div class="col-sm-4">
+
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select">
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" >
                                                         <option value="">Select</option>
-                                                        @if($ttn)
-                                            @foreach ($ttn as $ttnu)
-                                                        <option value="{{$ttnu->id}}">{{$ttnu->bn_name}}</option>
-                                                        @endforeach
-                                                        @endif
+                                                        <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -82,16 +76,24 @@
 
                                         
                                                     </div>
-
-                                            <div>
-                                                    <button type="submit" name="submit" class="btn btn-primary"> Search </button>
+                                            
+                                            
+                                            <div class="col-sm-12">
+                                                <div>
+                                                    <button type="submit" name="submit" class="btn btn-primary"> Submit </button>
                                                 </div>
-
+                                                
                                             </div>
-                                                </form>
-                                            </div>
-
-                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                </form>
+                                <div class="card">
+                                    <div class="card-body table-responsive">
+                                        
+                            
+                                               
+                                            
 
                                             <div id="chart_div"></div>
                                             <div id="piechart"></div>
@@ -125,7 +127,118 @@
                             </div>
                         </div>
                         <!-- end row -->
+                           @php
+                if($request->input('divisionID'))
+                    $division_id = $request->input('divisionID');
+                if($request->input('districtID'))
+                    $district_id = $this->input('districtID');
+                if($request->input('upazilaID'))
+                    $upozilla_id = $request->input('upazilaID');
+                if($request->input('thanaID'))
+                    $thana_id = $request->input('thanaID');
 
-                     
+                @endphp
+    <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
+    <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
+
+  <script>
+    var app = new Vue({
+          el: '#app',
+          data: {
+            message: 'Hello Vue!',
+            ajax_url: '<?php echo url('admin'); ?>',
+           
+              
+            divisions:null,
+            districts:null,
+            upozillas:null,
+            thanas:null,
+            
+            division_id:'@if(isset($division_id) and $division_id){{$division_id}}@endif',
+            district_id:'@if(isset($district_id) and $district_id){{$district_id}}@endif',
+            upozilla_id:'@if(isset($upozilla_id) and $upozilla_id){{$upozilla_id}}@endif',
+            thana_id:'@if(isset($thana_id) and $thana_id){{$thana_id}}@endif',
+
+
+          },
+
+            created(){
+                
+                if(this.division_id!=""){
+                    this.getDistricts();
+                }
+                if(this.district_id!=""){
+                    this.getUpozillas();
+                }
+                
+            },
+
+
+            methods:{
+
+                
+                // send message to account customer
+                getDivisions(){
+                     axios.get(this.ajax_url+'/divisions')
+                    .then(res => {
+                        this.divisions = res.data;
+                    })
+                    .catch(err => {console.log(err); });
+                    
+                },
+                
+                
+                //this method for get districts
+                getDistricts(){
+                    if(this.division_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/districts/'+this.division_id)
+                        .then(res => {
+                            this.districts = res.data;
+                        })
+                        .catch(err => {console.log(err); });
+                      
+                   }
+                    
+                },
+
+                getUpozillasAndThana(){
+                    //this.getUpozillas();
+                    this.getThanas();
+                },
+                
+                //this method for get medicals
+                getUpozillas(){
+                    if(this.district_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/upazilas/'+this.district_id)
+                        .then(res => {
+                            this.upozillas = res.data;
+                        })
+                        .catch(err => {console.log(err); }); 
+                   }
+                    
+                },
+
+                
+                //this method for get medicals
+                getThanas(){
+                    if(this.district_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/thanas/'+this.district_id)
+                        .then(res => {
+                            this.thanas = res.data;
+                        })
+                        .catch(err => {console.log(err); }); 
+                   }
+                    
+                },
+                
+
+            }
+
+        });
+
+    </script>
 <x-admin-footer/>
 

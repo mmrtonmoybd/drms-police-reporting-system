@@ -290,6 +290,7 @@ class QrrsController extends Controller
     public function srcs(Request $request)
     {
         $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
         $thana = Thana::get();
         $data['ttn'] = $thana;
 
