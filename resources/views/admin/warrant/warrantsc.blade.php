@@ -63,9 +63,11 @@
 
                                             </div>
 
+                                            <!-- chart  -->
                                             <div id="chart_div3"></div>
                                             <div id="chart_div"></div>
                                             <div id="piechart"></div>
+                                            <!-- chart  -->
                                             
 
                                             <h3>মোট রিসিভ: {{ $trecive[0]['total_sum'] }}</h3>

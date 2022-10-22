@@ -93,11 +93,14 @@
                                         
                             
                                                
-                                            
+                                            <!-- chart  -->
 
                                             <div id="chart_div"></div>
                                             <div id="piechart"></div>
                                             <div id="chart_div2"></div>
+
+                                            <!-- chart  -->
+                                            
                                             <div class="btn-group" role="group" aria-label="...">
   <a href="{{url('admin/qrrs/report/মারামারি')}}" class="btn btn-danger">মারামারি</a>
   <a href="{{url('admin/qrrs/report/খুন')}}" class="btn btn-danger">খুন</a>

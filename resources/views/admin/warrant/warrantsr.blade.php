@@ -31,9 +31,11 @@
 
                                             </div>
 
+                                            <!-- chart  -->
                                             <div id="chart_div3"></div>
                                             <div id="chart_div"></div>
                                             <div id="piechart"></div>
+                                            <!-- chart  -->
                                             
 
                                             <h3>{{$dis->bn_name}} মোট রিসিভ: {{ $trecive[0]['total_sum'] }}</h3>

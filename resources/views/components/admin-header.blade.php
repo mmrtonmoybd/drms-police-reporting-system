@@ -33,6 +33,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <!-- chart JS -->
+
             <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     @if (str_contains(url()->current(), '/admin/qrrs/srcs') || str_contains(url()->current(), '/admin/qrrs/charts'))
@@ -245,6 +247,8 @@
      
     </script>
       @endif
+
+       <!-- chart JS -->
 
     </head>
 
