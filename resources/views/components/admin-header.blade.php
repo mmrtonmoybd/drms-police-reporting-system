@@ -33,6 +33,219 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+            <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    @if (str_contains(url()->current(), '/admin/qrrs/srcs') || str_contains(url()->current(), '/admin/qrrs/charts'))
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'Incident', { role: 'style' }],
+         ['বরগুনা', {{session('borgona')}}, '#b87333'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, 'silver'],            // English color name
+         ['ভোলা', {{session('bhola')}}, 'gold'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2' ], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333' ],
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance' ],
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "Number of incent",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Information source', 'count'],
+          ['এলাকা', {{session('insala')}}],
+          ['কোর্ট',  {{session('inscou')}}],
+          ['থানা',  {{session('instha')}}],
+          ['৯৯৯', {{session('ins99')}}]
+        ]);
+
+        var options = {
+          title: 'Source of information',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+
+       // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart3);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart3() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Crime Type', 'Incident', { role: 'style' }],
+         ['মারামারি', {{session('etmara')}}, 'gold'],            // RGB value
+         ['খুন', {{session('etkun')}}, 'gold'],            // English color name
+         ['চুরি', {{session('etchori')}}, 'gold'],
+         ['ডাকাতি', {{session('etdakati')}}, 'color: gold' ], // CSS-style declaration
+         ['সম্পত্তি সংক্রান্ত', {{session('etsompds')}}, 'gold' ],
+         ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, 'gold' ],
+         ['নারী ও শিশু', {{session('etnarios')}}, 'gold' ],
+         ['অগ্নিকান্ড', {{session('etagun')}}, 'gold' ],
+         ['মাদক', {{session('etmadok')}}, 'gold' ],
+         ['সাইবার', {{session('etcyber')}}, 'gold' ],
+         ['প্রতারণা', {{session('etprota')}}, 'gold' ],
+         ['রাজনৈতিক', {{session('etrajnoi')}}, 'gold' ],
+         ['অন্যান্য', {{session('etonno')}}, 'gold' ],
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "Type of incent",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+
+      </script>
+
+      @endif
+
+      @if (str_contains(url()->current(), '/warrant/dashboard') || str_contains(url()->current(), '/warrant/search'))
+          <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'Recive', { role: 'style' }],
+         ['বরগুনা', {{session('borgona')}}, '#b87333'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, 'silver'],            // English color name
+         ['ভোলা', {{session('bhola')}}, 'gold'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2' ], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333' ],
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance' ],
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "Number of Revice",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['নিষ্পত্তি by District wise', 'count'],
+          ['বরগুনা', {{session('borgonan')}}],            // RGB value
+          ['বরিশাল', {{session('barisaln')}}],            // English color name
+          ['ভোলা', {{session('bholan')}}],
+          ['ঝালকাঠি', {{session('jalokhatin')}}], // CSS-style declaration
+          ['পটুয়াখালী', {{session('patuakhalin')}}],
+          ['পিরোজপুর', {{session('pirojpurn')}}]
+        ]);
+
+        var options = {
+          title: 'নিষ্পত্তি by District wise',
+          is3D: true,
+          pieSliceText: 'value',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+
+       // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart3);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart3() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'পেন্ডিং', { role: 'style' }],
+         ['বরগুনা', {{session('borgonap')}}, '#b87333'],            // RGB value
+         ['বরিশাল', {{session('barisalp')}}, 'silver'],            // English color name
+         ['ভোলা', {{session('bholap')}}, 'gold'],
+         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2' ], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333' ],
+         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance' ],
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "District wise পেন্ডিং",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+      }
+
+      
+
+     
+    </script>
+      @endif
+
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>

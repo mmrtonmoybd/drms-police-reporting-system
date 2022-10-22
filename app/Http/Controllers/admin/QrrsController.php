@@ -152,6 +152,13 @@ class QrrsController extends Controller
         $data['patuakhali'] = $patuakhali;
         $data['pirojpur'] = $pirojpur;
 
+        $request->session()->flash('borgona', $borgona);
+        $request->session()->flash('barisal', $barisal);
+        $request->session()->flash('bhola', $bhola);
+        $request->session()->flash('jalokhati', $jalokhati);
+        $request->session()->flash('patuakhali', $patuakhali);
+        $request->session()->flash('pirojpur', $pirojpur);
+
         $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
@@ -162,90 +169,112 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->count();
 
-        $data['inscou'] = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $dkey, $dvalue)
+
+        $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['ins99'] = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $dkey, $dvalue)
+        $ins99 = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['insala'] = Qrr::where('source_of_info', 'এলাকা')->where('districtID', $dkey, $dvalue)
+        $insala = Qrr::where('source_of_info', 'এলাকা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['instha'] = Qrr::where('source_of_info', 'থানা')->where('districtID', $dkey, $dvalue)
+        $instha = Qrr::where('source_of_info', 'থানা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $data['etmara'] = Qrr::where('event_type', 'মারামারি')->where('districtID', $dkey, $dvalue)
+        $request->session()->flash('inscou', $inscou);
+        $request->session()->flash('ins99', $ins99);
+        $request->session()->flash('insala', $insala);
+        $request->session()->flash('instha', $instha);
+
+        $etmara = Qrr::where('event_type', 'মারামারি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etkun'] = Qrr::where('event_type', 'খুন')->where('districtID', $dkey, $dvalue)
+        $etkun = Qrr::where('event_type', 'খুন')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etchori'] = Qrr::where('event_type', 'চুরি')->where('districtID', $dkey, $dvalue)
+        $etchori = Qrr::where('event_type', 'চুরি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etdakati'] = Qrr::where('event_type', 'ডাকাতি')->where('districtID', $dkey, $dvalue)
+        $etdakati = Qrr::where('event_type', 'ডাকাতি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
         
-        $data['etsompds'] = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->where('districtID', $dkey, $dvalue)
+        $etsompds = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etsorokd'] = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
+        $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etnarios'] = Qrr::where('event_type', 'নারী ও শিশু')->where('districtID', $dkey, $dvalue)
+        $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etagun'] = Qrr::where('event_type', 'অগ্নিকান্ড')->where('districtID', $dkey, $dvalue)
+        $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
        
-        $data['etmadok'] = Qrr::where('event_type', 'মাদক')->where('districtID', $dkey, $dvalue)
+        $etmadok = Qrr::where('event_type', 'মাদক')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
         
-        $data['etcyber'] = Qrr::where('event_type', 'সাইবার')->where('districtID', $dkey, $dvalue)
+        $etcyber = Qrr::where('event_type', 'সাইবার')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
         
-        $data['etprota'] = Qrr::where('event_type', 'প্রতারণা')->where('districtID', $dkey, $dvalue)
+        $etprota = Qrr::where('event_type', 'প্রতারণা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
         
-        $data['etrajnoi'] = Qrr::where('event_type', 'রাজনৈতিক')->where('districtID', $dkey, $dvalue)
+        $etrajnoi = Qrr::where('event_type', 'রাজনৈতিক')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
         
-        $data['etonno'] = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $dkey, $dvalue)
+        $etonno = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+
+        $request->session()->flash('etmara', $etmara);
+        $request->session()->flash('etkun', $etkun);
+        $request->session()->flash('etchori', $etchori);
+        $request->session()->flash('etdakati', $etdakati);
+        $request->session()->flash('etsompds', $etsompds);
+        $request->session()->flash('etsorokd', $etsorokd);
+        $request->session()->flash('etnarios', $etnarios);
+        $request->session()->flash('etagun', $etagun);
+        $request->session()->flash('etmadok', $etmadok);
+        $request->session()->flash('etcyber', $etcyber);
+        $request->session()->flash('etprota', $etprota);
+        $request->session()->flash('etrajnoi', $etrajnoi);
+        $request->session()->flash('etonno', $etonno);
+        
 
         return view('admin/qrr/qrrsg', $data);
     }
@@ -258,7 +287,7 @@ class QrrsController extends Controller
         return view('admin/qrr/qrrs-add', $data);
     }
 
-    public function srcs()
+    public function srcs(Request $request)
     {
         $data['districts'] = District::where('division_id', 1)->get();
         $thana = Thana::get();
@@ -278,27 +307,56 @@ class QrrsController extends Controller
         $data['patuakhali'] = $patuakhali;
         $data['pirojpur'] = $pirojpur;
 
+        $request->session()->flash('borgona', $borgona);
+        $request->session()->flash('barisal', $barisal);
+        $request->session()->flash('bhola', $bhola);
+        $request->session()->flash('jalokhati', $jalokhati);
+        $request->session()->flash('patuakhali', $patuakhali);
+        $request->session()->flash('pirojpur', $pirojpur);
+
         $data['tin'] = Qrr::count();
         $data['tcat'] = Qrr::whereNotNull('case_no')->count();
 
-        $data['inscou'] = Qrr::where('source_of_info', 'কোর্ট')->count();
-        $data['ins99'] = Qrr::where('source_of_info', '৯৯৯')->count();
-        $data['insala'] = Qrr::where('source_of_info', 'এলাকা')->count();
-        $data['instha'] = Qrr::where('source_of_info', 'থানা')->count();
+        $inscou = Qrr::where('source_of_info', 'কোর্ট')->count();
+        $ins99 = Qrr::where('source_of_info', '৯৯৯')->count();
+        $insala = Qrr::where('source_of_info', 'এলাকা')->count();
+        $instha = Qrr::where('source_of_info', 'থানা')->count();
 
-        $data['etmara'] = Qrr::where('event_type', 'মারামারি')->count();
-        $data['etkun'] = Qrr::where('event_type', 'খুন')->count();
-        $data['etchori'] = Qrr::where('event_type', 'চুরি')->count();
-        $data['etdakati'] = Qrr::where('event_type', 'ডাকাতি')->count();
-        $data['etsompds'] = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->count();
-        $data['etsorokd'] = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->count();
-        $data['etnarios'] = Qrr::where('event_type', 'নারী ও শিশু')->count();
-        $data['etagun'] = Qrr::where('event_type', 'অগ্নিকান্ড')->count();
-        $data['etmadok'] = Qrr::where('event_type', 'মাদক')->count();
-        $data['etcyber'] = Qrr::where('event_type', 'সাইবার')->count();
-        $data['etprota'] = Qrr::where('event_type', 'প্রতারণা')->count();
-        $data['etrajnoi'] = Qrr::where('event_type', 'রাজনৈতিক')->count();
-        $data['etonno'] = Qrr::where('event_type', 'অন্যান্য')->count();
+        $request->session()->flash('inscou', $inscou);
+        $request->session()->flash('ins99', $ins99);
+        $request->session()->flash('insala', $insala);
+        $request->session()->flash('instha', $instha);
+
+        $etmara = Qrr::where('event_type', 'মারামারি')->count();
+        $etkun = Qrr::where('event_type', 'খুন')->count();
+        $etchori = Qrr::where('event_type', 'চুরি')->count();
+        $etdakati = Qrr::where('event_type', 'ডাকাতি')->count();
+        $etsompds = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->count();
+        $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->count();
+        $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->count();
+        $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->count();
+        $etmadok = Qrr::where('event_type', 'মাদক')->count();
+        $etcyber = Qrr::where('event_type', 'সাইবার')->count();
+        $etprota = Qrr::where('event_type', 'প্রতারণা')->count();
+        $etrajnoi = Qrr::where('event_type', 'রাজনৈতিক')->count();
+        $etonno = Qrr::where('event_type', 'অন্যান্য')->count();
+
+
+        $request->session()->flash('etmara', $etmara);
+        $request->session()->flash('etkun', $etkun);
+        $request->session()->flash('etchori', $etchori);
+        $request->session()->flash('etdakati', $etdakati);
+        $request->session()->flash('etsompds', $etsompds);
+        $request->session()->flash('etsorokd', $etsorokd);
+        $request->session()->flash('etnarios', $etnarios);
+        $request->session()->flash('etagun', $etagun);
+        $request->session()->flash('etmadok', $etmadok);
+        $request->session()->flash('etcyber', $etcyber);
+        $request->session()->flash('etprota', $etprota);
+        $request->session()->flash('etrajnoi', $etrajnoi);
+        $request->session()->flash('etonno', $etonno);
+
+        
 
         
         return view('admin/qrr/qrrsc', $data);

@@ -194,12 +194,19 @@ class WarrantController extends Controller
         $pirojpur = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('districtID', 39)->get();
 
-        $data['borgona'] = $borgona[0]['total_sum'];
-        $data['barisal'] = $barisal[0]['total_sum'];
-        $data['bhola'] = $bhola[0]['total_sum'];
-        $data['jalokhati'] = $jalokhati[0]['total_sum'];
-        $data['patuakhali'] = $patuakhali[0]['total_sum'];
-        $data['pirojpur'] = $pirojpur[0]['total_sum'];
+        $borgona = $borgona[0]['total_sum'];
+        $barisal = $barisal[0]['total_sum'];
+        $bhola = $bhola[0]['total_sum'];
+        $jalokhati = $jalokhati[0]['total_sum'];
+        $patuakhali = $patuakhali[0]['total_sum'];
+        $pirojpur = $pirojpur[0]['total_sum'];
+
+        $request->session()->flash('borgona', $borgona);
+        $request->session()->flash('barisal', $barisal);
+        $request->session()->flash('bhola', $bhola);
+        $request->session()->flash('jalokhati', $jalokhati);
+        $request->session()->flash('patuakhali', $patuakhali);
+        $request->session()->flash('pirojpur', $pirojpur);
 
 
         $borgonan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
@@ -215,12 +222,19 @@ class WarrantController extends Controller
         $pirojpurn = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                 ->where('districtID', 39)->get();
 
-        $data['borgonan'] = (!empty($borgonan[0]['total_sum'])) ? $borgonan[0]['total_sum'] : 0;
-        $data['barisaln'] = (!empty($barisaln[0]['total_sum'])) ? $barisaln[0]['total_sum'] : 0;
-        $data['bholan'] = (!empty($bholan[0]['total_sum'])) ? $bholan[0]['total_sum'] : 0;
-        $data['jalokhatin'] = (!empty($jalokhatin[0]['total_sum'])) ? $jalokhatin[0]['total_sum'] : 0;
-        $data['patuakhalin'] = (!empty($patuakhalin[0]['total_sum'])) ? $patuakhalin[0]['total_sum'] : 0;
-        $data['pirojpurn'] = (!empty($pirojpurn[0]['total_sum'])) ? $pirojpurn[0]['total_sum'] : 0;
+        $borgonan = (!empty($borgonan[0]['total_sum'])) ? $borgonan[0]['total_sum'] : 0;
+        $barisaln = (!empty($barisaln[0]['total_sum'])) ? $barisaln[0]['total_sum'] : 0;
+        $bholan = (!empty($bholan[0]['total_sum'])) ? $bholan[0]['total_sum'] : 0;
+        $jalokhatin = (!empty($jalokhatin[0]['total_sum'])) ? $jalokhatin[0]['total_sum'] : 0;
+        $patuakhalin = (!empty($patuakhalin[0]['total_sum'])) ? $patuakhalin[0]['total_sum'] : 0;
+        $pirojpurn = (!empty($pirojpurn[0]['total_sum'])) ? $pirojpurn[0]['total_sum'] : 0;
+
+        $request->session()->flash('borgonan', $borgonan);
+        $request->session()->flash('barisaln', $barisaln);
+        $request->session()->flash('bholan', $bholan);
+        $request->session()->flash('jalokhatin', $jalokhatin);
+        $request->session()->flash('patuakhalin', $patuakhalin);
+        $request->session()->flash('pirojpurn', $pirojpurn);
 
         $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->get();
@@ -256,14 +270,19 @@ class WarrantController extends Controller
         $pirojpurp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
                 ->where('districtID', 39)->get();
 
-        $data['borgonap'] = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
-        $data['barisalp'] = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
-        $data['bholap'] = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
-        $data['jalokhatip'] = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
-        $data['patuakhalip'] = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
-        $data['pirojpurp'] = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
+        $borgonap = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
+        $barisalp = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
+        $bholap = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
+        $jalokhatip = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
+        $patuakhalip = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
+        $pirojpurp = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
 
-                //dd($mm);
+        $request->session()->flash('borgonap', $borgonap);
+        $request->session()->flash('barisalp', $barisalp);
+        $request->session()->flash('bholap', $bholap);
+        $request->session()->flash('jalokhatip', $jalokhatip);
+        $request->session()->flash('patuakhalip', $patuakhalip);
+        $request->session()->flash('pirojpurp', $pirojpurp);
 
 
                return view('admin/warrant/warrantsc', $data);
@@ -313,12 +332,19 @@ class WarrantController extends Controller
         $pirojpur = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('districtID', 39)->whereBetween('date', [$fvalue, $tovalue])->get();
 
-        $data['borgona'] = $borgona[0]['total_sum'];
-        $data['barisal'] = $barisal[0]['total_sum'];
-        $data['bhola'] = $bhola[0]['total_sum'];
-        $data['jalokhati'] = $jalokhati[0]['total_sum'];
-        $data['patuakhali'] = $patuakhali[0]['total_sum'];
-        $data['pirojpur'] = $pirojpur[0]['total_sum'];
+        $borgona = $borgona[0]['total_sum'];
+        $barisal = $barisal[0]['total_sum'];
+        $bhola = $bhola[0]['total_sum'];
+        $jalokhati = $jalokhati[0]['total_sum'];
+        $patuakhali = $patuakhali[0]['total_sum'];
+        $pirojpur = $pirojpur[0]['total_sum'];
+
+        $request->session()->flash('borgona', $borgona);
+        $request->session()->flash('barisal', $barisal);
+        $request->session()->flash('bhola', $bhola);
+        $request->session()->flash('jalokhati', $jalokhati);
+        $request->session()->flash('patuakhali', $patuakhali);
+        $request->session()->flash('pirojpur', $pirojpur);
 
 
         $borgonan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
@@ -334,12 +360,19 @@ class WarrantController extends Controller
         $pirojpurn = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                 ->where('districtID', 39)->whereBetween('date', [$fvalue, $tovalue])->get();
 
-        $data['borgonan'] = (!empty($borgonan[0]['total_sum'])) ? $borgonan[0]['total_sum'] : 0;
-        $data['barisaln'] = (!empty($barisaln[0]['total_sum'])) ? $barisaln[0]['total_sum'] : 0;
-        $data['bholan'] = (!empty($bholan[0]['total_sum'])) ? $bholan[0]['total_sum'] : 0;
-        $data['jalokhatin'] = (!empty($jalokhatin[0]['total_sum'])) ? $jalokhatin[0]['total_sum'] : 0;
-        $data['patuakhalin'] = (!empty($patuakhalin[0]['total_sum'])) ? $patuakhalin[0]['total_sum'] : 0;
-        $data['pirojpurn'] = (!empty($pirojpurn[0]['total_sum'])) ? $pirojpurn[0]['total_sum'] : 0;
+        $borgonan = (!empty($borgonan[0]['total_sum'])) ? $borgonan[0]['total_sum'] : 0;
+        $barisaln = (!empty($barisaln[0]['total_sum'])) ? $barisaln[0]['total_sum'] : 0;
+        $bholan = (!empty($bholan[0]['total_sum'])) ? $bholan[0]['total_sum'] : 0;
+        $jalokhatin = (!empty($jalokhatin[0]['total_sum'])) ? $jalokhatin[0]['total_sum'] : 0;
+        $patuakhalin = (!empty($patuakhalin[0]['total_sum'])) ? $patuakhalin[0]['total_sum'] : 0;
+        $pirojpurn = (!empty($pirojpurn[0]['total_sum'])) ? $pirojpurn[0]['total_sum'] : 0;
+
+        $request->session()->flash('borgonan', $borgonan);
+        $request->session()->flash('barisaln', $barisaln);
+        $request->session()->flash('bholan', $bholan);
+        $request->session()->flash('jalokhatin', $jalokhatin);
+        $request->session()->flash('patuakhalin', $patuakhalin);
+        $request->session()->flash('pirojpurn', $pirojpurn);
 
         $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->get();
@@ -378,12 +411,19 @@ class WarrantController extends Controller
         $pirojpurp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
                 ->where('districtID', 39)->get();
 
-        $data['borgonap'] = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
-        $data['barisalp'] = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
-        $data['bholap'] = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
-        $data['jalokhatip'] = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
-        $data['patuakhalip'] = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
-        $data['pirojpurp'] = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
+        $borgonap = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
+        $barisalp = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
+        $bholap = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
+        $jalokhatip = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
+        $patuakhalip = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
+        $pirojpurp = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
+
+        $request->session()->flash('borgonap', $borgonap);
+        $request->session()->flash('barisalp', $barisalp);
+        $request->session()->flash('bholap', $bholap);
+        $request->session()->flash('jalokhatip', $jalokhatip);
+        $request->session()->flash('patuakhalip', $patuakhalip);
+        $request->session()->flash('pirojpurp', $pirojpurp);
 
 
                return view('admin/warrant/warrantsr', $data);
