@@ -17,7 +17,7 @@ jobs:
     - uses: shivammathur/setup-php@947009a71769c25ab5292f073f5343624b7c879d
       with:
         php-version: '8.0'
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
          ref: ${{ github.head_ref }}
     - name: Copy .env
