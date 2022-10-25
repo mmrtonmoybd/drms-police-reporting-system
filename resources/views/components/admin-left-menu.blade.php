@@ -63,7 +63,7 @@
                         </li>
                         
                         <li class="side-nav-item">
-                            <a href="{{url('admin/narcotics')}}" class="side-nav-link">
+                            <a href="{{url('admin/narcotic')}}" class="side-nav-link">
                             <i class="mdi mdi-home-city-outline"></i>
                                 <span> Narcotics </span>
                             </a>

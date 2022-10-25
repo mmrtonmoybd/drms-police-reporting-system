@@ -67,7 +67,7 @@ class WarrantController extends Controller
         $request->request->add(['divisionID' => 1, 'user_id' => $uid]);
 
         if (Warrant::create($request->all())) {
-           $request->session()->flash('success_msg', 'Data updated successfully');
+           $request->session()->flash('success_msg', 'Data created successfully');
            return redirect('admin/warrant');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
@@ -132,7 +132,7 @@ class WarrantController extends Controller
             return redirect('admin/warrant');
 
         if(Warrant::where('id', $id)->delete()){
-            $request->session()->flash('success_msg', 'Data updated successfully');
+            $request->session()->flash('success_msg', 'Data deleted successfully');
             return redirect('admin/warrant');
         }else{
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
@@ -144,7 +144,7 @@ class WarrantController extends Controller
     public function pView(Request $request, $id)
     {
         if(!$id or !is_numeric($id))
-            return redirect('admin/qrrs');
+            return redirect('admin/warrant');
         
         $data['war'] = Warrant::where('id', $id)->with(['district', 'thana'])->first();
     

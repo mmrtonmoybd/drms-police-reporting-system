@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\AccountsController;
 use App\Http\Controllers\admin\SmsController;
 use App\Http\Controllers\admin\RoomsController;
 use App\Http\Controllers\admin\BookingsController;
+use App\Http\Controllers\admin\NarcotiscController;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,6 +154,16 @@ Route::prefix('admin')->group(function(){
          Route::get('/warrant/delete/{id}',  [WarrantController::class, 'delete']);
          Route::get('/warrant/view/{id}',  [WarrantController::class, 'pView']);
          Route::get('/warrant/print-details/{id}',  [WarrantController::class, 'PrintView']);
+
+         // Narcotic router
+         Route::get('/narcotic',  [NarcotiscController::class, 'index']);
+         Route::get('/narcotic/add',  [NarcotiscController::class, 'addShow']);
+         Route::post('/narcotic/add',  [NarcotiscController::class, 'addData']);
+         Route::get('/narcotic/edit/{id}',  [NarcotiscController::class, 'editShow']);
+         Route::post('/narcotic/edit/{id}',  [NarcotiscController::class, 'editUpdate']);
+         Route::get('/narcotic/delete/{id}',  [NarcotiscController::class, 'delete']);
+         Route::get('/narcotic/view/{id}',  [NarcotiscController::class, 'pView']);
+         Route::get('/narcotic/print-details/{id}',  [NarcotiscController::class, 'PrintView']);
 
         
 
