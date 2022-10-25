@@ -28,13 +28,13 @@ class AdminLeftMenu extends Component
     public function render()
     {
         $data['session_user'] = Session::get('user');
-        
+
         $session_user = $data['session_user'];
-        
+
         $template = '';
         $data['template'] = request()->segment(2);
         $data['template2'] = request()->segment(3);
-     
+
         return view('components.admin-left-menu', $data);
     }
 }

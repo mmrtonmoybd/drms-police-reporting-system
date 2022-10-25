@@ -20,26 +20,25 @@ use Validator;
 class API_Auth extends Controller
 {
     //user login method
-    public function Login(Request $request){
+    public function Login(Request $request)
+    {
         $response = array();
         $token_key = env('JWT_SECRET');
         $email = $request->input('email');
         $password = md5($request->input('password'));
-        
+
         $user = User::where('email', $email)->where('password', $password)->first();
-        
-        if($user){
+
+        if ($user) {
             $decrypted=null;
             //try password dycription
-            try{
+            try {
                 $decrypted = $user->password;
-                
-            }catch(\DecryptException $e){
-
+            } catch(\DecryptException $e) {
             }
-            
-            if($decrypted){
-                if($decrypted == $password){
+
+            if ($decrypted) {
+                if ($decrypted == $password) {
                     //successfully login need to generate access_token
                     $payload = array(
                         "iss" => "http://demo.org",
@@ -63,21 +62,19 @@ class API_Auth extends Controller
                         'message' => 'Login successfully completed',
                         'user' => $user
                     );
-                }else{
+                } else {
                     $response=array(
                         'status'  => 'ERROR',
                         'message' => 'Password Cannot match'
                     );
                 }
-            }else{
+            } else {
                 $response=array(
                     'status'  => 'ERROR',
                     'message' => 'Password Cannot Decrypted'
                 );
             }
-
-
-        }else{
+        } else {
             $response=array(
                 'status'  => 'ERROR',
                 'message' => 'User name not found'
@@ -89,7 +86,8 @@ class API_Auth extends Controller
 
 
     //this method for signup
-    public function SignUp( Request $request){
+    public function SignUp(Request $request)
+    {
         $response = array();
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|max:20',
@@ -111,24 +109,23 @@ class API_Auth extends Controller
             'type' => 'Customer',
             'password' => md5($request->input('password'))
         );
-        
 
-        if($validator->fails()){
+
+        if ($validator->fails()) {
             $response=array(
                 'status'  => 'ERROR',
                 'message' => 'Something wrong in signup',
                 'errors' => $validator->errors()
             );
-        }else{
-
-            if($userID = User::insertGetId($insert_data)){
+        } else {
+            if ($userID = User::insertGetId($insert_data)) {
                 $response=array(
                     'status'  => 'SUCCESS',
                     'message' => 'You have signup Successfully',
                 );
-    
+
                 $new_user = User::where('id', $userID)->first();
-    
+
                 $token_key = env('JWT_SECRET');
                 $payload = array(
                     "iss" => "http://demo.org",
@@ -145,53 +142,52 @@ class API_Auth extends Controller
                 $factory = JWTFactory::customClaims($customClaims);
                 $payload = $factory->make();
                 $jwt = JWTAuth::encode($payload)->get();
-    
+
                 $response['user'] = $new_user;
                 $response['access_token'] = $jwt;
 
-                //after completing signup send email
-                // $this->sendEmail([
+            //after completing signup send email
+            // $this->sendEmail([
                 //     'user_name' => $new_user->user_name,
                 //     'name' => $new_user->name,
                 //     'email' => $new_user->email,
                 //     'subject' => 'Welcome to the best online earning and learning ocean!',
                 //     'template' => 'signup-mail',
-                // ]);
+            // ]);
 
-                //$this->sendGitf($new_user);
-
-            }else{
+            //$this->sendGitf($new_user);
+            } else {
                 $response=array(
                     'status'  => 'ERROR',
                     'message' => 'Something wrong please try again',
                     'errors'  => array()
                 );
             }
-    
         }
 
         return response($response);
     }
 
     //this method for get bookings for customer
-    public function Bookings( Request $request){
+    public function Bookings(Request $request)
+    {
         $response = array();
         $token = $request->header('Authorization');
         $user_id = JWTAuth::parseToken()->getPayload()->get('user_id');
 
-        if($user_id){
-                
+        if ($user_id) {
             $query = Booking::query();
             $query->orderBy('id', 'DESC');
             $query->where('user_id', $user_id);
             $response = $query->get();
         }
-        
+
         return response($response);
     }
 
 
-    public function BookNow(Request $request){
+    public function BookNow(Request $request)
+    {
         $insertAttr = [];
         $response = array(
             'status'=> 'ERROR',
@@ -201,23 +197,22 @@ class API_Auth extends Controller
         $token = $request->header('Authorization');
         $user_id = JWTAuth::parseToken()->getPayload()->get('user_id');
 
-        if($user_id){
-
+        if ($user_id) {
             $validator = Validator::make($request->all(), [
                 'check_in' => 'required',
                 'check_out' => 'required',
                 'room_id' => 'required',
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 $response=array(
                     'status'  => 'ERROR',
                     'message' => 'Something wrong in please try again 2'.$request->input('check_in'),
                     'errors' => $validator->errors()
                 );
-            }else{
+            } else {
                 $room = Room::with('banglo')->where('id', $request->input('room_id'))->first();
-                if($room){
+                if ($room) {
                     $insertAttr = [
                         'user_id'=>$user_id,
                         'status'=>'requested',
@@ -228,34 +223,31 @@ class API_Auth extends Controller
                         'child'=>$request->input('chield'),
                         'room_id'=>$request->input('room_id'),
                     ];
-                    $insertAttr['check_in'] = Carbon::createFromFormat('d/m/Y',$request->input('check_in'))->format('Y-m-d H:m:s');
-                    $insertAttr['check_out'] = Carbon::createFromFormat('d/m/Y',$request->input('check_out'))->format('Y-m-d H:m:s');
+                    $insertAttr['check_in'] = Carbon::createFromFormat('d/m/Y', $request->input('check_in'))->format('Y-m-d H:m:s');
+                    $insertAttr['check_out'] = Carbon::createFromFormat('d/m/Y', $request->input('check_out'))->format('Y-m-d H:m:s');
 
-                    if($userID = Booking::insertGetId($insertAttr)){
+                    if ($userID = Booking::insertGetId($insertAttr)) {
                         $response=array(
                             'status'  => 'SUCCESS',
                             'message' => 'You have successfully booked the room',
                             'errors'=>[]
                         );
-                        }else{
-                            $response = array(
-                            'status'=> 'ERROR',
-                            'message'=> 'Something wrong 3',
-                            'errors'=>[]
+                    } else {
+                        $response = array(
+                        'status'=> 'ERROR',
+                        'message'=> 'Something wrong 3',
+                        'errors'=>[]
                         );
                     }
-                }else{
+                } else {
                     $response = array(
                         'status'=> 'ERROR',
                         'message'=> 'We cannot found this room',
                         'errors'=>[]
                     );
                 }
-
-
             }
-    
-        }else{
+        } else {
             $response = array(
                 'status'=> 'ERROR',
                 'message'=> 'This user is not authorized for booking',
@@ -263,9 +255,7 @@ class API_Auth extends Controller
             );
         }
 
-        
+
         return response($response);
     }
-
-
 }

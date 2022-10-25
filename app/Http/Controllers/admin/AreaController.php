@@ -12,40 +12,46 @@ use App\Models\Thana;
 class AreaController extends Controller
 {
     //this method for get divisions
-    public function getDivisions(){
+    public function getDivisions()
+    {
         $data = Division::get();
         return response()->json($data);
     }
 
     //this method for get distrcits
-    public function getDistricts(Request $request, $division_id=null){
+    public function getDistricts(Request $request, $division_id=null)
+    {
         $data = array();
-        if($division_id)
+        if ($division_id) {
             $data = District::where('division_id', $division_id)->get();
-        else
+        } else {
             $data = District::get();
+        }
         return response()->json($data);
     }
 
     //get upazillas
-    public function getUpazilas(Request $request, $district_id=null){
+    public function getUpazilas(Request $request, $district_id=null)
+    {
         $data = array();
-        if($district_id)
+        if ($district_id) {
             $data = Upazila::where('district_id', $district_id)->get();
-        else
+        } else {
             $data = Upazila::get();
+        }
         return response()->json($data);
     }
 
-    
+
     //get upazillas
-    public function getThanas(Request $request, $district_id=null){
+    public function getThanas(Request $request, $district_id=null)
+    {
         $data = array();
-        if($district_id)
+        if ($district_id) {
             $data = Thana::where('district_id', $district_id)->get();
-        else
+        } else {
             $data = Thana::get();
+        }
         return response()->json($data);
     }
-
 }

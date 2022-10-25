@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Qrr extends Model
 {
     use HasFactory;
-    public function district(){
+    public function district()
+    {
         return $this->hasOne('App\Models\District', 'id', 'districtID');
     }
 
-    public function thana(){
+    public function thana()
+    {
         return $this->hasOne('App\Models\Thana', 'id', 'thanaID');
     }
 }

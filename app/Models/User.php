@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 //use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-   use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,13 +46,13 @@ class User extends Authenticatable
 
     protected $appends = ['online'];
 
-    //this method 
-    public function getOnlineAttribute(){
-        if($this->last_login > time()){
-            return TRUE;
-        }else{
-            return FALSE;
+    //this method
+    public function getOnlineAttribute()
+    {
+        if ($this->last_login > time()) {
+            return true;
+        } else {
+            return false;
         }
     }
-
 }

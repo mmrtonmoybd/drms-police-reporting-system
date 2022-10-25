@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Session;
 
-
 class AdminLoginCheck
 {
     /**
@@ -20,20 +19,18 @@ class AdminLoginCheck
     public function handle(Request $request, Closure $next)
     {
         $user_session = $request->session()->get('user');
-        
-        if($user_session and isset($user_session['login']) and $user_session['login']==true){
-            
+
+        if ($user_session and isset($user_session['login']) and $user_session['login']==true) {
             $user = User::where('id', $user_session['id'])->first();
-            
-            if($user_session['password']==$user->password){
+
+            if ($user_session['password']==$user->password) {
                 //ACCESS AVAILABLE
-                
-            }else{
+            } else {
                 $request->session()->pull('user');
                 $request->session()->flash('error_msg', 'Your session expaired');
                 return redirect('admin/login');
             }
-        }else{
+        } else {
             $request->session()->flash('error_msg', 'You are not authorized');
             return redirect('admin/login');
         }

@@ -13,12 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class QrrsController extends Controller
 {
-    public function __construct(){
-        
+    public function __construct()
+    {
     }
 
     //This method list all users
-    public function Index(Request $request){
+    public function Index(Request $request)
+    {
         $query = Qrr::query();
         $query->with(['district', 'thana']);
         $data['qrrs'] = $query->orderBy('id', 'desc')->paginate(20);
@@ -30,7 +31,7 @@ class QrrsController extends Controller
 
         $data['disc'] = District::where('division_id', 1)->get();
         $mm = $data['disc'];
-        
+
         return view('admin/qrr/qrrs', $data);
     }
 
@@ -47,60 +48,60 @@ class QrrsController extends Controller
 
         $data['disc'] = District::where('division_id', 1)->get();
         $mm = $data['disc'];
-        
+
         return view('admin/qrr/qrrsr', $data);
     }
 
     public function chart(Request $request)
     {
+        // $from = Carbon::parse();
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
-       // $from = Carbon::parse();
-    $to = Carbon::parse($request->input('to'))->toDateTimeString();
-    $from = Carbon::parse($request->input('form'))->toDateTimeString();
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
 
-    if (!empty($request->input('districtID'))) {
-        $dkey = '=';
-        $dvalue = $request->input('districtID');
-    } else {
-        $dkey = '!=';
-        $dvalue = 'ss';
-    }
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'jj';
+        }
 
-    if (!empty($request->input('thanaID'))) {
-        $tkey = '=';
-        $tvalue = $request->input('thanaID');
-    } else {
-        $tkey = '!=';
-        $tvalue = 'jj';
-    }
+        if (!empty($request->input('source_of_info'))) {
+            $skey = '=';
+            $svalue = $request->input('source_of_info');
+        } else {
+            $skey = '!=';
+            $svalue = 'gg';
+        }
 
-    if (!empty($request->input('source_of_info'))) {
-        $skey = '=';
-        $svalue = $request->input('source_of_info');
-    } else {
-        $skey = '!=';
-        $svalue = 'gg';
-    }
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $request->input('form');
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
 
-     if (!empty($request->input('form'))) {
-        $fkey = '=';
-        $fvalue = $request->input('form');
-    } else {
-        $fkey = '=';
-        $fvalue = '1971-01-01 11:45:00';
-    }
-
-     if (!empty($request->input('to'))) {
-        $tokey = '=';
-        $tovalue = $request->input('to');
-    } else {
-        $tokey = '=';
-        $tovalue = Carbon::now()->toDateTimeString();;
-    }
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $request->input('to');
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+            ;
+        }
 
 
 
-    //\DB::enableQueryLog();
+        //\DB::enableQueryLog();
         $query = Qrr::query();
         $query->with(['district', 'thana']);
         $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
@@ -120,24 +121,24 @@ class QrrsController extends Controller
         $data['ttn'] = $thana;
 
         //dd($data['qrrs']);
-      //  return view('admin/qrr/qrrs-s', $data);
+        //  return view('admin/qrr/qrrs-s', $data);
 
 
         $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $barisal = Qrr::where('districtID', 35)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $bhola = Qrr::where('districtID', 36)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $jalokhati = Qrr::where('districtID', 37)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $patuakhali = Qrr::where('districtID', 38)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
@@ -170,17 +171,17 @@ class QrrsController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $ins99 = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $insala = Qrr::where('source_of_info', 'এলাকা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $instha = Qrr::where('source_of_info', 'থানা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
@@ -195,62 +196,62 @@ class QrrsController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etkun = Qrr::where('event_type', 'খুন')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etchori = Qrr::where('event_type', 'চুরি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etdakati = Qrr::where('event_type', 'ডাকাতি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $etsompds = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-       
+
         $etmadok = Qrr::where('event_type', 'মাদক')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $etcyber = Qrr::where('event_type', 'সাইবার')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $etprota = Qrr::where('event_type', 'প্রতারণা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $etrajnoi = Qrr::where('event_type', 'রাজনৈতিক')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-        
+
         $etonno = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
@@ -270,14 +271,15 @@ class QrrsController extends Controller
         $request->session()->flash('etprota', $etprota);
         $request->session()->flash('etrajnoi', $etrajnoi);
         $request->session()->flash('etonno', $etonno);
-        
+
 
         return view('admin/qrr/qrrsg', $data);
     }
 
 
     //This method add new users
-    public function Addqrr(Request $request){
+    public function Addqrr(Request $request)
+    {
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
         return view('admin/qrr/qrrs-add', $data);
@@ -353,9 +355,9 @@ class QrrsController extends Controller
         $request->session()->flash('etrajnoi', $etrajnoi);
         $request->session()->flash('etonno', $etonno);
 
-        
 
-        
+
+
         return view('admin/qrr/qrrsc', $data);
     }
 
@@ -363,53 +365,54 @@ class QrrsController extends Controller
     {
         $session_user = Session::get('user');
 
-       // $from = Carbon::parse();
-    $to = Carbon::parse($request->input('to'))->toDateTimeString();
-    $from = Carbon::parse($request->input('form'))->toDateTimeString();
+        // $from = Carbon::parse();
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
-    if (!empty($request->input('districtID'))) {
-        $dkey = '=';
-        $dvalue = $request->input('districtID');
-    } else {
-        $dkey = '!=';
-        $dvalue = 'ss';
-    }
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
 
-    if (!empty($request->input('thanaID'))) {
-        $tkey = '=';
-        $tvalue = $request->input('thanaID');
-    } else {
-        $tkey = '!=';
-        $tvalue = 'jj';
-    }
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'jj';
+        }
 
-    if (!empty($request->input('source_of_info'))) {
-        $skey = '=';
-        $svalue = $request->input('source_of_info');
-    } else {
-        $skey = '!=';
-        $svalue = 'gg';
-    }
+        if (!empty($request->input('source_of_info'))) {
+            $skey = '=';
+            $svalue = $request->input('source_of_info');
+        } else {
+            $skey = '!=';
+            $svalue = 'gg';
+        }
 
-     if (!empty($request->input('form'))) {
-        $fkey = '=';
-        $fvalue = $request->input('form');
-    } else {
-        $fkey = '=';
-        $fvalue = '1971-01-01 11:45:00';
-    }
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $request->input('form');
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
 
-     if (!empty($request->input('to'))) {
-        $tokey = '=';
-        $tovalue = $request->input('to');
-    } else {
-        $tokey = '=';
-        $tovalue = Carbon::now()->toDateTimeString();;
-    }
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $request->input('to');
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+            ;
+        }
 
 
 
-    //\DB::enableQueryLog();
+        //\DB::enableQueryLog();
         $query = Qrr::query();
         $query->with(['district', 'thana']);
         $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
@@ -433,8 +436,8 @@ class QrrsController extends Controller
     }
 
     //this method for add new user
-    public function Create(Request $request){
-        
+    public function Create(Request $request)
+    {
         $data['districts'] = District::where('division_id', 1)->get();
 
         $validated = $request->validate([
@@ -472,55 +475,63 @@ class QrrsController extends Controller
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),
             'user_id' => $uid,
-            
+
         ];
 
-        if($request->input('date_time_of_incident'))
-            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A',$request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d h:i:s');
-            
-        if($request->input('date_time_of_police_news'))
-            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A',$request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d h:i:s');
-            
-        if($request->input('date_time_response'))
-            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A',$request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d h:i:s');
-            
-        if($request->input('gd_date'))
-            $insertAttr['gd_date'] = Carbon::createFromFormat('d/m/Y',$request->input('gd_date'))->format('Y-m-d');
-            
-        if($request->input('case_date'))
-            $insertAttr['case_date'] = Carbon::createFromFormat('d/m/Y',$request->input('case_date'))->format('Y-m-d');
+        if ($request->input('date_time_of_incident')) {
+            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d h:i:s');
+        }
+
+        if ($request->input('date_time_of_police_news')) {
+            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d h:i:s');
+        }
+
+        if ($request->input('date_time_response')) {
+            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d h:i:s');
+        }
+
+        if ($request->input('gd_date')) {
+            $insertAttr['gd_date'] = Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d');
+        }
+
+        if ($request->input('case_date')) {
+            $insertAttr['case_date'] = Carbon::createFromFormat('d/m/Y', $request->input('case_date'))->format('Y-m-d');
+        }
 
 
-            //delay count in  response
-        if($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']){
+        //delay count in  response
+        if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
             $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_response']);
             $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_of_police_news']);
 
             $insertAttr['delay_in_response'] = $to->diffInMinutes($from);
         }
 
-        
-        if(Qrr::insert($insertAttr)){
+
+        if (Qrr::insert($insertAttr)) {
             $request->session()->flash('success_msg', 'Data updated successfully');
             return redirect('admin/qrrs/add');
-        }else{
+        } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
-        
+
         return view('admin/qrr/qrrs-add');
     }
 
 
     //this method for view edit()
-    public function Edit(Request $request, $id){
-        if(!$id or !is_numeric($id))
+    public function Edit(Request $request, $id)
+    {
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/qrrs');
-        
+        }
+
         $data['qrr'] = Qrr::where('id', $id)->first();
-    
-        if(!$data)
+
+        if (!$data) {
             return redirect('admin/qrrs');
+        }
         $data['request'] = $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['thanas'] = $data['qrr']->districtID ? Thana::where('district_id', $data['qrr']->districtID)->get() : [] ;
@@ -529,9 +540,8 @@ class QrrsController extends Controller
 
 
     //this method for update user
-    public function Update(Request $request, $id){
-        
-
+    public function Update(Request $request, $id)
+    {
         $data['districts'] = District::where('division_id', 1)->get();
 
         $validated = $request->validate([
@@ -566,42 +576,47 @@ class QrrsController extends Controller
             'image_video'=>$request->input('image_video'),
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),
-            
+
         ];
 
-        if($request->input('date_time_of_incident'))
-            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A',$request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d h:i:s');
-            
-        if($request->input('date_time_of_police_news'))
-            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A',$request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d h:i:s');
-            
-        if($request->input('date_time_response'))
-            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A',$request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d h:i:s');
-            
-        if($request->input('gd_date'))
-            $insertAttr['gd_date'] = Carbon::createFromFormat('d/m/Y',$request->input('gd_date'))->format('Y-m-d');
-            
-        if($request->input('case_date'))
-            $insertAttr['case_date'] = Carbon::createFromFormat('d/m/Y',$request->input('case_date'))->format('Y-m-d');
+        if ($request->input('date_time_of_incident')) {
+            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d h:i:s');
+        }
+
+        if ($request->input('date_time_of_police_news')) {
+            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d h:i:s');
+        }
+
+        if ($request->input('date_time_response')) {
+            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d h:i:s');
+        }
+
+        if ($request->input('gd_date')) {
+            $insertAttr['gd_date'] = Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d');
+        }
+
+        if ($request->input('case_date')) {
+            $insertAttr['case_date'] = Carbon::createFromFormat('d/m/Y', $request->input('case_date'))->format('Y-m-d');
+        }
 
 
-            //delay count in  response
-        if($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']){
+        //delay count in  response
+        if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
             $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_response']);
             $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_of_police_news']);
 
             $insertAttr['delay_in_response'] = $to->diffInMinutes($from);
         }
 
-        
-        if(qrr::where('id', $id)->update($insertAttr)){
+
+        if (qrr::where('id', $id)->update($insertAttr)) {
             $request->session()->flash('success_msg', 'Data updated successfully');
             return redirect('admin/qrrs');
-        }else{
+        } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
-        
+
         return view('admin/qrr/qrrs-edit', $data);
     }
 
@@ -609,14 +624,16 @@ class QrrsController extends Controller
 
 
     //this method for  user delete
-    public function Delete(Request $request, $id=null){
-        if(!$id or !is_numeric($id))
+    public function Delete(Request $request, $id=null)
+    {
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/qrrs');
+        }
 
-        if(qrr::where('id', $id)->delete()){
+        if (qrr::where('id', $id)->delete()) {
             $request->session()->flash('success_msg', 'Data updated successfully');
             return redirect('admin/qrrs');
-        }else{
+        } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
             return redirect('admin/qrrs');
         }
@@ -624,44 +641,51 @@ class QrrsController extends Controller
     }
 
     //this method for short Services
-    public function Short(Request $request){
-        if($request->input('orders')){
+    public function Short(Request $request)
+    {
+        if ($request->input('orders')) {
             $orders = $request->input('orders');
-            if($orders){
+            if ($orders) {
                 $counter=0;
-               foreach($orders as $id){
-                   $counter++;
-                   $attr=array('order_by'=>$counter);
-                   Qrr::where('id', $id)->update($attr);
-               }
+                foreach ($orders as $id) {
+                    $counter++;
+                    $attr=array('order_by'=>$counter);
+                    Qrr::where('id', $id)->update($attr);
+                }
             }
         }
     }
 
 
     //this method for view edit()
-    public function View(Request $request, $id){
-        if(!$id or !is_numeric($id))
+    public function View(Request $request, $id)
+    {
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/qrrs');
-        
+        }
+
         $data['qrr'] = Qrr::where('id', $id)->with(['district', 'thana'])->first();
-    
-        if(!$data)
+
+        if (!$data) {
             return redirect('admin/qrrs');
+        }
         $data['request'] = $request;
         return view('admin/qrr/qrrs-view', $data);
     }
 
 
     //this method for view edit()
-    public function PrintView(Request $request, $id){
-        if(!$id or !is_numeric($id))
+    public function PrintView(Request $request, $id)
+    {
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/qrrs');
-        
+        }
+
         $data['qrr'] = Qrr::where('id', $id)->with(['district', 'thana'])->first();
-    
-        if(!$data)
+
+        if (!$data) {
             return redirect('admin/qrrs');
+        }
         $data['request'] = $request;
         return view('admin/qrr/qrrs-print-view', $data);
     }

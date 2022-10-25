@@ -19,31 +19,33 @@ use Session;
 class Dashboard extends Controller
 {
     //this method for index function
-    public function Index(Request $request){
+    public function Index(Request $request)
+    {
+        //  $this->UpdateLogin($request);
 
-      //  $this->UpdateLogin($request);
-        
-      
-        
-            
+
+
+
         $data=array();
 
 
-       
 
-       
+
+
         return view('admin/dashboard', $data);
     }
 
     //this method for update user login
-    
+
 
     //this method for index function
-    public function NotFound(){
+    public function NotFound()
+    {
         return view('errors/404');
     }
 
-    public function smsTest(){
+    public function smsTest()
+    {
         echo SmsSender::send('8801737963893', 'Hello ashraful isalm');
         //echo SmsSender::getBalance();
     }

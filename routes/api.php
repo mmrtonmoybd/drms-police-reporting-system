@@ -21,25 +21,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['cors'])->group(function () {
-    Route::get('/store',  [API::class, 'StoreContext']);
-    Route::post('/contact',  [API::class, 'AddContact']);
-    Route::get('/singledakbanglo/{id}',  [API::class, 'DakbangloByID']);
-    Route::get('/rooms/{id?}',  [API::class, 'Rooms']);
+    Route::get('/store', [API::class, 'StoreContext']);
+    Route::post('/contact', [API::class, 'AddContact']);
+    Route::get('/singledakbanglo/{id}', [API::class, 'DakbangloByID']);
+    Route::get('/rooms/{id?}', [API::class, 'Rooms']);
     Route::post('/signup', [API_Auth::class, 'SignUp']);
     Route::get('/bookings', [API_Auth::class, 'Bookings']);
     Route::get('/room-details/{room_id?}', [API::class, 'RoomDetails']);
 
-    Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/bookings', [API_Auth::class, 'Bookings']);
         Route::post('/booknow', [API_Auth::class, 'BookNow']);
     });
-    
+
     Route::group([
         'middleware' => 'api',
         'namespace' => 'App\Http\Controllers',
         'prefix' => 'auth'
-    ], function ($router){
+    ], function ($router) {
         Route::post('/login', [API_Auth::class, 'Login']);
     });
 });
-

@@ -59,7 +59,7 @@ class WarrantController extends Controller
         $date = $request->input('date');
 
         $request->merge(['date' => Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d')]);
-       
+
 
         $uid = auth()->user()->id;
         //dd();
@@ -67,8 +67,8 @@ class WarrantController extends Controller
         $request->request->add(['divisionID' => 1, 'user_id' => $uid]);
 
         if (Warrant::create($request->all())) {
-           $request->session()->flash('success_msg', 'Data created successfully');
-           return redirect('admin/warrant');
+            $request->session()->flash('success_msg', 'Data created successfully');
+            return redirect('admin/warrant');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
             return redirect('admin/warrant/add');
@@ -79,13 +79,15 @@ class WarrantController extends Controller
 
     public function editShow(Request $request, $id)
     {
-        if(!$id or !is_numeric($id))
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
-        
+        }
+
         $data['war'] = Warrant::where('id', $id)->first();
-    
-        if(!$data)
+
+        if (!$data) {
             return redirect('admin/warrant');
+        }
         $data['request'] = $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['thanas'] = $data['war']->districtID ? Thana::where('district_id', $data['war']->districtID)->get() : [] ;
@@ -115,26 +117,27 @@ class WarrantController extends Controller
         $request->request->remove('_token');
         $request->request->remove('submit');
 
-        if(Warrant::where('id', $id)->update($request->all())){
+        if (Warrant::where('id', $id)->update($request->all())) {
             $request->session()->flash('success_msg', 'Data updated successfully');
             return redirect('admin/warrant');
-        }else{
+        } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
-        
+
         return view('admin/warrant/warrant-edit', $data);
     }
 
     public function delete(Request $request, $id)
     {
-        if(!$id or !is_numeric($id))
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
+        }
 
-        if(Warrant::where('id', $id)->delete()){
+        if (Warrant::where('id', $id)->delete()) {
             $request->session()->flash('success_msg', 'Data deleted successfully');
             return redirect('admin/warrant');
-        }else{
+        } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
             return redirect('admin/warrant');
         }
@@ -143,25 +146,30 @@ class WarrantController extends Controller
 
     public function pView(Request $request, $id)
     {
-        if(!$id or !is_numeric($id))
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
-        
+        }
+
         $data['war'] = Warrant::where('id', $id)->with(['district', 'thana'])->first();
-    
-        if(!$data)
+
+        if (!$data) {
             return redirect('admin/warrant');
+        }
         $data['request'] = $request;
         return view('admin/warrant/warrant-view', $data);
     }
 
-    public function PrintView(Request $request, $id){
-        if(!$id or !is_numeric($id))
+    public function PrintView(Request $request, $id)
+    {
+        if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
-        
+        }
+
         $data['war'] = Warrant::where('id', $id)->with(['district', 'thana'])->first();
-    
-        if(!$data)
+
+        if (!$data) {
             return redirect('admin/warrant');
+        }
         $data['request'] = $request;
         return view('admin/warrant/warrant-print-view', $data);
     }
@@ -170,17 +178,17 @@ class WarrantController extends Controller
     {
         // $war->gr_recive + $war->cr_recive + $war->saja_gr_recive + $war->saja_cr_recive
         $total = 0;
-    for ($i = 0; $i < count($numbers); $i++) {
-        $total += $numbers[$i];
-    }
+        for ($i = 0; $i < count($numbers); $i++) {
+            $total += $numbers[$i];
+        }
 
-    return $total;
+        return $total;
     }
 
     public function dashs(Request $request)
     {
         $data['districts'] = District::where('division_id', 1)->get();
-     
+
         $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('districtID', 34)->get();
         $barisal = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
@@ -243,9 +251,9 @@ class WarrantController extends Controller
 
 
         //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
-        
 
-          $bari = Warrant::query();
+
+        $bari = Warrant::query();
         $data['wars'] = Warrant::selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
@@ -255,10 +263,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
         districtID
-        ")->orderBy('districtID','ASC')->groupBy('districtID')->get();
+        ")->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-         $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-                ->where('districtID', 34)->get();
+        $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+               ->where('districtID', 34)->get();
         $barisalp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
                 ->where('districtID', 35)->get();
         $bholap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
@@ -285,40 +293,41 @@ class WarrantController extends Controller
         $request->session()->flash('pirojpurp', $pirojpurp);
 
 
-               return view('admin/warrant/warrantsc', $data);
+        return view('admin/warrant/warrantsc', $data);
     }
 
     public function dashsp(Request $request)
     {
-    $to = Carbon::parse($request->input('to'))->toDateTimeString();
-    $from = Carbon::parse($request->input('form'))->toDateTimeString();
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
-    if (!empty($request->input('districtID'))) {
-        $dkey = '=';
-        $dvalue = $request->input('districtID');
-    } else {
-        $dkey = '!=';
-        $dvalue = 'ss';
-    }
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
 
-     if (!empty($request->input('form'))) {
-        $fkey = '=';
-        $fvalue = $request->input('form');
-    } else {
-        $fkey = '=';
-        $fvalue = '1971-01-01 11:45:00';
-    }
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $request->input('form');
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
 
-     if (!empty($request->input('to'))) {
-        $tokey = '=';
-        $tovalue = $request->input('to');
-    } else {
-        $tokey = '=';
-        $tovalue = Carbon::now()->toDateTimeString();;
-    }
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $request->input('to');
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+            ;
+        }
 
         $data['districts'] = District::where('division_id', 1)->get();
-     
+
         $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('districtID', 34)->whereBetween('date', [$fvalue, $tovalue])->get();
         $barisal = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
@@ -381,9 +390,9 @@ class WarrantController extends Controller
 
 
         //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
-        
 
-          $bari = Warrant::query();
+
+        $bari = Warrant::query();
         $data['wars'] = Warrant::selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
@@ -395,7 +404,7 @@ class WarrantController extends Controller
         districtID
         ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->groupBy('districtID')->get();
 
-                //dd($mm);
+        //dd($mm);
         $data['dis'] = District::find($dvalue);
 
         $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
@@ -426,6 +435,6 @@ class WarrantController extends Controller
         $request->session()->flash('pirojpurp', $pirojpurp);
 
 
-               return view('admin/warrant/warrantsr', $data);
+        return view('admin/warrant/warrantsr', $data);
     }
 }

@@ -15,11 +15,13 @@ class Warrant extends Model
 'cr_tamil', 'cr_tamil', 'saja_cr_tamil', 'saja_gr_tamil', 'recall_other', 'user_id'
 ];
 
-    public function district(){
+    public function district()
+    {
         return $this->hasOne('App\Models\District', 'id', 'districtID');
     }
 
-    public function thana(){
+    public function thana()
+    {
         return $this->hasOne('App\Models\Thana', 'id', 'thanaID');
     }
 }

@@ -13,7 +13,8 @@ use Carbon\Carbon;
 class PrlExporter implements FromCollection, WithMapping, WithHeadings
 {
     protected $request;
-    public function __construct($request){
+    public function __construct($request)
+    {
         $this->request = $request;
     }
     /**
@@ -26,40 +27,47 @@ class PrlExporter implements FromCollection, WithMapping, WithHeadings
         $query->with(['office', 'position']);
 
         //if search anything add some extra query for search
-        if( $name = $this->request->get('name'))
-            $query->where('name','LIKE','%'.$name.'%');
-        if( $phone = $this->request->get('phone'))
-            $query->where('phone','LIKE','%'.$phone.'%');
-        if( $officeID = $this->request->get('officeID'))
+        if ($name = $this->request->get('name')) {
+            $query->where('name', 'LIKE', '%'.$name.'%');
+        }
+        if ($phone = $this->request->get('phone')) {
+            $query->where('phone', 'LIKE', '%'.$phone.'%');
+        }
+        if ($officeID = $this->request->get('officeID')) {
             $query->where('officeID', $officeID);
-        if( $positionID = $this->request->get('positionID'))
+        }
+        if ($positionID = $this->request->get('positionID')) {
             $query->where('positionID', $positionID);
+        }
 
         $session_user = $request->session()->get('user');
-        if($session_user['type']=='Officer')
+        if ($session_user['type']=='Officer') {
             $query->where('officeID', $session_user['officeID']);
-        if($session_user['type']=='DivisionAdmin'){
+        }
+        if ($session_user['type']=='DivisionAdmin') {
             $current_user = User::where('id', $session_user['id'])->first();
             $query->where('divisionID', $current_user->divisionID);
         }
 
         $data['employees'] = $query->get();
 
-        
+
 
         return $data['employees'];
     }
 
 
-    public function map($employee) : array {
-
+    public function map($employee): array
+    {
         $office_name=null;
         $position_name=null;
 
-        if(isset($employee->office->name))
+        if (isset($employee->office->name)) {
             $office_name=$employee->office->name;
-        if(isset($employee->position->name))
+        }
+        if (isset($employee->position->name)) {
             $position_name=$employee->position->name;
+        }
 
         return [
 
@@ -71,14 +79,12 @@ class PrlExporter implements FromCollection, WithMapping, WithHeadings
             $position_name
 
         ] ;
-
-
     }
 
- 
 
-    public function headings() : array {
 
+    public function headings(): array
+    {
         return [
 
            'Name',
@@ -88,7 +94,5 @@ class PrlExporter implements FromCollection, WithMapping, WithHeadings
            'Current Office',
            'Current Position',
         ] ;
-
     }
-
 }

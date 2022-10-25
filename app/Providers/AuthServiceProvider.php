@@ -38,13 +38,12 @@ class AuthServiceProvider extends ServiceProvider
             $access_token = $request->header('access_token');
             $token_key = env('JWT_SECRET');
 
-            try{
+            try {
                 $decoded = JWT::decode($access_token, $token_key, array('HS256'));
                 return new User();
-            }catch(\Exception $e){
-                return Null;
+            } catch(\Exception $e) {
+                return null;
             }
-
         });
     }
 }

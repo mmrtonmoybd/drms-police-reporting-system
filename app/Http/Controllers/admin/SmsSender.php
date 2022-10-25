@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Http;
 class SmsSender extends Controller
 {
     //This method for send sms
-    public static function send($numbers, $message){
-
+    public static function send($numbers, $message)
+    {
         $apiURL = 'http://66.45.237.70/api.php';
 
         $postInput = [
@@ -27,10 +27,11 @@ class SmsSender extends Controller
         return $responseBody = $response->getBody();
     }
 
-    
+
     //this method for get balance
-    public static function getBalance(){
-        $api_key = (new static)->getApiKey();
+    public static function getBalance()
+    {
+        $api_key = (new static())->getApiKey();
         $apiURL = 'http://isms.engineerbd.net/api/balance';
         $response = Http::get($apiURL);
         $statusCode = $response->status();
@@ -38,12 +39,13 @@ class SmsSender extends Controller
     }
 
     //this method for get api key
-    public static function getApiKey(){
+    public static function getApiKey()
+    {
         $key=null;
         $setting = Setting::where('data_id', 'sms_api_key')->first();
-        if($setting and $setting->data)
+        if ($setting and $setting->data) {
             $key = $setting->data;
+        }
         return $key;
     }
-
 }
