@@ -12,7 +12,7 @@ class SettingsController extends Controller
     public function __construct(){
         $this->middleware(function ($request, $next) {
             $session_user = Session::get('user');
-             if($session_user['type']=='Admin'){
+             if(auth()->user()->type=='Admin'){
                 //allowed
              }
             else{

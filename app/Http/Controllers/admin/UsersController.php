@@ -12,7 +12,7 @@ class UsersController extends Controller
     public function __construct(){
             $this->middleware(function ($request, $next) {
                 $session_user = Session::get('user');
-                 if($session_user['type']=='Admin' or $session_user['type']=='DivisionAdmin'){
+                 if(auth()->user()->type =='Admin' or auth()->user()->type =='DivisionAdmin'){
                     //allowed
                  }
                 else{

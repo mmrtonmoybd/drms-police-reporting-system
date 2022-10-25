@@ -24,11 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('designation', 50)->nullable();
             $table->longText('picture');
             $table->rememberToken();
+            $table->string('address', 255)->nullable();
             $table->timestamps();
-            $table->text('address');
-            $table->text('positionID');
-            $table->text('officeID');
-            $table->integer('last_login', 255)->default(0);
         });
     }
 

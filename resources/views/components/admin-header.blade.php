@@ -2,9 +2,6 @@
 <html lang="en">
     
 <!-- Mirrored from coderthemes.com/hyper/saas/dashboard-crm.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 06:52:05 GMT -->
-
-@php $session_user = Session::get('user');
-@endphp
 <head>
         <meta charset="utf-8" />
         <title> DARMS | Management</title>
@@ -297,18 +294,21 @@
                                 <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                     aria-expanded="false">
                                     <span class="account-user-avatar"> 
-                                        <img src="{{ asset('storage/users/'.$session_user['picture']) }}" alt="user-image" class="rounded-circle">
+                                        <img src="{{ asset('storage/users'.auth()->user()->picture) }}" alt="user-image" class="rounded-circle">
                                     </span>
                                     <span>
-                                        <span class="account-user-name">{{$session_user['name']}}</span>
-                                        <span class="account-position">{{$session_user['designation']}}</span>
+                                        <span class="account-user-name">{{auth()->user()->name}}</span>
+                                        <span class="account-position">{{auth()->user()->designation}}</span>
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
                                     
 
                                     <!-- item-->
-                                    <a href="{{url('admin/users/edit/'.$session_user['id'])}}" class="dropdown-item notify-item">
+                                    @php
+                                    $id = auth()->user()->id;
+                                    @endphp
+                                    <a href="{{url('admin/users/edit/'.$id)}}" class="dropdown-item notify-item">
                                         <i class="mdi mdi-account-circle me-1"></i>
                                         <span>My Account</span>
                                     </a>

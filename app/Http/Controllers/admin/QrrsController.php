@@ -19,7 +19,6 @@ class QrrsController extends Controller
 
     //This method list all users
     public function Index(Request $request){
-        $session_user = Session::get('user');
         $query = Qrr::query();
         $query->with(['district', 'thana']);
         $data['qrrs'] = $query->orderBy('id', 'desc')->paginate(20);
@@ -37,7 +36,6 @@ class QrrsController extends Controller
 
     public function report(Request $request, $report)
     {
-        $session_user = Session::get('user');
         $query = Qrr::query();
         $query->with(['district', 'thana']);
         $data['qrrs'] = $query->orderBy('id', 'desc')->where('event_type', $report)->paginate(20);
@@ -55,8 +53,6 @@ class QrrsController extends Controller
 
     public function chart(Request $request)
     {
-
-         $session_user = Session::get('user');
 
        // $from = Carbon::parse();
     $to = Carbon::parse($request->input('to'))->toDateTimeString();
@@ -445,9 +441,7 @@ class QrrsController extends Controller
             'districtID' => 'required',
         ]);
 
-        $user = Session::get('user');
-
-        $uid = $user['id'];
+        $uid = auth()->user()->id;
 
         $insertAttr = [
             'divisionID'=>1,

@@ -32,9 +32,7 @@ class NarcotiscController extends Controller
 
         $trakingid = $year . $month . $day . $serialn;
 
-        $user = Session::get('user');
-
-        $uid = $user['id'];
+        $uid = auth()->user()->id;
 
         $request->request->add(['trakingID' => $trakingid, 'user_id' => $uid, 'divisionID' => 1,]);
         $request->merge(['sdate' => Carbon::createFromFormat('d/m/Y', $request->input('sdate'))->format('Y-m-d')]);

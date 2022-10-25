@@ -59,9 +59,9 @@ class WarrantController extends Controller
         $date = $request->input('date');
 
         $request->merge(['date' => Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d')]);
-        $user = Session::get('user');
+       
 
-        $uid = $user['id'];
+        $uid = auth()->user()->id;
         //dd();
 
         $request->request->add(['divisionID' => 1, 'user_id' => $uid]);

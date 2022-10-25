@@ -38,34 +38,48 @@
                             </div>
                                 
 
-                                <form action="{{url('admin/login')}}" method="POST">
-
+                                <form action="{{ route('login') }}" method="POST">
+                                   @csrf
                                     <div class="mb-3">
                                         <!-- <label for="emailaddress" class="form-label">Email address</label> -->
-                                        @csrf
-                                        <input class="form-control" name="email" type="email" value="{{old('email')}}" id="emailaddress" placeholder="Enter your email"  >
+                                        
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                     </div>
 
                                     <div class="mb-3">
                                         
                                         <!-- <label for="password" class="form-label">Password</label> -->
                                         <div class="input-group input-group-merge">
-                                            <input type="password" value="{{old('password')}}" name="password" id="password" class="form-control" placeholder="Enter your password" >
-                                            <div class="input-group-text" data-password="false">
-                                                <span class="password-eye"></span>
-                                            </div>
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                         </div>
                                     </div>
 
                                     <div class="mb-3 mb-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="checkbox-signin" checked>
-                                            <label class="form-check-label" for="checkbox-signin">Remember me</label>
-                                        </div>
+                                         <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
                                     </div>
 
                                     <div class="mb-3 mb-0 text-center">
-                                        <button class="btn btn-primary" type="submit"> Log In </button>
+                                        <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
                                     </div>
 
                                 </form>

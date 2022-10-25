@@ -21,30 +21,22 @@ class Dashboard extends Controller
     //this method for index function
     public function Index(Request $request){
 
-        $this->UpdateLogin($request);
+      //  $this->UpdateLogin($request);
         
-        $current_user = null;
-        $session_user = Session::get('user');
+      
         
             
         $data=array();
 
 
-        $data['user_type'] = $session_user['type'];
-
-        $data['total_logedin'] = User::where('last_login','>=' , time())->count();
-        $data['total_user'] = User::count();
+       
 
        
         return view('admin/dashboard', $data);
     }
 
     //this method for update user login
-    public function  UpdateLogin(Request $request){
-        $user = $request->session()->get('user');
-        User::where('id', $user['id'])->update(['last_login'=>time()+30]);
-        return $user;
-    }
+    
 
     //this method for index function
     public function NotFound(){

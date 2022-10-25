@@ -92,7 +92,7 @@
 
                         
                     
-                        @if($session_user['type'] =='Admin')
+                        @if(auth()->user()->type =='Admin')
                         
                         <li class="side-nav-item">
                             <a href="{{url('admin/settings')}}" class="side-nav-link">
