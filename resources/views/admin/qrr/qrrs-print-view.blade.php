@@ -62,6 +62,7 @@ body{
                                                         <td> <b>মূল ঘটনা: </b>{{$qrr->main_event}}</td>
                                                         <td> <b>ঘটনার ধরণ: </b> {{$qrr->event_type}}</td>
                                                         <td>  <b>ঘটনার সূত্রপাত: {{$qrr->begening_of_event}}</b>  </td>
+                                                        <td>  <b>ঘটনার সংক্ষিপ্ত বিবরন: {{$qrr->short_dettails}}</b>  </td>
                                                     </tr>
                                                     <tr>
                                                         <td> <b> জিডি নং: </b>{{$qrr->gd_no}}</td>

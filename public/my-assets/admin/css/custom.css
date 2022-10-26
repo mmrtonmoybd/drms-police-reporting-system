@@ -2,7 +2,7 @@
 .text-end{font-size:40px}
 body[data-leftbar-theme="dark"] .side-nav > .menuitem-active > a {
 	color: #fff !important;
-	background: #6a6d72;
+	background: #6d7fcc2e;
 	border-left: 3px solid #0ACF97;
 }
 body[data-leftbar-theme="dark"] .side-nav .side-nav-link {
@@ -10,7 +10,7 @@ body[data-leftbar-theme="dark"] .side-nav .side-nav-link {
 }
 
 body[data-leftbar-theme="dark"] .leftside-menu .logo {
-	background: #1e2733 !important;
+	background:  !important;
 }
 
 .table.small-padding > :not(caption) > * > * {

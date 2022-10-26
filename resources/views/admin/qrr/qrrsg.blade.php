@@ -52,6 +52,7 @@
                                             <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
+                                                    <th style="width: 86px">Action</th>
                                                     <th > রেফারেন্স নং </th>
                                                     <th > জেলা </th>
                                                     <th > থানা </th>
@@ -64,6 +65,7 @@
                                                     <th > মূল ঘটনা</th>
                                                     <th > ঘটনার ধরণ </th>
                                                     <th > ঘটনার সূত্রপাত </th>
+                                                    <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
                                                     <th > জিডি নং </th>
                                                     <th > তারিখ </th>
                                                     <th > মামলা নং </th>
@@ -79,7 +81,7 @@
                                                     <th > ছবি/ভিডিও প্রাপ্তি  </th>
                                                     <th > সন্তুষ্টির মান </th>
                                                     <th > মন্তব্য </th>
-                                                    <th style="width: 86px">Action</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -87,6 +89,15 @@
                                             @if($qrrs)
                                             @foreach ($qrrs as $qrr)
                                                 <tr>
+                                                    <td class="table-action">
+                                                        
+                                                        <a href="{{url('admin/qrrs/details/'.$qrr->id)}}"  class="action-icon text-primary">
+                                                            <i class="mdi mdi-eye"></i>
+                                                        </a>
+
+                                                        <a href="{{url('admin/qrrs/edit/'.$qrr->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="{{url('admin/qrrs/delete/'.$qrr->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                    </td>
                                                     <td > {{$qrr->id}}</td>
                                                     <td > @if(isset($qrr->district->name)) {{$qrr->district->bn_name}} @endif</td>
                                                     <td > @if(isset($qrr->thana->name)) {{$qrr->thana->name}} @endif</td>
@@ -112,7 +123,8 @@
                                                     </td>
                                                     <td > {{ Str::limit($qrr->main_event, 20)}}</td>
                                                     <td > {{$qrr->event_type}}</td>
-                                                    <td > {{Str::limit($qrr->begening_of_event, 5)}}</td>
+                                                    <td > {{$qrr->begening_of_event}}</td>
+                                                    <td > {{Str::limit($qrr->short_dettails, 5)}}</td>
                                                     <td > {{$qrr->gd_no}}</td>
                                                     <td > @if($qrr->gd_date) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
                                                     <td > {{$qrr->case_no}}</td>
@@ -129,15 +141,7 @@
                                                     <td > {{$qrr->media_quality}}</td>
                                                     <td > {{Str::limit($qrr->comments, 5)}}</td>
                                                        
-                                                    <td class="table-action">
-                                                        
-                                                        <a href="{{url('admin/qrrs/details/'.$qrr->id)}}"  class="action-icon text-primary">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </a>
-
-                                                        <a href="{{url('admin/qrrs/edit/'.$qrr->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
-                                                        <a href="{{url('admin/qrrs/delete/'.$qrr->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
-                                                    </td>
+                                                    
                                                 </tr>
 
                                             @endforeach

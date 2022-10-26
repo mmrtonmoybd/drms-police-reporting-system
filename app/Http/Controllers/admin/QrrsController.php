@@ -212,7 +212,7 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $etsompds = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->where('districtID', $dkey, $dvalue)
+        $etsompds = Qrr::where('event_type', 'বিরোধ')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
@@ -247,12 +247,27 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $etrajnoi = Qrr::where('event_type', 'রাজনৈতিক')->where('districtID', $dkey, $dvalue)
+        $etrajnoi = Qrr::where('event_type', 'দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
         $etonno = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+        $etnikoj = Qrr::where('event_type', 'নিখোঁজ-অপহরণ')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+        $etdusht = Qrr::where('event_type', 'দস্যুতা')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+        $etjua = Qrr::where('event_type', 'জুয়া')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
@@ -271,6 +286,9 @@ class QrrsController extends Controller
         $request->session()->flash('etprota', $etprota);
         $request->session()->flash('etrajnoi', $etrajnoi);
         $request->session()->flash('etonno', $etonno);
+        $request->session()->flash('etnikoj', $etnikoj);
+        $request->session()->flash('etdusht', $etdusht);
+        $request->session()->flash('etjua', $etjua);
 
 
         return view('admin/qrr/qrrsg', $data);
@@ -330,15 +348,18 @@ class QrrsController extends Controller
         $etkun = Qrr::where('event_type', 'খুন')->count();
         $etchori = Qrr::where('event_type', 'চুরি')->count();
         $etdakati = Qrr::where('event_type', 'ডাকাতি')->count();
-        $etsompds = Qrr::where('event_type', 'সম্পত্তি সংক্রান্ত')->count();
+        $etsompds = Qrr::where('event_type', 'বিরোধ')->count();
         $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->count();
         $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->count();
         $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->count();
         $etmadok = Qrr::where('event_type', 'মাদক')->count();
         $etcyber = Qrr::where('event_type', 'সাইবার')->count();
         $etprota = Qrr::where('event_type', 'প্রতারণা')->count();
-        $etrajnoi = Qrr::where('event_type', 'রাজনৈতিক')->count();
+        $etrajnoi = Qrr::where('event_type', 'দুর্ঘটনা')->count();
         $etonno = Qrr::where('event_type', 'অন্যান্য')->count();
+        $etnikoj = Qrr::where('event_type', 'নিখোঁজ-অপহরণ')->count();
+        $etdusht = Qrr::where('event_type', 'দস্যুতা')->count();
+        $etjua = Qrr::where('event_type', 'জুয়া')->count();
 
 
         $request->session()->flash('etmara', $etmara);
@@ -354,6 +375,9 @@ class QrrsController extends Controller
         $request->session()->flash('etprota', $etprota);
         $request->session()->flash('etrajnoi', $etrajnoi);
         $request->session()->flash('etonno', $etonno);
+        $request->session()->flash('etnikoj', $etnikoj);
+        $request->session()->flash('etdusht', $etdusht);
+        $request->session()->flash('etjua', $etjua);
 
 
 
@@ -475,19 +499,20 @@ class QrrsController extends Controller
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),
             'user_id' => $uid,
+            'short_dettails' => $request->input('short_dettails'),
 
         ];
 
         if ($request->input('date_time_of_incident')) {
-            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d h:i:s');
+            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
         }
 
         if ($request->input('date_time_of_police_news')) {
-            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d h:i:s');
+            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d H:s:i');
         }
 
         if ($request->input('date_time_response')) {
-            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d h:i:s');
+            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d H:s:i');
         }
 
         if ($request->input('gd_date')) {

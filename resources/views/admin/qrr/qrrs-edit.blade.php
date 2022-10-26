@@ -54,7 +54,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="village_word" class="form-label"> গ্রাম/ওয়ার্ড </label>
-                                                    <input type="text" name="village_word"  value="{{$qrr->village_word}}" id="village_word" class="form-control  @error('village_word') is-invalid @enderror" placeholder="গ্রাম/ওয়ার্ড" required>
+                                                    <input type="text" name="village_word"  value="{{$qrr->village_word}}" id="village_word" class="form-control  @error('village_word') is-invalid @enderror" placeholder="গ্রাম/ওয়ার্ড">
                                                 </div>
                                             </div>
 
@@ -81,7 +81,7 @@
                                                         <input type="text" name="date_time_of_incident"  value="{{date('d/m/Y', strtotime($qrr->date_time_of_incident))}}" id="date_time_of_incident" class="form-control datepicker  @error('date_time_of_incident') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="ঘটনার তারিখ ও সময়  " required>
 
                                                         <!-- Date dime -->
-                                                        <input name="incident_time" type="text" class="form-control timepicker" value="{{date('h:i A', strtotime($qrr->date_time_of_incident))}}" data-provide="timepicker">
+                                                        <input name="incident_time" type="text" class="form-control timepicker" value="{{date('h:i A', strtotime($qrr->date_time_of_incident))}}" data-provide="timepicker" required>
                                                     </div>
                                                         
                                                 </div>
@@ -105,10 +105,10 @@
                                                 <div class="mb-3">
                                                     <label for="date_time_response" class="form-label">  রেসপন্সের তারিখ ও সময় </label>
                                                     <div class="input-group" id="timepicker-input-group2">
-                                                        <input type="text" name="date_time_response"  value="{{date('d/m/Y', strtotime($qrr->date_time_response))}}" id="date_time_response" class="form-control datepicker  @error('date_time_response') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="রেসপন্সের তারিখ ও সময়" required>
+                                                        <input type="text" name="date_time_response"  value="{{date('d/m/Y', strtotime($qrr->date_time_response))}}" id="date_time_response" class="form-control datepicker  @error('date_time_response') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="রেসপন্সের তারিখ ও সময়" >
 
                                                         <!-- Date dime -->
-                                                        <input name="response_time" type="text"  value="{{date('h:i A', strtotime($qrr->date_time_response))}}" class="form-control timepicker" data-provide="timepicker" required>
+                                                        <input name="response_time" type="text"  value="{{date('h:i A', strtotime($qrr->date_time_response))}}" class="form-control timepicker" data-provide="timepicker" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,14 +129,17 @@
                                                         <option value="খুন" {{$qrr->event_type=='খুন' ? 'selected' : ''}}>খুন</option>
                                                         <option value="চুরি" {{$qrr->event_type=='চুরি' ? 'selected' : ''}}>চুরি</option>
                                                         <option value="ডাকাতি" {{$qrr->event_type=='ডাকাতি' ? 'selected' : ''}}>ডাকাতি</option>
-                                                        <option value="সম্পত্তি সংক্রান্ত" {{$qrr->event_type=='সম্পত্তি সংক্রান্ত' ? 'selected' : ''}}>সম্পত্তি সংক্রান্ত</option>
+                                                        <option value="বিরোধ" {{$qrr->event_type=='বিরোধ' ? 'selected' : ''}}>বিরোধ</option>
+                                                        <option value="নিখোঁজ-অপহরণ" {{$qrr->event_type=='নিখোঁজ-অপহরণ' ? 'selected' : ''}}>নিখোঁজ/ অপহরণ</option>
+                                                        <option value="দস্যুতা" {{$qrr->event_type=='দস্যুতা' ? 'selected' : ''}}>দস্যুতা</option>
+                                                        <option value="জুয়া" {{$qrr->event_type=='জুয়া' ? 'selected' : ''}}>জুয়া</option>
                                                         <option value="সড়ক দুর্ঘটনা" {{$qrr->event_type=='সড়ক দুর্ঘটনা' ? 'selected' : ''}}>সড়ক দুর্ঘটনা</option>
                                                         <option value="নারী ও শিশু" {{$qrr->event_type=='নারী ও শিশু' ? 'selected' : ''}}>নারী ও শিশু</option>
                                                         <option value="অগ্নিকান্ড" {{$qrr->event_type=='অগ্নিকান্ড' ? 'selected' : ''}}>অগ্নিকান্ড</option>
                                                         <option value="মাদক" {{$qrr->event_type=='মাদক' ? 'selected' : ''}}>মাদক</option>
                                                         <option value="সাইবার" {{$qrr->event_type=='সাইবার' ? 'selected' : ''}}>সাইবার</option>
                                                         <option value="প্রতারণা" {{$qrr->event_type=='প্রতারণা' ? 'selected' : ''}}>প্রতারণা</option>
-                                                        <option value="রাজনৈতিক" {{$qrr->event_type=='রাজনৈতিক' ? 'selected' : ''}}>রাজনৈতিক</option>
+                                                        <option value="দুর্ঘটনা" {{$qrr->event_type=='দুর্ঘটনা' ? 'selected' : ''}}>দুর্ঘটনা</option>
                                                         <option value="অন্যান্য" {{$qrr->event_type=='অন্যান্য' ? 'selected' : ''}}>অন্যান্য</option>
                                                     </select>
                                                     
@@ -145,17 +148,34 @@
       
                                             
                                             
-                                            <div class="col-sm-4">
+                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="begening_of_event" class="form-label">  ঘটনার সূত্রপাত  </label>
-                                                    <input type="text" name="begening_of_event"  value="{{$qrr->begening_of_event}}" id="begening_of_event" class="form-control  @error('begening_of_event') is-invalid @enderror" placeholder=" ঘটনার সূত্রপাত " required>
+                                                    <select name="begening_of_event" id="begening_of_event" class="form-select">
+                                                        <option value="">Select</option>
+                                                        <option value="জমিজমা" {{$qrr->begening_of_event=='জমিজমা' ? 'selected' : ''}}> জমিজমা </option>
+                                                        <option value="রাজনৈতিক" {{$qrr->begening_of_event=='রাজনৈতিক' ? 'selected' : ''}}>রাজনৈতিক</option>
+                                                        <option value="পারিবারিক" {{$qrr->begening_of_event=='পারিবারিক' ? 'selected' : ''}}>পারিবারিক</option>
+                                                        <option value="তুচ্ছ কারণ" {{$qrr->begening_of_event=='তুচ্ছ কারণ' ? 'selected' : ''}}>তুচ্ছ কারণ</option>
+                                                        <option value="প্রেম ঘটিত" {{$qrr->begening_of_event=='প্রেম ঘটিত' ? 'selected' : ''}}>প্রেম ঘটিত</option>
+                                                        <option value="লেনদেন সংক্রান্ত" {{$qrr->begening_of_event=='লেনদেন সংক্রান্ত' ? 'selected' : ''}}>লেনদেন সংক্রান্ত</option>
+                                                        <option value="অসতর্কতা" {{$qrr->begening_of_event=='অসতর্কতা' ? 'selected' : ''}}>অসতর্কতা</option>
+                                                        <option value="অন্যান্য" {{$qrr->begening_of_event=='অন্যান্য' ? 'selected' : ''}}>অন্যান্য</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label">  ঘটনার সংক্ষিপ্ত বিবরন   </label>
+                                                    <input type="text" name="short_dettails"  value="{{$qrr->short_dettails}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  ">
                                                 </div>
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="text" name="gd_no"  value="{{$qrr->gd_no}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  " required>
+                                                    <input type="text" name="gd_no"  value="{{$qrr->gd_no}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  " >
                                                 </div>
                                             </div>
       
@@ -164,7 +184,7 @@
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  তারিখ   </label>
                                                     
-                                                    <input type="text" name="gd_date"  value="{{date('d/m/Y', strtotime($qrr->gd_date))}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" required>
+                                                    <input type="text" name="gd_date"  value="{{date('d/m/Y', strtotime($qrr->gd_date))}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
 
                                                 </div>
                                             </div>
@@ -172,7 +192,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="case_no"  value="{{$qrr->case_no}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
+                                                    <input type="text" name="case_no"  value="{{$qrr->case_no}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " >
                                                 </div>
                                             </div>
       
@@ -181,7 +201,7 @@
                                                 <div class="mb-3">
                                                     <label for="case_date" class="form-label">  তারিখ  </label>
                                            
-                                                    <input type="text" name="case_date"  value="{{date('d/m/Y', strtotime($qrr->case_date))}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" required>
+                                                    <input type="text" name="case_date"  value="{{date('d/m/Y', strtotime($qrr->case_date))}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
                                             </div>
       
@@ -190,7 +210,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="clause" class="form-label">ধারা </label>
-                                                    <input type="text" name="clause"  value="{{$qrr->clause}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা" required>
+                                                    <input type="text" name="clause"  value="{{$qrr->clause}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা" >
                                                 </div>
                                             </div>
       
@@ -200,7 +220,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="nopc" class="form-label"> বাদীর/ সংবাদদাতার নাম </label>
-                                                    <input type="text" name="nopc"  value="{{$qrr->nopc}}" id="nopc" class="form-control  @error('nopc') is-invalid @enderror" placeholder="বাদীর/ সংবাদদাতার নাম " required>
+                                                    <input type="text" name="nopc"  value="{{$qrr->nopc}}" id="nopc" class="form-control  @error('nopc') is-invalid @enderror" placeholder="বাদীর/ সংবাদদাতার নাম " >
                                                 </div>
                                             </div>
       
@@ -209,7 +229,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="plaintiff_mobile" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{$qrr->plaintiff_mobile}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " required>
+                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{$qrr->plaintiff_mobile}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
                                                 </div>
                                             </div>
       
@@ -217,7 +237,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <select name="number_of_victims" id="number_of_victims" class="form-select" required>
+                                                    <select name="number_of_victims" id="number_of_victims" class="form-select" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$qrr->number_of_victims==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -229,7 +249,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">   এজাহারভুক্ত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" required>
+                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$qrr->number_of_accused==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -250,7 +270,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="text" name="bp_no"  value="{{$qrr->bp_no}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
+                                                    <input type="text" name="bp_no"  value="{{$qrr->bp_no}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " >
                                                 </div>
                                             </div>
       
@@ -267,7 +287,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="image_video" class="form-label">   ছবি/ভিডিও প্রাপ্তি    </label>
-                                                    <select name="image_video" id="image_video" class="form-select" required>
+                                                    <select name="image_video" id="image_video" class="form-select" >
                                                         <option value="">Select</option>
                                                         <option value="হ্যা"  {{$qrr->image_video=='হ্যা' ? 'selected' : ''}}>হ্যা</option>
                                                         <option value="না"  {{$qrr->image_video=='না' ? 'selected' : ''}}>না</option>
@@ -279,7 +299,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="media_quality" class="form-label">   সন্তুষ্টির মান   </label>
-                                                    <select name="media_quality" id="media_quality" class="form-select" required>
+                                                    <select name="media_quality" id="media_quality" class="form-select" >
                                                         <option value="">Select</option>
                                                         <option value="সন্তুষ্ট"  {{$qrr->media_quality=='সন্তুষ্ট' ? 'selected' : ''}}> সন্তুষ্ট </option>
                                                         <option value="মোটামুটি সন্তুষ্ট" {{$qrr->media_quality=='মোটামুটি সন্তুষ্ট' ? 'selected' : ''}}>মোটামুটি সন্তুষ্ট</option>

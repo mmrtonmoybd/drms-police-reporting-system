@@ -54,7 +54,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="village_word" class="form-label"> গ্রাম/ওয়ার্ড </label>
-                                                    <input type="text" name="village_word"  value="{{old('village_word')}}" id="village_word" class="form-control  @error('village_word') is-invalid @enderror" placeholder="গ্রাম/ওয়ার্ড" required>
+                                                    <input type="text" name="village_word"  value="{{old('village_word')}}" id="village_word" class="form-control  @error('village_word') is-invalid @enderror" placeholder="গ্রাম/ওয়ার্ড">
                                                 </div>
                                             </div>
 
@@ -81,7 +81,7 @@
                                                         <input type="text" name="date_time_of_incident"  value="{{old('date_time_of_incident')}}" id="date_time_of_incident" class="form-control datepicker  @error('date_time_of_incident') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="ঘটনার তারিখ ও সময়  " required>
 
                                                         <!-- Date dime -->
-                                                        <input name="incident_time" id="timepicker" type="text" class="form-control timepicker" data-provide="timepicker">
+                                                        <input name="incident_time" id="timepicker" type="text" class="form-control timepicker" data-provide="timepicker" required>
                                                     </div>
                                                         
                                                 </div>
@@ -105,10 +105,10 @@
                                                 <div class="mb-3">
                                                     <label for="date_time_response" class="form-label">  রেসপন্সের তারিখ ও সময় </label>
                                                     <div class="input-group" id="timepicker-input-group2">
-                                                        <input type="text" name="date_time_response"  value="{{old('date_time_response')}}" id="date_time_response" class="form-control datepicker  @error('date_time_response') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="রেসপন্সের তারিখ ও সময়" required>
+                                                        <input type="text" name="date_time_response"  value="{{old('date_time_response')}}" id="date_time_response" class="form-control datepicker  @error('date_time_response') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="রেসপন্সের তারিখ ও সময়" >
 
                                                         <!-- Date dime -->
-                                                        <input name="response_time" type="text" class="form-control timepicker" data-provide="timepicker" required>
+                                                        <input name="response_time" type="text" class="form-control timepicker" data-provide="timepicker" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,14 +127,17 @@
                                                         <option value="খুন">খুন</option>
                                                         <option value="চুরি">চুরি</option>
                                                         <option value="ডাকাতি">ডাকাতি</option>
-                                                        <option value="সম্পত্তি সংক্রান্ত">সম্পত্তি সংক্রান্ত</option>
+                                                        <option value="বিরোধ">বিরোধ</option>
+                                                        <option value="দস্যুতা">দস্যুতা</option>
+                                                        <option value="নিখোঁজ-অপহরণ">নিখোঁজ/ অপহরণ</option>
+                                                        <option value="জুয়া">জুয়া</option>
                                                         <option value="সড়ক দুর্ঘটনা">সড়ক দুর্ঘটনা</option>
                                                         <option value="নারী ও শিশু">নারী ও শিশু</option>
                                                         <option value="অগ্নিকান্ড">অগ্নিকান্ড</option>
                                                         <option value="মাদক">মাদক</option>
                                                         <option value="সাইবার">সাইবার</option>
                                                         <option value="প্রতারণা">প্রতারণা</option>
-                                                        <option value="রাজনৈতিক">রাজনৈতিক</option>
+                                                        <option value="রাজনৈতিক">দুর্ঘটনা</option>
                                                         <option value="অন্যান্য">অন্যান্য</option>
                                                     </select>
                                                     
@@ -146,7 +149,24 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="begening_of_event" class="form-label">  ঘটনার সূত্রপাত  </label>
-                                                    <input type="text" name="begening_of_event"  value="{{old('begening_of_event')}}" id="begening_of_event" class="form-control  @error('begening_of_event') is-invalid @enderror" placeholder=" ঘটনার সূত্রপাত " required>
+                                                    <select name="begening_of_event" id="begening_of_event" class="form-select">
+                                                        <option value="">Select</option>
+                                                        <option value="জমিজমা"> জমিজমা </option>
+                                                        <option value="রাজনৈতিক">রাজনৈতিক</option>
+                                                        <option value="পারিবারিক">পারিবারিক</option>
+                                                        <option value="তুচ্ছ কারণ">তুচ্ছ কারণ</option>
+                                                        <option value="প্রেম ঘটিত">প্রেম ঘটিত</option>
+                                                        <option value="লেনদেন সংক্রান্ত">লেনদেন সংক্রান্ত</option>
+                                                        <option value="অসতর্কতা">অসতর্কতা</option>
+                                                        <option value="অন্যান্য">অন্যান্য</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label">  ঘটনার সংক্ষিপ্ত বিবরন   </label>
+                                                    <input type="text" name="short_dettails"  value="{{old('short_dettails')}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  ">
                                                 </div>
                                             </div>
                                             
@@ -198,7 +218,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="nopc" class="form-label"> বাদীর/ সংবাদদাতার নাম </label>
-                                                    <input type="text" name="nopc"  value="{{old('nopc')}}" id="nopc" class="form-control  @error('nopc') is-invalid @enderror" placeholder="বাদীর/ সংবাদদাতার নাম " required>
+                                                    <input type="text" name="nopc"  value="{{old('nopc')}}" id="nopc" class="form-control  @error('nopc') is-invalid @enderror" placeholder="বাদীর/ সংবাদদাতার নাম ">
                                                 </div>
                                             </div>
       
@@ -207,7 +227,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="plaintiff_mobile" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " required>
+                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
                                                 </div>
                                             </div>
       
@@ -215,7 +235,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <select name="number_of_victims" id="number_of_victims" class="form-select" required>
+                                                    <select name="number_of_victims" id="number_of_victims" class="form-select" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}">{{$i}}</option>
@@ -227,7 +247,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">   এজাহারভুক্ত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" required>
+                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}">{{$i}}</option>
@@ -248,7 +268,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
+                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং ">
                                                 </div>
                                             </div>
       
@@ -265,7 +285,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="image_video" class="form-label">   ছবি/ভিডিও প্রাপ্তি    </label>
-                                                    <select name="image_video" id="image_video" class="form-select" required>
+                                                    <select name="image_video" id="image_video" class="form-select" >
                                                         <option value="">Select</option>
                                                         <option value="হ্যা">হ্যা</option>
                                                         <option value="না">না</option>
@@ -277,7 +297,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="media_quality" class="form-label">   সন্তুষ্টির মান   </label>
-                                                    <select name="media_quality" id="media_quality" class="form-select" required>
+                                                    <select name="media_quality" id="media_quality" class="form-select" >
                                                         <option value="">Select</option>
                                                         <option value="সন্তুষ্ট"> সন্তুষ্ট </option>
                                                         <option value="মোটামুটি সন্তুষ্ট">মোটামুটি সন্তুষ্ট</option>

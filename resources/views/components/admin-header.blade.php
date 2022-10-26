@@ -2,6 +2,7 @@
 <html lang="en">
     
 <!-- Mirrored from coderthemes.com/hyper/saas/dashboard-crm.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 06:52:05 GMT -->
+
 <head>
         <meta charset="utf-8" />
         <title> DARMS | Management</title>
@@ -51,19 +52,21 @@
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }],
-         ['বরগুনা', {{session('borgona')}}, '#b87333'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, 'silver'],            // English color name
-         ['ভোলা', {{session('bhola')}}, 'gold'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2' ], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333' ],
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance' ],
+         ['বরগুনা', {{session('borgona')}}, '#26a49a'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, '#e94236'],         // English color name
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d' ],
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001' ],
+         ['ভোলা', {{session('bhola')}}, '#0c5295'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47' ], // CSS-style declaration
+        
+       
       ]);
 
         // Set chart options
         var options = {
-        title: "Number of incent",
-        width: 600,
-        height: 400,
+        title: "",
+        width: 300,
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -86,8 +89,10 @@
         ]);
 
         var options = {
-          title: 'Source of information',
+          title: '',
           is3D: true,
+        width: "98%",
+        height: 150,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -106,26 +111,29 @@
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['Crime Type', 'Incident', { role: 'style' }],
-         ['মারামারি', {{session('etmara')}}, 'gold'],            // RGB value
-         ['খুন', {{session('etkun')}}, 'gold'],            // English color name
-         ['চুরি', {{session('etchori')}}, 'gold'],
-         ['ডাকাতি', {{session('etdakati')}}, 'color: gold' ], // CSS-style declaration
-         ['সম্পত্তি সংক্রান্ত', {{session('etsompds')}}, 'gold' ],
-         ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, 'gold' ],
-         ['নারী ও শিশু', {{session('etnarios')}}, 'gold' ],
-         ['অগ্নিকান্ড', {{session('etagun')}}, 'gold' ],
-         ['মাদক', {{session('etmadok')}}, 'gold' ],
-         ['সাইবার', {{session('etcyber')}}, 'gold' ],
-         ['প্রতারণা', {{session('etprota')}}, 'gold' ],
-         ['রাজনৈতিক', {{session('etrajnoi')}}, 'gold' ],
-         ['অন্যান্য', {{session('etonno')}}, 'gold' ],
+         ['মারামারি', {{session('etmara')}}, '#26a59a'],            // RGB value
+         ['খুন', {{session('etkun')}}, '#26a59a'],            // English color name
+         ['চুরি', {{session('etchori')}}, '#26a59a'],
+         ['ডাকাতি', {{session('etdakati')}}, 'color: #26a59a' ], // CSS-style declaration
+         ['বিরোধ', {{session('etsompds')}}, '#26a59a' ],
+         ['নিখোঁজ', {{session('etnikoj')}}, '#26a59a' ],
+         ['দস্যুতা', {{session('etdusht')}}, '#26a59a' ],
+         ['জুয়া', {{session('etjua')}}, '#26a59a' ],
+         ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, '#26a59a' ],
+         ['নারী ও শিশু', {{session('etnarios')}}, '#26a59a' ],
+         ['অগ্নিকান্ড', {{session('etagun')}}, '#26a59a' ],
+         ['মাদক', {{session('etmadok')}}, '#26a59a' ],
+         ['সাইবার', {{session('etcyber')}}, '#26a59a' ],
+         ['প্রতারণা', {{session('etprota')}}, '#26a59a' ],
+         ['দুর্ঘটনা', {{session('etrajnoi')}}, '#26a59a' ],
+         ['অন্যান্য', {{session('etonno')}}, '#26a59a' ],
       ]);
 
         // Set chart options
         var options = {
-        title: "Type of incent",
-        width: 600,
-        height: 400,
+        title: "",
+        width: "98%",
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -140,7 +148,7 @@
       @endif
 
       @if (str_contains(url()->current(), '/warrant/dashboard') || str_contains(url()->current(), '/warrant/search'))
-          <script type="text/javascript">
+           <script type="text/javascript">
 
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});

@@ -47,13 +47,6 @@
                                 <span> QRR Dashboard</span>
                             </a>
                         </li>
-
-                        <li class="side-nav-item ">
-                            <a href="{{url('admin/qrrs')}}" class="side-nav-link ">
-                            <i class="mdi mdi-home-city-outline"></i>
-                                <span> QRR </span>
-                            </a>
-                        </li>
                         
                         <li class="side-nav-item">
                             <a href="{{url('admin/undeaths')}}" class="side-nav-link">
@@ -131,3 +124,8 @@
 
             </div>
             <!-- Left Sidebar End -->
+            
+            
+
+            
+        
