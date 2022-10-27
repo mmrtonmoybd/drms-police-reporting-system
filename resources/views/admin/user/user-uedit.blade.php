@@ -21,7 +21,15 @@
 
                         <div class="row">
                             <div class="col-sm-12 ">
-                                <form action="{{url('admin/users/edit/'.$user->id)}}" method="POST" enctype="multipart/form-data">
+                                <p><font color='red'>বিঃদ্রঃ</font> <b>ইউজার এডিট করার সময় নিচের নির্দেশনা মেনে চলুনঃ<br>
+১.  Super admin এর জন্য জেলা এবং থানা নির্বাচন করার দরকার নেই।<br>
+২. SP এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br>
+৩. OC এর জন্য জেলা এবং থানা উভয় নির্বাচন করতে হবে।<br>
+৪. Operator 1 এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br>
+৫. operator 2 এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br>
+৬. operator 3 এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br></b>
+</p>
+                                <form action="{{url('admin/users/uedit/'.$user->id)}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card card-body" id="app">
                                         <div class="row">
@@ -35,16 +43,31 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">User email</label>
-                                                    <input type="email"  value="{{$user->email}}" id="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Email" required>
+                                                    <input type="email" name="email"  value="{{$user->email}}" id="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Email" required>
                                                 </div>
                                             </div>
 
-                                            @if (auth()->user()->type !== 'Super Admin')
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="type" class="form-label "> Role </label>
+                                                    <select name="type" id="type" class="form-select" required  >
+                                                        <option value="">Select</option>
+                                                        
+
+                                                        @foreach($roles as $role)
+                                                        <option value="{{$role->name}}"  {{ ($user->hasRole($role->name)) ? 'selected' : '' }} >{{$role->name}}</option>
+                                                        @endforeach
+                                                
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -60,21 +83,15 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select">
                                                         <option value="">Select</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            @endif
                                         
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label for="picture" class="form-label">Profile picture <small>(300px X 300px)</small></label>
-                                                    <input type="file" name="picture" id="picture" class="form-control" placeholder="Profile picture">
-                                                </div>
-                                            </div>
+                                        
 
                                             <div class="col-sm-6">
                                                 <div class="mb-3">

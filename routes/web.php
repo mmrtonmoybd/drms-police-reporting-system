@@ -117,6 +117,18 @@ Route::prefix('admin')->group(function () {
 
             Route::get('/add/sp', [UsersController::class, 'addspShow']);
             Route::post('/add/sp', [UsersController::class, 'addspcreate']);
+
+            Route::get('/add/op1', [UsersController::class, 'addop1Show']);
+            Route::post('/add/sp', [UsersController::class, 'addop1create']);
+
+            Route::get('/add/op2', [UsersController::class, 'addop2Show']);
+            Route::post('/add/op2', [UsersController::class, 'addop2create']);
+
+            Route::get('/add/op3', [UsersController::class, 'addop3Show']);
+            Route::post('/add/op3', [UsersController::class, 'addop3create']);
+
+            Route::get('/add/oc', [UsersController::class, 'addocShow']);
+            Route::post('/add/oc', [UsersController::class, 'addoccreate']);
         });
 
 

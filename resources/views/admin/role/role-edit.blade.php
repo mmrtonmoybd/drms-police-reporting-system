@@ -41,7 +41,7 @@
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label for="name" class="form-label"> Role name </label>
-                                                    <input type="text" name="name"  value="{{$role->name}}" id="name" class="form-control  " placeholder="   Role name " required>
+                                                    <input type="text"  value="{{$role->name}}" id="name" class="form-control  " placeholder="   Role name " disabled>
                                                 </div>
                                             </div>
                                             <br>

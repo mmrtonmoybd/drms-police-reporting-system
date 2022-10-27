@@ -5,7 +5,7 @@
 
 <head>
         <meta charset="utf-8" />
-        <title> DARMS | Management</title>
+        <title> DRMS | Management</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -27,6 +27,34 @@
         .hidden {
     display: none;
     }
+    
+    .button-menu-mobile.open-left {
+  color: #fff;
+}
+
+.navbar-custom .topbar-menu .nav-link {
+  padding: 0;
+  color: #98a6ad;
+  min-width: 32px;
+  display: block;
+  text-align: center;
+  margin: 0 10px;
+  position: relative;
+}
+
+
+.side-nav-link.nav-link.active {
+    color: #fff !important;
+background: #6d7fcc2e;
+border-left: 3px solid #0ACF97!important;
+}
+
+
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
+  z-index: 2000 !important;
+}
+                   
+                        
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -65,10 +93,11 @@
         // Set chart options
         var options = {
         title: "",
-        width: 300,
+        width: "98%",
         height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
+        
       };
 
         // Instantiate and draw our chart, passing in some options.
@@ -92,7 +121,7 @@
           title: '',
           is3D: true,
         width: "98%",
-        height: 150,
+        height: "172",
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -111,7 +140,7 @@
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['Crime Type', 'Incident', { role: 'style' }],
-         ['মারামারি', {{session('etmara')}}, '#26a59a'],            // RGB value
+          ['মারামারি', {{session('etmara')}}, '#26a59a'],            // RGB value
          ['খুন', {{session('etkun')}}, '#26a59a'],            // English color name
          ['চুরি', {{session('etchori')}}, '#26a59a'],
          ['ডাকাতি', {{session('etdakati')}}, 'color: #26a59a' ], // CSS-style declaration

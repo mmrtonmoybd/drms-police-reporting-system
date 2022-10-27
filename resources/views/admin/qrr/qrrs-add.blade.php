@@ -1,5 +1,6 @@
 <x-admin-header />
-                        
+
+
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -170,7 +171,28 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-sm-4">
+                                            
+           
+                                                <div class="col-sm-12">
+                                                <div class="mb-3">
+                                              জিডি হয়েছেঃ
+                                               &nbsp; &nbsp;
+                                               <input type="radio"  id="myCheckgd"   onclick="myFunction()" name="gd_check" value="HTML">
+<label for="myCheckgd">হ্যাঁ     &nbsp; &nbsp;</label>
+
+&nbsp; &nbsp;
+ <input type="radio" id="nogd" id="myCheck" checked onclick="myFunction()" name="gd_check" value="CSS">
+<label for="nogd">না     &nbsp; &nbsp;</label>
+
+                                               
+                                               
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                            
+                                            <div class="col-sm-4" id="gd1" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
                                                     <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
@@ -178,7 +200,7 @@
                                             </div>
       
                                             
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="gd2" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  তারিখ   </label>
                                                     
@@ -187,7 +209,31 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-sm-4">
+                                            
+                                            
+                                                <div class="col-sm-12">
+                                                <div class="mb-3">
+                                              মামলা হয়েছেঃ
+                                               &nbsp; &nbsp;
+                                               <input type="radio"  id="myCheck"   onclick="myFunction()" name="mam_check" value="HTML">
+<label for="myCheck">হ্যাঁ     &nbsp; &nbsp;</label>
+
+&nbsp; &nbsp;
+ <input type="radio" id="no" id="myCheck" checked onclick="myFunction()" name="mam_check" value="CSS">
+<label for="no">না     &nbsp; &nbsp;</label>
+
+                                               
+                                               
+                                                </div>
+                                            </div>
+                                            
+
+
+
+                                            
+                                            
+                                
+                                            <div class="col-sm-4" id="mam" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
                                                     <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
@@ -195,7 +241,7 @@
                                             </div>
       
                                             
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="mam2" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="case_date" class="form-label">  তারিখ  </label>
                                            
@@ -204,13 +250,17 @@
                                             </div>
       
       
-                                            
-                                            <div class="col-sm-4">
+                                             
+                                            <div class="col-sm-4" id="mam3" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="clause" class="form-label">ধারা </label>
                                                     <input type="text" name="clause"  value="{{old('clause')}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা">
                                                 </div>
                                             </div>
+      
+      
+      
+      
       
       
       
@@ -338,8 +388,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                
+     
                                 </form>
+                                
+                                
+                                
                             </div>
                         </div>
                         <!-- end row -->
@@ -356,6 +409,63 @@
                 @endphp
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
     <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
+
+
+
+<script>
+
+
+function myFunction() {
+  var checkBox = document.getElementById("myCheck");
+  
+  var checkBoxgd = document.getElementById("myCheckgd");
+  
+      var gd1 = document.getElementById("gd1");
+      var gd2 = document.getElementById("gd2");
+   
+     var mam = document.getElementById("mam");
+     var mam2 = document.getElementById("mam2");
+     var mam3 = document.getElementById("mam3");
+     
+     
+  if (checkBox.checked == true){
+      mam.style.display = "block";
+      mam2.style.display = "block";
+      mam3.style.display = "block";
+  
+  } else {
+         mam.style.display = "none";
+         mam2.style.display = "none";
+         mam3.style.display = "none";
+         
+     
+  }
+  
+  
+  
+    if (checkBoxgd.checked == true){
+  
+      
+      gd1.style.display = "block";
+      gd2.style.display = "block";
+  } else {
+
+         
+         gd1.style.display = "none";
+         gd2.style.display = "none";
+  }
+  
+  
+  
+  
+  
+  
+}
+
+
+
+</script>
+
 
   <script>
     var app = new Vue({
@@ -457,4 +567,53 @@
 
     </script>
 
-                     <x-admin-footer/>
+
+<script>
+
+var defaults = {
+	calendarWeeks: true,
+	showClear: true,
+	showClose: true,
+	allowInputToggle: true,
+	useCurrent: false,
+	ignoreReadonly: true,
+	minDate: new Date(),
+	toolbarPlacement: 'top',
+	locale: 'nl',
+	icons: {
+		time: 'fa fa-clock-o',
+		date: 'fa fa-calendar',
+		up: 'fa fa-angle-up',
+		down: 'fa fa-angle-down',
+		previous: 'fa fa-angle-left',
+		next: 'fa fa-angle-right',
+		today: 'fa fa-dot-circle-o',
+		clear: 'fa fa-trash',
+		close: 'fa fa-times'
+	}
+};
+
+
+</script>    
+
+
+
+<script>
+$( document ).ready(function() {
+    
+    var checkboxes = $("input[type='checkbox']"),
+    actions = $("#actions");
+
+    checkboxes.click(function() {
+    
+       actions.attr("hidden", !checkboxes.is(":checked"));
+      
+    });
+      
+});
+</script>  
+
+
+
+
+<x-admin-footer/>

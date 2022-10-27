@@ -21788,6 +21788,9 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child
 	font-weight: 700 !important
 }
 
+
+/*  Time Picker Position Issue Solve /* 
+
 .timepicker-orient-bottom {
 	top: auto !important;
 	bottom: calc(1.5em + .9rem + 2px) !important
@@ -21797,6 +21800,8 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child
 	left: 0 !important;
 	right: auto !important
 }
+
+/*  Time Picker Position Issue Solve */
 
 .bootstrap-timepicker-widget.timepicker-orient-left:before {
 	left: 6px;

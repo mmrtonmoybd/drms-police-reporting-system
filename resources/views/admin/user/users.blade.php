@@ -28,42 +28,19 @@
                                             <div class="col-sm-3">
                                             <a href="{{url('admin/users/add/superadmin')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Super admin</a>
                                             <a href="{{url('admin/users/add/sp')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add SP</a>
+                                            <a href="{{url('admin/users/add/oc')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add OC</a>
+                                            <a href="{{url('admin/users/add/op1')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add operator 1</a>
+                                            <a href="{{url('admin/users/add/op2')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add operator 2</a>
+                                            <a href="{{url('admin/users/add/op3')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add operator 3</a>
                                             </div>
-                                            <div class="col-sm-8">
-                                                <div class="text-sm-end">
-                                                    <form action="{{url('admin/users')}}" method="get">
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <div class="mb-3">
-                                                                <input type="text" name="name"  id="name" class="form-control form-control-sm" placeholder=" Name" value="{{ $request->get('name') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="mb-3">
-                                                                <input type="text" name="email"  id="email" value="{{$request->get('email')}}" class="form-control form-control-sm" placeholder=" Email">
-                                                            </div>
-                                                        </div>
-
-
-
-                                                        <div class="col-sm-2">
-                                                            <div class="mb-3">
-                                                                <div class="d-grid">
-                                                                    <button class="btn btn-primary  btn-sm btn-block" name="submit" value="submit"> 
-                                                                        <i class="uil uil-search-alt"></i> 
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    </form>
-                                                </div>
-                                            </div><!-- end col-->
+                                          <!-- end col-->
                                         </div>
                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th >Name</th>
+                                                    <th>District</th>
+                                                    <th>Thana</th>
                                                     <th >Type</th>
                                                     <th >Email</th>
                                                     <th style="width: 86px">Action</th>
@@ -81,6 +58,8 @@
                                                         {{$user->name}} 
                                                     
                                                     </td>
+                                                    <td>@if (!empty($user->district->bn_name)) {{$user->district->bn_name}} @endif</td>
+                                                    <td>@if (!empty($user->thana->bn_name)) {{$user->thana->bn_name}} @endif</td>
                                                     <td >
                                                         
                                                             <span class="badge bg-success">{{$user->type}}</span>
@@ -90,8 +69,10 @@
                                                     <td >{{$user->email}}</td>
                                                     
                                                     <td class="table-action">
-                                                        <a href="{{url('admin/users/edit/'.$user->id)}}" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @if (auth()->user()->id !== $user->id)
+                                                        <a href="{{url('admin/users/uedit/'.$user->id)}}" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a>
                                                         <a href="{{url('admin/users/delete/'.$user->id)}}"  onclick="return confirm('Do you want to delete this user?')" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                        @endif
                                                     </td>
                                                 </tr>
 
