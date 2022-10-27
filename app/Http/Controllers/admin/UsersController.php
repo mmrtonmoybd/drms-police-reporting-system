@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Session;
+use Illuminate\Support\Facades\Hash;
+use App\Models\District;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
+
+        /*
         $this->middleware(function ($request, $next) {
             $session_user = Session::get('user');
             if (auth()->user()->type =='Admin' or auth()->user()->type =='DivisionAdmin') {
@@ -21,6 +26,8 @@ class UsersController extends Controller
 
             return $next($request);
         });
+
+        */
     }
     //This method list all users
     public function Index(Request $request)
@@ -50,7 +57,9 @@ class UsersController extends Controller
     //This method add new users
     public function AddUser(Request $request)
     {
-        return view('admin/user/users-add');
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+        return view('admin/user/users-add', $data);
     }
 
     //this method for add new user
@@ -93,6 +102,87 @@ class UsersController extends Controller
         return view('admin/user/users-add');
     }
 
+    public function addsaShow()
+    {
+       $role = Role::all();
+       return view('admin/user/users-addsa', ['roles' => $role]);
+    }
+
+    public function addsacreate(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|unique:users',
+            'name' => 'required',
+            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+            'confirm-password' => 'min:6',
+        ]);
+
+        $insertAttr = [
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'type'=> 'Super admin',
+            'password'=> Hash::make($request->input('password')),
+        ];
+
+        //dd($insertAttr);
+
+        $user = User::create($insertAttr);
+
+
+        if ($user) {
+            $user->assignRole('Super admin');
+            $request->session()->flash('success_msg', 'Super admin created successful');
+            return redirect('admin/users');
+        } else {
+            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+        }
+
+        $role = Role::all();
+
+        return view('admin/user/users-addsa', ['roles' => $role]);
+    }
+
+    public function addspShow()
+    {
+        $data['districts'] = District::where('division_id', 1)->get();
+       return view('admin/user/users-addsp', $data);
+    }
+
+    public function addspcreate(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|unique:users',
+            'name' => 'required',
+            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+            'confirm-password' => 'min:6',
+        ]);
+
+        $insertAttr = [
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'type'=> 'SP',
+            'districtID' => $request->input('districtID'),
+            'password'=> Hash::make($request->input('password')),
+        ];
+
+        //dd($insertAttr);
+
+        $user = User::create($insertAttr);
+
+
+        if ($user) {
+            $user->assignRole('SP');
+            $request->session()->flash('success_msg', 'SP created successful');
+            return redirect('admin/users');
+        } else {
+            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+        }
+
+        $role = Role::all();
+
+        return view('admin/user/users-addsp', ['roles' => $role]);
+    }
+
 
     //this method for view edit()
     public function Edit(Request $request, $id)
@@ -114,11 +204,7 @@ class UsersController extends Controller
     public function Update(Request $request, $id)
     {
         $validated = $request->validate([
-            'email' => 'required|unique:users',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'phone' => 'required',
             'name' => 'required',
-            'type' => 'required'
         ]);
 
         if ($request->input('password')) {
@@ -132,15 +218,10 @@ class UsersController extends Controller
 
         $insertAttr = [
             'name'=>$request->input('name'),
-            'email'=>$request->input('email'),
-            'phone'=>$request->input('phone'),
-            'type'=>$request->input('type'),
-            'address'=>$request->input('address'),
-            'designation'=>$request->input('designation'),
         ];
 
         if ($request->input('password')) {
-            $insertAttr['password'] = md5($request->input('password'));
+            $insertAttr['password'] = Hash::make($request->input('password'));
         }
 
 
@@ -151,9 +232,11 @@ class UsersController extends Controller
             $insertAttr['picture'] = $path;
         }
 
+        $data = User::find($id);
+
         if (User::where('id', $id)->update($insertAttr)) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
-            return redirect('admin/users');
+            $request->session()->flash('success_msg', 'Profile updated successfully');
+            return view('admin/user/users-edit', ['user'=>$data]);
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
@@ -180,5 +263,58 @@ class UsersController extends Controller
             return redirect('admin/users');
         }
         return redirect('admin/users');
+    }
+
+    public function ueditshow(Request $request, User $user)
+    {
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+        $data['user'] = $user;
+
+        return view('admin/user/user-uedit', $data);
+    }
+
+    public function ueditupdate(Request $request, User $user)
+    {
+         $validated = $request->validate([
+            'email' => 'required|unique:users|email',
+            'name' => 'required',
+            'type' => 'required'
+        ]);
+
+        if ($request->input('password')) {
+            $validated = $request->validate(
+                [
+                    'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+                    'confirm-password' => 'min:6'
+                ]
+            );
+        }
+
+        $insertAttr = [
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'type'=>$request->input('type'),
+        ];
+
+        if ($request->input('password')) {
+            $insertAttr['password'] = md5($request->input('password'));
+        }
+
+
+        if ($request->file('picture')) {
+            $path = $request->file('picture')->store('public/users');
+            $path =str_replace("public/users", "", $path);
+
+            $insertAttr['picture'] = $path;
+        }
+
+        if (User::where('id', $id)->update($insertAttr)) {
+            $request->session()->flash('success_msg', 'Data updated successfully');
+            return redirect('admin/users');
+        } else {
+            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+        }
+
     }
 }

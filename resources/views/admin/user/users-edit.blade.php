@@ -31,44 +31,32 @@
                                                     <input type="text" name="name" id="user_name" value="{{$user->name}}" class="form-control @error('name') is-invalid @enderror" placeholder="User Name" required >
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label for="user_phone" class="form-label">User phone</label>
-                                                    <input type="text" name="phone"  value="{{$user->phone}}" id="user_phone" class="form-control  @error('phone') is-invalid @enderror" placeholder="User phone" required>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">User email</label>
-                                                    <input type="email" name="email"  value="{{$user->email}}" id="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Email" required>
+                                                    <input type="email"  value="{{$user->email}}" id="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Email" disabled>
                                                 </div>
                                             </div>
+
+                                            @if (auth()->user()->type !== 'Super Admin')
+
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="type" class="form-label">Type</label>
-                                                    <select name="type" class="form-select " id="type" required>
-                                                        <option value="Admin" @if($user->type=='Admin') selected @endif>Admin</option>
-                                                        <option value="Accountant" @if($user->type=='Accountant') selected @endif>Accountant</option>
-                                                        <option value="Customer" @if($user->type=='Customer') selected @endif>Customer</option>
-                                                       
-                                                    </select>
+                                                    <label for="email" class="form-label">User District</label>
+                                                    <input type="email"  value="@if(!empty($user->district->bn_name)) {{$user->district->bn_name}} @endif" id="email" class="form-control" disabled>
                                                 </div>
                                             </div>
-                                        
-                                            
 
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="address" class="form-label">Address</label>
-                                                    <textarea name="address"  class="form-control  @error('address') is-invalid @enderror" id="address" rows="2" placeholder="Type Address">{{$user->address}}</textarea>
+                                                    <label for="email" class="form-label">User Thana</label>
+                                                    <input type="email"  value="@if(!empty($user->thana->bn_name)) {{$user->thana->bn_name}} @endif" id="email" class="form-control" disabled>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label for="designation" class="form-label">Designation</label>
-                                                    <input type="text"  value="{{$user->designation}}" name="designation" id="designation" class="form-control @error('designation') is-invalid @enderror" placeholder="Desitnation">
-                                                </div>
-                                            </div>
+
+                                            @endif
+                                        
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="picture" class="form-label">Profile picture <small>(300px X 300px)</small></label>

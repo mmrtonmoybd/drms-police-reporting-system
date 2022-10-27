@@ -26,7 +26,8 @@
                                         
                                         <div class="row">
                                             <div class="col-sm-3">
-                                            <a href="{{url('admin/users/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add User</a>
+                                            <a href="{{url('admin/users/add/superadmin')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Super admin</a>
+                                            <a href="{{url('admin/users/add/sp')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add SP</a>
                                             </div>
                                             <div class="col-sm-8">
                                                 <div class="text-sm-end">
@@ -35,11 +36,6 @@
                                                         <div class="col-sm-3">
                                                             <div class="mb-3">
                                                                 <input type="text" name="name"  id="name" class="form-control form-control-sm" placeholder=" Name" value="{{ $request->get('name') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="mb-3">
-                                                                <input type="text" name="phone"  id="phone" value="{{$request->get('phone')}}" class="form-control form-control-sm" placeholder=" Phone">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
@@ -69,9 +65,7 @@
                                                 <tr>
                                                     <th >Name</th>
                                                     <th >Type</th>
-                                                    <th >Phone</th>
                                                     <th >Email</th>
-                                                    <th >Address</th>
                                                     <th style="width: 86px">Action</th>
                                                 </tr>
                                             </thead>
@@ -88,18 +82,12 @@
                                                     
                                                     </td>
                                                     <td >
-                                                        @if($user->type=='Officer')
-                                                            <span class="badge bg-success">Officer</span>
-                                                        @elseif($user->type=='Admin')
-                                                            <span class="badge bg-danger">Admin</span>
-                                                        @elseif($user->type=='Accountant')
-                                                            <span class="badge bg-warning">Accountant</span>
-                                                        @endif
+                                                        
+                                                            <span class="badge bg-success">{{$user->type}}</span>
+                                                        
                                                     </td>
-                                                    <td > {{$user->phone}}</td>
                                                         
                                                     <td >{{$user->email}}</td>
-                                                    <td > {{$user->address}} </td>
                                                     
                                                     <td class="table-action">
                                                         <a href="{{url('admin/users/edit/'.$user->id)}}" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a>

@@ -25,6 +25,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'districtID',
+        'thanaID',
+        'picture'
     ];
 
     /**
@@ -46,15 +50,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = ['online'];
-
-    //this method
-    public function getOnlineAttribute()
+    public function district()
     {
-        if ($this->last_login > time()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->hasOne('App\Models\District', 'id', 'districtID');
+    }
+
+    public function thana()
+    {
+        return $this->hasOne('App\Models\Thana', 'id', 'thanaID');
     }
 }

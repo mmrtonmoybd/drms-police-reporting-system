@@ -85,7 +85,7 @@
 
                         
                     
-                        @if(auth()->user()->type =='Admin')
+                        
                         
                         <li class="side-nav-item">
                             <a href="{{url('admin/settings')}}" class="side-nav-link">
@@ -102,7 +102,7 @@
                                 <span> Users manager </span>
                             </a>
                         </li>
-                        @endif
+                       
                         
                        
 

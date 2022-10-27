@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\QrrsController;
 use App\Http\Controllers\admin\WarrantController;
 use App\Http\Controllers\admin\GallerysController;
 use App\Http\Controllers\admin\NarcotiscController;
+use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\Test;
 
 /*
@@ -99,6 +100,24 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/delete/{id}', [NarcotiscController::class, 'delete']);
         Route::get('/narcotic/view/{id}', [NarcotiscController::class, 'pView']);
         Route::get('/narcotic/print-details/{id}', [NarcotiscController::class, 'PrintView']);
+
+        Route::group(['prefix' => 'users'], function() {
+            Route::get('/role', [RoleController::class, 'index']);
+            Route::get('/role/add', [RoleController::class, 'addShow']);
+            Route::post('/role/add', [RoleController::class, 'addData']);
+            Route::get('/role/edit/{role}', [RoleController::class, 'editShow']);
+            Route::post('/role/edit/{role}', [RoleController::class, 'editUpdate']);
+            Route::get('/role/delete/{role}', [RoleController::class, 'delete']);
+            Route::get('/role/show/{role}', [RoleController::class, 'show']);
+            Route::get('/uedit/{user}', [UsersController::class, 'ueditshow']);
+            Route::post('/uedit/{user}', [UsersController::class, 'ueditupdate']);
+
+            Route::get('/add/superadmin', [UsersController::class, 'addsaShow']);
+            Route::post('/add/superadmin', [UsersController::class, 'addsacreate']);
+
+            Route::get('/add/sp', [UsersController::class, 'addspShow']);
+            Route::post('/add/sp', [UsersController::class, 'addspcreate']);
+        });
 
 
 
