@@ -101,7 +101,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/view/{id}', [NarcotiscController::class, 'pView']);
         Route::get('/narcotic/print-details/{id}', [NarcotiscController::class, 'PrintView']);
 
-        Route::group(['prefix' => 'users'], function() {
+        Route::group(['prefix' => 'users'], function () {
             Route::get('/role', [RoleController::class, 'index']);
             Route::get('/role/add', [RoleController::class, 'addShow']);
             Route::post('/role/add', [RoleController::class, 'addData']);

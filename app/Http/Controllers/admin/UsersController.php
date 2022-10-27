@@ -14,7 +14,6 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-
         /*
         $this->middleware(function ($request, $next) {
             $session_user = Session::get('user');
@@ -104,8 +103,8 @@ class UsersController extends Controller
 
     public function addsaShow()
     {
-       $role = Role::all();
-       return view('admin/user/users-addsa', ['roles' => $role]);
+        $role = Role::all();
+        return view('admin/user/users-addsa', ['roles' => $role]);
     }
 
     public function addsacreate(Request $request)
@@ -145,7 +144,7 @@ class UsersController extends Controller
     public function addspShow()
     {
         $data['districts'] = District::where('division_id', 1)->get();
-       return view('admin/user/users-addsp', $data);
+        return view('admin/user/users-addsp', $data);
     }
 
     public function addspcreate(Request $request)
@@ -276,10 +275,10 @@ class UsersController extends Controller
 
     public function ueditupdate(Request $request, User $user)
     {
-         $validated = $request->validate([
-            'email' => 'required|unique:users|email',
-            'name' => 'required',
-            'type' => 'required'
+        $validated = $request->validate([
+           'email' => 'required|unique:users|email',
+           'name' => 'required',
+           'type' => 'required'
         ]);
 
         if ($request->input('password')) {
@@ -315,6 +314,5 @@ class UsersController extends Controller
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
-
     }
 }

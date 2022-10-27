@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     public function addShow(Request $request)
     {
-       return view('admin/role/role-add');
+        return view('admin/role/role-add');
     }
 
     public function addData(Request $request)
@@ -20,7 +20,7 @@ class RoleController extends Controller
         $arrper = $request->input('models');
 
         $role = Role::create(['name' => $request->input('name')]);
-        
+
 
         if ($role->givePermissionTo($arrper)) {
             $request->session()->flash('success_msg', 'Role created successfully and added permissions');
@@ -44,7 +44,7 @@ class RoleController extends Controller
 
     public function editShow(Request $request, Role $role)
     {
-       // dd($role->permissions);
+        // dd($role->permissions);
         return view('admin/role/role-edit', [
             'role' => $role,
         ]);
@@ -55,7 +55,7 @@ class RoleController extends Controller
         $arrper = $request->input('models');
 
         if ($role->syncPermissions($arrper)) {
-             $request->session()->flash('success_msg', 'Role updated successfully and updated permissions');
+            $request->session()->flash('success_msg', 'Role updated successfully and updated permissions');
             return redirect('admin/users/role');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
