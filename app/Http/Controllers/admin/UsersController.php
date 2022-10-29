@@ -44,11 +44,11 @@ class UsersController extends Controller
 
     public function addsacreate(Request $request)
     {
-         $request->validate([
-            'email' => 'required|unique:users',
-            'name' => 'required',
-            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-            'confirm-password' => 'min:6',
+        $request->validate([
+           'email' => 'required|unique:users',
+           'name' => 'required',
+           'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+           'confirm-password' => 'min:6',
         ]);
 
         $insertAttr = [
@@ -127,13 +127,13 @@ class UsersController extends Controller
 
     public function addoccreate(Request $request)
     {
-         $request->validate([
-            'email' => 'required|unique:users',
-            'name' => 'required',
-            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-            'confirm-password' => 'min:6',
-            'districtID' => 'required',
-            'thanaID' => 'required',
+        $request->validate([
+           'email' => 'required|unique:users',
+           'name' => 'required',
+           'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+           'confirm-password' => 'min:6',
+           'districtID' => 'required',
+           'thanaID' => 'required',
         ]);
 
         $insertAttr = [
@@ -257,13 +257,13 @@ class UsersController extends Controller
 
     public function addocop1create(Request $request)
     {
-         $request->validate([
-            'email' => 'required|unique:users',
-            'name' => 'required',
-            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-            'confirm-password' => 'min:6',
-            'districtID' => 'required',
-            'thanaID' => 'required',
+        $request->validate([
+           'email' => 'required|unique:users',
+           'name' => 'required',
+           'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+           'confirm-password' => 'min:6',
+           'districtID' => 'required',
+           'thanaID' => 'required',
         ]);
 
         $insertAttr = [
@@ -302,13 +302,13 @@ class UsersController extends Controller
 
     public function addocop2create(Request $request)
     {
-         $request->validate([
-            'email' => 'required|unique:users',
-            'name' => 'required',
-            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-            'confirm-password' => 'min:6',
-            'districtID' => 'required',
-            'thanaID' => 'required',
+        $request->validate([
+           'email' => 'required|unique:users',
+           'name' => 'required',
+           'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+           'confirm-password' => 'min:6',
+           'districtID' => 'required',
+           'thanaID' => 'required',
         ]);
 
         $insertAttr = [
@@ -347,13 +347,13 @@ class UsersController extends Controller
 
     public function addocop3create(Request $request)
     {
-         $request->validate([
-            'email' => 'required|unique:users',
-            'name' => 'required',
-            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-            'confirm-password' => 'min:6',
-            'districtID' => 'required',
-            'thanaID' => 'required',
+        $request->validate([
+           'email' => 'required|unique:users',
+           'name' => 'required',
+           'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+           'confirm-password' => 'min:6',
+           'districtID' => 'required',
+           'thanaID' => 'required',
         ]);
 
         $insertAttr = [
@@ -408,12 +408,12 @@ class UsersController extends Controller
     public function Update(Request $request, $id)
     {
         Gate::authorize('profile', $id);
-         $request->validate([
-            'name' => 'required',
+        $request->validate([
+           'name' => 'required',
         ]);
 
         if ($request->input('password')) {
-             $request->validate(
+            $request->validate(
                 [
                     'password' => 'min:6|required_with:confirm-password|same:confirm-password',
                     'confirm-password' => 'min:6'
@@ -487,14 +487,14 @@ class UsersController extends Controller
 
     public function ueditupdate(Request $request, User $user)
     {
-         $request->validate([
-           'email' => 'required|email',
-           'name' => 'required',
-           'type' => 'required'
+        $request->validate([
+          'email' => 'required|email',
+          'name' => 'required',
+          'type' => 'required'
         ]);
 
         if ($request->input('password')) {
-             $request->validate(
+            $request->validate(
                 [
                     'password' => 'min:6|required_with:confirm-password|same:confirm-password',
                     'confirm-password' => 'min:6'

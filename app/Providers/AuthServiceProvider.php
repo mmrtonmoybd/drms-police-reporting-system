@@ -34,14 +34,14 @@ class AuthServiceProvider extends ServiceProvider
             if (auth()->user()->getRoleNames()[0] !== $name) {
                 return true;
             }
-           return false;
+            return false;
         });
 
         Gate::define('profile', function (User $user, $id) {
             if (auth()->user()->id == $id) {
                 return true;
             }
-           return false;
+            return false;
         });
     }
 }

@@ -9,8 +9,6 @@ use Session;
 
 class SettingsController extends Controller
 {
-    
-
     //index function
     public function Index()
     {

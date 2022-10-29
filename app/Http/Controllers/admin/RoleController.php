@@ -71,7 +71,7 @@ class RoleController extends Controller
     public function delete(Request $request, Role $role)
     {
         Gate::authorize('roleedit', $role->name);
-        
+
         if ($role->delete()) {
             $request->session()->flash('success_msg', 'Role deleted successfully and deleted permissions');
             return redirect('admin/users/role');

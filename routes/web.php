@@ -99,9 +99,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/print-details/{id}', [NarcotiscController::class, 'PrintView'])->middleware('permission:narcotic.view');
 
         Route::group(['prefix' => 'users'], function () {
-
-        Route::get('/edit/{id}', [UsersController::class, 'Edit']);
-        Route::post('/edit/{id}', [UsersController::class, 'Update']);
+            Route::get('/edit/{id}', [UsersController::class, 'Edit']);
+            Route::post('/edit/{id}', [UsersController::class, 'Update']);
 
             Route::get('/role', [RoleController::class, 'index']);
             Route::get('/role/add', [RoleController::class, 'addShow']);
@@ -119,40 +118,36 @@ Route::prefix('admin')->group(function () {
             Route::get('/uedit/{user}', [UsersController::class, 'ueditshow'])->middleware('permission:user.edit');
             Route::post('/uedit/{user}', [UsersController::class, 'ueditupdate'])->middleware('permission:user.edit');
 
-            Route::group(['middleware' => 'permission:user.add'], function() {
+            Route::group(['middleware' => 'permission:user.add'], function () {
+                Route::get('/add/superadmin', [UsersController::class, 'addsaShow']);
+                Route::post('/add/superadmin', [UsersController::class, 'addsacreate']);
 
-            Route::get('/add/superadmin', [UsersController::class, 'addsaShow']);
-            Route::post('/add/superadmin', [UsersController::class, 'addsacreate']);
+                Route::get('/add/sp', [UsersController::class, 'addspShow']);
+                Route::post('/add/sp', [UsersController::class, 'addspcreate']);
 
-            Route::get('/add/sp', [UsersController::class, 'addspShow']);
-            Route::post('/add/sp', [UsersController::class, 'addspcreate']);
+                Route::get('/add/sp/op1', [UsersController::class, 'addspop1Show']);
+                Route::post('/add/sp/op1', [UsersController::class, 'addspop1create']);
 
-            Route::get('/add/sp/op1', [UsersController::class, 'addspop1Show']);
-            Route::post('/add/sp/op1', [UsersController::class, 'addspop1create']);
+                Route::get('/add/sp/op2', [UsersController::class, 'addspop2Show']);
+                Route::post('/add/sp/op2', [UsersController::class, 'addspop2create']);
 
-            Route::get('/add/sp/op2', [UsersController::class, 'addspop2Show']);
-            Route::post('/add/sp/op2', [UsersController::class, 'addspop2create']);
+                Route::get('/add/oc', [UsersController::class, 'addocShow']);
+                Route::post('/add/oc', [UsersController::class, 'addoccreate']);
 
-            Route::get('/add/oc', [UsersController::class, 'addocShow']);
-            Route::post('/add/oc', [UsersController::class, 'addoccreate']);
+                Route::get('/add/oc/op1', [UsersController::class, 'addocop1Show']);
+                Route::post('/add/oc/op1', [UsersController::class, 'addococ1create']);
 
-            Route::get('/add/oc/op1', [UsersController::class, 'addocop1Show']);
-            Route::post('/add/oc/op1', [UsersController::class, 'addococ1create']);
+                Route::get('/add/oc/op2', [UsersController::class, 'addocop2Show']);
+                Route::post('/add/oc/op2', [UsersController::class, 'addococ2create']);
 
-            Route::get('/add/oc/op2', [UsersController::class, 'addocop2Show']);
-            Route::post('/add/oc/op2', [UsersController::class, 'addococ2create']);
-
-            Route::get('/add/oc/op3', [UsersController::class, 'addocop3Show']);
-            Route::post('/add/oc/op3', [UsersController::class, 'addococ3create']);
-        
-        });
+                Route::get('/add/oc/op3', [UsersController::class, 'addocop3Show']);
+                Route::post('/add/oc/op3', [UsersController::class, 'addococ3create']);
+            });
         });
 
         //settings route
         Route::get('/settings', [SettingsController::class, 'Index'])->middleware('permission:setting.view');
         Route::post('/settings', [SettingsController::class, 'SaveData'])->middleware('permission:setting.view');
-
-        
     });
 });
 

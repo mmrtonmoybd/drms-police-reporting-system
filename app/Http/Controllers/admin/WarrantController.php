@@ -33,9 +33,9 @@ class WarrantController extends Controller
     }
 
      private function reptpenum($sub)
-    {
-        return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
-    }
+     {
+         return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
+     }
 
     public function addShow(Request $request)
     {
@@ -75,7 +75,7 @@ class WarrantController extends Controller
                 'gr_recive' => $this->reptpenum($request->input('gr_recive')),
                 'cr_recive' => $this->reptpenum($request->input('cr_recive')),
                 'saja_gr_recive' => $this->reptpenum($request->input('saja_gr_recive')),
-                'saja_cr_recive' => $this->reptpenum($request->input('saja_cr_recive')), 
+                'saja_cr_recive' => $this->reptpenum($request->input('saja_cr_recive')),
                 'gr_tamil' => $this->reptpenum($request->input('gr_tamil')),
                 'cr_tamil' => $this->reptpenum($request->input('cr_tamil')),
                 'saja_gr_tamil' => $this->reptpenum($request->input('saja_gr_tamil')),
@@ -138,7 +138,7 @@ class WarrantController extends Controller
                 'gr_recive' => $this->reptpenum($request->input('gr_recive')),
                 'cr_recive' => $this->reptpenum($request->input('cr_recive')),
                 'saja_gr_recive' => $this->reptpenum($request->input('saja_gr_recive')),
-                'saja_cr_recive' => $this->reptpenum($request->input('saja_cr_recive')), 
+                'saja_cr_recive' => $this->reptpenum($request->input('saja_cr_recive')),
                 'gr_tamil' => $this->reptpenum($request->input('gr_tamil')),
                 'cr_tamil' => $this->reptpenum($request->input('cr_tamil')),
                 'saja_gr_tamil' => $this->reptpenum($request->input('saja_gr_tamil')),
