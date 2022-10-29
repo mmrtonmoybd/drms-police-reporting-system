@@ -32,6 +32,11 @@ class WarrantController extends Controller
         return view('admin/warrant/warrant', $data);
     }
 
+     private function reptpenum($sub)
+    {
+        return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
+    }
+
     public function addShow(Request $request)
     {
         $data['districts'] = District::where('division_id', 1)->get();
@@ -43,18 +48,18 @@ class WarrantController extends Controller
     public function addData(Request $request)
     {
         $request->validate([
-            'districtID' => 'required|integer',
-            'thanaID' => 'required|integer',
+            'districtID' => 'required',
+            'thanaID' => 'required',
             'date' => 'required',
-            'gr_recive' => 'required|numeric',
-            'cr_recive' => 'required|numeric',
-            'saja_gr_recive' => 'required|numeric',
-            'saja_cr_recive' => 'required|numeric',
-            'gr_tamil' => 'required|numeric',
-            'cr_tamil' => 'required|numeric',
-            'saja_gr_tamil' => 'required|numeric',
-            'saja_cr_tamil' => 'required|numeric',
-            'recall_other' => 'required|numeric',
+            'gr_recive' => 'required',
+            'cr_recive' => 'required',
+            'saja_gr_recive' => 'required',
+            'saja_cr_recive' => 'required',
+            'gr_tamil' => 'required',
+            'cr_tamil' => 'required',
+            'saja_gr_tamil' => 'required',
+            'saja_cr_tamil' => 'required',
+            'recall_other' => 'required',
         ]);
         $date = $request->input('date');
 
@@ -65,6 +70,18 @@ class WarrantController extends Controller
         //dd();
 
         $request->request->add(['divisionID' => 1, 'user_id' => $uid]);
+
+        $request->merge([
+                'gr_recive' => $this->reptpenum($request->input('gr_recive')),
+                'cr_recive' => $this->reptpenum($request->input('cr_recive')),
+                'saja_gr_recive' => $this->reptpenum($request->input('saja_gr_recive')),
+                'saja_cr_recive' => $this->reptpenum($request->input('saja_cr_recive')), 
+                'gr_tamil' => $this->reptpenum($request->input('gr_tamil')),
+                'cr_tamil' => $this->reptpenum($request->input('cr_tamil')),
+                'saja_gr_tamil' => $this->reptpenum($request->input('saja_gr_tamil')),
+                'saja_cr_tamil' => $this->reptpenum($request->input('saja_cr_tamil')),
+                'recall_other' => $this->reptpenum($request->input('recall_other'))
+        ]);
 
         if (Warrant::create($request->all())) {
             $request->session()->flash('success_msg', 'Data created successfully');
@@ -97,18 +114,18 @@ class WarrantController extends Controller
     public function editUpdate(Request $request, $id)
     {
         $request->validate([
-            'districtID' => 'required|integer',
-            'thanaID' => 'required|integer',
+            'districtID' => 'required',
+            'thanaID' => 'required',
             'date' => 'required',
-            'gr_recive' => 'required|numeric',
-            'cr_recive' => 'required|numeric',
-            'saja_gr_recive' => 'required|numeric',
-            'saja_cr_recive' => 'required|numeric',
-            'gr_tamil' => 'required|numeric',
-            'cr_tamil' => 'required|numeric',
-            'saja_gr_tamil' => 'required|numeric',
-            'saja_cr_tamil' => 'required|numeric',
-            'recall_other' => 'required|numeric',
+            'gr_recive' => 'required',
+            'cr_recive' => 'required',
+            'saja_gr_recive' => 'required',
+            'saja_cr_recive' => 'required',
+            'gr_tamil' => 'required',
+            'cr_tamil' => 'required',
+            'saja_gr_tamil' => 'required',
+            'saja_cr_tamil' => 'required',
+            'recall_other' => 'required',
         ]);
         $date = $request->input('date');
 
@@ -116,6 +133,18 @@ class WarrantController extends Controller
 
         $request->request->remove('_token');
         $request->request->remove('submit');
+
+        $request->merge([
+                'gr_recive' => $this->reptpenum($request->input('gr_recive')),
+                'cr_recive' => $this->reptpenum($request->input('cr_recive')),
+                'saja_gr_recive' => $this->reptpenum($request->input('saja_gr_recive')),
+                'saja_cr_recive' => $this->reptpenum($request->input('saja_cr_recive')), 
+                'gr_tamil' => $this->reptpenum($request->input('gr_tamil')),
+                'cr_tamil' => $this->reptpenum($request->input('cr_tamil')),
+                'saja_gr_tamil' => $this->reptpenum($request->input('saja_gr_tamil')),
+                'saja_cr_tamil' => $this->reptpenum($request->input('saja_cr_tamil')),
+                'recall_other' => $this->reptpenum($request->input('recall_other'))
+        ]);
 
         if (Warrant::where('id', $id)->update($request->all())) {
             $request->session()->flash('success_msg', 'Data updated successfully');

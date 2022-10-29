@@ -9,6 +9,7 @@ use App\Models\District;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\Thana;
+use Illuminate\Support\Str;
 
 class NarcotiscController extends Controller
 {
@@ -20,12 +21,36 @@ class NarcotiscController extends Controller
         return view('admin/narcotic/narcotic-add', $data);
     }
 
+    private function reptpenum($sub)
+    {
+        return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
+    }
+
     public function addData(Request $request)
     {
         $date = Carbon::createFromFormat('d/m/Y', $request->input('sdate'));
         $day = $date->day;
         $month = $date->month;
         $year = $date->year;
+
+         $request->merge([
+            'serial' => $this->reptpenum($request->input('serial')),
+            'folder_no' => $this->reptpenum($request->input('folder_no')),
+            'case_no' => $this->reptpenum($request->input('case_no')),
+            'nopc' => $this->reptpenum($request->input('nopc')),
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile_no' => $this->reptpenum($request->input('mobile_no')),
+            'gaza' => $this->reptpenum($request->input('gaza')),
+            'gaza_tree' => $this->reptpenum($request->input('gaza_tree')),
+            'yaba' => $this->reptpenum($request->input('yaba')),
+            'heroine' => $this->reptpenum($request->input('heroine')),
+            'fansdel' => $this->reptpenum($request->input('fansdel')),
+            'cholai_alcohol' => $this->reptpenum($request->input('cholai_alcohol')),
+            'bidesh_alcohol' => $this->reptpenum($request->input('bidesh_alcohol')),
+            'lsd' => $this->reptpenum($request->input('lsd')),
+            'ice' => $this->reptpenum($request->input('ice')),
+            'otherd' => $this->reptpenum($request->input('otherd'))
+        ]);
 
         $serial = $request->input('serial');
         $serialn = ($serial <= 9) ? '0' . $serial : $serial;
@@ -98,6 +123,25 @@ class NarcotiscController extends Controller
         $day = $date->day;
         $month = $date->month;
         $year = $date->year;
+
+        $request->merge([
+            'serial' => $this->reptpenum($request->input('serial')),
+            'folder_no' => $this->reptpenum($request->input('folder_no')),
+            'case_no' => $this->reptpenum($request->input('case_no')),
+            'nopc' => $this->reptpenum($request->input('nopc')),
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile_no' => $this->reptpenum($request->input('mobile_no')),
+            'gaza' => $this->reptpenum($request->input('gaza')),
+            'gaza_tree' => $this->reptpenum($request->input('gaza_tree')),
+            'yaba' => $this->reptpenum($request->input('yaba')),
+            'heroine' => $this->reptpenum($request->input('heroine')),
+            'fansdel' => $this->reptpenum($request->input('fansdel')),
+            'cholai_alcohol' => $this->reptpenum($request->input('cholai_alcohol')),
+            'bidesh_alcohol' => $this->reptpenum($request->input('bidesh_alcohol')),
+            'lsd' => $this->reptpenum($request->input('lsd')),
+            'ice' => $this->reptpenum($request->input('ice')),
+            'otherd' => $this->reptpenum($request->input('otherd'))
+        ]);
 
         $serial = $request->input('serial');
         $serialn = ($serial <= 9) ? '0' . $serial : $serial;

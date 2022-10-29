@@ -39,7 +39,7 @@
                                                 </div>
                                             </div>
 
-                                            @if (auth()->user()->type !== 'Super Admin')
+                                            @if (auth()->user()->getRoleNames()[0] !== 'Super Admin')
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">

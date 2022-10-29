@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use JWT;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,24 +28,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         //$this->registerPolicies();
 
-        // Here you may define how you wish users to be authenticated for your Lumen
-        // application. The callback which receives the incoming request instance
-        // should return either a User instance or null. You're free to obtain
-        // the User instance via an API token or any other method necessary.
+        /* Qrr Authorization */
 
-        $this->app['auth']->viaRequest('api', function ($request) {
-            // if ($request->input('api_token')) {
-            //     return User::where('api_token', $request->input('api_token'))->first();
-            // }
-            $access_token = $request->header('access_token');
-            $token_key = env('JWT_SECRET');
-
-            try {
-                $decoded = JWT::decode($access_token, $token_key, array('HS256'));
-                return new User();
-            } catch(\Exception $e) {
-                return null;
+        Gate::define('roleedit', function (User $user, $name) {
+            if (auth()->user()->getRoleNames()[0] !== $name) {
+                return true;
             }
+           return false;
+        });
+
+        Gate::define('profile', function (User $user, $id) {
+            if (auth()->user()->id == $id) {
+                return true;
+            }
+           return false;
         });
     }
 }

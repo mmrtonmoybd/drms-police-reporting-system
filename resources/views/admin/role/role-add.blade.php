@@ -66,6 +66,12 @@
                                                    </label>
                                                   </div>
 
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="qrr.delete">QRR delete
+                                                   </label>
+                                                  </div>
+
                                                   
                                             </div>
                                             <br>
@@ -95,6 +101,12 @@
                                                   <div class="form-check">
                                                 <label class="form-check-label">
                                                  <input type="checkbox" name="models[]" class="form-check-input" value="warrant.edit">Warrant edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="warrant.delete">Warrant delete
                                                    </label>
                                                   </div>
 
@@ -131,7 +143,90 @@
                                                    </label>
                                                   </div>
 
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="narcotic.delete">Narcotic delete
+                                                   </label>
+                                                  </div>
+
                                                   
+                                            </div>
+
+                                            <br>
+
+                                            <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b>Role permission</b> </label>
+                                                
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="role.view">Role view
+                                            </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="role.add">Role add
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="role.edit">Role edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="role.delete">Role delete
+                                                   </label>
+                                                  </div>
+
+                                                  
+                                            </div>
+
+                                            <br>
+
+                                             <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b>User permission</b> </label>
+                                                
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="user.view">User view
+                                            </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="user.add">User add
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="user.edit">User edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="user.delete">User delete
+                                                   </label>
+                                                  </div>
+
+                                                  
+                                            </div>
+
+                                            <br>
+
+                                              <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b>Settings permission</b> </label>
+                                                
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="setting.view">Settings (Add, edit, delete)
+                                            </label>
+                                                </div>
+
                                             </div>
 
                                             <br>

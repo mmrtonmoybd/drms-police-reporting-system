@@ -8,10 +8,10 @@
                                         <ol class="breadcrumb m-0">
                                             
                                             <li class="breadcrumb-item"><a href="{{url('admin/users')}}">Users</a></li>
-                                            <li class="breadcrumb-item active">Add super user</li>
+                                            <li class="breadcrumb-item active">Add SP-Operator 1 user</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"> <i class="uil uil-plus"></i> Add Super User</h4>
+                                    <h4 class="page-title"> <i class="uil uil-plus"></i> Add SP-Operator 1 User</h4>
                                 </div>
                             </div>
                         </div>     
@@ -21,7 +21,7 @@
 
                         <div class="row">
                             <div class="col-sm-12 ">
-                                <form action="{{url('admin/users/add/op1')}}" method="POST" enctype="multipart/form-data">
+                                <form action="{{url('admin/users/add/sp/op1')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card card-body">
                                         <div class="row">

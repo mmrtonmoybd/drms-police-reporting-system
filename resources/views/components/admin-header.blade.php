@@ -79,13 +79,13 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['District', 'Incident', { role: 'style' }],
-         ['বরগুনা', {{session('borgona')}}, '#26a49a'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, '#e94236'],         // English color name
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d' ],
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001' ],
-         ['ভোলা', {{session('bhola')}}, '#0c5295'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47' ], // CSS-style declaration
+         ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['বরগুনা', {{session('borgona')}}, '#26a49a', '{{session("borgona")}}'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, '#e94236', '{{session("barisal")}}'],         // English color name
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d', '{{session("pirojpur")}}' ],
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001', '{{session("patuakhali")}}' ],
+         ['ভোলা', {{session('bhola')}}, '#0c5295', '{{session("bhola")}}'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47',  '{{session("jalokhati")}}' ], // CSS-style declaration
         
        
       ]);
@@ -95,7 +95,7 @@ border-left: 3px solid #0ACF97!important;
         title: "",
         width: "98%",
         height: 300,
-        bar: {groupWidth: "95%"},
+        bar: {groupWidth: "55%"},
         legend: { position: "none" },
         
       };
@@ -139,23 +139,23 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Crime Type', 'Incident', { role: 'style' }],
-          ['মারামারি', {{session('etmara')}}, '#26a59a'],            // RGB value
-         ['খুন', {{session('etkun')}}, '#26a59a'],            // English color name
-         ['চুরি', {{session('etchori')}}, '#26a59a'],
-         ['ডাকাতি', {{session('etdakati')}}, 'color: #26a59a' ], // CSS-style declaration
-         ['বিরোধ', {{session('etsompds')}}, '#26a59a' ],
-         ['নিখোঁজ', {{session('etnikoj')}}, '#26a59a' ],
-         ['দস্যুতা', {{session('etdusht')}}, '#26a59a' ],
-         ['জুয়া', {{session('etjua')}}, '#26a59a' ],
-         ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, '#26a59a' ],
-         ['নারী ও শিশু', {{session('etnarios')}}, '#26a59a' ],
-         ['অগ্নিকান্ড', {{session('etagun')}}, '#26a59a' ],
-         ['মাদক', {{session('etmadok')}}, '#26a59a' ],
-         ['সাইবার', {{session('etcyber')}}, '#26a59a' ],
-         ['প্রতারণা', {{session('etprota')}}, '#26a59a' ],
-         ['দুর্ঘটনা', {{session('etrajnoi')}}, '#26a59a' ],
-         ['অন্যান্য', {{session('etonno')}}, '#26a59a' ],
+         ['Crime Type', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}],
+          ['মারামারি', {{session('etmara')}}, '#26a59a', '{{session("etmara")}}'],            // RGB value
+         ['খুন', {{session('etkun')}}, '#26a59a', '{{session("etkun")}}'],            // English color name
+         ['চুরি', {{session('etchori')}}, '#26a59a', '{{session("etchori")}}'],
+         ['ডাকাতি', {{session('etdakati')}}, 'color: #26a59a', '{{session("etdakati")}}' ], // CSS-style declaration
+         ['বিরোধ', {{session('etsompds')}}, '#26a59a', '{{session("etsompds")}}' ],
+         ['নিখোঁজ', {{session('etnikoj')}}, '#26a59a', '{{session("etnikoj")}}' ],
+         ['দস্যুতা', {{session('etdusht')}}, '#26a59a', '{{session("etdusht")}}' ],
+         ['জুয়া', {{session('etjua')}}, '#26a59a', '{{session("etjua")}}' ],
+         ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, '#26a59a', '{{session("etsorokd")}}' ],
+         ['নারী ও শিশু', {{session('etnarios')}}, '#26a59a', '{{session("etnarios")}}' ],
+         ['অগ্নিকান্ড', {{session('etagun')}}, '#26a59a', '{{session("etagun")}}' ],
+         ['মাদক', {{session('etmadok')}}, '#26a59a', '{{session("etmadok")}}' ],
+         ['সাইবার', {{session('etcyber')}}, '#26a59a', '{{session("etcyber")}}' ],
+         ['প্রতারণা', {{session('etprota')}}, '#26a59a', '{{session("etprota")}}' ],
+         ['দুর্ঘটনা', {{session('etrajnoi')}}, '#26a59a', '{{session("etrajnoi")}}' ],
+         ['অন্যান্য', {{session('etonno')}}, '#26a59a', '{{session("etonno")}}' ],
       ]);
 
         // Set chart options
@@ -163,7 +163,7 @@ border-left: 3px solid #0ACF97!important;
         title: "",
         width: "98%",
         height: 300,
-        bar: {groupWidth: "95%"},
+        bar: {groupWidth: "55%"},
         legend: { position: "none" },
       };
 
@@ -335,7 +335,6 @@ border-left: 3px solid #0ACF97!important;
                                     </span>
                                     <span>
                                         <span class="account-user-name">{{auth()->user()->name}}</span>
-                                        <span class="account-position">{{auth()->user()->designation}}</span>
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">

@@ -21,11 +21,7 @@
 
                         <div class="row">
                             <div class="col-sm-12 ">
-                                <div class="d-flex justify-content-between align-items-center breaking-news bg-white">
-                <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1 news"><span class="d-flex align-items-center">Danger Warning</span></div>
-                <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"> <span class="dot"><font color='red'><h2> All Input Must Be English Character</h2></font></span>
-                </marquee>
-            </div>
+                               
                                 <form action="{{url('admin/warrant/add')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card card-body" id="app">

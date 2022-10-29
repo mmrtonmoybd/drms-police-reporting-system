@@ -9,19 +9,7 @@ use Session;
 
 class SettingsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $session_user = Session::get('user');
-            if (auth()->user()->type=='Admin') {
-                //allowed
-            } else {
-                return redirect('admin/dashboard');
-            }
-
-            return $next($request);
-        });
-    }
+    
 
     //index function
     public function Index()

@@ -237,20 +237,23 @@ transform: scale(1.1);
                                               <div id="piechart"></div>
                                               <div id="chart_div2"></div>
    ----------->
+   
+   
+   
+   
+   
+   
 <div class="row">
    <div class="card">
-      <div class="">
-         <div class="row">
-            <div class="col-sm-2 ">
-               <form action="{{url('admin/qrrs/charts')}}" method="POST">
+                <form action="{{url('admin/qrrs/charts')}}" method="POST">
                @csrf
-               <div class="card card-body" id="app">
+               <div class="" id="app">
                                         <div class="row">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
-                                                        <option value="">Select</option>
+                                                    <label for="districtID" class="form-label "></label>
+                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                        <option value="">জেলা</option>
                                                         @if($districts)
 
                                                         @foreach($districts as $district)
@@ -262,11 +265,11 @@ transform: scale(1.1);
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
-                                                        <option value="">Select</option>
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" required>
+                                                        <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
@@ -283,7 +286,7 @@ transform: scale(1.1);
                   </select>
                </div>
             </div>
-            <div class="col-sm-4 " >
+            <div class="col-sm-4 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
@@ -306,6 +309,8 @@ transform: scale(1.1);
          <div id="piechart"></div>
          <div id="chart_div2"></div>
          --->
+
+
    </div>
 </div>
 

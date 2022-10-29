@@ -108,35 +108,42 @@
                         </li>
                         
                         
-                        
-                        <li class="side-nav-item nav-item has-submenu ">
+                        @canany(['qrr.dashboard', 'qrr.add', 'qrr.view'])
+
+                        <li class="side-nav-item nav-item has-submenu">
 		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-tachograph-digital"></i>  QRR <i class="bi small bi-caret-down-fill"></i> </a>
-		<ul class="submenu collapse">
+		<ul class="submenu collapse @if(request()->is('admin/qrrs/*') || request()->is('admin/qrrs')) show @endif"> 
+            @can('qrr.dashboard')
 			<li>         <a href="{{url('admin/qrrs/srcs')}}" class="side-nav-link nav-link  ">
                            <i class="fa-solid fa-chart-line"></i>
                                 <span> QRR Dashboard</span>
                             </a>
             </li>
+
+            @endcan
             
-            
-            	<li class="">         <a href="{{url('admin/qrrs/add')}}" class="side-nav-link nav-link  ">
+            @can('qrr.add')
+            	<li>         <a href="{{url('admin/qrrs/add')}}" class="side-nav-link nav-link  ">
                            <i class="fa-solid fa-plus"></i>
                                 <span> Add QRR</span>
                             </a>
             </li>
+            @endcan
             
             
             
-            
+            @can('qrr.view')
 		    <li>
 		      <a href="{{url('admin/qrrs')}}" class="side-nav-link nav-link ">
                           <i class="fa-solid fa-list-ul"></i>
                                 <span> QRR List </span>
                             </a>
 		    </li>
+            @endcan
 		   
 		</ul>
 	</li>
+    @endcanany
 	
 	
                         
@@ -188,25 +195,46 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
-                            <a href="{{url('admin/warrant/dashboard')}}" class="side-nav-link nav-link">
-                           <i class="fa-solid fa-flag"></i>
+                        @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
+
+                        <li class="side-nav-item nav-item has-submenu">
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-handcuffs"></i>  Warrant <i class="bi small bi-caret-down-fill"></i> </a>
+		<ul class="submenu collapse @if(request()->is('admin/warrant/*') || request()->is('admin/warrant')) show @endif"> 
+            @can('warrant.dashboard')
+			<li>         <a href="{{url('admin/warrant/dashboard')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-chart-line"></i>
                                 <span> Warrant Dashboard</span>
                             </a>
-                        </li>
-                        
-                        <li class="side-nav-item nav-item">
-                            <a href="{{url('admin/warrant')}}" class="side-nav-link nav-link">
-                           <i class="fa-solid fa-flag"></i>
-                                <span> Warrant </span>
+            </li>
+
+            @endcan
+            
+            @can('warrant.add')
+            	<li>         <a href="{{url('admin/warrant/add')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-plus"></i>
+                                <span> Add Warrant</span>
                             </a>
-                        </li>
+            </li>
+            @endcan
+            
+            
+            
+            @can('warrant.view')
+		    <li>
+		      <a href="{{url('admin/warrant')}}" class="side-nav-link nav-link ">
+                          <i class="fa-solid fa-list-ul"></i>
+                                <span> Warrant List </span>
+                            </a>
+		    </li>
+            @endcan
+		   
+		</ul>
+	</li>
+    @endcanany
 
                         
                     
-                        
-                        
-                        <li class="side-nav-item nav-item">
+                         <li class="side-nav-item nav-item">
                             <a href="{{url('admin/settings')}}" class="side-nav-link nav-link">
                             <i class="dripicons-gear noti-icon"></i>
                                 <span> Settings </span>
@@ -215,7 +243,7 @@
 
                         <li class="side-nav-item nav-item has-submenu ">
 		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid dripicons-user-group"></i>  Users manager <i class="bi small bi-caret-down-fill"></i> </a>
-		<ul class="submenu collapse">
+		<ul class="submenu collapse @if(request()->is('admin/users/*') || request()->is('admin/users')) show @endif">
 
         <li>         <a href="{{url('admin/users/role')}}" class="side-nav-link nav-link  ">
                            <i class="fa-solid fa-users"></i>
@@ -235,12 +263,11 @@
 		</ul>
 	</li>
                         
-                        
                        
 
                         <li class="side-nav-item nav-item">
                             <a href="{{url('admin/logout')}}" class="side-nav-link nav-link text-warning">
-                                <i class="mdi mdi-logout me-1"></i>
+                               <i class="fa-solid fa-right-from-bracket"></i>
                                 <span> Logout </span>
                             </a>
                         </li>

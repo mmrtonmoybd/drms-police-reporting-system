@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->integer('districtID')->nullable();
             $table->integer('thanaID')->nullable();
             $table->string('type', 50);
-            $table->longText('picture')->nullable();
+            $table->longText('picture')->default('/default.png');
             $table->rememberToken();
             $table->timestamps();
         });

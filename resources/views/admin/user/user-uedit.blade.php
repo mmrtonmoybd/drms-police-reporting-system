@@ -21,13 +21,23 @@
 
                         <div class="row">
                             <div class="col-sm-12 ">
-                                <p><font color='red'>বিঃদ্রঃ</font> <b>ইউজার এডিট করার সময় নিচের নির্দেশনা মেনে চলুনঃ<br>
-১.  Super admin এর জন্য জেলা এবং থানা নির্বাচন করার দরকার নেই।<br>
-২. SP এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br>
-৩. OC এর জন্য জেলা এবং থানা উভয় নির্বাচন করতে হবে।<br>
-৪. Operator 1 এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br>
-৫. operator 2 এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br>
-৬. operator 3 এর জন্য জেলা নির্বাচন করতে হবে এবং থানা নির্বাচন করার দরকার নেই।<br></b>
+                                <p><b><font color='red'>বিঃদ্রঃ</font> ইউজার এডিট অথবা রোল পরিবর্তন করার সময় নিচের নির্দেশনা মেনে চলুন অন্যথাই <font color='red'> ইউজার সিষ্টেম কাজ করবে নাঃ</font><br>
+                                <br>
+১.  Super Admin এর জন্য জেলা এবং থানা নির্বাচন করার দরকার নেই।<br>
+<br>
+২. SP এর জন্য শুধুমাত্র জেলা নির্বাচন করতে হবে।<br>
+<br>
+৩. SP-Operator 1 এর জন্য শুধুমাত্র জেলা নির্বাচন করতে হবে।<br>
+<br>
+৪. SP-Operator 2 এর জন্য শুধুমাত্র জেলা নির্বাচন করতে হবে।<br>
+<br>
+৫. OC এর জন্য জেলা এবং থানা উভয় নির্বাচন করতে হবে।<br>
+<br>
+৬. OC-Operator 1 এর জন্য জেলা এবং থানা উভয় নির্বাচন করতে হবে।<br>
+<br>
+৭. OC-Operator 2 এর জন্য জেলা এবং থানা উভয় নির্বাচন করতে হবে।<br>
+<br>
+৮. OC-Operator 3 এর জন্য জেলা এবং থানা উভয় নির্বাচন করতে হবে।<br></b>
 </p>
                                 <form action="{{url('admin/users/uedit/'.$user->id)}}" method="POST" enctype="multipart/form-data">
                                     @csrf
@@ -120,11 +130,11 @@
 
                          @php
                 if($user->divisionID)
-                    $division_id = $qrr->divisionID;
+                    $division_id = $user->divisionID;
                 if($user->districtID)
-                    $district_id = $qrr->districtID;
+                    $district_id = $user->districtID;
                 if($user->thanaID)
-                    $thana_id = $qrr->thanaID;
+                    $thana_id = $user->thanaID;
 
                 @endphp
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>

@@ -20,7 +20,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-4">
                                 <div class="text-center">
-                                    <img src="assets/images/file-searching.svg" alt="File not found Image" height="90">
+                                    <img src="/my-assets/admin/images/file-searching.svg" alt="File not found Image" height="90">
 
                                     <h1 class="text-error mt-4">404</h1>
                                     <h4 class="text-uppercase text-danger mt-3">Page Not Found</h4>

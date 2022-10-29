@@ -26,12 +26,14 @@
                                         
                                         <div class="row">
                                             <div class="col-sm-3">
-                                            <a href="{{url('admin/users/add/superadmin')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Super admin</a>
+                                            <a href="{{url('admin/users/add/superadmin')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Super Admin</a>
                                             <a href="{{url('admin/users/add/sp')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add SP</a>
+                                            <a href="{{url('admin/users/add/sp/op1')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add SP-Operator 1</a>
+                                            <a href="{{url('admin/users/add/sp/op2')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add SP-Operator 2</a>
                                             <a href="{{url('admin/users/add/oc')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add OC</a>
-                                            <a href="{{url('admin/users/add/op1')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add operator 1</a>
-                                            <a href="{{url('admin/users/add/op2')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add operator 2</a>
-                                            <a href="{{url('admin/users/add/op3')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add operator 3</a>
+                                            <a href="{{url('admin/users/add/oc/op1')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add OC-Operator 1 </a>
+                                            <a href="{{url('admin/users/add/oc/op2')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add OC-Operator 2</a>
+                                            <a href="{{url('admin/users/add/oc/op3')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add OC-Operator 3</a>
                                             </div>
                                           <!-- end col-->
                                         </div>

@@ -28,8 +28,8 @@
 
                                         <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="serial" class="form-label">  ক্রমিক নং ( <font color='red'> ইংরেজী ব্যবহার করতে হবে</font> )  </label>
-                                                    <input type="number" name="serial"  value="{{old('serial')}}" id="serial" class="form-control  @error('serial') is-invalid @enderror" placeholder="  ক্রমিক নং  " required>
+                                                    <label for="serial" class="form-label">  ক্রমিক নং   </label>
+                                                    <input type="text" name="serial"  value="{{old('serial')}}" id="serial" class="form-control  @error('serial') is-invalid @enderror" placeholder="  ক্রমিক নং  " required>
                                                 </div>
                                             </div> 
 

@@ -8,10 +8,10 @@
                                         <ol class="breadcrumb m-0">
                                             
                                             <li class="breadcrumb-item"><a href="{{url('admin/users')}}">Users</a></li>
-                                            <li class="breadcrumb-item active">Add super user</li>
+                                            <li class="breadcrumb-item active">Add OC user</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"> <i class="uil uil-plus"></i> Add Super User</h4>
+                                    <h4 class="page-title"> <i class="uil uil-plus"></i> Add OC User</h4>
                                 </div>
                             </div>
                         </div>     

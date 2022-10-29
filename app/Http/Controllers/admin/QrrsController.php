@@ -10,6 +10,7 @@ use App\Models\Thana;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class QrrsController extends Controller
 {
@@ -142,19 +143,12 @@ class QrrsController extends Controller
         $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $data['borgona'] = $borgona;
-        $data['barisal'] = $barisal;
-        $data['bhola'] = $bhola;
-        $data['jalokhati'] = $jalokhati;
-        $data['patuakhali'] = $patuakhali;
-        $data['pirojpur'] = $pirojpur;
-
-        $request->session()->flash('borgona', $borgona);
-        $request->session()->flash('barisal', $barisal);
-        $request->session()->flash('bhola', $bhola);
-        $request->session()->flash('jalokhati', $jalokhati);
-        $request->session()->flash('patuakhali', $patuakhali);
-        $request->session()->flash('pirojpur', $pirojpur);
+        $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
+        $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
+        $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
+        $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
+        $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
+        $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
 
         $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
@@ -273,22 +267,22 @@ class QrrsController extends Controller
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
 
-        $request->session()->flash('etmara', $etmara);
-        $request->session()->flash('etkun', $etkun);
-        $request->session()->flash('etchori', $etchori);
-        $request->session()->flash('etdakati', $etdakati);
-        $request->session()->flash('etsompds', $etsompds);
-        $request->session()->flash('etsorokd', $etsorokd);
-        $request->session()->flash('etnarios', $etnarios);
-        $request->session()->flash('etagun', $etagun);
-        $request->session()->flash('etmadok', $etmadok);
-        $request->session()->flash('etcyber', $etcyber);
-        $request->session()->flash('etprota', $etprota);
-        $request->session()->flash('etrajnoi', $etrajnoi);
-        $request->session()->flash('etonno', $etonno);
-        $request->session()->flash('etnikoj', $etnikoj);
-        $request->session()->flash('etdusht', $etdusht);
-        $request->session()->flash('etjua', $etjua);
+        $request->session()->flash('etmara', ($etmara !== 0) ? $etmara : '');
+        $request->session()->flash('etkun', ($etkun !== 0) ? $etkun : '');
+        $request->session()->flash('etchori', ($etchori !== 0) ? $etchori : '');
+        $request->session()->flash('etdakati', ($etdakati !== 0) ? $etdakati : '');
+        $request->session()->flash('etsompds', ($etsompds !== 0) ? $etsompds : '');
+        $request->session()->flash('etsorokd', ($etsorokd !== 0) ? $etsorokd : '');
+        $request->session()->flash('etnarios', ($etnarios !== 0) ? $etnarios : '');
+        $request->session()->flash('etagun', ($etagun !== 0) ? $etagun : '');
+        $request->session()->flash('etmadok', ($etmadok !== 0) ? $etmadok : '');
+        $request->session()->flash('etcyber', ($etcyber !== 0) ? $etcyber : '');
+        $request->session()->flash('etprota', ($etprota !== 0) ? $etprota : '');
+        $request->session()->flash('etrajnoi', ($etrajnoi !== 0) ? $etrajnoi : '');
+        $request->session()->flash('etonno', ($etonno !== 0) ? $etonno : '');
+        $request->session()->flash('etnikoj', ($etnikoj !== 0) ? $etnikoj : '');
+        $request->session()->flash('etdusht', ($etdusht !== 0) ? $etdusht : '');
+        $request->session()->flash('etjua', ($etjua !== 0) ? $etjua : '');
 
 
         return view('admin/qrr/qrrsg', $data);
@@ -305,6 +299,7 @@ class QrrsController extends Controller
 
     public function srcs(Request $request)
     {
+        //Gate::authorize('QrrDashboard');
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
         $thana = Thana::get();
@@ -317,19 +312,12 @@ class QrrsController extends Controller
         $patuakhali = Qrr::where('districtID', 38)->count();
         $pirojpur = Qrr::where('districtID', 39)->count();
 
-        $data['borgona'] = $borgona;
-        $data['barisal'] = $barisal;
-        $data['bhola'] = $bhola;
-        $data['jalokhati'] = $jalokhati;
-        $data['patuakhali'] = $patuakhali;
-        $data['pirojpur'] = $pirojpur;
-
-        $request->session()->flash('borgona', $borgona);
-        $request->session()->flash('barisal', $barisal);
-        $request->session()->flash('bhola', $bhola);
-        $request->session()->flash('jalokhati', $jalokhati);
-        $request->session()->flash('patuakhali', $patuakhali);
-        $request->session()->flash('pirojpur', $pirojpur);
+        $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
+        $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
+        $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
+        $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
+        $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
+        $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
 
         $data['tin'] = Qrr::count();
         $data['tcat'] = Qrr::whereNotNull('case_no')->count();
@@ -362,22 +350,22 @@ class QrrsController extends Controller
         $etjua = Qrr::where('event_type', 'জুয়া')->count();
 
 
-        $request->session()->flash('etmara', $etmara);
-        $request->session()->flash('etkun', $etkun);
-        $request->session()->flash('etchori', $etchori);
-        $request->session()->flash('etdakati', $etdakati);
-        $request->session()->flash('etsompds', $etsompds);
-        $request->session()->flash('etsorokd', $etsorokd);
-        $request->session()->flash('etnarios', $etnarios);
-        $request->session()->flash('etagun', $etagun);
-        $request->session()->flash('etmadok', $etmadok);
-        $request->session()->flash('etcyber', $etcyber);
-        $request->session()->flash('etprota', $etprota);
-        $request->session()->flash('etrajnoi', $etrajnoi);
-        $request->session()->flash('etonno', $etonno);
-        $request->session()->flash('etnikoj', $etnikoj);
-        $request->session()->flash('etdusht', $etdusht);
-        $request->session()->flash('etjua', $etjua);
+        $request->session()->flash('etmara', ($etmara !== 0) ? $etmara : '');
+        $request->session()->flash('etkun', ($etkun !== 0) ? $etkun : '');
+        $request->session()->flash('etchori', ($etchori !== 0) ? $etchori : '');
+        $request->session()->flash('etdakati', ($etdakati !== 0) ? $etdakati : '');
+        $request->session()->flash('etsompds', ($etsompds !== 0) ? $etsompds : '');
+        $request->session()->flash('etsorokd', ($etsorokd !== 0) ? $etsorokd : '');
+        $request->session()->flash('etnarios', ($etnarios !== 0) ? $etnarios : '');
+        $request->session()->flash('etagun', ($etagun !== 0) ? $etagun : '');
+        $request->session()->flash('etmadok', ($etmadok !== 0) ? $etmadok : '');
+        $request->session()->flash('etcyber', ($etcyber !== 0) ? $etcyber : '');
+        $request->session()->flash('etprota', ($etprota !== 0) ? $etprota : '');
+        $request->session()->flash('etrajnoi', ($etrajnoi !== 0) ? $etrajnoi : '');
+        $request->session()->flash('etonno', ($etonno !== 0) ? $etonno : '');
+        $request->session()->flash('etnikoj', ($etnikoj !== 0) ? $etnikoj : '');
+        $request->session()->flash('etdusht', ($etdusht !== 0) ? $etdusht : '');
+        $request->session()->flash('etjua', ($etjua !== 0) ? $etjua : '');
 
 
 
@@ -459,6 +447,11 @@ class QrrsController extends Controller
         return view('admin/qrr/qrrs-s', $data);
     }
 
+    private function reptpenum($sub)
+    {
+        return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
+    }
+
     //this method for add new user
     public function Create(Request $request)
     {
@@ -483,18 +476,18 @@ class QrrsController extends Controller
             'main_event'=>$request->input('main_event'),
             'event_type'=>$request->input('event_type'),
             'begening_of_event'=>$request->input('begening_of_event'),
-            'gd_no'=>$request->input('gd_no'),
+            'gd_no'=> $this->reptpenum($request->input('gd_no')),
             'gd_date'=>null,
-            'case_no'=>$request->input('case_no'),
-            'case_date'=>$request->input('case_date'),
-            'clause'=>$request->input('clause'),
+            'case_no'=> $this->reptpenum($request->input('case_no')),
+            'case_date'=> $request->input('case_date'),
+            'clause'=> $this->reptpenum($request->input('clause')),
             'nopc'=>$request->input('nopc'),
-            'plaintiff_mobile'=>$request->input('plaintiff_mobile'),
+            'plaintiff_mobile'=> $this->reptpenum($request->input('plaintiff_mobile')),
             'number_of_victims'=>$request->input('number_of_victims'),
             'number_of_accused'=>$request->input('number_of_accused'),
             'name_of_investigator'=>$request->input('name_of_investigator'),
-            'bp_no'=>$request->input('bp_no'),
-            'mobile_no'=>$request->input('mobile_no'),
+            'bp_no'=> $this->reptpenum($request->input('bp_no')),
+            'mobile_no'=> $this->reptpenum($request->input('mobile_no')),
             'image_video'=>$request->input('image_video'),
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),
@@ -586,18 +579,18 @@ class QrrsController extends Controller
             'main_event'=>$request->input('main_event'),
             'event_type'=>$request->input('event_type'),
             'begening_of_event'=>$request->input('begening_of_event'),
-            'gd_no'=>$request->input('gd_no'),
+            'gd_no'=> $this->reptpenum($request->input('gd_no')),
             'gd_date'=>null,
-            'case_no'=>$request->input('case_no'),
+            'case_no'=> $this->reptpenum($request->input('case_no')),
             'case_date'=>$request->input('case_date'),
-            'clause'=>$request->input('clause'),
-            'nopc'=>$request->input('nopc'),
-            'plaintiff_mobile'=>$request->input('plaintiff_mobile'),
+            'clause'=> $this->reptpenum($request->input('clause')),
+            'nopc'=> $request->input('nopc'),
+            'plaintiff_mobile'=> $this->reptpenum($request->input('plaintiff_mobile')),
             'number_of_victims'=>$request->input('number_of_victims'),
             'number_of_accused'=>$request->input('number_of_accused'),
             'name_of_investigator'=>$request->input('name_of_investigator'),
-            'bp_no'=>$request->input('bp_no'),
-            'mobile_no'=>$request->input('mobile_no'),
+            'bp_no'=> $this->reptpenum($request->input('bp_no')),
+            'mobile_no'=> $this->reptpenum($request->input('mobile_no')),
             'image_video'=>$request->input('image_video'),
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),

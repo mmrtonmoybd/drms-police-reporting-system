@@ -75,6 +75,12 @@
                                                    </label>
                                                   </div>
 
+                                                   <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="qrr.delete" {{getPermi($role->id, 'qrr.delete') == 1 ? 'checked' : ''}}>QRR delete
+                                                   </label>
+                                                  </div>
+
                                                   
                                             </div>
                                             <br>
@@ -104,6 +110,12 @@
                                                   <div class="form-check">
                                                 <label class="form-check-label">
                                                  <input type="checkbox" name="models[]" class="form-check-input" value="warrant.edit" {{getPermi($role->id, 'warrant.edit') == 1 ? 'checked' : ''}}>Warrant edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="warrant.delete" {{getPermi($role->id, 'warrant.delete') == 1 ? 'checked' : ''}}>Warrant delete
                                                    </label>
                                                   </div>
 
@@ -140,7 +152,90 @@
                                                    </label>
                                                   </div>
 
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="narcotic.delete" {{getPermi($role->id, 'narcotic.delete') == 1 ? 'checked' : ''}}>Narcotic delete
+                                                   </label>
+                                                  </div>
+
                                                   
+                                            </div>
+
+                                            <br>
+
+                                            <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b>Role permission</b> </label>
+                                                
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="role.view" {{getPermi($role->id, 'role.view') == 1 ? 'checked' : ''}}>Role view
+                                            </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="role.add" {{getPermi($role->id, 'role.add') == 1 ? 'checked' : ''}}>Role add
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="role.edit" {{getPermi($role->id, 'role.edit') == 1 ? 'checked' : ''}}>Role edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="role.delete" {{getPermi($role->id, 'role.delete') == 1 ? 'checked' : ''}}>Role delete
+                                                   </label>
+                                                  </div>
+
+                                                  
+                                            </div>
+
+                                            <br>
+
+                                             <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b>User permission</b> </label>
+                                                
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="user.view" {{getPermi($role->id, 'user.view') == 1 ? 'checked' : ''}}>User view
+                                            </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="user.add" {{getPermi($role->id, 'user.add') == 1 ? 'checked' : ''}}>User add
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="user.edit" {{getPermi($role->id, 'user.edit') == 1 ? 'checked' : ''}}>User edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="user.delete" {{getPermi($role->id, 'user.delete') == 1 ? 'checked' : ''}}>User delete
+                                                   </label>
+                                                  </div>
+
+                                                  
+                                            </div>
+
+                                            <br>
+
+                                              <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b>Settings permission</b> </label>
+                                                
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="setting.view" {{getPermi($role->id, 'setting.view') == 1 ? 'checked' : ''}}>Settings (Add, edit, delete)
+                                            </label>
+                                                </div>
+
                                             </div>
 
                                             <br>
