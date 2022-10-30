@@ -8,10 +8,10 @@
                                         <ol class="breadcrumb m-0">
                                             
                                             <li class="breadcrumb-item"><a href="{{url('admin/users')}}">Users</a></li>
-                                            <li class="breadcrumb-item active">Edit user</li>
+                                            <li class="breadcrumb-item active">Edit profile</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"> <i class=" dripicons-document-edit "></i> Edit User</h4>
+                                    <h4 class="page-title"> <i class=" dripicons-document-edit "></i> Edit profile</h4>
                                 </div>
                             </div>
                         </div>     
@@ -48,12 +48,15 @@
                                                 </div>
                                             </div>
 
+                                            @if ((auth()->user()->getRoleNames()[0] == 'OC') || (auth()->user()->getRoleNames()[0] == 'OC-Operator 1') || (auth()->user()->getRoleNames()[0] == 'OC-Operator 2') || (auth()->user()->getRoleNames()[0] == 'OC-Operator 3'))
+
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">User Thana</label>
                                                     <input type="email"  value="@if(!empty($user->thana->bn_name)) {{$user->thana->bn_name}} @endif" id="email" class="form-control" disabled>
                                                 </div>
                                             </div>
+                                            @endif
 
                                             @endif
                                         

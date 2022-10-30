@@ -232,7 +232,7 @@
 	</li>
     @endcanany
 
-                        
+                        @can('setting.view')
                     
                          <li class="side-nav-item nav-item">
                             <a href="{{url('admin/settings')}}" class="side-nav-link nav-link">
@@ -240,21 +240,27 @@
                                 <span> Settings </span>
                             </a>
                         </li>
+                        @endcan
+
+                        @canany(['role.view', 'user.view'])
 
                         <li class="side-nav-item nav-item has-submenu ">
 		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid dripicons-user-group"></i>  Users manager <i class="bi small bi-caret-down-fill"></i> </a>
 		<ul class="submenu collapse @if(request()->is('admin/users/*') || request()->is('admin/users')) show @endif">
-
+            @can('role.view')
         <li>         <a href="{{url('admin/users/role')}}" class="side-nav-link nav-link  ">
                            <i class="fa-solid fa-users"></i>
                                 <span> Role</span>
                             </a>
             </li>
+            @endcan
+            @can('user.view')
 			<li>         <a href="{{url('admin/users')}}" class="side-nav-link nav-link  ">
                            <i class="fa-solid fa-list-ul"></i>
                                 <span> User list</span>
                             </a>
             </li>
+            @endcan
             
             
             	
@@ -262,6 +268,7 @@
 		   
 		</ul>
 	</li>
+    @endcanany
                         
                        
 

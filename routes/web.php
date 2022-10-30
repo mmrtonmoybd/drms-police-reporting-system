@@ -102,13 +102,13 @@ Route::prefix('admin')->group(function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);
             Route::post('/edit/{id}', [UsersController::class, 'Update']);
 
-            Route::get('/role', [RoleController::class, 'index']);
-            Route::get('/role/add', [RoleController::class, 'addShow']);
-            Route::post('/role/add', [RoleController::class, 'addData']);
-            Route::get('/role/edit/{role}', [RoleController::class, 'editShow']);
-            Route::post('/role/edit/{role}', [RoleController::class, 'editUpdate']);
-            Route::get('/role/delete/{role}', [RoleController::class, 'delete']);
-            Route::get('/role/show/{role}', [RoleController::class, 'show']);
+            Route::get('/role', [RoleController::class, 'index'])->middleware('permission:role.view');
+            Route::get('/role/add', [RoleController::class, 'addShow'])->middleware('permission:role.add');
+            Route::post('/role/add', [RoleController::class, 'addData'])->middleware('permission:role.add');
+            Route::get('/role/edit/{role}', [RoleController::class, 'editShow'])->middleware('permission:role.edit');
+            Route::post('/role/edit/{role}', [RoleController::class, 'editUpdate'])->middleware('permission:role.edit');
+            Route::get('/role/delete/{role}', [RoleController::class, 'delete'])->middleware('permission:role.delete');
+            Route::get('/role/show/{role}', [RoleController::class, 'show'])->middleware('permission:role.view');
 
             //
 

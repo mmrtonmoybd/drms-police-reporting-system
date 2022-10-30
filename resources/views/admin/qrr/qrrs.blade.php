@@ -74,13 +74,17 @@ use Illuminate\Support\Str;
                                             @foreach ($qrrs as $qrr)
                                                 <tr>
                                                     <td class="table-action">
-                                                        
+                                                        @can('qrr.view')
                                                         <a href="{{url('admin/qrrs/details/'.$qrr->id)}}"  class="action-icon text-primary">
                                                             <i class="mdi mdi-eye"></i>
                                                         </a>
-
+                                                        @endcan
+                                                        @can('qrr.edit')
                                                         <a href="{{url('admin/qrrs/edit/'.$qrr->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @endcan
+                                                        @can('qrr.delete')
                                                         <a href="{{url('admin/qrrs/delete/'.$qrr->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                        @endcan
                                                     </td>
                                                     <td > {{$qrr->id}}</td>
                                                     <td > @if(isset($qrr->district->name)) {{$qrr->district->bn_name}} @endif</td>

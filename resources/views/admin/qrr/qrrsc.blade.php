@@ -245,14 +245,15 @@ transform: scale(1.1);
    
 <div class="row">
    <div class="card">
-                <form action="{{url('admin/qrrs/charts')}}" method="POST">
+                <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="POST">
                @csrf
                <div class="" id="app">
                                         <div class="row">
+                                          @if (auth()->user()->hasRole('Super Admin'))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -264,16 +265,53 @@ transform: scale(1.1);
                                                 </div>
                                             </div>
 
-
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            @endif
+
+                                            @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}">{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                             @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish">
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+
+                                    
             <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>

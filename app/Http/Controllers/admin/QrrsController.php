@@ -21,9 +21,26 @@ class QrrsController extends Controller
     //This method list all users
     public function Index(Request $request)
     {
+        $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+             $disid = auth()->user()->districtID;
+             $disexp = '=';
+             $thaid = auth()->user()->thanaID;
+             $thaexp = '=';
+        }
+
         $query = Qrr::query();
         $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->orderBy('id', 'desc')->paginate(20);
+        $data['qrrs'] = $query->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->orderBy('id', 'desc')->paginate(20);
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -38,9 +55,26 @@ class QrrsController extends Controller
 
     public function report(Request $request, $report)
     {
+           $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+             $disid = auth()->user()->districtID;
+             $disexp = '=';
+             $thaid = auth()->user()->thanaID;
+             $thaexp = '=';
+        }
+
         $query = Qrr::query();
         $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->orderBy('id', 'desc')->where('event_type', $report)->paginate(20);
+        $data['qrrs'] = $query->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->orderBy('id', 'desc')->where('event_type', $report)->paginate(20);
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -55,6 +89,23 @@ class QrrsController extends Controller
 
     public function chart(Request $request)
     {
+        $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+             $disid = auth()->user()->districtID;
+             $disexp = '=';
+             $thaid = auth()->user()->thanaID;
+             $thaexp = '=';
+        }
+
         // $from = Carbon::parse();
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
@@ -97,8 +148,21 @@ class QrrsController extends Controller
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
-            ;
         }
+
+        if (($dvalue !== 'ss')) {
+            $sdis = District::find($request->input('districtID'));
+        }
+
+        if (($tvalue !== 'jj')) {
+            $sthan = Thana::find($request->input('thanaID'));
+        }
+
+        $data['sdisn'] = ($dvalue !== 'ss') ? $sdis : 'খালি';
+        $data['sthan'] = ($tvalue !== 'jj') ? $sthan : 'খালি';
+        $data['ssoun'] = ($svalue !== 'gg') ? $svalue : 'খালি';
+        $data['ssdate'] = (!empty($request->input('form'))) ? $request->input('form') : 'খালি';
+        $data['stdate'] = (!empty($request->input('form'))) ? $request->input('to') : 'খালি';
 
 
 
@@ -121,8 +185,38 @@ class QrrsController extends Controller
         $thana = Thana::get();
         $data['ttn'] = $thana;
 
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            foreach ($spthana as $key => $value) {
+                $dd = Qrr::where('thanaID', $value->id)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+                $data['spthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name];
+            }
+
+            $request->session()->flash('spthana', $data['spthana']);
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+            
+                $dd = Qrr::where('thanaID', $octhana->id)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+                $val =  ($dd !== 0) ? $dd : '';
+
+            $request->session()->flash('octhananame',  $octhana->bn_name);
+            $request->session()->flash('octhanavalue', $val);
+        }
+
         //dd($data['qrrs']);
         //  return view('admin/qrr/qrrs-s', $data);
+
+        if (auth()->user()->hasRole('Super Admin')) {
 
 
         $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
@@ -150,36 +244,38 @@ class QrrsController extends Controller
         $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
         $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
 
+        }
+
         $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $data['tcat'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
 
         $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $ins99 = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $insala = Qrr::where('source_of_info', 'এলাকা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $instha = Qrr::where('source_of_info', 'থানা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $request->session()->flash('inscou', $inscou);
         $request->session()->flash('ins99', $ins99);
@@ -189,82 +285,82 @@ class QrrsController extends Controller
         $etmara = Qrr::where('event_type', 'মারামারি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etkun = Qrr::where('event_type', 'খুন')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etchori = Qrr::where('event_type', 'চুরি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etdakati = Qrr::where('event_type', 'ডাকাতি')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etsompds = Qrr::where('event_type', 'বিরোধ')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etmadok = Qrr::where('event_type', 'মাদক')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etcyber = Qrr::where('event_type', 'সাইবার')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etprota = Qrr::where('event_type', 'প্রতারণা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etrajnoi = Qrr::where('event_type', 'দুর্ঘটনা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etonno = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etnikoj = Qrr::where('event_type', 'নিখোঁজ-অপহরণ')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etdusht = Qrr::where('event_type', 'দস্যুতা')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $etjua = Qrr::where('event_type', 'জুয়া')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
 
         $request->session()->flash('etmara', ($etmara !== 0) ? $etmara : '');
@@ -285,6 +381,8 @@ class QrrsController extends Controller
         $request->session()->flash('etjua', ($etjua !== 0) ? $etjua : '');
 
 
+
+
         return view('admin/qrr/qrrsg', $data);
     }
 
@@ -294,16 +392,73 @@ class QrrsController extends Controller
     {
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+        
         return view('admin/qrr/qrrs-add', $data);
     }
 
     public function srcs(Request $request)
     {
-        //Gate::authorize('QrrDashboard');
+
+        $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+             $disid = auth()->user()->districtID;
+             $disexp = '=';
+             $thaid = auth()->user()->thanaID;
+             $thaexp = '=';
+        }
+
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
         $thana = Thana::get();
         $data['ttn'] = $thana;
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            foreach ($spthana as $key => $value) {
+                $dd = Qrr::where('thanaID', $value->id)->count();
+
+                $data['spthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name];
+            }
+
+            $request->session()->flash('spthana', $data['spthana']);
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+            
+                $dd = Qrr::where('thanaID', $octhana->id)->count();
+
+                $val =  ($dd !== 0) ? $dd : '';
+
+            $request->session()->flash('octhananame',  $octhana->bn_name);
+            $request->session()->flash('octhanavalue', $val);
+        }
+
+        if (auth()->user()->hasRole('Super Admin')) {
 
         $borgona = Qrr::where('districtID', 34)->count();
         $barisal = Qrr::where('districtID', 35)->count();
@@ -318,36 +473,38 @@ class QrrsController extends Controller
         $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
         $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
         $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
+    
+    }
 
-        $data['tin'] = Qrr::count();
-        $data['tcat'] = Qrr::whereNotNull('case_no')->count();
+        $data['tin'] = Qrr::where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
-        $inscou = Qrr::where('source_of_info', 'কোর্ট')->count();
-        $ins99 = Qrr::where('source_of_info', '৯৯৯')->count();
-        $insala = Qrr::where('source_of_info', 'এলাকা')->count();
-        $instha = Qrr::where('source_of_info', 'থানা')->count();
+        $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $ins99 = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $insala = Qrr::where('source_of_info', 'এলাকা')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $instha = Qrr::where('source_of_info', 'থানা')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         $request->session()->flash('inscou', $inscou);
         $request->session()->flash('ins99', $ins99);
         $request->session()->flash('insala', $insala);
         $request->session()->flash('instha', $instha);
 
-        $etmara = Qrr::where('event_type', 'মারামারি')->count();
-        $etkun = Qrr::where('event_type', 'খুন')->count();
-        $etchori = Qrr::where('event_type', 'চুরি')->count();
-        $etdakati = Qrr::where('event_type', 'ডাকাতি')->count();
-        $etsompds = Qrr::where('event_type', 'বিরোধ')->count();
-        $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->count();
-        $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->count();
-        $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->count();
-        $etmadok = Qrr::where('event_type', 'মাদক')->count();
-        $etcyber = Qrr::where('event_type', 'সাইবার')->count();
-        $etprota = Qrr::where('event_type', 'প্রতারণা')->count();
-        $etrajnoi = Qrr::where('event_type', 'দুর্ঘটনা')->count();
-        $etonno = Qrr::where('event_type', 'অন্যান্য')->count();
-        $etnikoj = Qrr::where('event_type', 'নিখোঁজ-অপহরণ')->count();
-        $etdusht = Qrr::where('event_type', 'দস্যুতা')->count();
-        $etjua = Qrr::where('event_type', 'জুয়া')->count();
+        $etmara = Qrr::where('event_type', 'মারামারি')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etkun = Qrr::where('event_type', 'খুন')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etchori = Qrr::where('event_type', 'চুরি')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etdakati = Qrr::where('event_type', 'ডাকাতি')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etsompds = Qrr::where('event_type', 'বিরোধ')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etsorokd = Qrr::where('event_type', 'সড়ক দুর্ঘটনা')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etnarios = Qrr::where('event_type', 'নারী ও শিশু')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etagun = Qrr::where('event_type', 'অগ্নিকান্ড')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etmadok = Qrr::where('event_type', 'মাদক')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etcyber = Qrr::where('event_type', 'সাইবার')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etprota = Qrr::where('event_type', 'প্রতারণা')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etrajnoi = Qrr::where('event_type', 'দুর্ঘটনা')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etonno = Qrr::where('event_type', 'অন্যান্য')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etnikoj = Qrr::where('event_type', 'নিখোঁজ-অপহরণ')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etdusht = Qrr::where('event_type', 'দস্যুতা')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $etjua = Qrr::where('event_type', 'জুয়া')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
 
         $request->session()->flash('etmara', ($etmara !== 0) ? $etmara : '');
@@ -368,83 +525,7 @@ class QrrsController extends Controller
         $request->session()->flash('etjua', ($etjua !== 0) ? $etjua : '');
 
 
-
-
         return view('admin/qrr/qrrsc', $data);
-    }
-
-    public function SearchSort(Request $request)
-    {
-        $session_user = Session::get('user');
-
-        // $from = Carbon::parse();
-        $to = Carbon::parse($request->input('to'))->toDateTimeString();
-        $from = Carbon::parse($request->input('form'))->toDateTimeString();
-
-        if (!empty($request->input('districtID'))) {
-            $dkey = '=';
-            $dvalue = $request->input('districtID');
-        } else {
-            $dkey = '!=';
-            $dvalue = 'ss';
-        }
-
-        if (!empty($request->input('thanaID'))) {
-            $tkey = '=';
-            $tvalue = $request->input('thanaID');
-        } else {
-            $tkey = '!=';
-            $tvalue = 'jj';
-        }
-
-        if (!empty($request->input('source_of_info'))) {
-            $skey = '=';
-            $svalue = $request->input('source_of_info');
-        } else {
-            $skey = '!=';
-            $svalue = 'gg';
-        }
-
-        if (!empty($request->input('form'))) {
-            $fkey = '=';
-            $fvalue = $request->input('form');
-        } else {
-            $fkey = '=';
-            $fvalue = '1971-01-01 11:45:00';
-        }
-
-        if (!empty($request->input('to'))) {
-            $tokey = '=';
-            $tovalue = $request->input('to');
-        } else {
-            $tokey = '=';
-            $tovalue = Carbon::now()->toDateTimeString();
-            ;
-        }
-
-
-
-        //\DB::enableQueryLog();
-        $query = Qrr::query();
-        $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
-        ->where('thanaID', $tkey, $tvalue)
-        ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->get();
-
-        //dd(\DB::getQueryLog());
-
-        //$query->where('districtID', '=', $request->input('districtID'))
-        //->orWhere('thanaID', '=', $request->input('thanaID'))
-        //->orWhere('source_of_info', '=', $request->input('source_of_info'))->orWhereDate('date_time_of_police_news', '=', $request->input('form'))
-        $data['request'] =  $request;
-        $data['districts'] = District::where('division_id', 1)->get();
-        $data['request'] = $request;
-        $thana = Thana::get();
-        $data['ttn'] = $thana;
-
-        //dd($data['qrrs']);
-        return view('admin/qrr/qrrs-s', $data);
     }
 
     private function reptpenum($sub)
@@ -457,16 +538,12 @@ class QrrsController extends Controller
     {
         $data['districts'] = District::where('division_id', 1)->get();
 
-        $validated = $request->validate([
-            'districtID' => 'required',
-        ]);
-
         $uid = auth()->user()->id;
 
         $insertAttr = [
             'divisionID'=>1,
-            'districtID'=>$request->input('districtID'),
-            'thanaID'=>$request->input('thanaID'),
+            'districtID'=> ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+            'thanaID'=>  (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID'),
             'village_word'=>$request->input('village_word'),
             'source_of_info'=>$request->input('source_of_info'),
             'date_time_of_incident'=>null,
@@ -533,6 +610,17 @@ class QrrsController extends Controller
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
 
         return view('admin/qrr/qrrs-add');
     }
@@ -547,6 +635,19 @@ class QrrsController extends Controller
 
         $data['qrr'] = Qrr::where('id', $id)->first();
 
+        Gate::authorize('editdeleteqrr', $data['qrr']);
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
         if (!$data) {
             return redirect('admin/qrrs');
         }
@@ -560,16 +661,14 @@ class QrrsController extends Controller
     //this method for update user
     public function Update(Request $request, $id)
     {
+        $qrrf = Qrr::find($id);
+        Gate::authorize('editdeleteqrr', $qrrf);
         $data['districts'] = District::where('division_id', 1)->get();
-
-        $validated = $request->validate([
-            'districtID' => 'required',
-        ]);
 
         $insertAttr = [
             'divisionID'=>1,
-            'districtID'=>$request->input('districtID'),
-            'thanaID'=>$request->input('thanaID'),
+            'districtID'=> ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+            'thanaID'=> (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID'),
             'village_word'=>$request->input('village_word'),
             'source_of_info'=>$request->input('source_of_info'),
             'date_time_of_incident'=>null,
@@ -634,6 +733,17 @@ class QrrsController extends Controller
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
 
         return view('admin/qrr/qrrs-edit', $data);
     }
@@ -647,6 +757,9 @@ class QrrsController extends Controller
         if (!$id or !is_numeric($id)) {
             return redirect('admin/qrrs');
         }
+
+        $qrrf = Qrr::find($id);
+        Gate::authorize('editdeleteqrr', $qrrf);
 
         if (qrr::where('id', $id)->delete()) {
             $request->session()->flash('success_msg', 'Data updated successfully');
@@ -684,6 +797,8 @@ class QrrsController extends Controller
 
         $data['qrr'] = Qrr::where('id', $id)->with(['district', 'thana'])->first();
 
+        Gate::authorize('editdeleteqrr', $data['qrr']);
+
         if (!$data) {
             return redirect('admin/qrrs');
         }
@@ -700,6 +815,8 @@ class QrrsController extends Controller
         }
 
         $data['qrr'] = Qrr::where('id', $id)->with(['district', 'thana'])->first();
+
+         Gate::authorize('editdeleteqrr', $data['qrr']);
 
         if (!$data) {
             return redirect('admin/qrrs');

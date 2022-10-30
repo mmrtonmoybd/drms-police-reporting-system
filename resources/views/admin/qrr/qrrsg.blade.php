@@ -262,48 +262,102 @@ transform: scale(1.1);
 </div>
 
 
+<style>
 
-   
+.sidetitle {
+    font-weight:bold;
+    color:#ffbfa0;
+}
+</style>
+
+
 <div class="row">
    <div class="card">
-                <form action="{{url('admin/qrrs/charts')}}" method="POST">
+                <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="POST">
                @csrf
                <div class="" id="app">
                                         <div class="row">
-                                            <div class="col-sm-2">
+                                          @if (auth()->user()->hasRole('Super Admin'))
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  required>
-                                                        <option value="">জেলা</option>
+                                                    <label for="districtID" class="form-label "> জেলা </label>
+                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()">
+                                                        <option value="">Select</option>
+
+                                                        @php 
+                                                        if ($sdisn !== 'খালি') {
+                                                         $did = $sdisn->id;
+                                                        } else {
+                                                         $did = 82625;
+                                                        }
+                                                        @endphp
+
                                                         @if($districts)
 
                                                         @foreach($districts as $district)
-                                                        <option value="{{$district->id}}">{{$district->bn_name}}</option>
+                                                        <option value="{{$district->id}}" {{ ($district->id == $did) ? 'selected' : '' }} >{{$district->bn_name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
                                                 </div>
                                             </div>
 
-
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            @endif
+
+                                            @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}">{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                             @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish">
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+
+                                    
             <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <select name="source_of_info" id="source_of_info" class="form-select stylish">
                      <option value="">উৎস</option>
-                     <option value="এলাকা"> এলাকা </option>
-                     <option value="কোর্ট">কোর্ট</option>
-                     <option value="থানা">থানা</option>
-                     <option value="৯৯৯">৯৯৯</option>
+                     <option value="এলাকা" {{ ($ssoun == 'এলাকা') ? 'selected' : '' }} > এলাকা </option>
+                     <option value="কোর্ট" {{ ($ssoun == 'কোর্ট') ? 'selected' : '' }}>কোর্ট</option>
+                     <option value="থানা" {{ ($ssoun == 'থানা') ? 'selected' : '' }}>থানা</option>
+                     <option value="৯৯৯" {{ ($ssoun == '৯৯৯') ? 'selected' : '' }}>৯৯৯</option>
                   </select>
                </div>
             </div>
@@ -311,8 +365,8 @@ transform: scale(1.1);
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{($ssdate !== 'খালি') ? $ssdate : ''}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{($stdate !== 'খালি') ? $stdate : ''}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -325,43 +379,15 @@ transform: scale(1.1);
             </div>
          </div>
       </div>
+      <!----
+         <div id="chart_div"></div>
+         <div id="piechart"></div>
+         <div id="chart_div2"></div>
+         --->
+
+
    </div>
 </div>
-
-
-
-
-<style>
-
-.sidetitle {
-    font-weight:bold;
-    color:#ffbfa0;
-}
-</style>
-<dib class="float3">
-    
-<span class="sidetitle">জেলা </span> <br>
- 
- <span class="sidetext">বরিশাল </span>
- 
- <span class="sidetitle">উপজেলা </span>
- 
-  <span class="sidetext">উজিরপুর </span>
-
- <span class="sidetitle">উৎস </span>
- <br>
-  <span class="sidetext">৯৯৯ </span>
-
-
-
-
-
-</dib>
-
-
-
-
-
 
 
 <a href="add" class="float2 silverhover">
@@ -508,18 +534,21 @@ transform: scale(1.1);
          <div id="chart_div2"></div>
          --->
       <div class="btn-group" role="group" aria-label="...">
-         <a href="{{url('admin/qrrs/report/মারামারি')}}" class="btn btn-danger">মারামারি</a>
+       <a href="{{url('admin/qrrs/report/মারামারি')}}" class="btn btn-danger">মারামারি</a>
          <a href="{{url('admin/qrrs/report/খুন')}}" class="btn btn-danger">খুন</a>
          <a href="{{url('admin/qrrs/report/চুরি')}}" class="btn btn-danger">চুরি</a>
          <a href="{{url('admin/qrrs/report/ডাকাতি')}}" class="btn btn-danger">ডাকাতি</a>
-         <a href="{{url('admin/qrrs/report/সম্পত্তি সংক্রান্ত')}}" class="btn btn-danger">সম্পত্তি সংক্রান্ত</a>
+         <a href="{{url('admin/qrrs/report/বিরোধ')}}" class="btn btn-danger">বিরোধ</a>
+         <a href="{{url('admin/qrrs/report/নিখোঁজ-অপহরণ')}}" class="btn btn-danger">নিখোঁজ / অপহরণ</a>
+         <a href="{{url('admin/qrrs/report/দস্যুতা')}}" class="btn btn-danger">দস্যুতা</a>
+         <a href="{{url('admin/qrrs/report/জুয়া')}}" class="btn btn-danger">জুয়া</a>
          <a href="{{url('admin/qrrs/report/সড়ক দুর্ঘটনা')}}" class="btn btn-danger">সড়ক দুর্ঘটনা</a>
          <a href="{{url('admin/qrrs/report/নারী ও শিশু')}}" class="btn btn-danger">নারী ও শিশু</a>
          <a href="{{url('admin/qrrs/report/অগ্নিকান্ড')}}" class="btn btn-danger">অগ্নিকান্ড</a>
          <a href="{{url('admin/qrrs/report/মাদক')}}" class="btn btn-danger">মাদক</a>
          <a href="{{url('admin/qrrs/report/সাইবার')}}" class="btn btn-danger">সাইবার</a>
          <a href="{{url('admin/qrrs/report/প্রতারণা')}}" class="btn btn-danger">প্রতারণা</a>
-         <a href="{{url('admin/qrrs/report/রাজনৈতিক')}}" class="btn btn-danger">রাজনৈতিক</a>
+         <a href="{{url('admin/qrrs/report/দুর্ঘটনা')}}" class="btn btn-danger">দুর্ঘটনা</a>
          <a href="{{url('admin/qrrs/report/অন্যান্য')}}" class="btn btn-danger">অন্যান্য</a>
       </div>
       
@@ -574,13 +603,17 @@ transform: scale(1.1);
                                             @foreach ($qrrs as $qrr)
                                                 <tr>
                                                     <td class="table-action">
-                                                        
+                                                        @can('qrr.view')
                                                         <a href="{{url('admin/qrrs/details/'.$qrr->id)}}"  class="action-icon text-primary">
                                                             <i class="mdi mdi-eye"></i>
                                                         </a>
-
+                                                        @endcan
+                                                        @can('qrr.edit')
                                                         <a href="{{url('admin/qrrs/edit/'.$qrr->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @endcan
+                                                        @can('qrr.delete')
                                                         <a href="{{url('admin/qrrs/delete/'.$qrr->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                        @endcan
                                                     </td>
                                                     <td > {{$qrr->id}}</td>
                                                     <td > @if(isset($qrr->district->name)) {{$qrr->district->bn_name}} @endif</td>
@@ -646,10 +679,19 @@ transform: scale(1.1);
 </div>
 <!-- end row -->
 
+     @php
+                
+                  $division_id = 1;
+                if(($sdisn !== 'খালি'))
+                    $district_id = $sdisn->id;
+                if(($sthan !== 'খালি'))
+                    $thana_id = $sthan->id;
+
+                @endphp
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
     <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
 
-    <script>
+  <script>
     var app = new Vue({
           el: '#app',
           data: {
@@ -676,7 +718,7 @@ transform: scale(1.1);
                     this.getDistricts();
                 }
                 if(this.district_id!=""){
-                    this.getUpozillas();
+                    this.getThanas();
                 }
                 
             },
