@@ -32,10 +32,10 @@ class QrrsController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-             $disid = auth()->user()->districtID;
-             $disexp = '=';
-             $thaid = auth()->user()->thanaID;
-             $thaexp = '=';
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
         }
 
         $query = Qrr::query();
@@ -55,7 +55,7 @@ class QrrsController extends Controller
 
     public function report(Request $request, $report)
     {
-           $disid = 9552;
+        $disid = 9552;
         $disexp = '!=';
         $thaid = 8256;
         $thaexp = '!=';
@@ -66,10 +66,10 @@ class QrrsController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-             $disid = auth()->user()->districtID;
-             $disexp = '=';
-             $thaid = auth()->user()->thanaID;
-             $thaexp = '=';
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
         }
 
         $query = Qrr::query();
@@ -100,10 +100,10 @@ class QrrsController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-             $disid = auth()->user()->districtID;
-             $disexp = '=';
-             $thaid = auth()->user()->thanaID;
-             $thaexp = '=';
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
         }
 
         // $from = Carbon::parse();
@@ -203,13 +203,13 @@ class QrrsController extends Controller
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $octhana = Thana::find(auth()->user()->thanaID);
             $data['octhana'] = $octhana;
-            
-                $dd = Qrr::where('thanaID', $octhana->id)->where('source_of_info', $skey, $svalue)
+
+            $dd = Qrr::where('thanaID', $octhana->id)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-                $val =  ($dd !== 0) ? $dd : '';
+            $val =  ($dd !== 0) ? $dd : '';
 
-            $request->session()->flash('octhananame',  $octhana->bn_name);
+            $request->session()->flash('octhananame', $octhana->bn_name);
             $request->session()->flash('octhanavalue', $val);
         }
 
@@ -217,33 +217,30 @@ class QrrsController extends Controller
         //  return view('admin/qrr/qrrs-s', $data);
 
         if (auth()->user()->hasRole('Super Admin')) {
+            $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
+            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
+            $barisal = Qrr::where('districtID', 35)->where('source_of_info', $skey, $svalue)
+            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+            $bhola = Qrr::where('districtID', 36)->where('source_of_info', $skey, $svalue)
+            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $barisal = Qrr::where('districtID', 35)->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+            $jalokhati = Qrr::where('districtID', 37)->where('source_of_info', $skey, $svalue)
+            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $bhola = Qrr::where('districtID', 36)->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+            $patuakhali = Qrr::where('districtID', 38)->where('source_of_info', $skey, $svalue)
+            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $jalokhati = Qrr::where('districtID', 37)->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+            $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
+            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-        $patuakhali = Qrr::where('districtID', 38)->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-
-        $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-
-        $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
-        $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
-        $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
-        $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
-        $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
-        $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
-
+            $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
+            $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
+            $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
+            $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
+            $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
+            $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
         }
 
         $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
@@ -403,13 +400,12 @@ class QrrsController extends Controller
             $octhana = Thana::find(auth()->user()->thanaID);
             $data['octhana'] = $octhana;
         }
-        
+
         return view('admin/qrr/qrrs-add', $data);
     }
 
     public function srcs(Request $request)
     {
-
         $disid = 9552;
         $disexp = '!=';
         $thaid = 8256;
@@ -421,10 +417,10 @@ class QrrsController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-             $disid = auth()->user()->districtID;
-             $disexp = '=';
-             $thaid = auth()->user()->thanaID;
-             $thaexp = '=';
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
         }
 
         $data['districts'] = District::where('division_id', 1)->get();
@@ -449,32 +445,30 @@ class QrrsController extends Controller
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $octhana = Thana::find(auth()->user()->thanaID);
             $data['octhana'] = $octhana;
-            
-                $dd = Qrr::where('thanaID', $octhana->id)->count();
 
-                $val =  ($dd !== 0) ? $dd : '';
+            $dd = Qrr::where('thanaID', $octhana->id)->count();
 
-            $request->session()->flash('octhananame',  $octhana->bn_name);
+            $val =  ($dd !== 0) ? $dd : '';
+
+            $request->session()->flash('octhananame', $octhana->bn_name);
             $request->session()->flash('octhanavalue', $val);
         }
 
         if (auth()->user()->hasRole('Super Admin')) {
+            $borgona = Qrr::where('districtID', 34)->count();
+            $barisal = Qrr::where('districtID', 35)->count();
+            $bhola = Qrr::where('districtID', 36)->count();
+            $jalokhati = Qrr::where('districtID', 37)->count();
+            $patuakhali = Qrr::where('districtID', 38)->count();
+            $pirojpur = Qrr::where('districtID', 39)->count();
 
-        $borgona = Qrr::where('districtID', 34)->count();
-        $barisal = Qrr::where('districtID', 35)->count();
-        $bhola = Qrr::where('districtID', 36)->count();
-        $jalokhati = Qrr::where('districtID', 37)->count();
-        $patuakhali = Qrr::where('districtID', 38)->count();
-        $pirojpur = Qrr::where('districtID', 39)->count();
-
-        $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
-        $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
-        $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
-        $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
-        $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
-        $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
-    
-    }
+            $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
+            $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
+            $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
+            $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
+            $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
+            $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
+        }
 
         $data['tin'] = Qrr::where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
         $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
@@ -816,7 +810,7 @@ class QrrsController extends Controller
 
         $data['qrr'] = Qrr::where('id', $id)->with(['district', 'thana'])->first();
 
-         Gate::authorize('editdeleteqrr', $data['qrr']);
+        Gate::authorize('editdeleteqrr', $data['qrr']);
 
         if (!$data) {
             return redirect('admin/qrrs');
