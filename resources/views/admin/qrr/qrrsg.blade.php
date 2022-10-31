@@ -1,4 +1,4 @@
-	  
+	
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
   <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
@@ -319,11 +319,20 @@ transform: scale(1.1);
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                       @php 
+                                                        if ($sthan !== 'খালি') {
+                                                         $did = $sthan->id;
+
+                                                         //dd($did);
+                                                        } else {
+                                                         $did = 82625;
+                                                        }
+                                                        @endphp
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
                                                         @foreach($spthanas as $thnsp)
-                                                        <option value="{{$thnsp->id}}">{{$thnsp->bn_name}}</option>
+                                                        <option value="{{$thnsp->id}}"  {{ ($thnsp->id === $did) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
