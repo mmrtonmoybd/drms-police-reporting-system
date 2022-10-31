@@ -298,73 +298,73 @@ class WarrantController extends Controller
     public function dashs(Request $request)
     {
         if (auth()->user()->hasRole('Super Admin')) {
-        $data['districts'] = District::where('division_id', 1)->get();
+            $data['districts'] = District::where('division_id', 1)->get();
 
-        $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->where('districtID', 34)->get();
-        $barisal = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->where('districtID', 35)->get();
-        $bhola = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->where('districtID', 36)->get();
-        $jalokhati = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->where('districtID', 37)->get();
-        $patuakhali = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->where('districtID', 38)->get();
-        $pirojpur = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->where('districtID', 39)->get();
+            $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->where('districtID', 34)->get();
+            $barisal = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->where('districtID', 35)->get();
+            $bhola = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->where('districtID', 36)->get();
+            $jalokhati = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->where('districtID', 37)->get();
+            $patuakhali = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->where('districtID', 38)->get();
+            $pirojpur = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->where('districtID', 39)->get();
 
-        $borgona = $borgona[0]['total_sum'];
-        $barisal = $barisal[0]['total_sum'];
-        $bhola = $bhola[0]['total_sum'];
-        $jalokhati = $jalokhati[0]['total_sum'];
-        $patuakhali = $patuakhali[0]['total_sum'];
-        $pirojpur = $pirojpur[0]['total_sum'];
+            $borgona = $borgona[0]['total_sum'];
+            $barisal = $barisal[0]['total_sum'];
+            $bhola = $bhola[0]['total_sum'];
+            $jalokhati = $jalokhati[0]['total_sum'];
+            $patuakhali = $patuakhali[0]['total_sum'];
+            $pirojpur = $pirojpur[0]['total_sum'];
 
-        $request->session()->flash('borgona', $borgona);
-        $request->session()->flash('barisal', $barisal);
-        $request->session()->flash('bhola', $bhola);
-        $request->session()->flash('jalokhati', $jalokhati);
-        $request->session()->flash('patuakhali', $patuakhali);
-        $request->session()->flash('pirojpur', $pirojpur);
+            $request->session()->flash('borgona', $borgona);
+            $request->session()->flash('barisal', $barisal);
+            $request->session()->flash('bhola', $bhola);
+            $request->session()->flash('jalokhati', $jalokhati);
+            $request->session()->flash('patuakhali', $patuakhali);
+            $request->session()->flash('pirojpur', $pirojpur);
 
-        $borgonan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('districtID', 34)->get();
-        $barisaln = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('districtID', 35)->get();
-        $bholan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('districtID', 36)->get();
-        $jalokhatin = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('districtID', 37)->get();
-        $patuakhalin = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('districtID', 38)->get();
-        $pirojpurn = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('districtID', 39)->get();
+            $borgonan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', 34)->get();
+            $barisaln = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', 35)->get();
+            $bholan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', 36)->get();
+            $jalokhatin = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', 37)->get();
+            $patuakhalin = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', 38)->get();
+            $pirojpurn = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', 39)->get();
 
-        $borgonan = (!empty($borgonan[0]['total_sum'])) ? $borgonan[0]['total_sum'] : 0;
-        $barisaln = (!empty($barisaln[0]['total_sum'])) ? $barisaln[0]['total_sum'] : 0;
-        $bholan = (!empty($bholan[0]['total_sum'])) ? $bholan[0]['total_sum'] : 0;
-        $jalokhatin = (!empty($jalokhatin[0]['total_sum'])) ? $jalokhatin[0]['total_sum'] : 0;
-        $patuakhalin = (!empty($patuakhalin[0]['total_sum'])) ? $patuakhalin[0]['total_sum'] : 0;
-        $pirojpurn = (!empty($pirojpurn[0]['total_sum'])) ? $pirojpurn[0]['total_sum'] : 0;
+            $borgonan = (!empty($borgonan[0]['total_sum'])) ? $borgonan[0]['total_sum'] : 0;
+            $barisaln = (!empty($barisaln[0]['total_sum'])) ? $barisaln[0]['total_sum'] : 0;
+            $bholan = (!empty($bholan[0]['total_sum'])) ? $bholan[0]['total_sum'] : 0;
+            $jalokhatin = (!empty($jalokhatin[0]['total_sum'])) ? $jalokhatin[0]['total_sum'] : 0;
+            $patuakhalin = (!empty($patuakhalin[0]['total_sum'])) ? $patuakhalin[0]['total_sum'] : 0;
+            $pirojpurn = (!empty($pirojpurn[0]['total_sum'])) ? $pirojpurn[0]['total_sum'] : 0;
 
-        $request->session()->flash('borgonan', $borgonan);
-        $request->session()->flash('barisaln', $barisaln);
-        $request->session()->flash('bholan', $bholan);
-        $request->session()->flash('jalokhatin', $jalokhatin);
-        $request->session()->flash('patuakhalin', $patuakhalin);
-        $request->session()->flash('pirojpurn', $pirojpurn);
+            $request->session()->flash('borgonan', $borgonan);
+            $request->session()->flash('barisaln', $barisaln);
+            $request->session()->flash('bholan', $bholan);
+            $request->session()->flash('jalokhatin', $jalokhatin);
+            $request->session()->flash('patuakhalin', $patuakhalin);
+            $request->session()->flash('pirojpurn', $pirojpurn);
 
-        $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-                ->get();
-        $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->get();
-
-
-        //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+            $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                    ->get();
+            $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->get();
 
 
-        $bari = Warrant::query();
-        $data['wars'] = Warrant::selectRaw("
+            //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+
+
+            $bari = Warrant::query();
+            $data['wars'] = Warrant::selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
         SUM(gr_tamil) AS total_gr_tamil,
@@ -375,39 +375,38 @@ class WarrantController extends Controller
         districtID
         ")->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-        $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-               ->where('districtID', 34)->get();
-        $barisalp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-                ->where('districtID', 35)->get();
-        $bholap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-                ->where('districtID', 36)->get();
-        $jalokhatip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-                ->where('districtID', 37)->get();
-        $patuakhalip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-                ->where('districtID', 38)->get();
-        $pirojpurp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
-                ->where('districtID', 39)->get();
+            $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                   ->where('districtID', 34)->get();
+            $barisalp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                    ->where('districtID', 35)->get();
+            $bholap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                    ->where('districtID', 36)->get();
+            $jalokhatip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                    ->where('districtID', 37)->get();
+            $patuakhalip = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                    ->where('districtID', 38)->get();
+            $pirojpurp = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+                    ->where('districtID', 39)->get();
 
-        $borgonap = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
-        $barisalp = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
-        $bholap = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
-        $jalokhatip = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
-        $patuakhalip = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
-        $pirojpurp = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
+            $borgonap = ($borgonap[0]['total_sum'] >= 0) ? $borgonap[0]['total_sum'] : 0;
+            $barisalp = ($barisalp[0]['total_sum'] >= 0) ? $barisalp[0]['total_sum'] : 0;
+            $bholap = ($bholap[0]['total_sum'] >= 0) ? $bholap[0]['total_sum'] : 0;
+            $jalokhatip = ($jalokhatip[0]['total_sum'] >= 0) ? $jalokhatip[0]['total_sum'] : 0;
+            $patuakhalip = ($patuakhalip[0]['total_sum'] >= 0) ? $patuakhalip[0]['total_sum'] : 0;
+            $pirojpurp = ($pirojpurp[0]['total_sum'] >= 0) ? $pirojpurp[0]['total_sum'] : 0;
 
-        $request->session()->flash('borgonap', $borgonap);
-        $request->session()->flash('barisalp', $barisalp);
-        $request->session()->flash('bholap', $bholap);
-        $request->session()->flash('jalokhatip', $jalokhatip);
-        $request->session()->flash('patuakhalip', $patuakhalip);
-        $request->session()->flash('pirojpurp', $pirojpurp);
-
+            $request->session()->flash('borgonap', $borgonap);
+            $request->session()->flash('barisalp', $barisalp);
+            $request->session()->flash('bholap', $bholap);
+            $request->session()->flash('jalokhatip', $jalokhatip);
+            $request->session()->flash('patuakhalip', $patuakhalip);
+            $request->session()->flash('pirojpurp', $pirojpurp);
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-        $data['districts'] = District::where('division_id', 1)->get();
+            $data['districts'] = District::where('division_id', 1)->get();
 
-        $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
             $data['spthanas'] = $spthana;
 
@@ -439,16 +438,16 @@ class WarrantController extends Controller
             $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                ->where('districtID', auth()->user()->districtID)
                 ->get();
-        $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-               ->where('districtID', auth()->user()->districtID)
-                ->get();
+            $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                   ->where('districtID', auth()->user()->districtID)
+                    ->get();
 
 
-        //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+            //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
 
 
-        $bari = Warrant::query();
-        $data['wars'] = Warrant::selectRaw("
+            $bari = Warrant::query();
+            $data['wars'] = Warrant::selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
         SUM(gr_tamil) AS total_gr_tamil,
@@ -461,7 +460,6 @@ class WarrantController extends Controller
         ")->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             //dd($data['spthana']);
-
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -471,40 +469,40 @@ class WarrantController extends Controller
             $dd = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('thanaID', $octhana->id)->get();
 
-                $dd = $dd[0]['total_sum'];
+            $dd = $dd[0]['total_sum'];
 
-                $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-                ->where('thanaID', $octhana->id)->get();
+            $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('thanaID', $octhana->id)->get();
 
-                $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
+            $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
 
-                $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+            $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
                ->where('thanaID', $octhana->id)->get();
 
-                $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
+            $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
 
-                $data['octhana'] =  [$dd, $octhana->bn_name];
-                $data['octhanan'] = [$dd2, $octhana->bn_name];
-                $data['octhanap'] = [$dd3, $octhana->bn_name];
+            $data['octhana'] =  [$dd, $octhana->bn_name];
+            $data['octhanan'] = [$dd2, $octhana->bn_name];
+            $data['octhanap'] = [$dd3, $octhana->bn_name];
 
-                $request->session()->flash('octhana', $data['octhana']);
+            $request->session()->flash('octhana', $data['octhana']);
             $request->session()->flash('octhanan', $data['octhanan']);
             $request->session()->flash('octhanap', $data['octhanap']);
 
 
-             $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
-               ->where('thanaID', $octhana->id)
-                ->get();
-        $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
-               ->where('thanaID', $octhana->id)
-                ->get();
+            $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+              ->where('thanaID', $octhana->id)
+               ->get();
+            $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                   ->where('thanaID', $octhana->id)
+                    ->get();
 
 
-        //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+            //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
 
 
-        $bari = Warrant::query();
-        $data['wars'] = Warrant::selectRaw("
+            $bari = Warrant::query();
+            $data['wars'] = Warrant::selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
         SUM(gr_tamil) AS total_gr_tamil,
@@ -515,7 +513,6 @@ class WarrantController extends Controller
         districtID,
         thanaID
         ")->where('thanaID', $octhana->id)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
-
         }
 
 
