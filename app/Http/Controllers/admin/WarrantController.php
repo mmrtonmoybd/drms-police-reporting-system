@@ -532,6 +532,14 @@ class WarrantController extends Controller
             $dvalue = 'ss';
         }
 
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'ss';
+        }
+
         if (!empty($request->input('form'))) {
             $fkey = '=';
             $fvalue = $request->input('form');
@@ -549,7 +557,9 @@ class WarrantController extends Controller
             ;
         }
 
-        $data['districts'] = District::where('division_id', 1)->get();
+        if (auth()->user()->hasRole('Super Admin')) {
+
+$data['districts'] = District::where('division_id', 1)->get();
 
         $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                 ->where('districtID', 34)->whereBetween('date', [$fvalue, $tovalue])->get();
@@ -656,6 +666,128 @@ class WarrantController extends Controller
         $request->session()->flash('jalokhatip', $jalokhatip);
         $request->session()->flash('patuakhalip', $patuakhalip);
         $request->session()->flash('pirojpurp', $pirojpurp);
+
+
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $data['districts'] = District::where('division_id', 1)->get();
+
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+             foreach ($spthana as $key => $value) {
+                $dd = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                ->where('thanaID', $value->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+                $dd = $dd[0]['total_sum'];
+
+                $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                ->where('thanaID', $value->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+                $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
+
+                $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+               ->where('thanaID', $value->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+                $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
+
+                $data['spthana'][$key] =  [$dd, $value->bn_name];
+                $data['spthanan'][$key] = [$dd2, $value->bn_name];
+                $data['spthanap'][$key] = [$dd3, $value->bn_name];
+            }
+
+             $request->session()->flash('spthana', $data['spthana']);
+            $request->session()->flash('spthanan', $data['spthanan']);
+            $request->session()->flash('spthanap', $data['spthanap']);
+
+
+             $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                ->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->get();
+        $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                ->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+
+        //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+
+        $tha = Thana::find($tvalue);
+        $data['tha'] = $tha;
+
+
+        $bari = Warrant::query();
+        $data['wars'] = Warrant::selectRaw("
+        (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
+        (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
+        SUM(gr_tamil) AS total_gr_tamil,
+        SUM(cr_tamil) AS total_cr_tamil,
+        SUM(saja_gr_tamil) AS total_saja_gr_tamil,
+        SUM(saja_cr_tamil) AS total_saja_cr_tamil,
+        SUM(recall_other) AS total_recall,
+        districtID,
+        thanaID
+        ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        }
+
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhanacol'] = $octhana;
+
+            $dd = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                ->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+            $dd = $dd[0]['total_sum'];
+
+            $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+            $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
+
+            $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+               ->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+            $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
+
+            $data['octhana'] =  [$dd, $octhana->bn_name];
+            $data['octhanan'] = [$dd2, $octhana->bn_name];
+            $data['octhanap'] = [$dd3, $octhana->bn_name];
+
+            $request->session()->flash('octhana', $data['octhana']);
+            $request->session()->flash('octhanan', $data['octhanan']);
+            $request->session()->flash('octhanap', $data['octhanap']);
+
+
+            $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+              ->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])
+               ->get();
+            $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                   ->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])
+                    ->get();
+
+
+            //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+
+
+            $bari = Warrant::query();
+            $data['wars'] = Warrant::selectRaw("
+        (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
+        (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
+        SUM(gr_tamil) AS total_gr_tamil,
+        SUM(cr_tamil) AS total_cr_tamil,
+        SUM(saja_gr_tamil) AS total_saja_gr_tamil,
+        SUM(saja_cr_tamil) AS total_saja_cr_tamil,
+        SUM(recall_other) AS total_recall,
+        districtID,
+        thanaID
+        ")->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+
+        }
+
+        
 
 
         return view('admin/warrant/warrantsr', $data);

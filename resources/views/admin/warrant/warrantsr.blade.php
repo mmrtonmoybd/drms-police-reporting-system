@@ -8,10 +8,24 @@
                                         <ol class="breadcrumb m-0">
                                             
                                             <li class="breadcrumb-item"><a href="{{url('admin/warrant')}}">Warrants</a></li>
-                                            <li class="breadcrumb-item active">{{$dis->bn_name}} Warrant</li>
+                                            <li class="breadcrumb-item active">
+                                            @if (auth()->user()->hasRole('Super Admin'))    
+                                            {{$dis->bn_name}} Warrant
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$tha->bn_name}} Warrant
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$octhanacol->bn_name}} Warrant
+                                            @endif
+                                        </li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"><i class="dripicons-scale"></i>{{$dis->bn_name}} Warrant</h4>
+                                    <h4 class="page-title"><i class="dripicons-scale"></i>@if (auth()->user()->hasRole('Super Admin'))    
+                                            {{$dis->bn_name}} Warrant
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$tha->bn_name}} Warrant
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$octhanacol->bn_name}} Warrant
+                                            @endif</h4>
                                 </div>
                             </div>
                         </div>     
@@ -38,14 +52,39 @@
                                             <!-- chart  -->
                                             
 
-                                            <h3>{{$dis->bn_name}} মোট রিসিভ: {{ $trecive[0]['total_sum'] }}</h3>
-                                            <h3>{{$dis->bn_name}} মোট নিষ্পত্তি: {{ $tnis[0]['total_sum'] }}</h3>
-                                            <h3>{{$dis->bn_name}} মোট পেন্ডিং: @if (($trecive[0]['total_sum'] - $tnis[0]['total_sum']) >= 0) {{$trecive[0]['total_sum'] - $tnis[0]['total_sum']}} @else {{0}} @endif</h3>
+                                            <h3>@if (auth()->user()->hasRole('Super Admin'))    
+                                            {{$dis->bn_name}} Warrant
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$tha->bn_name}} Warrant
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$octhanacol->bn_name}} Warrant
+                                            @endif মোট রিসিভ: {{ $trecive[0]['total_sum'] }}</h3>
+
+
+                                            <h3>@if (auth()->user()->hasRole('Super Admin'))    
+                                            {{$dis->bn_name}} Warrant
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$tha->bn_name}} Warrant
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$octhanacol->bn_name}} Warrant
+                                            @endif মোট নিষ্পত্তি: {{ $tnis[0]['total_sum'] }}</h3>
+
+                                            <h3>@if (auth()->user()->hasRole('Super Admin'))    
+                                            {{$dis->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$tha->bn_name}}
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$octhanacol->bn_name}}
+                                            @endif মোট পেন্ডিং: @if (($trecive[0]['total_sum'] - $tnis[0]['total_sum']) >= 0) {{$trecive[0]['total_sum'] - $tnis[0]['total_sum']}} @else {{0}} @endif</h3>
 
                                             <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
+                                                    @if (auth()->user()->hasRole('Super Admin'))
                                                     <th > জেলা </th>
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    <th > থানা </th>
+                                                    @endif
                                                     <th > মোট রিসিভ  </th>
                                                     <th > মোট নিষ্পত্তি</th>
                                                     <th > মোট জিআর তামিল </th>
@@ -61,7 +100,13 @@
                                             @foreach ($wars as $war)
                                                 <tr>
 
-                                                    <td > {{$dis->bn_name}}</td>
+                                                    <td >@if (auth()->user()->hasRole('Super Admin'))    
+                                            {{$dis->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$tha->bn_name}}
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$octhanacol->bn_name}}
+                                            @endif</td>
                                                     
                                                     <td > {{$war->total_recive}}</td>
                                                     <td > {{$war->total_nispotti}}</td>

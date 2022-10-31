@@ -612,11 +612,15 @@ border-left: 3px solid #0ACF97!important;
                                         <span>My Account</span>
                                     </a>
 
+                                    @can('setting.view')
+
                                     <!-- item-->
                                     <a href="{{url('admin/settings')}}" class="dropdown-item notify-item">
                                         <i class="mdi mdi-account-edit me-1"></i>
                                         <span>Settings</span>
                                     </a>
+
+                                    @endcan
 
                                     
 

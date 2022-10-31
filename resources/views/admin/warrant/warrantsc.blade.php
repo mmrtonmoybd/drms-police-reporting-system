@@ -28,7 +28,7 @@
                                             
 
 <div> 
-                                                <form action="{{url('/admin/warrant/search')}}" method="POST">
+                                                <form target="_blank" action="{{url('/admin/warrant/search')}}" method="POST">
                                                     @csrf
                                                     <div class="col-sm-4">
                                                         @if  (auth()->user()->hasRole('Super Admin'))
