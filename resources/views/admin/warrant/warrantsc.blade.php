@@ -31,6 +31,7 @@
                                                 <form action="{{url('/admin/warrant/search')}}" method="POST">
                                                     @csrf
                                                     <div class="col-sm-4">
+                                                        @if  (auth()->user()->hasRole('Super Admin'))
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
                                                     <select name="districtID" id="districtID" class="form-select"  v-model="district_id">
@@ -43,6 +44,36 @@
                                                         @endif
                                                     </select>
                                                 </div>
+                                                @endif
+
+                                                @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                                 <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}">{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                @endif
+
+                                                @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                                 <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($octhanacol)
+
+                                                        <option value="{{$octhanacol->id}}" selected>{{$octhanacol->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                                @endif
 
 
                                             <div class="input-group" id="timepicker-input-group2">
@@ -77,7 +108,11 @@
                                             <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
+                                                    @if (auth()->user()->hasRole('Super Admin'))
                                                     <th > জেলা </th>
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    <th > থানা </th>
+                                                    @endif
                                                     <th > মোট রিসিভ  </th>
                                                     <th > মোট নিষ্পত্তি</th>
                                                     <th > মোট জিআর তামিল </th>
@@ -90,18 +125,26 @@
                                             <tbody>
 @php
 use App\Models\District;
+use App\Models\Thana;
 
 function disna($id) {
     $get = District::find($id);
+    return $get->bn_name;
+}
+
+function thana($id) {
+    $get = Thana::find($id);
     return $get->bn_name;
 }
 @endphp
                                             @if($wars)
                                             @foreach ($wars as $war)
                                                 <tr>
-
+                                                    @if (auth()->user()->hasRole('Super Admin'))
                                                     <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif</td>
-                                                    
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
+                                                    <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
+                                                    @endif
                                                     <td > {{$war->total_recive}}</td>
                                                     <td > {{$war->total_nispotti}}</td>
                                                     <td > {{$war->total_gr_tamil}}</td>

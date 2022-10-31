@@ -10,16 +10,34 @@ use App\Models\Warrant;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Thana;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
 class WarrantController extends Controller
 {
     public function index(Request $request)
     {
-        //$session_user = Session::get('user');
+        $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
+        }
+
+
         $query = Warrant::query();
         $query->with(['district', 'thana']);
-        $data['wars'] = $query->orderBy('id', 'desc')->paginate(20);
+        $data['wars'] = $query->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->orderBy('id', 'desc')->paginate(20);
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -42,13 +60,23 @@ class WarrantController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
         return view('admin/warrant/warrant-add', $data);
     }
 
     public function addData(Request $request)
     {
         $request->validate([
-            'districtID' => 'required',
             'thanaID' => 'required',
             'date' => 'required',
             'gr_recive' => 'required',
@@ -80,7 +108,9 @@ class WarrantController extends Controller
                 'cr_tamil' => $this->reptpenum($request->input('cr_tamil')),
                 'saja_gr_tamil' => $this->reptpenum($request->input('saja_gr_tamil')),
                 'saja_cr_tamil' => $this->reptpenum($request->input('saja_cr_tamil')),
-                'recall_other' => $this->reptpenum($request->input('recall_other'))
+                'recall_other' => $this->reptpenum($request->input('recall_other')),
+                'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+                'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
         ]);
 
         if (Warrant::create($request->all())) {
@@ -89,6 +119,17 @@ class WarrantController extends Controller
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
             return redirect('admin/warrant/add');
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
         }
 
         return view('admin/warrant/warrant-add');
@@ -100,11 +141,28 @@ class WarrantController extends Controller
             return redirect('admin/warrant');
         }
 
-        $data['war'] = Warrant::where('id', $id)->first();
+        $war = Warrant::where('id', $id)->first();
+
+        $data['war'] = $war;
 
         if (!$data) {
             return redirect('admin/warrant');
         }
+
+        Gate::authorize('editdeletewarrant', $war);
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
+
         $data['request'] = $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['thanas'] = $data['war']->districtID ? Thana::where('district_id', $data['war']->districtID)->get() : [] ;
@@ -113,8 +171,10 @@ class WarrantController extends Controller
 
     public function editUpdate(Request $request, $id)
     {
+        $war = Warrant::where('id', $id)->first();
+        Gate::authorize('editdeletewarrant', $war);
+
         $request->validate([
-            'districtID' => 'required',
             'thanaID' => 'required',
             'date' => 'required',
             'gr_recive' => 'required',
@@ -143,8 +203,12 @@ class WarrantController extends Controller
                 'cr_tamil' => $this->reptpenum($request->input('cr_tamil')),
                 'saja_gr_tamil' => $this->reptpenum($request->input('saja_gr_tamil')),
                 'saja_cr_tamil' => $this->reptpenum($request->input('saja_cr_tamil')),
-                'recall_other' => $this->reptpenum($request->input('recall_other'))
+                'recall_other' => $this->reptpenum($request->input('recall_other')),
+                'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+                'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
         ]);
+
+
 
         if (Warrant::where('id', $id)->update($request->all())) {
             $request->session()->flash('success_msg', 'Data updated successfully');
@@ -153,12 +217,25 @@ class WarrantController extends Controller
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
 
         return view('admin/warrant/warrant-edit', $data);
     }
 
     public function delete(Request $request, $id)
     {
+        $war = Warrant::where('id', $id)->first();
+        Gate::authorize('editdeletewarrant', $war);
         if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
         }
@@ -175,6 +252,8 @@ class WarrantController extends Controller
 
     public function pView(Request $request, $id)
     {
+        $war = Warrant::where('id', $id)->first();
+        Gate::authorize('editdeletewarrant', $war);
         if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
         }
@@ -190,6 +269,8 @@ class WarrantController extends Controller
 
     public function PrintView(Request $request, $id)
     {
+        $war = Warrant::where('id', $id)->first();
+        Gate::authorize('editdeletewarrant', $war);
         if (!$id or !is_numeric($id)) {
             return redirect('admin/warrant');
         }
@@ -216,6 +297,7 @@ class WarrantController extends Controller
 
     public function dashs(Request $request)
     {
+        if (auth()->user()->hasRole('Super Admin')) {
         $data['districts'] = District::where('division_id', 1)->get();
 
         $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
@@ -244,7 +326,6 @@ class WarrantController extends Controller
         $request->session()->flash('jalokhati', $jalokhati);
         $request->session()->flash('patuakhali', $patuakhali);
         $request->session()->flash('pirojpur', $pirojpur);
-
 
         $borgonan = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                 ->where('districtID', 34)->get();
@@ -320,6 +401,122 @@ class WarrantController extends Controller
         $request->session()->flash('jalokhatip', $jalokhatip);
         $request->session()->flash('patuakhalip', $patuakhalip);
         $request->session()->flash('pirojpurp', $pirojpurp);
+
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+        $data['districts'] = District::where('division_id', 1)->get();
+
+        $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            foreach ($spthana as $key => $value) {
+                $dd = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                ->where('thanaID', $value->id)->get();
+
+                $dd = $dd[0]['total_sum'];
+
+                $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                ->where('thanaID', $value->id)->get();
+
+                $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
+
+                $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+               ->where('thanaID', $value->id)->get();
+
+                $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
+
+                $data['spthana'][$key] =  [$dd, $value->bn_name];
+                $data['spthanan'][$key] = [$dd2, $value->bn_name];
+                $data['spthanap'][$key] = [$dd3, $value->bn_name];
+            }
+
+            $request->session()->flash('spthana', $data['spthana']);
+            $request->session()->flash('spthanan', $data['spthanan']);
+            $request->session()->flash('spthanap', $data['spthanap']);
+
+            $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+               ->where('districtID', auth()->user()->districtID)
+                ->get();
+        $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+               ->where('districtID', auth()->user()->districtID)
+                ->get();
+
+
+        //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+
+
+        $bari = Warrant::query();
+        $data['wars'] = Warrant::selectRaw("
+        (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
+        (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
+        SUM(gr_tamil) AS total_gr_tamil,
+        SUM(cr_tamil) AS total_cr_tamil,
+        SUM(saja_gr_tamil) AS total_saja_gr_tamil,
+        SUM(saja_cr_tamil) AS total_saja_cr_tamil,
+        SUM(recall_other) AS total_recall,
+        districtID,
+        thanaID
+        ")->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            //dd($data['spthana']);
+
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhanacol'] = $octhana;
+
+            $dd = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                ->where('thanaID', $octhana->id)->get();
+
+                $dd = $dd[0]['total_sum'];
+
+                $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                ->where('thanaID', $octhana->id)->get();
+
+                $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
+
+                $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+               ->where('thanaID', $octhana->id)->get();
+
+                $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
+
+                $data['octhana'] =  [$dd, $octhana->bn_name];
+                $data['octhanan'] = [$dd2, $octhana->bn_name];
+                $data['octhanap'] = [$dd3, $octhana->bn_name];
+
+                $request->session()->flash('octhana', $data['octhana']);
+            $request->session()->flash('octhanan', $data['octhanan']);
+            $request->session()->flash('octhanap', $data['octhanap']);
+
+
+             $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+               ->where('thanaID', $octhana->id)
+                ->get();
+        $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+               ->where('thanaID', $octhana->id)
+                ->get();
+
+
+        //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+
+
+        $bari = Warrant::query();
+        $data['wars'] = Warrant::selectRaw("
+        (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
+        (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
+        SUM(gr_tamil) AS total_gr_tamil,
+        SUM(cr_tamil) AS total_cr_tamil,
+        SUM(saja_gr_tamil) AS total_saja_gr_tamil,
+        SUM(saja_cr_tamil) AS total_saja_cr_tamil,
+        SUM(recall_other) AS total_recall,
+        districtID,
+        thanaID
+        ")->where('thanaID', $octhana->id)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        }
 
 
         return view('admin/warrant/warrantsc', $data);

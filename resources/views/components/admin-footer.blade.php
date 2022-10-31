@@ -12,7 +12,7 @@
                 <script>document.write(new Date().getFullYear())</script> © DARMS Management
             </div>
             <div class="col-md-6 text-end" style="font-size: .9rem;">
-                Developed By <a href="https://www.facebook.com/mmrtonmoy">Moshiur Rahman</a>
+                Developed By <a href="https://engineerbd.net/">Engineer BD Network</a>
             </div>
       
         </div>
