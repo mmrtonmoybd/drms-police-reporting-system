@@ -354,16 +354,19 @@ transform: scale(1.1);
 
 
 
-
+@can('qrr.add')
 <a href="add" class="float2 silverhover">
     
 <i class="dripicons-plus  plus my-float"></i>
 </a>
+@endcan
 
+@can('qrr.view')
 
 <a href="../qrrs" class="float silverhover" style="padding: 7px;">
 <i style="font-size: 20px;" class="dripicons-view-list my-float"></i>
 </a>
+@endcan
 
 
 

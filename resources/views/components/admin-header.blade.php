@@ -284,9 +284,9 @@ border-left: 3px solid #0ACF97!important;
 
         // Set chart options
         var options = {
-        title: "Number of Revice",
-        width: 600,
-        height: 400,
+        title: "",
+        width: "98%",
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -311,7 +311,9 @@ border-left: 3px solid #0ACF97!important;
         ]);
 
         var options = {
-          title: 'নিষ্পত্তি by District wise',
+          title: '',
+          width: "98%",
+          height: 172,
           is3D: true,
           pieSliceText: 'value',
         };
@@ -345,9 +347,9 @@ border-left: 3px solid #0ACF97!important;
 
         // Set chart options
         var options = {
-        title: "District wise পেন্ডিং",
-        width: 600,
-        height: 400,
+        title: "",
+        width: "98%",
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -382,9 +384,9 @@ border-left: 3px solid #0ACF97!important;
 
         // Set chart options
         var options = {
-        title: "Number of Revice",
-        width: 600,
-        height: 400,
+        title: "",
+        width: "98%",
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -408,7 +410,9 @@ border-left: 3px solid #0ACF97!important;
         ]);
 
         var options = {
-          title: 'নিষ্পত্তি by Thana wise',
+          title: '',
+          width: "98%",
+          height: 172,
           is3D: true,
           pieSliceText: 'value',
         };
@@ -441,9 +445,9 @@ border-left: 3px solid #0ACF97!important;
 
         // Set chart options
         var options = {
-        title: "District wise পেন্ডিং",
-        width: 600,
-        height: 400,
+        title: "",
+        width: "98%",
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -474,9 +478,9 @@ border-left: 3px solid #0ACF97!important;
 
         // Set chart options
         var options = {
-        title: "Number of Revice",
-        width: 600,
-        height: 400,
+        title: "",
+        width: "98%",
+        height: 300,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
@@ -496,7 +500,7 @@ border-left: 3px solid #0ACF97!important;
         ]);
 
         var options = {
-          title: 'নিষ্পত্তি by Thana wise',
+          title: '',
           is3D: true,
           pieSliceText: 'value',
         };
@@ -525,7 +529,7 @@ border-left: 3px solid #0ACF97!important;
 
         // Set chart options
         var options = {
-        title: "District wise পেন্ডিং",
+        title: "",
         width: 600,
         height: 400,
         bar: {groupWidth: "95%"},

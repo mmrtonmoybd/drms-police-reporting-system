@@ -1,12 +1,11 @@
-	
+<x-admin-header />
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
   <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
 
 
-
-
-<x-admin-header />
 <!-- start page title -
    <div class="row">
       <div class="col-12">
@@ -56,7 +55,11 @@
    }
    
 
-   
+   .purplecol  {
+       
+       background: purple;
+       
+   }
    
    
 
@@ -278,11 +281,28 @@ transform: scale(1.1);
                <div class="" id="app">
                                         <div class="row">
                                           @if (auth()->user()->hasRole('Super Admin'))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()">
-                                                        <option value="">Select</option>
+                                                    <label for="districtID" class="form-label "></label>
+                                                    
+                                                           @php 
+                                                        if ($sdisn !== 'খালি') {
+                                                         $col = 'purplecol';
+                                                        } else {
+                                                         $col ='';
+                                                        }
+                                                        
+                                                   
+                                                        
+                                                        
+                                                        
+                                                        @endphp
+                                                    
+                                                   
+                                                    
+                                                    
+                                                    <select name="districtID" id="districtID" class="form-select stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
+                                                        <option value="">জেলা</option>
 
                                                         @php 
                                                         if ($sdisn !== 'খালি') {
@@ -399,15 +419,19 @@ transform: scale(1.1);
 </div>
 
 
+@can('qrr.add')
 <a href="add" class="float2 silverhover">
     
 <i class="dripicons-plus  plus my-float"></i>
 </a>
+@endcan
 
+@can('qrr.view')
 
 <a href="../qrrs" class="float silverhover" style="padding: 7px;">
 <i style="font-size: 20px;" class="dripicons-view-list my-float"></i>
 </a>
+@endcan
 
 
 

@@ -4,15 +4,19 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<script src="https://animexdev.com/modpos/admin/lib/@fortawesome/fontawesome-free/font-awesomekit.js" crossorigin="anonymous"></script>
-
-
-<div class="leftside-menu">
-    <nav class="sidebar  py-2 mb-4"> 
-    
+<script src="https://animexdev.com/modpos/admin/lib/@fortawesome/fontawesome-free/font-awesomekit.js" crossorigin="anonymous"></script>  
     
     
 <style type="text/css">
+
+.side-nav-item.nav-item:hover {
+  background: #ffffff30;
+}
+
+
+.side-nav-link.nav-link {
+  background: transparent;
+}
 
 .sidebar li .submenu{ 
 	list-style: none; 
@@ -28,6 +32,11 @@
 }
 .sidebar .nav-link:hover {
     color: #ddd;
+}
+
+.leftside-menu {
+  position: fixed;
+  overflow: auto;
 }
 
 </style>
@@ -71,10 +80,11 @@
 
 
 
-    
+<div class="leftside-menu">
+    <nav class="sidebar">
     
                 <!-- LOGO -->
-                <a href="{{url('admin/dashboard')}}" class="logo text-center logo-light" style="color: #FFF;text-decoration:none;">
+                <a href="{{url('admin/dashboard')}}" class="logo text-center logo-light" style="color: #FFF;text-decoration:none;z-index: 1000;">
                     <span class="logo-lg" style="color:#FFF">
                         <h1>DRMS</h1>
                         <p></p>
@@ -86,7 +96,7 @@
 
               
     
-                <div class="h-100" id="leftside-menu-container " data-simplebar>
+                <div class="" id="leftside-menu-container " data-simplebar>
 
                     <!--- Sidemenu -->
                     <ul class="side-nav">
