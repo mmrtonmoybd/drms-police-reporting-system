@@ -27,16 +27,18 @@ use Illuminate\Support\Str;
                                     <div class="card-body table-responsive">
                                         
                                         <div class="row">
+                                            @can('narcotic.add')
                                             <div class="col-sm-2">
                                             <a href="{{url('admin/narcotic/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Narcotic</a>
                                             </div>
-
+                                            @endcan
                                            
                                             
                                         </div>
                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
+                                                    <th style="width: 86px">Action</th>
                                                     <th > রেফারেন্স নং </th>
                                                     <th > ট্র্যাকিং নং </th>
                                                     <th> ক্রমিক নং </th>
@@ -69,7 +71,7 @@ use Illuminate\Support\Str;
                                                     <th > তদন্তের ফলাফল (CS নং) </th>
                                                     <th > তারিখ </th>
                                                     <th > মন্তব্য  </th>
-                                                    <th style="width: 86px">Action</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -77,6 +79,17 @@ use Illuminate\Support\Str;
                                             @if($narcotics)
                                             @foreach ($narcotics as $nar)
                                                 <tr>
+                                                    <td class="table-action">
+                                                        <a href="{{url('admin/narcotic/view/'.$nar->id)}}"  class="action-icon text-primary">
+                                                            <i class="mdi mdi-eye"></i>
+                                                        </a>
+                                                        @can('narcotic.edit')
+                                                        <a href="{{url('admin/narcotic/edit/'.$nar->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @endcan
+                                                        @can('narcotic.delete')
+                                                        <a href="{{url('admin/narcotic/delete/'.$nar->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                       @endcan
+                                                    </td>
                                                     <td > {{$nar->id}}</td>
                                                     <td > {{$nar->trakingID}}</td>
                                                     <td> {{$nar->serial}}</td>
@@ -109,16 +122,7 @@ use Illuminate\Support\Str;
                                                     <td > {{$nar->investigate_result}}</td>
                                                     <td > {{date('d/m/Y', strtotime($nar->tdate))}}</td>
                                                     <td > {{Str::limit($nar->comment, 5)}}</td>
-                                                       
-                                                    <td class="table-action">
-                                                        <a href="{{url('admin/narcotic/view/'.$nar->id)}}"  class="action-icon text-primary">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </a>
-
-                                                        <a href="{{url('admin/narcotic/edit/'.$nar->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
-                                                        <a href="{{url('admin/narcotic/delete/'.$nar->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
-                                                       
-                                                    </td>
+                                                    
                                                 </tr>
 
                                             @endforeach

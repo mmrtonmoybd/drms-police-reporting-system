@@ -180,13 +180,46 @@
                                 <span> Unnatural Death </span>
                             </a>
                         </li>
-                        
-                        <li class="side-nav-item nav-item">
-                            <a href="{{url('admin/narcotic')}}" class="side-nav-link nav-link">
-                           <i class="fa-solid fa-tablets"></i>
-                                <span> Narcotics </span>
+                    
+
+                         @canany(['narcotic.add', 'narcotic.dashboard', 'narcotic.view'])
+
+                        <li class="side-nav-item nav-item has-submenu">
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-tablets"></i>  Narcotics <i class="bi small bi-caret-down-fill"></i> </a>
+		<ul class="submenu collapse @if(request()->is('admin/narcotic/*') || request()->is('admin/narcotic')) show @endif"> 
+            @can('narcotic.dashboard')
+			<li>         <a href="{{url('admin/narcotic/dashboard')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-chart-line"></i>
+                                <span> Narcotics Dashboard</span>
                             </a>
-                        </li>
+            </li>
+
+            @endcan
+            
+            @can('narcotic.add')
+            	<li>         <a href="{{url('admin/narcotic/add')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-plus"></i>
+                                <span> Add Narcotic</span>
+                            </a>
+            </li>
+            @endcan
+            
+            
+            
+            @can('narcotic.view')
+		    <li>
+		      <a href="{{url('admin/narcotic')}}" class="side-nav-link nav-link ">
+                          <i class="fa-solid fa-list-ul"></i>
+                                <span> Narcotics List </span>
+                            </a>
+		    </li>
+            @endcan
+		   
+		</ul>
+	</li>
+    @endcanany
+
+
 
                         <li class="side-nav-item nav-item">
                             <a href="{{url('admin/women_and_childrens')}}" class="side-nav-link nav-link">

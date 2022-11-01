@@ -97,6 +97,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/delete/{id}', [NarcotiscController::class, 'delete'])->middleware('permission:narcotic.delete');
         Route::get('/narcotic/view/{id}', [NarcotiscController::class, 'pView'])->middleware('permission:narcotic.view');
         Route::get('/narcotic/print-details/{id}', [NarcotiscController::class, 'PrintView'])->middleware('permission:narcotic.view');
+        Route::get('narcotic/dashboard', [NarcotiscController::class, 'dashp'])->middleware('permission:narcotic.dashboard');
+        Route::post('narcotic/dashboard', [NarcotiscController::class, 'dashsc'])->middleware('permission:narcotic.dashboard');
 
         Route::group(['prefix' => 'users'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);

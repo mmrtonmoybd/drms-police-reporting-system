@@ -545,6 +545,8 @@ border-left: 3px solid #0ACF97!important;
     </script>
       @endif
 
+      @include('components.narcoticg')
+
        <!-- chart JS -->
 
     </head>

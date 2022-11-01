@@ -18,6 +18,17 @@ class NarcotiscController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
         return view('admin/narcotic/narcotic-add', $data);
     }
 
@@ -59,8 +70,14 @@ class NarcotiscController extends Controller
 
         $uid = auth()->user()->id;
 
-        $request->request->add(['trakingID' => $trakingid, 'user_id' => $uid, 'divisionID' => 1,]);
-        $request->merge(['sdate' => Carbon::createFromFormat('d/m/Y', $request->input('sdate'))->format('Y-m-d')]);
+        $request->request->add([
+            'trakingID' => $trakingid, 
+            'user_id' => $uid, 'divisionID' => 1,
+    ]);
+        $request->merge(['sdate' => Carbon::createFromFormat('d/m/Y', $request->input('sdate'))->format('Y-m-d'),
+     'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+    'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
+    ]);
         if (!empty($request->input('tdate'))) {
             $request->merge(['tdate' => Carbon::createFromFormat('d/m/Y', $request->input('tdate'))->format('Y-m-d')]);
         }
@@ -78,10 +95,24 @@ class NarcotiscController extends Controller
 
     public function index(Request $request)
     {
-        $session_user = Session::get('user');
+        if (auth()->user()->hasRole('Super Admin')) {
         $query = Narcotic::query();
         $query->with(['district', 'thana']);
         $data['narcotics'] = $query->orderBy('id', 'desc')->paginate(20);
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+        $query = Narcotic::query();
+        $query->with(['district', 'thana']);
+        $data['narcotics'] = $query->where('districtID', auth()->user()->districtID)->orderBy('id', 'desc')->paginate(20); 
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+        $query = Narcotic::query();
+        $query->with(['district', 'thana']);
+        $data['narcotics'] = $query->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20); 
+        }
+        
 
         return view('admin/narcotic/narcotic', $data);
     }
@@ -97,6 +128,19 @@ class NarcotiscController extends Controller
         if (!$data) {
             return redirect('admin/qrrs');
         }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
+
         $data['request'] = $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['thanas'] = $data['nar']->districtID ? Thana::where('district_id', $data['nar']->districtID)->get() : [] ;
@@ -140,7 +184,9 @@ class NarcotiscController extends Controller
             'bidesh_alcohol' => $this->reptpenum($request->input('bidesh_alcohol')),
             'lsd' => $this->reptpenum($request->input('lsd')),
             'ice' => $this->reptpenum($request->input('ice')),
-            'otherd' => $this->reptpenum($request->input('otherd'))
+            'otherd' => $this->reptpenum($request->input('otherd')),
+            'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+            'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
         ]);
 
         $serial = $request->input('serial');
@@ -163,6 +209,18 @@ class NarcotiscController extends Controller
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
 
         return view('admin/narcotic/narcotic-edit', $data);
     }
@@ -211,5 +269,506 @@ class NarcotiscController extends Controller
         }
         $data['request'] = $request;
         return view('admin/narcotic/narcotic-print-view', $data);
+    }
+
+    public function dashp(Request $request)
+    {
+        if (auth()->user()->hasRole('Super Admin')) {
+            $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+
+            $data['narcotics'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            districtID
+            ")->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+            $data['gtgaza'] = Narcotic::sum('gaza');
+            $data['gtgazatree'] = Narcotic::sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::sum('yaba');
+            $data['gtheroine'] = Narcotic::sum('heroine');
+            $data['gtfansdel'] = Narcotic::sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::sum('lsd');
+            $data['gtice'] = Narcotic::sum('ice');
+            $data['gtotherd'] = Narcotic::sum('otherd');
+
+            $data['narcoticsthas'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            districtID,
+            thanaID
+            ")->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            // Number of case graph
+
+            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID")->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+            $request->session()->flash('numofcase', $numofcase);
+
+            // operation conducting authority
+
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $request->session()->flash('conduautho', $conduautho);
+           // dd($numofcase);
+
+           // arrest by unit
+
+           $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+           $request->session()->flash('arrastbyu', $arrastbyu);
+
+           $data['totalcase'] = Narcotic::whereNotNull('case_no')->count('case_no');
+
+           $data['totalarrast'] = Narcotic::sum('number_of_accused');
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $data['request'] = $request;
+             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            $data['narcotics'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $data['gtgaza'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('otherd');
+
+            // Number of case graph
+
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $request->session()->flash('numofcase', $numofcase);
+
+            // operation conducting authority
+
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('districtID', auth()->user()->districtID)->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $request->session()->flash('conduautho', $conduautho);
+           // dd($numofcase);
+
+           // arrest by unit
+
+           $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+           $request->session()->flash('arrastbyu', $arrastbyu);
+
+           $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->count('case_no');
+
+           $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->sum('number_of_accused');
+        }
+
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+
+            $data['request'] = $request;
+
+             $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+            $data['narcotics'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $data['gtgaza'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('gaza');
+            $data['gtgazatree'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('lsd');
+            $data['gtice'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('ice');
+            $data['gtotherd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('otherd');
+
+            // Number of case graph
+
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $request->session()->flash('numofcase', $numofcase);
+
+            // operation conducting authority
+
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('thanaID', auth()->user()->thanaID)->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $request->session()->flash('conduautho', $conduautho);
+           // dd($numofcase);
+
+           // arrest by unit
+
+           $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+           $request->session()->flash('arrastbyu', $arrastbyu);
+
+           $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->count('case_no');
+
+           $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->sum('number_of_accused');
+        }
+
+
+        
+        return view('admin/narcotic/narcoticsc', $data);
+    }
+
+    public function dashsc(Request $request) {
+
+        $data['request'] = $request;
+
+         if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
+
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'jj';
+        }
+
+        if (!empty($request->input('name_of_investigator_org'))) {
+            $skey = '=';
+            $svalue = $request->input('name_of_investigator_org');
+        } else {
+            $skey = '!=';
+            $svalue = 'gg';
+        }
+
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $request->input('form');
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $request->input('to');
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+        }
+
+        if (auth()->user()->hasRole('Super Admin')) {
+            $data['narcotics'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            districtID
+            ")->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+            $data['gtgaza'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza');
+
+            $data['gtgazatree'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('lsd');
+            $data['gtice'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('ice');
+            $data['gtotherd'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('otherd');
+
+            $data['narcoticsthas'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            districtID,
+            thanaID
+            ")->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            // Number of case graph
+
+            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID")->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+            $request->session()->flash('numofcase', $numofcase);
+
+            // operation conducting authority
+
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $request->session()->flash('conduautho', $conduautho);
+           // dd($numofcase);
+
+           // arrest by unit
+
+           $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+           $request->session()->flash('arrastbyu', $arrastbyu);
+
+           $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->count('case_no');
+
+           $data['totalarrast'] = Narcotic::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+        }
+
+
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            $data['narcotics'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $data['gtgaza'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza');
+            $data['gtgazatree'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('lsd');
+            $data['gtice'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('ice');
+            $data['gtotherd'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('otherd');
+
+            // Number of case graph
+
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('districtID', auth()->user()->districtID)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $request->session()->flash('numofcase', $numofcase);
+
+            // operation conducting authority
+
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $request->session()->flash('conduautho', $conduautho);
+           // dd($numofcase);
+
+           // arrest by unit
+
+           $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('districtID', auth()->user()->districtID)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+           $request->session()->flash('arrastbyu', $arrastbyu);
+
+           $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->where('districtID', auth()->user()->districtID)->count('case_no');
+
+           $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+
+        }
+
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+
+            $data['request'] = $request;
+
+             $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+            $data['narcotics'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $data['gtgaza'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza');
+            $data['gtgazatree'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('lsd');
+            $data['gtice'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('ice');
+            $data['gtotherd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('otherd');
+
+            // Number of case graph
+
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $request->session()->flash('numofcase', $numofcase);
+
+            // operation conducting authority
+
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $request->session()->flash('conduautho', $conduautho);
+           // dd($numofcase);
+
+           // arrest by unit
+
+           $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+           $request->session()->flash('arrastbyu', $arrastbyu);
+
+           $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->where('thanaID', auth()->user()->thanaID)->count('case_no');
+
+           $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+        }
+
+
+
+        return view('admin/narcotic/narcoticsc', $data);
     }
 }

@@ -38,6 +38,7 @@
                                                     <input type="text" name="folder_no"  value="{{$nar->folder_no}}" id="folder_no" class="form-control  @error('folder_no') is-invalid @enderror" placeholder=" ফোল্ডার নং  " required>
                                                 </div>
                                             </div> 
+                                            @if (auth()->user()->hasRole('Super Admin'))
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
@@ -63,6 +64,40 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            @endif
+
+                                            @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label">থানা</label>
+                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                        <option value="">Select</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}" {{ ( $thnsp->id == $qrr->thanaID) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                            @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label">থানা</label>
+                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
