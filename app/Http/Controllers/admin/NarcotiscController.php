@@ -614,10 +614,10 @@ class NarcotiscController extends Controller
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
-        $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
-        ->where('thanaID', $tkey, $tvalue)
-        ->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
         }
 
 
@@ -706,10 +706,9 @@ class NarcotiscController extends Controller
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
-        $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
-        ->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
-
+            $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+            ->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
         }
 
 
@@ -781,8 +780,8 @@ class NarcotiscController extends Controller
             $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
-        $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
         }
 
 

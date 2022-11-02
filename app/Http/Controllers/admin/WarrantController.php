@@ -727,7 +727,7 @@ class WarrantController extends Controller
         thanaID
         ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-        $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -783,7 +783,7 @@ class WarrantController extends Controller
         thanaID
         ")->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-        $data['wars2'] = Warrant::with(['district', 'thana'])->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
