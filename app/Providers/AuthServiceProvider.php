@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Narcotic;
 use App\Models\Qrr;
 use App\Models\User;
 use App\Models\Warrant;
@@ -81,5 +82,26 @@ class AuthServiceProvider extends ServiceProvider
 
             return false;
         });
+
+
+        Gate::define('editdeletenarcotic', function (User $user, Narcotic $narcotic) {
+            if ($user->hasRole('Super Admin')) {
+                return true;
+            }
+
+            if ($user->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+                return $user->districtID == $narcotic->districtID;
+            }
+
+            if ($user->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+                if (($user->districtID == $narcotic->districtID) && ($user->thanaID == $narcotic->thanaID)) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+
     }
 }

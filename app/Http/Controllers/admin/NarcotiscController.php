@@ -9,6 +9,7 @@ use App\Models\District;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\Thana;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class NarcotiscController extends Controller
@@ -129,6 +130,8 @@ class NarcotiscController extends Controller
             return redirect('admin/qrrs');
         }
 
+        Gate::authorize('editdeletenarcotic', $data['nar']);
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
@@ -159,6 +162,9 @@ class NarcotiscController extends Controller
         if (!$data) {
             return redirect('admin/qrrs');
         }
+
+        Gate::authorize('editdeletenarcotic', $data['nar']);
+
         $data['request'] = $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['thanas'] = $data['nar']->districtID ? Thana::where('district_id', $data['nar']->districtID)->get() : [] ;
@@ -230,6 +236,9 @@ class NarcotiscController extends Controller
         if (!$id or !is_numeric($id)) {
             return redirect('admin/narcotic');
         }
+
+        $nar = Narcotic::find($id);
+        Gate::authorize('editdeletenarcotic', $nar);
 
         if (Narcotic::where('id', $id)->delete()) {
             $request->session()->flash('success_msg', 'Data deleted successfully');
@@ -573,7 +582,8 @@ class NarcotiscController extends Controller
 
             // Number of case graph
 
-            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID")->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID") ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
             $request->session()->flash('numofcase', $numofcase);
 
@@ -589,7 +599,6 @@ class NarcotiscController extends Controller
             // arrest by unit
 
             $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")
-        ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
@@ -604,6 +613,11 @@ class NarcotiscController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+
+        $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
         }
 
 
@@ -691,6 +705,11 @@ class NarcotiscController extends Controller
             $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+
+        $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+
         }
 
 
@@ -761,6 +780,9 @@ class NarcotiscController extends Controller
 
             $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+
+        $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+        ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
         }
 
 

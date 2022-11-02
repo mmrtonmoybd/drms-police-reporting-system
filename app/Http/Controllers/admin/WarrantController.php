@@ -665,6 +665,8 @@ class WarrantController extends Controller
             $request->session()->flash('jalokhatip', $jalokhatip);
             $request->session()->flash('patuakhalip', $patuakhalip);
             $request->session()->flash('pirojpurp', $pirojpurp);
+
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -724,6 +726,8 @@ class WarrantController extends Controller
         districtID,
         thanaID
         ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -778,6 +782,8 @@ class WarrantController extends Controller
         districtID,
         thanaID
         ")->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        $data['wars2'] = Warrant::with(['district', 'thana'])->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
