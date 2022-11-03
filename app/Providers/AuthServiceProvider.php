@@ -6,6 +6,7 @@ use App\Models\Narcotic;
 use App\Models\Qrr;
 use App\Models\User;
 use App\Models\Warrant;
+use App\Models\Woman;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use JWT;
@@ -95,6 +96,24 @@ class AuthServiceProvider extends ServiceProvider
 
             if ($user->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
                 if (($user->districtID == $narcotic->districtID) && ($user->thanaID == $narcotic->thanaID)) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+        Gate::define('editdeletwoman', function (User $user, Woman $woman) {
+            if ($user->hasRole('Super Admin')) {
+                return true;
+            }
+
+            if ($user->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+                return $user->districtID == $woman->districtID;
+            }
+
+            if ($user->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+                if (($user->districtID == $woman->districtID) && ($user->thanaID == $woman->thanaID)) {
                     return true;
                 }
             }

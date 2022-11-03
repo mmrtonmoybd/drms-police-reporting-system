@@ -43,7 +43,7 @@ class RoleController extends Controller
 
     public function editShow(Request $request, Role $role)
     {
-        Gate::authorize('roleedit', $role->name);
+        //Gate::authorize('roleedit', $role->name);
         // dd($role->permissions);
         return view('admin/role/role-edit', [
             'role' => $role,
@@ -52,7 +52,7 @@ class RoleController extends Controller
 
     public function editUpdate(Request $request, Role $role)
     {
-        Gate::authorize('roleedit', $role->name);
+        //Gate::authorize('roleedit', $role->name);
 
         $arrper = $request->input('models');
 
@@ -70,7 +70,7 @@ class RoleController extends Controller
 
     public function delete(Request $request, Role $role)
     {
-        Gate::authorize('roleedit', $role->name);
+        //Gate::authorize('roleedit', $role->name);
 
         if ($role->delete()) {
             $request->session()->flash('success_msg', 'Role deleted successfully and deleted permissions');

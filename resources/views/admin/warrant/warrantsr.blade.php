@@ -317,13 +317,7 @@ transform: scale(1.1);
             <div class="card purplebg">
          
          
-                                                     <h6>@if (auth()->user()->hasRole('Super Admin'))    
-                                            {{$dis->bn_name}}
-                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
-                                            {{$tha->bn_name}}
-                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
-                                            {{$octhanacol->bn_name}}
-                                            @endif মোট রিসিভ</h6>
+                                                     <h6> মোট রিসিভ</h6>
          
                                    <h2> {{ $trecive[0]['total_sum'] }} </h2>
          
@@ -335,13 +329,7 @@ transform: scale(1.1);
          
          <div class="col-sm-4" style="padding: 1px;">
             <div class="card redbg">
-                       <h6>@if (auth()->user()->hasRole('Super Admin'))    
-                                            {{$dis->bn_name}}
-                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
-                                            {{$tha->bn_name}}
-                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
-                                            {{$octhanacol->bn_name}}
-                                            @endif মোট নিষ্পত্তি
+                       <h6> মোট নিষ্পত্তি
                 </h6>
 
                
@@ -356,13 +344,7 @@ transform: scale(1.1);
                <h6> 
                
                
-              @if (auth()->user()->hasRole('Super Admin'))    
-                                            {{$dis->bn_name}}
-                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
-                                            {{$tha->bn_name}}
-                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
-                                            {{$octhanacol->bn_name}}
-                                            @endif মোট পেন্ডিং</h3>
+               মোট পেন্ডিং</h3>
 
                              
                
@@ -427,11 +409,11 @@ transform: scale(1.1);
                                                 <tr>
 
                                                     <td >@if (auth()->user()->hasRole('Super Admin'))    
-                                            {{$dis->bn_name}}
+                                            {{$war->district->bn_name}}
                                             @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
-                                            {{$tha->bn_name}}
+                                            {{$war->thana->bn_name}}
                                             @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
-                                            {{$octhanacol->bn_name}}
+                                            {{$war->thana->bn_name}}
                                             @endif</td>
                                                     
                                                     <td > {{$war->total_recive}}</td>

@@ -16,11 +16,11 @@
                             </div>
                         </div>     
                         <!-- end page title -->
-@if ($request->isMethod('get'))
+@if ($request->is('admin/narcotic/dashboard'))
                         <div class="row">
    <div class="card">
-                <form target="_blank" action="{{url('admin/narcotic/dashboard')}}" method="POST">
-               @csrf
+                <form target="_blank" action="{{url('admin/narcotic/src')}}" method="get">
+               
                <div class="" id="app">
                                         <div class="row">
                                           @if (auth()->user()->hasRole('Super Admin'))
@@ -110,7 +110,7 @@
                   </div>
                </div>
             </div>
-            @csrf
+            
             <div class="col-sm-2 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
@@ -274,7 +274,7 @@
                                         <br>
                                         <br>
 
-                                        @if ($request->isMethod('post'))
+                                        @if ($request->has('submit'))
 
                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
@@ -388,7 +388,7 @@
                             </div>
                         </div>
                         <!-- end row -->
-                        @if ($request->isMethod('get'))
+                        @if ($request->is('admin/narcotic/dashboard'))
 
 @php
                 if($request->input('divisionID'))

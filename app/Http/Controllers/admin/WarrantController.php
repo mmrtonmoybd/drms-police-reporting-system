@@ -121,6 +121,9 @@ class WarrantController extends Controller
             return redirect('admin/warrant/add');
         }
 
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
@@ -215,17 +218,8 @@ class WarrantController extends Controller
             return redirect('admin/warrant');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
-        }
 
-        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
-
-            $data['spthanas'] = $spthana;
-        }
-
-        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-            $octhana = Thana::find(auth()->user()->thanaID);
-            $data['octhana'] = $octhana;
+            return redirect()->back();
         }
 
 
@@ -540,9 +534,13 @@ class WarrantController extends Controller
             $tvalue = 'ss';
         }
 
-        if (!empty($request->input('form'))) {
+         if (!empty($request->input('form'))) {
             $fkey = '=';
-            $fvalue = $request->input('form');
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+            //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';
@@ -550,11 +548,13 @@ class WarrantController extends Controller
 
         if (!empty($request->input('to'))) {
             $tokey = '=';
-            $tovalue = $request->input('to');
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
-            ;
         }
 
         if (auth()->user()->hasRole('Super Admin')) {
@@ -625,7 +625,7 @@ class WarrantController extends Controller
 
 
             $bari = Warrant::query();
-            $data['wars'] = Warrant::selectRaw("
+            $data['wars'] = Warrant::with(['district', 'thana'])->selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
         SUM(gr_tamil) AS total_gr_tamil,
@@ -633,7 +633,8 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
-        districtID
+        districtID,
+        thanaID
         ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->groupBy('districtID')->get();
 
             //dd($mm);
@@ -715,7 +716,7 @@ class WarrantController extends Controller
 
 
             $bari = Warrant::query();
-            $data['wars'] = Warrant::selectRaw("
+            $data['wars'] = Warrant::with(['district', 'thana'])->selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
         SUM(gr_tamil) AS total_gr_tamil,
@@ -771,7 +772,7 @@ class WarrantController extends Controller
 
 
             $bari = Warrant::query();
-            $data['wars'] = Warrant::selectRaw("
+            $data['wars'] = Warrant::with(['district', 'thana'])->selectRaw("
         (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
         (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
         SUM(gr_tamil) AS total_gr_tamil,

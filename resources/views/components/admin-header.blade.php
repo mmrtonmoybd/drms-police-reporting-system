@@ -273,13 +273,13 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['District', 'Recive', { role: 'style' }],
-         ['বরগুনা', {{session('borgona')}}, '#b87333'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, 'silver'],            // English color name
-         ['ভোলা', {{session('bhola')}}, 'gold'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2' ], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333' ],
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance' ],
+         ['District', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['বরগুনা', {{session('borgona')}}, '#b87333', '{{session('borgona')}}'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, 'silver', '{{session('barisal')}}'],            // English color name
+         ['ভোলা', {{session('bhola')}}, 'gold', '{{session('bhola')}}'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2', '{{session('jalokhati')}}'], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333', '{{session('patuakhali')}}'],
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance', '{{session('pirojpur')}}'],
       ]);
 
         // Set chart options
@@ -301,13 +301,13 @@ border-left: 3px solid #0ACF97!important;
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['নিষ্পত্তি by District wise', 'count'],
-          ['বরগুনা', {{session('borgonan')}}],            // RGB value
-          ['বরিশাল', {{session('barisaln')}}],            // English color name
-          ['ভোলা', {{session('bholan')}}],
-          ['ঝালকাঠি', {{session('jalokhatin')}}], // CSS-style declaration
-          ['পটুয়াখালী', {{session('patuakhalin')}}],
-          ['পিরোজপুর', {{session('pirojpurn')}}]
+          ['নিষ্পত্তি by District wise', 'count', {role: 'annotation', type: 'string'}],
+          ['বরগুনা', {{session('borgonan')}}, {{session('borgonan')}}],            // RGB value
+          ['বরিশাল', {{session('barisaln')}}, {{session('barisaln')}}],            // English color name
+          ['ভোলা', {{session('bholan')}}, {{session('bholan')}}],
+          ['ঝালকাঠি', {{session('jalokhatin')}}, {{session('jalokhatin')}}], // CSS-style declaration
+          ['পটুয়াখালী', {{session('patuakhalin')}}, {{session('patuakhalin')}}],
+          ['পিরোজপুর', {{session('pirojpurn')}}, {{session('pirojpurn')}}]
         ]);
 
         var options = {
@@ -336,13 +336,13 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['District', 'পেন্ডিং', { role: 'style' }],
-         ['বরগুনা', {{session('borgonap')}}, '#b87333'],            // RGB value
-         ['বরিশাল', {{session('barisalp')}}, 'silver'],            // English color name
-         ['ভোলা', {{session('bholap')}}, 'gold'],
-         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2' ], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333' ],
-         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance' ],
+         ['District', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['বরগুনা', {{session('borgonap')}}, '#b87333', '{{session('borgonap')}}'],            // RGB value
+         ['বরিশাল', {{session('barisalp')}}, 'silver', '{{session('barisalp')}}'],            // English color name
+         ['ভোলা', {{session('bholap')}}, 'gold', '{{session('bholap')}}'],
+         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2', '{{session('jalokhatip')}}'], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333', '{{session('patuakhalip')}}'],
+         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance', '{{session('pirojpurp')}}'],
       ]);
 
         // Set chart options
@@ -374,10 +374,10 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'Recive', { role: 'style' }],
+         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}],
          @foreach(session("spthana") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001'],
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}'],
 
          @endforeach
       ]);
@@ -401,10 +401,10 @@ border-left: 3px solid #0ACF97!important;
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['নিষ্পত্তি by Thana wise', 'count'],
+          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}],
           @foreach(session("spthanan") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}],
+         ['{{$value[1]}}', {{$value[0]}}, {{$value[0]}}],
 
          @endforeach
         ]);
@@ -435,10 +435,10 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'পেন্ডিং', { role: 'style' }],
+         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}],
          @foreach(session("spthanap") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001'],
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}'],
 
          @endforeach
       ]);
@@ -472,8 +472,8 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'Recive', { role: 'style' }],
-         ['{{session("octhana")[1]}}', {{session('octhana')[0]}}, '#b87333']
+         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['{{session("octhana")[1]}}', {{session('octhana')[0]}}, '#b87333', '{{session('octhana')[0]}}']
       ]);
 
         // Set chart options
@@ -495,8 +495,8 @@ border-left: 3px solid #0ACF97!important;
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['নিষ্পত্তি by Thana wise', 'count'],
-         ['{{session("octhanan")[1]}}', {{session('octhanan')[0]}}]
+          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}],
+         ['{{session("octhanan")[1]}}', {{session('octhanan')[0]}}, '{{session('octhanan')[0]}}']
         ]);
 
         var options = {
@@ -523,8 +523,8 @@ border-left: 3px solid #0ACF97!important;
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'পেন্ডিং', { role: 'style' }],
-         ['{{session("octhanap")[1]}}', {{session('octhanap')[0]}}, '#b87333']
+         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['{{session("octhanap")[1]}}', {{session('octhanap')[0]}}, '#b87333', '{{session('octhanap')[0]}}']
       ]);
 
         // Set chart options
@@ -550,6 +550,7 @@ border-left: 3px solid #0ACF97!important;
       @endif
 
       @include('components.narcoticg')
+      @include('components.womang')
 
        <!-- chart JS -->
 

@@ -1,4 +1,4 @@
-@if (str_contains(url()->current(), '/admin/narcotic/dashboard'))
+@if (str_contains(url()->current(), '/admin/narcotic/dashboard') || str_contains(url()->current(), '/admin/narcotic/src'))
     <script type="text/javascript">
 
       // Load the Visualization API and the corechart package.

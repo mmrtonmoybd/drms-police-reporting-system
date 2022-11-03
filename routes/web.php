@@ -10,7 +10,10 @@ use App\Http\Controllers\admin\QrrsController;
 use App\Http\Controllers\admin\WarrantController;
 use App\Http\Controllers\admin\NarcotiscController;
 use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\admin\WomanController;
 use App\Http\Controllers\Test;
+use App\Models\Woman;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/qrrs/edit/{id}', [QrrsController::class, 'Update'])->middleware('permission:qrr.edit');
         Route::get('/qrrs/details/{id}', [QrrsController::class, 'View'])->middleware('permission:qrr.view');
         Route::get('/qrrs/print-details/{id}', [QrrsController::class, 'PrintView'])->middleware('permission:qrr.view');
-        Route::post('/qrrs/charts', [QrrsController::class, 'chart'])->middleware('permission:qrr.dashboard');
+        Route::get('/qrrs/charts', [QrrsController::class, 'chart'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/report/{report}', [QrrsController::class, 'report'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs', [QrrsController::class, 'srcs'])->middleware('permission:qrr.dashboard');
 
@@ -81,7 +84,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/warrant/add', [WarrantController::class, 'addData'])->middleware('permission:warrant.add');
         Route::get('/warrant', [WarrantController::class, 'index'])->middleware('permission:warrant.view');
         Route::get('/warrant/dashboard', [WarrantController::class, 'dashs'])->middleware('permission:warrant.dashboard');
-        Route::post('/warrant/search', [WarrantController::class, 'dashsp'])->middleware('permission:warrant.dashboard');
+        Route::get('/warrant/search', [WarrantController::class, 'dashsp'])->middleware('permission:warrant.dashboard');
         Route::get('/warrant/edit/{id}', [WarrantController::class, 'editShow'])->middleware('permission:warrant.edit');
         Route::post('/warrant/edit/{id}', [WarrantController::class, 'editUpdate'])->middleware('permission:warrant.edit');
         Route::get('/warrant/delete/{id}', [WarrantController::class, 'delete'])->middleware('permission:warrant.delete');
@@ -97,8 +100,21 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/delete/{id}', [NarcotiscController::class, 'delete'])->middleware('permission:narcotic.delete');
         Route::get('/narcotic/view/{id}', [NarcotiscController::class, 'pView'])->middleware('permission:narcotic.view');
         Route::get('/narcotic/print-details/{id}', [NarcotiscController::class, 'PrintView'])->middleware('permission:narcotic.view');
-        Route::get('narcotic/dashboard', [NarcotiscController::class, 'dashp'])->middleware('permission:narcotic.dashboard');
-        Route::post('narcotic/dashboard', [NarcotiscController::class, 'dashsc'])->middleware('permission:narcotic.dashboard');
+        Route::get('/narcotic/dashboard', [NarcotiscController::class, 'dashp'])->middleware('permission:narcotic.dashboard');
+        Route::get('/narcotic/src', [NarcotiscController::class, 'dashsc'])->middleware('permission:narcotic.dashboard');
+
+
+        // Woman router
+        Route::get('/woman', [WomanController::class, 'index'])->middleware('permission:woman.view');
+        Route::get('/woman/add', [WomanController::class, 'addWoman'])->middleware('permission:woman.add');
+        Route::post('/woman/add', [WomanController::class, 'create'])->middleware('permission:woman.add');
+        Route::get('/woman/edit/{woman}', [WomanController::class, 'editShow'])->middleware('permission:woman.edit');
+        Route::post('/woman/edit/{woman}', [WomanController::class, 'update'])->middleware('permission:woman.edit');
+        Route::get('/woman/delete/{woman}', [WomanController::class, 'delete'])->middleware('permission:woman.delete');
+        Route::get('/woman/view/{woman}', [WomanController::class, 'wview'])->middleware('permission:woman.view');
+        Route::get('/woman/pview/{woman}', [WomanController::class, 'pview'])->middleware('permission:woman.view');
+        Route::get('/woman/dashboard', [WomanController::class, 'dashboard'])->middleware('permission:woman.dashboard');
+        Route::get('/woman/src', [WomanController::class, 'dashboardsc'])->middleware('permission:woman.dashboard');
 
         Route::group(['prefix' => 'users'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);

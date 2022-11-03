@@ -136,7 +136,11 @@ class QrrsController extends Controller
 
         if (!empty($request->input('form'))) {
             $fkey = '=';
-            $fvalue = $request->input('form');
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+            //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';
@@ -144,7 +148,10 @@ class QrrsController extends Controller
 
         if (!empty($request->input('to'))) {
             $tokey = '=';
-            $tovalue = $request->input('to');
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
@@ -167,12 +174,14 @@ class QrrsController extends Controller
 
 
         //\DB::enableQueryLog();
-        $query = Qrr::query();
-        $query->with(['district', 'thana']);
-        $data['qrrs'] = $query->where('districtID', $dkey, $dvalue)
+       // $query = ;
+       // $query->with(['district', 'thana']);
+        $data['qrrs'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+       // dd($data['qrrs'], $from, $to, \DB::getQueryLog());
 
         //dd(\DB::getQueryLog());
 
@@ -604,6 +613,9 @@ class QrrsController extends Controller
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
@@ -726,6 +738,9 @@ class QrrsController extends Controller
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
+
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();

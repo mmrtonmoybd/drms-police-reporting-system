@@ -154,6 +154,45 @@
 
                                             <br>
 
+                                             <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b> Women and children permission</b> </label>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="woman.dashboard">Women and children Dashboard
+                                                   </label>
+                                                  </div>
+
+
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="woman.view">Women and children view
+                                            </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="woman.add">Women and children add
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="woman.edit">Women and children edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="woman.delete">Women and children delete
+                                                   </label>
+                                                  </div>
+
+                                                  
+                                            </div>
+
+                                            <br>
+
                                             <div class="col-sm-12">
                                                 <label for="name" class="form-label"> <b>Role permission</b> </label>
                                                 

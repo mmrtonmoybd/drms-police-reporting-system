@@ -251,8 +251,8 @@ margin-top: -39px;
 <div class="row">
    <div class="card">
    
-                                                <form target="_blank" action="{{url('/admin/warrant/search')}}" method="POST">
-                                                    @csrf
+                                                <form target="_blank" action="{{url('/admin/warrant/search')}}" method="get">
+                                                    
                                                     <div class="" id="app">
                                         <div class="row">
 										
@@ -317,7 +317,7 @@ margin-top: -39px;
                   </div>
                </div>
             </div>
-            @csrf
+            
             <div class="col-sm-4 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>

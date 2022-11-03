@@ -245,8 +245,8 @@ transform: scale(1.1);
    
 <div class="row">
    <div class="card">
-                <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="POST">
-               @csrf
+                <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="get">
+               
                <div class="" id="app">
                                         <div class="row">
                                           @if (auth()->user()->hasRole('Super Admin'))
@@ -333,7 +333,7 @@ transform: scale(1.1);
                   </div>
                </div>
             </div>
-            @csrf
+            
             <div class="col-sm-2 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>

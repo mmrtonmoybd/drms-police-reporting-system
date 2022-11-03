@@ -230,13 +230,43 @@
     @endcanany
 
 
+        
+                     @canany(['woman.dashboard', 'woman.add', 'woman.view'])
 
-                        <li class="side-nav-item nav-item">
-                            <a href="{{url('admin/women_and_childrens')}}" class="side-nav-link nav-link">
-                          <i class="fa-solid fa-children"></i>
-                                <span> Women and children </span>
+                        <li class="side-nav-item nav-item has-submenu">
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-children"></i>  Women and children <i class="bi small bi-caret-down-fill"></i> </a>
+		<ul class="submenu collapse @if(request()->is('admin/woman/*') || request()->is('admin/woman')) show @endif"> 
+            @can('woman.dashboard')
+			<li>         <a href="{{url('admin/woman/dashboard')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-chart-line"></i>
+                                <span> Women and children Dashboard</span>
                             </a>
-                        </li>
+            </li>
+
+            @endcan
+            
+            @can('woman.add')
+            	<li>         <a href="{{url('admin/woman/add')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-plus"></i>
+                                <span> Add Women and children</span>
+                            </a>
+            </li>
+            @endcan
+            
+            
+            
+            @can('woman.view')
+		    <li>
+		      <a href="{{url('admin/woman')}}" class="side-nav-link nav-link ">
+                          <i class="fa-solid fa-list-ul"></i>
+                                <span> Women and children List </span>
+                            </a>
+		    </li>
+            @endcan
+		   
+		</ul>
+	</li>
+    @endcanany
 
                         @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
 
