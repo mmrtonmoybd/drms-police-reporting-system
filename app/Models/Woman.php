@@ -15,7 +15,7 @@ class Woman extends Model
 
     protected $table = 'womens';
 
-     public function district()
+    public function district()
     {
         return $this->hasOne('App\Models\District', 'id', 'districtID');
     }

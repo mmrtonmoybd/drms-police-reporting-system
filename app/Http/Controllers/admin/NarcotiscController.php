@@ -464,7 +464,7 @@ class NarcotiscController extends Controller
     {
         $data['request'] = $request;
 
-         $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
         if (!empty($request->input('districtID'))) {
@@ -491,13 +491,13 @@ class NarcotiscController extends Controller
             $svalue = 'gg';
         }
 
-         if (!empty($request->input('form'))) {
+        if (!empty($request->input('form'))) {
             $fkey = '=';
             $fvalue = $from;
 
             $date = Carbon::parse($fvalue);
             $fvalue = $date->format('Y-m-d') . ' 00:00:00';
-            //dd($ggg);
+        //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';

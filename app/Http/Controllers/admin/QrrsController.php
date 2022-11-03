@@ -140,7 +140,7 @@ class QrrsController extends Controller
 
             $date = Carbon::parse($fvalue);
             $fvalue = $date->format('Y-m-d') . ' 00:00:00';
-            //dd($ggg);
+        //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';
@@ -174,14 +174,14 @@ class QrrsController extends Controller
 
 
         //\DB::enableQueryLog();
-       // $query = ;
-       // $query->with(['district', 'thana']);
+        // $query = ;
+        // $query->with(['district', 'thana']);
         $data['qrrs'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
-       // dd($data['qrrs'], $from, $to, \DB::getQueryLog());
+        // dd($data['qrrs'], $from, $to, \DB::getQueryLog());
 
         //dd(\DB::getQueryLog());
 

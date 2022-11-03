@@ -54,7 +54,7 @@ class WomanController extends Controller
             $data['octhana'] = $octhana;
         }
 
-        
+
 
         return view('admin/woman/woman-add', $data);
     }
@@ -67,7 +67,7 @@ class WomanController extends Controller
     public function create(Request $request)
     {
         $dateandtime = Carbon::createFromFormat('d/m/Y h:i A', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
-        $request->merge(['wdate' => $dateandtime, 
+        $request->merge(['wdate' => $dateandtime,
     'badi_age' => $this->reptpenum($request->input('badi_age')),
 'badi_phone' => $this->reptpenum($request->input('badi_phone')),
 'mobile_no' => $this->reptpenum($request->input('mobile_no')),
@@ -82,7 +82,7 @@ class WomanController extends Controller
  'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
  'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
 ]);
-       // dd($request->all());
+        // dd($request->all());
 
         $request->request->remove('incident_time');
 
@@ -93,7 +93,7 @@ class WomanController extends Controller
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
         }
 
-         $data['districts'] = District::where('division_id', 1)->get();
+        $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -107,7 +107,7 @@ class WomanController extends Controller
             $data['octhana'] = $octhana;
         }
 
-         return view('admin/woman/woman-add', $data);
+        return view('admin/woman/woman-add', $data);
     }
 
     public function editShow(Request $request, Woman $woman)
@@ -116,7 +116,7 @@ class WomanController extends Controller
 
         $data['woman'] = $woman;
 
-         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
             $data['spthanas'] = $spthana;
@@ -140,8 +140,8 @@ class WomanController extends Controller
 
         $data['districts'] = District::where('division_id', 1)->get();
 
-         $dateandtime = Carbon::createFromFormat('d/m/Y h:i A', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
-        $request->merge(['wdate' => $dateandtime, 
+        $dateandtime = Carbon::createFromFormat('d/m/Y h:i A', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
+        $request->merge(['wdate' => $dateandtime,
     'badi_age' => $this->reptpenum($request->input('badi_age')),
 'badi_phone' => $this->reptpenum($request->input('badi_phone')),
 'mobile_no' => $this->reptpenum($request->input('mobile_no')),
@@ -154,10 +154,10 @@ class WomanController extends Controller
 'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
  'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
 ]);
-       // dd($request->all());
+        // dd($request->all());
 
         $request->request->remove('incident_time');
-         $request->request->remove('_token');
+        $request->request->remove('_token');
         $request->request->remove('submit');
 
         if ($woman->update($request->all())) {
@@ -188,7 +188,6 @@ class WomanController extends Controller
         $data['request'] = $request;
 
         return view('admin/woman/woman-view', $data);
-
     }
 
     public function pview(Request $request, Woman $woman)
@@ -197,17 +196,15 @@ class WomanController extends Controller
         $data['request'] = $request;
 
         return view('admin/woman/woman-print', $data);
-
     }
 
     public function dashboard(Request $request)
     {
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
-        
-        
+
+
         if (auth()->user()->hasRole('Super Admin')) {
-            
             // Number of complain graph
             $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
@@ -226,13 +223,13 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
-            // total complain 
+            // total complain
             $data['totalcomplain'] = Woman::count();
             //end total complain
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
             $data['spthanas'] = $spthana;
 
@@ -254,7 +251,7 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
-            // total complain 
+            // total complain
             $data['totalcomplain'] = Woman::count();
             //end total complain
         }
@@ -281,13 +278,13 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
-            // total complain 
+            // total complain
             $data['totalcomplain'] = Woman::count();
             //end total complain
         }
 
         return view('admin/woman/womansc', $data);
-    } 
+    }
 
     public function dashboardsc(Request $request)
     {
@@ -310,13 +307,13 @@ class WomanController extends Controller
             $tvalue = 'ss';
         }
 
-         if (!empty($request->input('form'))) {
+        if (!empty($request->input('form'))) {
             $fkey = '=';
             $fvalue = $from;
 
             $date = Carbon::parse($fvalue);
             $fvalue = $date->format('Y-m-d') . ' 00:00:00';
-            //dd($ggg);
+        //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';
@@ -342,7 +339,6 @@ class WomanController extends Controller
         }
 
         if (auth()->user()->hasRole('Super Admin')) {
-            
             // Number of complain graph
             $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")
         ->where('thanaID', $tkey, $tvalue)
@@ -370,25 +366,22 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
-            // total complain 
+            // total complain
             $data['totalcomplain'] = Woman::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
 
-            //show data 
+            //show data
 
             $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
-
-
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-            
             // Number of complain graph
             $totalcomplains = Woman::with('thana')->selectRaw("COUNT(id) AS totalcomplain, thanaID")
             ->where('districtID', auth()->user()->districtID)
@@ -417,25 +410,22 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
-            // total complain 
+            // total complain
             $data['totalcomplain'] = Woman::where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
 
-            //show data 
+            //show data
 
             $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
-
-
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-            
             // Number of complain graph
             $totalcomplains = Woman::with('thana')->selectRaw("COUNT(id) AS totalcomplain, thanaID")
             ->where('districtID', auth()->user()->districtID)
@@ -464,26 +454,21 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
-            // total complain 
+            // total complain
             $data['totalcomplain'] = Woman::where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
 
-            //show data 
+            //show data
 
             $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
-
-
         }
 
         return view('admin/woman/womansr', $data);
-
     }
-} 
-
-
+}
