@@ -366,6 +366,8 @@ margin-top: -39px;
          </div>
       </div>
 
+                                               </form>
+
                                             <!----
          <div id="chart_div"></div>
          <div id="piechart"></div>

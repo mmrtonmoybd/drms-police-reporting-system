@@ -798,4 +798,279 @@ class NarcotiscController extends Controller
 
         return view('admin/narcotic/narcoticsc', $data);
     }
+
+    public function narcoticcase(Request $request)
+    {
+        $data['request'] = $request;
+
+        return view('admin/narcotic/narcotic-totalcase', $data);
+    }
+
+    private function repmonntobn($sub)
+    {
+        return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
+    }
+
+    public function tcsrc(Request $request)
+    {
+        $data['request'] = $request;
+
+        $to1 = Carbon::parse($request->input('to1'))->toDateTimeString();
+        $from1 = Carbon::parse($request->input('form1'))->toDateTimeString();
+
+        $to2 = Carbon::parse($request->input('to2'))->toDateTimeString();
+        $from2 = Carbon::parse($request->input('form2'))->toDateTimeString();
+
+
+        if (!empty($request->input('form1'))) {
+            $fkey1 = '=';
+            $fvalue1 = $from1;
+
+            $date1 = Carbon::parse($fvalue1);
+            $fvalue1 = $date1->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey1 = '=';
+            $fvalue1 = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to1'))) {
+            $tokey1 = '=';
+            $tovalue1 = $to1;
+
+            $date1 = Carbon::parse($tovalue1);
+            $tovalue1 = $date1->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey1 = '=';
+            $tovalue1 = Carbon::now()->toDateTimeString();
+        }
+
+        $monnaf1 = Carbon::parse($fvalue1);
+        $data['monnf1'] = $monnaf1->format('d F Y');
+
+
+        $monnat1 = Carbon::parse($tovalue1);
+        $data['monnt1'] = $monnat1->format('d F Y');
+        
+
+
+        if (!empty($request->input('form2'))) {
+            $fkey2 = '=';
+            $fvalue2 = $from2;
+
+            $date2 = Carbon::parse($fvalue2);
+            $fvalue2 = $date2->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey2 = '=';
+            $fvalue2 = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to2'))) {
+            $tokey2 = '=';
+            $tovalue2 = $to2;
+
+            $date2 = Carbon::parse($tovalue2);
+            $tovalue2 = $date2->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey2 = '=';
+            $tovalue2 = Carbon::now()->toDateTimeString();
+        }
+
+        $monnaf2 = Carbon::parse($fvalue2);
+        $data['monnf2'] = $monnaf2->format('d F Y');
+
+
+        $monnat2 = Carbon::parse($tovalue2);
+        $data['monnt2'] = $monnat2->format('d F Y');
+
+        
+
+        if (auth()->user()->hasRole('Super Admin')) {
+
+        
+        $data['narcotic1'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            districtID
+            ")->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('yaba');
+            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('lsd');
+            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('ice');
+            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('otherd');
+
+
+        $data['narcotic2'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            districtID
+            ")->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('otherd');
+
+        }
+
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+
+             $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('districtID', auth()->user()->districtID)
+              ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+              //dd($data['narcotic1']);
+
+
+            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('otherd');
+
+
+
+            $data['narcotic2'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('districtID', auth()->user()->districtID)
+              ->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+              //dd($data['narcotic2']);
+
+            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('otherd');
+
+
+        }
+
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+
+             $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('districtID', auth()->user()->districtID)
+            ->where('thanaID', auth()->user()->thanaID)
+              ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+
+            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
+
+
+
+            $data['narcotic2'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            SUM(gaza_tree) AS gaza_treec,
+            SUM(yaba) AS yabac,
+            SUM(heroine) AS heroinec,
+            SUM(fansdel) AS fansdelc,
+            SUM(cholai_alcohol) AS cholai_alcoholc,
+            SUM(bidesh_alcohol) AS bidesh_alcoholc,
+            SUM(lsd) AS lsdc,
+            SUM(ice) AS icec,
+            SUM(otherd) AS otherdc,
+            thanaID,
+            districtID
+            ")->where('districtID', auth()->user()->districtID)
+            ->where('thanaID', auth()->user()->thanaID)
+              ->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
+
+
+        }
+
+           // dd($data['narcotic1'], $data['narcotic2']);
+
+            return view('admin/narcotic/narcotic-totalcase', $data);
+    }
+
 }

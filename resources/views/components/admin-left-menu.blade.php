@@ -281,6 +281,12 @@ a.side-nav-link.nav-link:hover {
                             </a>
             </li>
 
+            <li>         <a href="{{url('admin/narcotic/totalcase')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-chart-line"></i>
+                                <span> Narcotics case number</span>
+                            </a>
+            </li>
+
             @endcan
             
             @can('narcotic.add')
