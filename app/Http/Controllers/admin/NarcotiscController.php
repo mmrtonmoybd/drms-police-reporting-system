@@ -851,7 +851,7 @@ class NarcotiscController extends Controller
 
         $monnat1 = Carbon::parse($tovalue1);
         $data['monnt1'] = $monnat1->format('d F Y');
-        
+
 
 
         if (!empty($request->input('form2'))) {
@@ -884,12 +884,10 @@ class NarcotiscController extends Controller
         $monnat2 = Carbon::parse($tovalue2);
         $data['monnt2'] = $monnat2->format('d F Y');
 
-        
+
 
         if (auth()->user()->hasRole('Super Admin')) {
-
-        
-        $data['narcotic1'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
+            $data['narcotic1'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
             SUM(heroine) AS heroinec,
@@ -914,7 +912,7 @@ class NarcotiscController extends Controller
             $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('otherd');
 
 
-        $data['narcotic2'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
+            $data['narcotic2'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
             SUM(heroine) AS heroinec,
@@ -937,13 +935,11 @@ class NarcotiscController extends Controller
             $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('lsd');
             $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('ice');
             $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('otherd');
-
         }
 
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-
-             $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
             SUM(heroine) AS heroinec,
@@ -956,9 +952,9 @@ class NarcotiscController extends Controller
             thanaID,
             districtID
             ")->where('districtID', auth()->user()->districtID)
-              ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+             ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-              //dd($data['narcotic1']);
+            //dd($data['narcotic1']);
 
 
             $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('gaza');
@@ -989,7 +985,7 @@ class NarcotiscController extends Controller
             ")->where('districtID', auth()->user()->districtID)
               ->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-              //dd($data['narcotic2']);
+            //dd($data['narcotic2']);
 
             $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('gaza');
             $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
@@ -1001,14 +997,11 @@ class NarcotiscController extends Controller
             $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('lsd');
             $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('ice');
             $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('otherd');
-
-
         }
 
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-
-             $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
+            $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
             SUM(heroine) AS heroinec,
@@ -1022,7 +1015,7 @@ class NarcotiscController extends Controller
             districtID
             ")->where('districtID', auth()->user()->districtID)
             ->where('thanaID', auth()->user()->thanaID)
-              ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+             ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
 
             $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
@@ -1064,13 +1057,10 @@ class NarcotiscController extends Controller
             $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
             $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
             $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
-
-
         }
 
-           // dd($data['narcotic1'], $data['narcotic2']);
+        // dd($data['narcotic1'], $data['narcotic2']);
 
-            return view('admin/narcotic/narcotic-totalcase', $data);
+        return view('admin/narcotic/narcotic-totalcase', $data);
     }
-
 }

@@ -102,8 +102,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/print-details/{id}', [NarcotiscController::class, 'PrintView'])->middleware('permission:narcotic.view');
         Route::get('/narcotic/dashboard', [NarcotiscController::class, 'dashp'])->middleware('permission:narcotic.dashboard');
         Route::get('/narcotic/src', [NarcotiscController::class, 'dashsc'])->middleware('permission:narcotic.dashboard');
-        Route::get('/narcotic/totalcase', [NarcotiscController::class, 'narcoticcase'])->middleware('permission:narcotic.dashboard');;
-        Route::get('/narcotic/totalcase/src', [NarcotiscController::class, 'tcsrc'])->middleware('permission:narcotic.dashboard');;
+        Route::get('/narcotic/totalcase', [NarcotiscController::class, 'narcoticcase'])->middleware('permission:narcotic.dashboard');
+        ;
+        Route::get('/narcotic/totalcase/src', [NarcotiscController::class, 'tcsrc'])->middleware('permission:narcotic.dashboard');
+        ;
 
 
         // Woman router
