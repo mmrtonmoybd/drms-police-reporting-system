@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <script>document.write(new Date().getFullYear())</script> © DARMS Management
+                <script>document.write(new Date().getFullYear())</script> © DRMS Management
             </div>
             <div class="col-md-6 text-end" style="font-size: .9rem;">
                 Developed By <a href="https://engineerbd.net/">Engineer BD Network</a>
@@ -114,5 +114,4 @@
 </script>
 </body>
 
-<!-- Mirrored from coderthemes.com/hyper/saas/dashboard-crm.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 06:52:07 GMT -->
 </html>

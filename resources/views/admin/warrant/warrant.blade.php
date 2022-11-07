@@ -31,7 +31,7 @@
                                            
                                             
                                         </div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="tablestyle">
                                             <thead>
                                                 <tr>
                                                     <th > রেফারেন্স নং </th>

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+a<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
 
 
@@ -9,8 +9,80 @@
     
 <style type="text/css">
 
-.side-nav-item.nav-item:hover {
+
+
+
+.tablestyle {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tablestyle td, .tablestyle th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.tablestyle tr:nth-child(even){background-color: #f2f2f2;}
+
+.tablestyle tr:hover {background-color: #ddd;}
+
+.tablestyle th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+
+
+
+
+/* Breadcumb */
+
+/* Breadcumb */
+
+/* Breadcumb */
+
+.page-title-box {
+    /* border: 1px solid #ddd; */
+    padding: 0px 25px;
+    margin: 10px 0px;
+    background: #fff;
+    box-shadow: 1px 2px 4px 1px #e2deff;
+    color: #fff;
+    background: #810099;
+    border-radius: 19px;
+}
+
+.breadcrumb-item.active {
+    color: #ffffff;
+}
+
+li.breadcrumb-item a {
+    color: lime;
+    font-weight: 800;
+}
+
+
+
+/* Breadcumb */
+
+/* Breadcumb */
+
+
+i.fa-solid.fa-angle-down {
+    font-size: 12px;
+    padding: 0px 0px 5px 0px;
+    position: relative;
+ 
+}
+
+
+a.side-nav-link.nav-link:hover {
   background: #ffffff30;
+    background-size: 10px 80px;
 }
 
 
@@ -37,6 +109,11 @@
 .leftside-menu {
   position: fixed;
   overflow: auto;
+}
+
+
+.side-nav-link.nav-link {
+  padding-right: 0px;
 }
 
 </style>
@@ -121,7 +198,7 @@
                         @canany(['qrr.dashboard', 'qrr.add', 'qrr.view'])
 
                         <li class="side-nav-item nav-item has-submenu">
-		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-tachograph-digital"></i>  QRR <i class="bi small bi-caret-down-fill"></i> </a>
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-tachograph-digital"></i>  QRR <i class="fa-solid fa-angle-down"></i> </a>
 		<ul class="submenu collapse @if(request()->is('admin/qrrs/*') || request()->is('admin/qrrs')) show @endif"> 
             @can('qrr.dashboard')
 			<li>         <a href="{{url('admin/qrrs/srcs')}}" class="side-nav-link nav-link  ">
@@ -195,7 +272,7 @@
                          @canany(['narcotic.add', 'narcotic.dashboard', 'narcotic.view'])
 
                         <li class="side-nav-item nav-item has-submenu">
-		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-tablets"></i>  Narcotics <i class="bi small bi-caret-down-fill"></i> </a>
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-tablets"></i>  Narcotics <i class="fa-solid fa-angle-down"></i> </a>
 		<ul class="submenu collapse @if(request()->is('admin/narcotic/*') || request()->is('admin/narcotic')) show @endif"> 
             @can('narcotic.dashboard')
 			<li>         <a href="{{url('admin/narcotic/dashboard')}}" class="side-nav-link nav-link  ">
@@ -234,7 +311,7 @@
                      @canany(['woman.dashboard', 'woman.add', 'woman.view'])
 
                         <li class="side-nav-item nav-item has-submenu">
-		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-children"></i>  Women and children <i class="bi small bi-caret-down-fill"></i> </a>
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-children"></i>  Women and children <i class="fa-solid fa-angle-down"></i> </a>
 		<ul class="submenu collapse @if(request()->is('admin/woman/*') || request()->is('admin/woman')) show @endif"> 
             @can('woman.dashboard')
 			<li>         <a href="{{url('admin/woman/dashboard')}}" class="side-nav-link nav-link  ">
@@ -271,7 +348,7 @@
                         @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
 
                         <li class="side-nav-item nav-item has-submenu">
-		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-handcuffs"></i>  Warrant <i class="bi small bi-caret-down-fill"></i> </a>
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid fa-handcuffs"></i>  Warrant <i class="fa-solid fa-angle-down"></i> </a>
 		<ul class="submenu collapse @if(request()->is('admin/warrant/*') || request()->is('admin/warrant')) show @endif"> 
             @can('warrant.dashboard')
 			<li>         <a href="{{url('admin/warrant/dashboard')}}" class="side-nav-link nav-link  ">
@@ -318,7 +395,7 @@
                         @canany(['role.view', 'user.view'])
 
                         <li class="side-nav-item nav-item has-submenu ">
-		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid dripicons-user-group"></i>  Users manager <i class="bi small bi-caret-down-fill"></i> </a>
+		<a class="side-nav-link nav-link" href="#">  <i class="fa-solid dripicons-user-group"></i>  Users manager <i class="fa-solid fa-angle-down"></i> </a>
 		<ul class="submenu collapse @if(request()->is('admin/users/*') || request()->is('admin/users')) show @endif">
             @can('role.view')
         <li>         <a href="{{url('admin/users/role')}}" class="side-nav-link nav-link  ">

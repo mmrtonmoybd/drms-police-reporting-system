@@ -1,5 +1,5 @@
 <x-admin-header />
-<!-- start page title -->
+<!-- start page title -
 
                         <div class="row">
                             <div class="col-12">
@@ -7,23 +7,256 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             
-                                            <li class="breadcrumb-item"><a href="{{url('admin/narcotic')}}">Narcotic</a></li>
-                                            <li class="breadcrumb-item active">Narcotic dashboard</li>
+                                            <li class="breadcrumb-item"><a href="{{url('admin/warrant')}}">Warrants</a></li>
+                                            <li class="breadcrumb-item active">All Warrants</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"><i class="dripicons-scale"></i> Narcotic dashboard</h4>
+                                    <h4 class="page-title"><i class="dripicons-scale"></i> Warrants</h4>
                                 </div>
                             </div>
                         </div>     
                         <!-- end page title -->
-@if ($request->is('admin/narcotic/dashboard'))
-                        <div class="row">
+
+                        <x-admin-validation-errors :errors="$errors->all()"/>
+<!------------secondery hedaer----------->
+
+<style>
+   .row {
+   width:100%;
+   overflow:none;
+   }
+   text {
+   font-family: Nunito, 'SolaimanLipi', sans-serif;
+   font-size: 11px;
+   }
+   
+   
+ 
+   
+   .stylish {
+   background: #f42b1c;
+   color: #fff;
+   border-radius: 20px;
+   display: block;
+   width: 100%;
+   padding: 5px 7px 5px 5px;
+   font-size: .9rem;
+   font-weight: 400;
+   line-height: 1.5;
+   text-align: center;
+   }
+   .stylish option {
+   text-align: center;
+   }
+   
+
+
+   
+   .stylish:hover {
+   background: #ff0000e3;
+   color: #fff;
+   border-radius: 20px;
+   display: block;
+   width: 100%;
+   padding: 5px 7px 5px 5px;
+   font-size: .9rem;
+   font-weight: 400;
+   line-height: 1.5;
+   text-align: center;
+   }
+   .stylish option {
+   text-align: center;
+   }
+   
+   
+   .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, {
+   padding: 7px!important;
+   }
+   .sheader {
+   background:#ff4a11; 
+   color:white;
+   height:120px;
+   }
+   .datepicker {
+   border: 1px solid #ff0000e3;
+   color:#ff0000e3;
+   border-radius:20px;
+   }
+   input#date_time_response {
+   height: 33px;
+   border: 1px solid #ff0000e3;
+   }
+   .redbg {
+   background:red; 
+   color:white;
+   height:120px;
+   text-align:center;
+     margin-bottom: 5px!important;
+   }
+   
+   
+      .purplebg {
+   background:purple; 
+   color:white;
+   height:120px;
+   text-align:center;
+   margin-bottom: 5px!important;
+   }
+   
+   
+   .greenbg {
+   background:green; 
+   color:white;
+   height:120px;
+   text-align:center;
+   margin-bottom: 5px!important;
+   }
+   .centerimg {
+   text-align:center;
+   width:100%;
+   }
+   .sheader h1 {
+   color:white;
+   }
+   .inliner {
+   display:inline-block;
+   }
+   .leftimg, .rightimg, .centerimg {
+   display:inline-block;
+   }
+   .leftimg {
+   float: left;
+   position: absolute;
+   }
+   .rightimg {
+   float: right;
+   position: absolute;
+   right: 17px;
+   }
+
+   
+   .chart-header-main {
+  color: #a05078;
+
+  font-size: 17px;
+  position: relative;
+  top: 25px;
+  z-index: 10;
+  left: 20px;
+    }
+       .chart-header {
+   color:#a05078;
+   margin: 21px 0px 0px 10px;
+   font-size: 17px;
+   }
+   .card {
+   border-radius: 0px;
+   border: 1px solid #ddd;
+   }
+   .xtrm {
+   margin-top:25px;
+   }
+   .button-menu-mobile { color:#fff!important;  }
+   
+   
+   
+.float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:40px;
+	right:40px;
+	background-color:#04c;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	transition: transform .2s;
+}
+
+
+.float2{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:100px;
+	right:40px;
+	background-color:#f44336;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	text-decoration:none;
+		transition: transform .2s;
+}
+
+.float:hover{
+transform: scale(1.1);
+}
+
+
+.float2:hover{
+transform: scale(1.1);
+}
+
+.my-float{
+	margin-top:22px;
+	font-size:30px;
+	text-decoration:none;
+}
+
+.my-float:hover {
+  color: #ddd;
+}
+   
+   .silverhover:hover {
+  color: #ddd;
+}
+
+
+#chart_div2 {
+position: relative;
+margin-top: -39px;
+}
+   
+</style>
+
+                     <div class="row ">
+   <div class="col-sm-12 " style="padding: 5px 0px 0px 0px;">
+      <div class="card sheader">
+         <div class="card-body inliner">
+            <div class="leftimg">
+               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
+            </div>
+            <div class="centerimg">
+               <h1> Narcotic Dashboard </h1>
+               <h3> Barisal Range, Barisal </h3>
+               <br>
+            </div>
+            <div class="rightimg">
+               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+   
+   
+   
+   
+   @if ($request->is('admin/narcotic/dashboard'))
+<div class="row">
    <div class="card">
-                <form target="_blank" action="{{url('admin/narcotic/src')}}" method="get">
-               
-               <div class="" id="app">
+   
+                                               <form target="_blank" action="{{url('admin/narcotic/src')}}" method="get">
+                                                    
+                                                    <div class="" id="app">
                                         <div class="row">
-                                          @if (auth()->user()->hasRole('Super Admin'))
+										
+                                                       @if (auth()->user()->hasRole('Super Admin'))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
@@ -38,8 +271,11 @@
                                                     </select>
                                                 </div>
                                             </div>
-
-                                            <div class="col-sm-2">
+												
+												
+												
+												
+												 <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
@@ -48,10 +284,13 @@
                                                     </select>
                                                 </div>
                                             </div>
-
-                                            @endif
-
-                                            @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            
+                                            
+                                                @endif
+                                                
+                                                
+                                                
+                                     @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
@@ -68,7 +307,7 @@
                                             </div>
                                             @endif
 
-                                             @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                                         @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
@@ -83,14 +322,15 @@
                                                 </div>
                                             </div>
                                             @endif
-
-
-                                    
-            <div class="col-sm-2 ">
+												
+												
+												
+												
+												            <div class="col-sm-2 ">
                <div class="mb-3">
-                  <label for="name_of_investigator_org" class="form-label">   অভিযান পরিচালনাকারী সংস্থা     </label>
-                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="form-select" >
-                                                        <option value="">Select</option>
+                  <label for="name_of_investigator_org" class="form-label"></label>
+                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="form-select stylish" >
+                                                        <option value="">সংস্থা</option>
                                                         <option value="থানা পুলিশ"> থানা পুলিশ </option>
                                                         <option value="ডিবি">ডিবি</option>
                                                         <option value="র‍্যাব">র‍্যাব</option>
@@ -101,11 +341,17 @@
                                                     </select>
                </div>
             </div>
-            <div class="col-sm-4 " > 
+												
+												
+												
+												
+												
+												<div class="col-sm-4 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                    
+                   <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
                      <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
@@ -119,7 +365,8 @@
             </div>
          </div>
       </div>
-      <!----
+
+                                            <!----
          <div id="chart_div"></div>
          <div id="piechart"></div>
          <div id="chart_div2"></div>
@@ -127,13 +374,96 @@
 
 
    </div>
+   </div>
+   
+   @endif
+   
+       <x-admin-validation-errors :errors="$errors->all()"/>
+       
+       
+   @can('narcotic.add')
+   <a href="add" class="float2 silverhover">
+    
+<i class="dripicons-plus  plus my-float"></i>
+</a>
+@endcan
+@can('narcotic.view')
+<a href="../narcotic" class="float silverhover" style="padding: 7px;">
+<i style="font-size: 20px;" class="dripicons-view-list my-float"></i>
+</a>
+@endcan
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+   
+   
+   <div class="col-sm-3 " style="padding: 0px 10px 0px 0px; width: 30%;">
+      <div class="card">
+         <h5 class="chart-header-main"> Dummy </h5>
+         <div id="chart_div"></div>
+      </div>
+   </div>
+   
+    
+   <div class="col-sm-5 " style="padding: 0px 0px 0px 13px; width:36.667%!important;">
+      <div class="row">
+          
+         
+              <div class="col-sm-6" style="padding: 1px;">
+            <div class="card purplebg">
+               <h3>মোট কেস</h3>
+               <h2> {{$totalcase}} </h2>
+            </div>
+         </div>
+         
+
+         
+         <div class="col-sm-6" style="padding: 1px;">
+            <div class="card redbg">
+               <h3>মোট আটক</h3>
+               <h2> {{$totalarrast}}</h2>
+            </div>
+         </div>
+  
+      </div>
+      <div class="row">
+         <div class="card" style="height: 213px;">
+            <h5 class="chart-header-main"> অনুযায়ী নিষ্পত্তি</h5>
+            <div id="piechart"></div>
+         </div>
+      </div>
+   </div>
+   <!------2nd----->
+   <div class="col-sm-4 " style="padding: 0px 0px 0px 0px;">
+      <div class="card" >
+         <h5 class="chart-header-main"> অনুযায়ী পেন্ডিং </h5>
+         <div id="chart_div2"></div>
+      </div>
+   </div>
+   <!------2nd----->
 </div>
-@endif
-
-                        <x-admin-validation-errors :errors="$errors->all()"/>
+<!-- end row -->
 
 
-                        <div class="row">
+
+
+
+
+
+
+
+
+
+    <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
                                     <div class="card-body table-responsive">
@@ -141,17 +471,14 @@
                                         
 
                                             <!-- chart  -->
-                                            
-                                            <div id="chart_div"></div>
-                                            <div id="piechart"></div>
-                                            <div id="chart_div2"></div>
-                                            <!-- chart  -->
+                                     
+                                            <!-- chart 
 
                                             <h3>Total case: {{$totalcase}}</h3>
                                             <h3>Total arrast: {{$totalarrast}}</h3>
                                             
 
-                                            
+                                             -->
 
                                              <caption>Amount of Narcotics recoverd by Unit</caption>
                                             <table class="table table-bordered table-striped table-centered mb-0">

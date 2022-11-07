@@ -34,7 +34,7 @@ use Illuminate\Support\Str;
                                            
                                             
                                         </div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="tablestyle">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
