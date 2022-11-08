@@ -946,7 +946,7 @@ class NarcotiscController extends Controller
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->orderBy('id', 'desc')->paginate(20);
 
-           // dd($data['narcoticdatas']);
+            // dd($data['narcoticdatas']);
         }
 
 
@@ -1085,18 +1085,18 @@ class NarcotiscController extends Controller
     public function narrecover(Request $request)
     {
         $data['request'] = $request;
-       return view('admin/narcotic/narcotic-recover', $data);
+        return view('admin/narcotic/narcotic-recover', $data);
     }
 
     public function narrecoversrc(Request $request)
     {
-         $request->validate([
-            'to1' => 'required|date',
-            'form1' => 'required|date',
-            'to2' => 'required|date',
-            'form2' => 'required|date',
-            'org1' => 'required',
-            'org2' => 'required',
+        $request->validate([
+           'to1' => 'required|date',
+           'form1' => 'required|date',
+           'to2' => 'required|date',
+           'form2' => 'required|date',
+           'org1' => 'required',
+           'org2' => 'required',
         ]);
 
         $data['request'] = $request;
@@ -1172,7 +1172,6 @@ class NarcotiscController extends Controller
 
 
         if (auth()->user()->hasRole('Super Admin')) {
-
             $data['narcotic1'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
@@ -1239,7 +1238,6 @@ class NarcotiscController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-
             $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
@@ -1309,7 +1307,6 @@ class NarcotiscController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-            
             $data['narcotic1'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
