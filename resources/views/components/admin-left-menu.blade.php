@@ -287,6 +287,12 @@ a.side-nav-link.nav-link:hover {
                             </a>
             </li>
 
+            <li>         <a href="{{url('admin/narcotic/recover')}}" class="side-nav-link nav-link  ">
+                           <i class="fa-solid fa-chart-line"></i>
+                                <span> Narcotics recover</span>
+                            </a>
+            </li>
+
             @endcan
             
             @can('narcotic.add')

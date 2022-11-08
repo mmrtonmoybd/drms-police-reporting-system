@@ -1,3 +1,5 @@
+@if (auth()->check())
+
 <!DOCTYPE html>
 <html lang="en">
     
@@ -625,13 +627,31 @@ border-left: 3px solid #0ACF97!important;
 
                     <!-- Start Content-->
                     <div class="container-fluid">
+@else 
 
-                    <script>
-                        var xhttp = new XMLHttpRequest();
-                        xhttp.open("GET", "{{url('admin/updatelogin')}}");
-                        xhttp.send();
-                        setInterval(function(){
-                        xhttp.open("GET", "{{url('admin/updatelogin')}}");
-                        xhttp.send();
-                        },20000); 
-                    </script>
+<!DOCTYPE html>
+<html lang="en">
+    
+<!-- Mirrored from coderthemes.com/hyper/saas/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 06:52:31 GMT -->
+<head>
+        <meta charset="utf-8" />
+        <title>DRMS | Management </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{ asset('my-assets/admin') }}/images/favicon.ico">
+        
+
+        <link href="{{ asset('my-assets/admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('my-assets/admin/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{{ asset('my-assets/admin/css/app-dark.min.css') }}" rel="stylesheet" type="text/css" id="dark-style" />
+        <link href="{{ asset('my-assets/admin/css/custom.css') }}" rel="stylesheet" type="text/css" id="dark-style" />
+
+    </head>
+
+    <body class="loading authentication-bg" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+        <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+            <div class="container">
+
+@endif

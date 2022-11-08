@@ -49,9 +49,7 @@ Route::get('/admin', function () {
     return redirect('admin/dashboard');
 });
 Route::prefix('admin')->group(function () {
-    Auth::routes(['login' => false, 'register' => false, 'logout' => false]);
-    Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
-    Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
+    Auth::routes(['register' => false, 'logout' => false]);
     Route::get('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
     //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -103,9 +101,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/dashboard', [NarcotiscController::class, 'dashp'])->middleware('permission:narcotic.dashboard');
         Route::get('/narcotic/src', [NarcotiscController::class, 'dashsc'])->middleware('permission:narcotic.dashboard');
         Route::get('/narcotic/totalcase', [NarcotiscController::class, 'narcoticcase'])->middleware('permission:narcotic.dashboard');
-        ;
         Route::get('/narcotic/totalcase/src', [NarcotiscController::class, 'tcsrc'])->middleware('permission:narcotic.dashboard');
-        ;
+        Route::get('/narcotic/recover', [NarcotiscController::class, 'narrecover'])->middleware('permission:narcotic.dashboard');
+        Route::get('/narcotic/recover/src', [NarcotiscController::class, 'narrecoversrc'])->middleware('permission:narcotic.dashboard');
 
 
         // Woman router
@@ -120,7 +118,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/woman/dashboard', [WomanController::class, 'dashboard'])->middleware('permission:woman.dashboard');
         Route::get('/woman/src', [WomanController::class, 'dashboardsc'])->middleware('permission:woman.dashboard');
 
-        Route::group(['prefix' => 'users'], function () {
+        Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);
             Route::post('/edit/{id}', [UsersController::class, 'Update']);
 

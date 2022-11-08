@@ -1,4 +1,4 @@
-
+@if (auth()->check())
                      
                     </div> <!-- container -->
 
@@ -115,3 +115,27 @@
 </body>
 
 </html>
+@else 
+
+<!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end page -->
+
+        <!-- <footer class="footer footer-alt">
+            2018 - 2021 © Hyper - Coderthemes.com
+        </footer> -->
+
+        <!-- bundle -->
+        <script src="assets/js/vendor.min.js"></script>
+        <script src="assets/js/app.min.js"></script>
+        <script src="{{ asset('my-assets/admin/js/vendor.min.js') }}"></script>
+        <script src="{{ asset('my-assets/admin/js/app.min.js') }}"></script>
+        
+    </body>
+
+<!-- Mirrored from coderthemes.com/hyper/saas/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 06:52:31 GMT -->
+</html>
+
+@endif
