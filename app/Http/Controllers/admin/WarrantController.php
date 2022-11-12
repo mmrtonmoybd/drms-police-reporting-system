@@ -792,4 +792,76 @@ class WarrantController extends Controller
 
         return view('admin/warrant/warrantsr', $data);
     }
+
+    public function chartlink(Request $request)
+    {
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
+
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
+
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'ss';
+        }
+
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+        }
+
+        if (auth()->user()->hasRole('Super Admin')) {
+            $data['districts'] = District::where('division_id', 1)->get();
+            $data['request'] = $request;
+
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $data['districts'] = District::where('division_id', 1)->get();
+
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+        }
+
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhanacol'] = $octhana;
+
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+        }
+
+        return view('admin/warrant/warrant-chartlink', $data);
+    }
 }

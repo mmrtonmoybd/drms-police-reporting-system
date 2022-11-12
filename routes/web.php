@@ -84,6 +84,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/warrant', [WarrantController::class, 'index'])->middleware('permission:warrant.view');
         Route::get('/warrant/dashboard', [WarrantController::class, 'dashs'])->middleware('permission:warrant.dashboard');
         Route::get('/warrant/search', [WarrantController::class, 'dashsp'])->middleware('permission:warrant.dashboard');
+        Route::get('/warrant/search/chart', [WarrantController::class, 'chartlink'])->middleware('permission:warrant.dashboard');
         Route::get('/warrant/edit/{id}', [WarrantController::class, 'editShow'])->middleware('permission:warrant.edit');
         Route::post('/warrant/edit/{id}', [WarrantController::class, 'editUpdate'])->middleware('permission:warrant.edit');
         Route::get('/warrant/delete/{id}', [WarrantController::class, 'delete'])->middleware('permission:warrant.delete');

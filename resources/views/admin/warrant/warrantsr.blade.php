@@ -276,6 +276,84 @@ transform: scale(1.1);
 }
 </style>    
                         <!-- end page title -->
+
+                        <form target="_blank" action="{{url('/admin/warrant/search')}}" method="get">
+                                                    
+                                                    <div class="" id="app">
+                                        <div class="row">
+										
+                                                        @if  (auth()->user()->hasRole('Super Admin'))
+												<div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="districtID" class="form-label "></label>
+                                                          <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id">
+                                                        <option value="">জেলা</option>
+                                                        @if($districts)
+
+                                                        @foreach($districts as $district)
+                                                        <option value="{{$district->id}}" {{ ( $district->id == request()->input('districtID')) ? 'selected' : '' }}>{{$district->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+												</div>
+                                                @endif
+
+                                                @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+												 <div class="col-sm-4">
+                                                 <div class="mb-3">
+                                                    <label for="districtID" class="form-label "></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}" {{ ( $thnsp->id == request()->input('thanaID')) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+												</div>
+                                                @endif
+
+                                                @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+												<div class="col-sm-4">
+                                                 <div class="mb-3">
+                                                    <label for="districtID" class="form-label "></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($octhanacol)
+
+                                                        <option value="{{$octhanacol->id}}" selected>{{$octhanacol->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                    </div>
+                                                @endif
+												
+												
+												<div class="col-sm-4 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <div class="input-group" id="timepicker-input-group2">
+                    
+                    <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date start" >
+                    <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date end" >
+                  </div>
+               </div>
+            </div>
+            
+            <div class="col-sm-4 " >
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+</form>
 						
 @can('warrant.add')
    <a href="add" class="float2 silverhover">

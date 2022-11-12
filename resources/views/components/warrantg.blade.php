@@ -1,5 +1,11 @@
 @if (str_contains(url()->current(), '/warrant/dashboard') || str_contains(url()->current(), '/warrant/search'))
-           <script type="text/javascript">
+@php 
+$allin = request()->all();
+$removarr = \Illuminate\Support\Arr::except($allin, 'districtID');
+$string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
+//dd($string);
+@endphp
+<script type="text/javascript">
 
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
@@ -16,13 +22,13 @@
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['District', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}],
-         ['বরগুনা', {{session('borgona')}}, '#b87333', '{{session('borgona')}}'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, 'silver', '{{session('barisal')}}'],            // English color name
-         ['ভোলা', {{session('bhola')}}, 'gold', '{{session('bhola')}}'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2', '{{session('jalokhati')}}'], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333', '{{session('patuakhali')}}'],
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance', '{{session('pirojpur')}}'],
+         ['District', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['বরগুনা', {{session('borgona')}}, '#b87333', '{{session('borgona')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, 'silver', '{{session('barisal')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
+         ['ভোলা', {{session('bhola')}}, 'gold', '{{session('bhola')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2', '{{session('jalokhati')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333', '{{session('patuakhali')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance', '{{session('pirojpur')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
       ]);
 
         // Set chart options
@@ -36,6 +42,14 @@
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+         google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -44,13 +58,13 @@
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['নিষ্পত্তি by District wise', 'count', {role: 'annotation', type: 'string'}],
-          ['বরগুনা', {{session('borgonan')}}, {{session('borgonan')}}],            // RGB value
-          ['বরিশাল', {{session('barisaln')}}, {{session('barisaln')}}],            // English color name
-          ['ভোলা', {{session('bholan')}}, {{session('bholan')}}],
-          ['ঝালকাঠি', {{session('jalokhatin')}}, {{session('jalokhatin')}}], // CSS-style declaration
-          ['পটুয়াখালী', {{session('patuakhalin')}}, {{session('patuakhalin')}}],
-          ['পিরোজপুর', {{session('pirojpurn')}}, {{session('pirojpurn')}}]
+          ['নিষ্পত্তি by District wise', 'count', {role: 'annotation', type: 'string'}, { role: 'link' }],
+          ['বরগুনা', {{session('borgonan')}}, {{session('borgonan')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+          ['বরিশাল', {{session('barisaln')}}, {{session('barisaln')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
+          ['ভোলা', {{session('bholan')}}, {{session('bholan')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+          ['ঝালকাঠি', {{session('jalokhatin')}}, {{session('jalokhatin')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+          ['পটুয়াখালী', {{session('patuakhalin')}}, {{session('patuakhalin')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+          ['পিরোজপুর', {{session('pirojpurn')}}, {{session('pirojpurn')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif']
         ]);
 
         var options = {
@@ -62,6 +76,15 @@
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
 
         chart.draw(data, options);
       }
@@ -79,13 +102,13 @@
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['District', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}],
-         ['বরগুনা', {{session('borgonap')}}, '#b87333', '{{session('borgonap')}}'],            // RGB value
-         ['বরিশাল', {{session('barisalp')}}, 'silver', '{{session('barisalp')}}'],            // English color name
-         ['ভোলা', {{session('bholap')}}, 'gold', '{{session('bholap')}}'],
-         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2', '{{session('jalokhatip')}}'], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333', '{{session('patuakhalip')}}'],
-         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance', '{{session('pirojpurp')}}'],
+         ['District', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['বরগুনা', {{session('borgonap')}}, '#b87333', '{{session('borgonap')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisalp')}}, 'silver', '{{session('barisalp')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
+         ['ভোলা', {{session('bholap')}}, 'gold', '{{session('bholap')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2', '{{session('jalokhatip')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333', '{{session('patuakhalip')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance', '{{session('pirojpurp')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
       ]);
 
         // Set chart options
@@ -99,6 +122,14 @@
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
