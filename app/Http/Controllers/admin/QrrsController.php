@@ -203,7 +203,7 @@ class QrrsController extends Controller
                 $dd = Qrr::where('thanaID', $value->id)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-                $data['spthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name];
+                $data['spthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name, $value->id];
             }
 
             $request->session()->flash('spthana', $data['spthana']);
@@ -220,6 +220,7 @@ class QrrsController extends Controller
 
             $request->session()->flash('octhananame', $octhana->bn_name);
             $request->session()->flash('octhanavalue', $val);
+            $request->session()->flash('octhanaid', $octhana->id);
         }
 
         //dd($data['qrrs']);
@@ -390,6 +391,137 @@ class QrrsController extends Controller
 
 
         return view('admin/qrr/qrrsg', $data);
+    }
+
+
+    public function chartdata(Request $request)
+    {
+        $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
+        }
+
+        // $from = Carbon::parse();
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
+
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
+
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'jj';
+        }
+
+        if (!empty($request->input('source_of_info'))) {
+            $skey = '=';
+            $svalue = $request->input('source_of_info');
+        } else {
+            $skey = '!=';
+            $svalue = 'gg';
+        }
+
+        if (!empty($request->input('eventtype'))) {
+            $ekey = '=';
+            $evalue = $request->input('eventtype');
+        } else {
+            $ekey = '!=';
+            $evalue = 'jpend';
+        }
+
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+        }
+
+        if (($dvalue !== 'ss')) {
+            $sdis = District::find($request->input('districtID'));
+        }
+
+        if (($tvalue !== 'jj')) {
+            $sthan = Thana::find($request->input('thanaID'));
+        }
+
+        $data['sdisn'] = ($dvalue !== 'ss') ? $sdis : 'খালি';
+        $data['sthan'] = ($tvalue !== 'jj') ? $sthan : 'খালি';
+        $data['ssoun'] = ($svalue !== 'gg') ? $svalue : 'খালি';
+        $data['ssdate'] = (!empty($request->input('form'))) ? $request->input('form') : 'খালি';
+        $data['stdate'] = (!empty($request->input('form'))) ? $request->input('to') : 'খালি';
+
+
+
+        //\DB::enableQueryLog();
+        // $query = ;
+        // $query->with(['district', 'thana']);
+        $data['qrrs'] = Qrr::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->where('event_type', $ekey, $evalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+        // dd($data['qrrs'], $from, $to, \DB::getQueryLog());
+
+        //dd(\DB::getQueryLog());
+
+        //$query->where('districtID', '=', $request->input('districtID'))
+        //->orWhere('thanaID', '=', $request->input('thanaID'))
+        //->orWhere('source_of_info', '=', $request->input('source_of_info'))->orWhereDate('date_time_of_police_news', '=', $request->input('form'))
+        $data['request'] =  $request;
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+        $thana = Thana::get();
+        $data['ttn'] = $thana;
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+        }
+
+        return view('admin/qrr/qrrscdata', $data);
     }
 
 

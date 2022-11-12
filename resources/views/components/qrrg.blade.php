@@ -1,0 +1,237 @@
+@if (str_contains(url()->current(), '/admin/qrrs/srcs') || str_contains(url()->current(), '/admin/qrrs/charts'))
+@php 
+$string = url('/admin/qrrs/srcs/data') .'?'. http_build_query(request()->all());
+
+//dd($string);
+@endphp
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      @if (auth()->user()->hasRole('Super Admin'))
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['বরগুনা', {{session('borgona')}}, '#26a49a', '{{session("borgona")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, '#e94236', '{{session("barisal")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&districtID=35"!!} @endif'],         // English color name
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d', '{{session("pirojpur")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&districtID=39"!!} @endif'],
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001', '{{session("patuakhali")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&districtID=38"!!} @endif'],
+         ['ভোলা', {{session('bhola')}}, '#0c5295', '{{session("bhola")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47',  '{{session("jalokhati")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&districtID=37"!!} @endif'], // CSS-style declaration
+        
+       
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+        
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      @endif
+
+      @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         
+         @foreach(session("spthana") as $key => $value)
+
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&thanaID=".$value[2]!!} @endif'],
+
+         @endforeach
+        
+       
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+        
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      @endif
+
+      @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+
+         ['{{session("octhananame")}}', {{session('octhanavalue')}}, '#26a49a', '{{session("octhanavalue")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&thanaID=".session("octhanaid")!!} @endif'],
+
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+        
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      @endif
+
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Information source', 'count', { role: 'link' }],
+          ['এলাকা', {{session('insala')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&source_of_info=এলাকা"!!} @endif'],
+          ['কোর্ট',  {{session('inscou')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&source_of_info=কোর্ট"!!} @endif'],
+          ['থানা',  {{session('instha')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&source_of_info=থানা"!!} @endif'],
+          ['৯৯৯', {{session('ins99')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string!!} @else {!!$string . "&source_of_info=৯৯৯"!!} @endif']
+        ]);
+
+        var options = {
+          title: '',
+          is3D: true,
+        width: "98%",
+        height: "172",
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 2);
+                    location.href = link;
+                }
+        });
+
+        chart.draw(data, options);
+      }
+
+       // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart3);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart3() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Crime Type', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['মারামারি', {{session('etmara')}}, '#26a59a', '{{session("etmara")}}', '{!!$string . "&eventtype=মারামারি"!!}'],
+         ['খুন', {{session('etkun')}}, '#26a59a', '{{session("etkun")}}', '{!!$string . "&eventtype=খুন"!!}'],
+         ['চুরি', {{session('etchori')}}, '#26a59a', '{{session("etchori")}}', '{!!$string . "&eventtype=চুরি"!!}'],
+         ['ডাকাতি', {{session('etdakati')}}, 'color: #26a59a', '{{session("etdakati")}}', '{!!$string . "&eventtype=ডাকাতি"!!}'], 
+         ['বিরোধ', {{session('etsompds')}}, '#26a59a', '{{session("etsompds")}}', '{!!$string . "&eventtype=বিরোধ"!!}'],
+         ['নিখোঁজ', {{session('etnikoj')}}, '#26a59a', '{{session("etnikoj")}}', '{!!$string . "&eventtype=নিখোঁজ"!!}'],
+         ['দস্যুতা', {{session('etdusht')}}, '#26a59a', '{{session("etdusht")}}', '{!!$string . "&eventtype=দস্যুতা"!!}'],
+         ['জুয়া', {{session('etjua')}}, '#26a59a', '{{session("etjua")}}', '{!!$string . "&eventtype=জুয়া"!!}'],
+         ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, '#26a59a', '{{session("etsorokd")}}', '{!!$string . "&eventtype=সড়ক দুর্ঘটনা"!!}'],
+         ['নারী ও শিশু', {{session('etnarios')}}, '#26a59a', '{{session("etnarios")}}', '{!!$string . "&eventtype=নারী ও শিশু"!!}'],
+         ['অগ্নিকান্ড', {{session('etagun')}}, '#26a59a', '{{session("etagun")}}', '{!!$string . "&eventtype=অগ্নিকান্ড"!!}'],
+         ['মাদক', {{session('etmadok')}}, '#26a59a', '{{session("etmadok")}}', '{!!$string . "&eventtype=মাদক"!!}'],
+         ['সাইবার', {{session('etcyber')}}, '#26a59a', '{{session("etcyber")}}', '{!!$string . "&eventtype=সাইবার"!!}'],
+         ['প্রতারণা', {{session('etprota')}}, '#26a59a', '{{session("etprota")}}', '{!!$string . "&eventtype=প্রতারণা"!!}'],
+         ['দুর্ঘটনা', {{session('etrajnoi')}}, '#26a59a', '{{session("etrajnoi")}}', '{!!$string . "&eventtype=দুর্ঘটনা"!!}'],
+         ['অন্যান্য', {{session('etonno')}}, '#26a59a', '{{session("etonno")}}', '{!!$string . "&eventtype=অন্যান্য"!!}'],
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      </script>
+
+      @endif

@@ -76,6 +76,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/qrrs/charts', [QrrsController::class, 'chart'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/report/{report}', [QrrsController::class, 'report'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs', [QrrsController::class, 'srcs'])->middleware('permission:qrr.dashboard');
+        Route::get('/qrrs/srcs/data', [QrrsController::class, 'chartdata'])->middleware('permission:qrr.dashboard');
 
         // Warrant router
         Route::get('/warrant/add', [WarrantController::class, 'addShow'])->middleware('permission:warrant.add');
