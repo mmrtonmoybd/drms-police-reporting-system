@@ -801,7 +801,8 @@ class NarcotiscController extends Controller
         return view('admin/narcotic/narcoticsc', $data);
     }
 
-    public function chartlink(Request $request) {
+    public function chartlink(Request $request)
+    {
         $data['request'] = $request;
 
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
