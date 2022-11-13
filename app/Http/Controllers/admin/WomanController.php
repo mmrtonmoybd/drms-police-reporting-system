@@ -547,7 +547,6 @@ class WomanController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
             $data['spthanas'] = $spthana;
@@ -574,5 +573,4 @@ class WomanController extends Controller
 
         return view('admin/woman/woman-chartlink', $data);
     }
-
 }
