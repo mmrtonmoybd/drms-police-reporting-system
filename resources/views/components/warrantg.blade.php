@@ -1,16 +1,17 @@
-@if (str_contains(url()->current(), '/warrant/dashboard') || str_contains(url()->current(), '/warrant/search'))
-@php 
-$allin = request()->all();
-$removarr = \Illuminate\Support\Arr::except($allin, 'districtID');
-$string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
-//dd($string);
-@endphp
+@if ( request()->is('admin/warrant/dashboard') || request()->is('admin/warrant/search'))
 <script type="text/javascript">
 
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
       @if (auth()->user()->hasRole('Super Admin'))
+
+@php 
+$allin = request()->all();
+$removarr = \Illuminate\Support\Arr::except($allin, 'districtID');
+$string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
+//dd($string);
+@endphp
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);
@@ -23,12 +24,12 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['District', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
-         ['বরগুনা', {{session('borgona')}}, '#b87333', '{{session('borgona')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, 'silver', '{{session('barisal')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
-         ['ভোলা', {{session('bhola')}}, 'gold', '{{session('bhola')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2', '{{session('jalokhati')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333', '{{session('patuakhali')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance', '{{session('pirojpur')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
+         ['বরগুনা', {{session('borgona')}}, '#b87333', '{{session('borgona')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, 'silver', '{{session('barisal')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
+         ['ভোলা', {{session('bhola')}}, 'gold', '{{session('bhola')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #e5e4e2', '{{session('jalokhati')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #b87333', '{{session('patuakhali')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: Romance', '{{session('pirojpur')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
       ]);
 
         // Set chart options
@@ -59,12 +60,12 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         var data = google.visualization.arrayToDataTable([
           ['নিষ্পত্তি by District wise', 'count', {role: 'annotation', type: 'string'}, { role: 'link' }],
-          ['বরগুনা', {{session('borgonan')}}, {{session('borgonan')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
-          ['বরিশাল', {{session('barisaln')}}, {{session('barisaln')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
-          ['ভোলা', {{session('bholan')}}, {{session('bholan')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
-          ['ঝালকাঠি', {{session('jalokhatin')}}, {{session('jalokhatin')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
-          ['পটুয়াখালী', {{session('patuakhalin')}}, {{session('patuakhalin')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
-          ['পিরোজপুর', {{session('pirojpurn')}}, {{session('pirojpurn')}}, '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif']
+          ['বরগুনা', {{session('borgonan')}}, {{session('borgonan')}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+          ['বরিশাল', {{session('barisaln')}}, {{session('barisaln')}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
+          ['ভোলা', {{session('bholan')}}, {{session('bholan')}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+          ['ঝালকাঠি', {{session('jalokhatin')}}, {{session('jalokhatin')}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+          ['পটুয়াখালী', {{session('patuakhalin')}}, {{session('patuakhalin')}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+          ['পিরোজপুর', {{session('pirojpurn')}}, {{session('pirojpurn')}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif']
         ]);
 
         var options = {
@@ -103,12 +104,12 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['District', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
-         ['বরগুনা', {{session('borgonap')}}, '#b87333', '{{session('borgonap')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
-         ['বরিশাল', {{session('barisalp')}}, 'silver', '{{session('barisalp')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
-         ['ভোলা', {{session('bholap')}}, 'gold', '{{session('bholap')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
-         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2', '{{session('jalokhatip')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
-         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333', '{{session('patuakhalip')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
-         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance', '{{session('pirojpurp')}}', '@if (!str_contains(url()->current(), "/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
+         ['বরগুনা', {{session('borgonap')}}, '#b87333', '{{session('borgonap')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisalp')}}, 'silver', '{{session('barisalp')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],            // English color name
+         ['ভোলা', {{session('bholap')}}, 'gold', '{{session('bholap')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhatip')}}, 'color: #e5e4e2', '{{session('jalokhatip')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['পটুয়াখালী', {{session('patuakhalip')}}, 'color: #b87333', '{{session('patuakhalip')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['পিরোজপুর', {{session('pirojpurp')}}, 'color: Romance', '{{session('pirojpurp')}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
       ]);
 
         // Set chart options
@@ -138,6 +139,12 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
       @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
 
+      @php 
+      $allin = request()->all();
+      $removarr = \Illuminate\Support\Arr::except($allin, 'thanaID');
+      $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
+      @endphp
+
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);
 
@@ -148,10 +155,10 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          @foreach(session("spthana") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}'],
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
 
          @endforeach
       ]);
@@ -167,6 +174,14 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -175,10 +190,10 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}],
+          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}, { role: 'link' }],
           @foreach(session("spthanan") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, {{$value[0]}}],
+         ['{{$value[1]}}', {{$value[0]}}, {{$value[0]}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
 
          @endforeach
         ]);
@@ -192,7 +207,14 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -209,10 +231,10 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          @foreach(session("spthanap") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}'],
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
 
          @endforeach
       ]);
@@ -228,6 +250,14 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -235,6 +265,12 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
 
       @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+
+       @php 
+      $allin = request()->all();
+      $removarr = \Illuminate\Support\Arr::except($allin, 'thanaID');
+      $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
+      @endphp
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);
@@ -246,8 +282,8 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}],
-         ['{{session("octhana")[1]}}', {{session('octhana')[0]}}, '#b87333', '{{session('octhana')[0]}}']
+         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['{{session("octhana")[1]}}', {{session('octhana')[0]}}, '#b87333', '{{session('octhana')[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".session("octhana")[2]!!} @else {!!$string1 . "&thanaID=".session("octhana")[2]!!} @endif']
       ]);
 
         // Set chart options
@@ -261,6 +297,14 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -269,8 +313,8 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}],
-         ['{{session("octhanan")[1]}}', {{session('octhanan')[0]}}, '{{session('octhanan')[0]}}']
+          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['{{session("octhanan")[1]}}', {{session('octhanan')[0]}}, '{{session('octhanan')[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".session("octhana")[2]!!} @else {!!$string1 . "&thanaID=".session("octhana")[2]!!} @endif']
         ]);
 
         var options = {
@@ -281,6 +325,14 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
+         google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -297,8 +349,8 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}],
-         ['{{session("octhanap")[1]}}', {{session('octhanap')[0]}}, '#b87333', '{{session('octhanap')[0]}}']
+         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         ['{{session("octhanap")[1]}}', {{session('octhanap')[0]}}, '#b87333', '{{session('octhanap')[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".session("octhana")[2]!!} @else {!!$string1 . "&thanaID=".session("octhana")[2]!!} @endif']
       ]);
 
         // Set chart options
@@ -312,6 +364,14 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 

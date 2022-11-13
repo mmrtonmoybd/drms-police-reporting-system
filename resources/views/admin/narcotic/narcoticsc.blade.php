@@ -377,6 +377,138 @@ margin-top: -39px;
 
    </div>
    </div>
+
+   @elseif($request->is('admin/narcotic/src'))
+
+   <div class="row">
+   <div class="card">
+   
+                                               <form target="_blank" action="{{url('admin/narcotic/src')}}" method="get">
+                                                    
+                                                    <div class="" id="app">
+                                        <div class="row">
+										
+                                                       @if (auth()->user()->hasRole('Super Admin'))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="districtID" class="form-label "></label>
+                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
+                                                        <option value="">জেলা</option>
+                                                        @if($districts)
+
+                                                        @foreach($districts as $district)
+                                                        <option value="{{$district->id}}" {{ ( $district->id == $request->input('districtID')) ? 'selected' : '' }} >{{$district->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+												
+												
+												
+												
+												 <div class="col-sm-2">
+                                               <div class="mb-3">
+                                                    <label for="thanaID" class="form-label">থানা</label>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                        <option value="">Select</option>
+                                                        <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                                @endif
+                                                
+                                                
+                                                
+                                     @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}" {{ ( $thnsp->id == $request->input('thanaID')) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                                         @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select stylish">
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+												
+												
+												
+												
+												            <div class="col-sm-2 ">
+               <div class="mb-3">
+                  <label for="name_of_investigator_org" class="form-label"></label>
+                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="form-select stylish" >
+                                                        <option value="">সংস্থা</option>
+                                                        <option value="থানা পুলিশ"> থানা পুলিশ </option>
+                                                        <option value="ডিবি">ডিবি</option>
+                                                        <option value="র‍্যাব">র‍্যাব</option>
+                                                        <option value="এপিবিএন">এপিবিএন</option>
+                                                        <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর">মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
+                                                        <option value="কোস্টগার্ড">কোস্টগার্ড</option>
+                                                        <option value="অন্যান্য">অন্যান্য</option>
+                                                    </select>
+               </div>
+            </div>
+												
+												
+												
+												
+												
+												<div class="col-sm-4 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <div class="input-group" id="timepicker-input-group2">
+                    
+                   <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                  </div>
+               </div>
+            </div>
+            
+            <div class="col-sm-2 " >
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+                                               </form>
+
+                                            <!----
+         <div id="chart_div"></div>
+         <div id="piechart"></div>
+         <div id="chart_div2"></div>
+         --->
+
+
+   </div>
+   </div>
    
    @endif
    
@@ -717,8 +849,8 @@ margin-top: -39px;
                             </div>
                         </div>
                         <!-- end row -->
-                        @if ($request->is('admin/narcotic/dashboard'))
-
+                        
+@if ($request->is('admin/narcotic/dashboard'))
 @php
                 if($request->input('divisionID'))
                     $division_id = $request->input('divisionID');
@@ -730,6 +862,21 @@ margin-top: -39px;
                     $thana_id = $request->input('thanaID');
 
                 @endphp
+@endphp
+@endif
+@if ($request->is('admin/narcotic/src'))
+@php
+                if($request->input('divisionID'))
+                    $division_id = $request->input('divisionID');
+                if($request->input('districtID'))
+                    $district_id = $request->input('districtID');
+                if($request->input('thanaID'))
+                    $thana_id = $request->input('thanaID');
+
+                @endphp
+@endphp
+@endif
+@if ($request->is('admin/narcotic/dashboard') || ($request->is('admin/narcotic/src')))
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
     <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
 

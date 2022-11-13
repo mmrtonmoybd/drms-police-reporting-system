@@ -420,9 +420,9 @@ class WarrantController extends Controller
 
                 $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
 
-                $data['spthana'][$key] =  [$dd, $value->bn_name];
-                $data['spthanan'][$key] = [$dd2, $value->bn_name];
-                $data['spthanap'][$key] = [$dd3, $value->bn_name];
+                $data['spthana'][$key] =  [$dd, $value->bn_name, $value->id];
+                $data['spthanan'][$key] = [$dd2, $value->bn_name, $value->id];
+                $data['spthanap'][$key] = [$dd3, $value->bn_name, $value->id];
             }
 
             $request->session()->flash('spthana', $data['spthana']);
@@ -475,9 +475,9 @@ class WarrantController extends Controller
 
             $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
 
-            $data['octhana'] =  [$dd, $octhana->bn_name];
-            $data['octhanan'] = [$dd2, $octhana->bn_name];
-            $data['octhanap'] = [$dd3, $octhana->bn_name];
+            $data['octhana'] =  [$dd, $octhana->bn_name, $octhana->id];
+            $data['octhanan'] = [$dd2, $octhana->bn_name, $octhana->id];
+            $data['octhanap'] = [$dd3, $octhana->bn_name, $octhana->id];
 
             $request->session()->flash('octhana', $data['octhana']);
             $request->session()->flash('octhanan', $data['octhanan']);
@@ -693,9 +693,9 @@ class WarrantController extends Controller
 
                 $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
 
-                $data['spthana'][$key] =  [$dd, $value->bn_name];
-                $data['spthanan'][$key] = [$dd2, $value->bn_name];
-                $data['spthanap'][$key] = [$dd3, $value->bn_name];
+                $data['spthana'][$key] =  [$dd, $value->bn_name, $value->id];
+                $data['spthanan'][$key] = [$dd2, $value->bn_name, $value->id];
+                $data['spthanap'][$key] = [$dd3, $value->bn_name, $value->id];
             }
 
             $request->session()->flash('spthana', $data['spthana']);
@@ -751,9 +751,9 @@ class WarrantController extends Controller
 
             $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
 
-            $data['octhana'] =  [$dd, $octhana->bn_name];
-            $data['octhanan'] = [$dd2, $octhana->bn_name];
-            $data['octhanap'] = [$dd3, $octhana->bn_name];
+            $data['octhana'] =  [$dd, $octhana->bn_name, $octhana->id];
+            $data['octhanan'] = [$dd2, $octhana->bn_name, $octhana->id];
+            $data['octhanap'] = [$dd3, $octhana->bn_name, $octhana->id];
 
             $request->session()->flash('octhana', $data['octhana']);
             $request->session()->flash('octhanan', $data['octhanan']);

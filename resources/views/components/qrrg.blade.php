@@ -1,4 +1,4 @@
-@if (str_contains(url()->current(), '/admin/qrrs/srcs') || str_contains(url()->current(), '/admin/qrrs/charts'))
+@if ( request()->is('admin/qrrs/srcs') || request()->is('admin/qrrs/charts'))
 @php 
 $allin = request()->all();
 $removarr = \Illuminate\Support\Arr::except($allin, 'districtID');
@@ -23,12 +23,12 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
-         ['বরগুনা', {{session('borgona')}}, '#26a49a', '{{session("borgona")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, '#e94236', '{{session("barisal")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d', '{{session("pirojpur")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001', '{{session("patuakhali")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
-         ['ভোলা', {{session('bhola')}}, '#0c5295', '{{session("bhola")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47',  '{{session("jalokhati")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['বরগুনা', {{session('borgona')}}, '#26a49a', '{{session("borgona")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, '#e94236', '{{session("barisal")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d', '{{session("pirojpur")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001', '{{session("patuakhali")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['ভোলা', {{session('bhola')}}, '#0c5295', '{{session("bhola")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47',  '{{session("jalokhati")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
         
        
       ]);
@@ -79,7 +79,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
          
          @foreach(session("spthana") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
 
          @endforeach
         
@@ -131,7 +131,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
 
-         ['{{session("octhananame")}}', {{session('octhanavalue')}}, '#26a49a', '{{session("octhanavalue")}}', '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&thanaID=".session("octhanaid")!!} @else {!!$string1 . "&thanaID=".session("octhanaid")!!} @endif'],
+         ['{{session("octhananame")}}', {{session('octhanavalue')}}, '#26a49a', '{{session("octhanavalue")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".session("octhanaid")!!} @else {!!$string1 . "&thanaID=".session("octhanaid")!!} @endif'],
 
       ]);
 
@@ -172,10 +172,10 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
 
         var data = google.visualization.arrayToDataTable([
           ['Information source', 'count', { role: 'link' }],
-          ['এলাকা', {{session('insala')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&source_of_info=এলাকা"!!} @else {!!$string1 . "&source_of_info=এলাকা"!!} @endif'],
-          ['কোর্ট',  {{session('inscou')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&source_of_info=কোর্ট"!!} @else {!!$string1 . "&source_of_info=কোর্ট"!!} @endif'],
-          ['থানা',  {{session('instha')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&source_of_info=থানা"!!} @else {!!$string1 . "&source_of_info=থানা"!!} @endif'],
-          ['৯৯৯', {{session('ins99')}}, '@if (!str_contains(url()->current(), "/admin/qrrs/srcs")) {!!$string1 . "&source_of_info=৯৯৯"!!} @else {!!$string1 . "&source_of_info=৯৯৯"!!} @endif']
+          ['এলাকা', {{session('insala')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=এলাকা"!!} @else {!!$string1 . "&source_of_info=এলাকা"!!} @endif'],
+          ['কোর্ট',  {{session('inscou')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=কোর্ট"!!} @else {!!$string1 . "&source_of_info=কোর্ট"!!} @endif'],
+          ['থানা',  {{session('instha')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=থানা"!!} @else {!!$string1 . "&source_of_info=থানা"!!} @endif'],
+          ['৯৯৯', {{session('ins99')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=৯৯৯"!!} @else {!!$string1 . "&source_of_info=৯৯৯"!!} @endif']
         ]);
 
         var options = {

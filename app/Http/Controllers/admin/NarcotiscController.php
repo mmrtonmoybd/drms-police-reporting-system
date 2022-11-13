@@ -515,6 +515,8 @@ class NarcotiscController extends Controller
         }
 
         if (auth()->user()->hasRole('Super Admin')) {
+            $data['districts'] = District::where('division_id', 1)->get();
+            $data['request'] = $request;
             $data['narcotics'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
@@ -797,6 +799,93 @@ class NarcotiscController extends Controller
 
 
         return view('admin/narcotic/narcoticsc', $data);
+    }
+
+    public function chartlink(Request $request) {
+        $data['request'] = $request;
+
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
+
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
+
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'jj';
+        }
+
+        if (!empty($request->input('name_of_investigator_org'))) {
+            $skey = '=';
+            $svalue = $request->input('name_of_investigator_org');
+        } else {
+            $skey = '!=';
+            $svalue = 'gg';
+        }
+
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+        }
+
+        if (auth()->user()->hasRole('Super Admin')) {
+            $data['districts'] = District::where('division_id', 1)->get();
+            $data['request'] = $request;
+            $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+        }
+
+
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
+            $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+            ->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+        }
+
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $data['request'] = $request;
+
+            $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+        }
+
+
+
+        return view('admin/narcotic/narcotic-clickchart', $data);
     }
 
     public function narcoticcase(Request $request)
