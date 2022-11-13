@@ -1,6 +1,15 @@
-@if (str_contains(url()->current(), '/admin/woman/dashboard') || str_contains(url()->current(), '/admin/woman/src'))
+@if ( request()->is('admin/woman/dashboard') || request()->is('admin/woman/src'))
     <script type="text/javascript">
+@php 
+$allin = request()->all();
+$removarr = \Illuminate\Support\Arr::except($allin, 'districtID');
+$string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
 
+$removarr2 = \Illuminate\Support\Arr::except($allin, 'action_taken');
+$string2 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr2);
+$string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
+//dd($string);
+@endphp
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
@@ -16,11 +25,11 @@
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['District', 'Complain', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['District', 'Complain', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          
          @foreach(session("totalcomplains") as $key => $value)
 
-         ['{{$value->district->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' ],
+         ['{{$value->district->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&districtID=".$value->district->id!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
 
          @endforeach
         
@@ -39,6 +48,14 @@
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -48,9 +65,9 @@
       function drawChart3() {
 
         var data = google.visualization.arrayToDataTable([
-          ['Action taken', 'count'],
+          ['Action taken', 'count', 'number', { role: 'link' }],
           @foreach(session("actiontakens") as $key => $value)
-          ['{{$value->action_taken}}', {{$value->totalactiontaken}}],
+          ['{{$value->action_taken}}', {{$value->totalactiontaken}}, '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&action_taken=".$value->action_taken!!} @else {!!$string2 . "&action_taken=".$value->action_taken!!} @endif'],
           @endforeach
         ]);
 
@@ -64,6 +81,14 @@
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -71,9 +96,9 @@
 
     function drawChart2() {
       var data = google.visualization.arrayToDataTable([
-        ["Report", "count", { role: "style" } ],
+        ["Report", "count", { role: "style" } , { role: 'link' }],
          @foreach(session("disposalrepors") as $key => $value)
-          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold"],
+          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold", '@if (request()->is("admin/woman/dashboard")) {!!$string3 . "&nreport=".$value->nreport!!} @else {!!$string3 . "&nreport=".$value->nreport!!} @endif'],
           @endforeach
       ]);
 
@@ -93,6 +118,14 @@
         legend: { position: "none" },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+       google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
       chart.draw(view, options);
   }
 
@@ -106,15 +139,21 @@
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
+
+      @php 
+      $allin = request()->all();
+$removarr = \Illuminate\Support\Arr::except($allin, 'thanaID');
+$string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
+      @endphp
       function drawChart() {
 
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
-         ['Thana', 'Complain', { role: 'style' }, {role: 'annotation', type: 'string'}],
+         ['Thana', 'Complain', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          
          @foreach(session("totalcomplains") as $key => $value)
 
-         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' ],
+         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' , '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
 
          @endforeach
         
@@ -133,6 +172,14 @@
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -142,9 +189,9 @@
       function drawChart3() {
 
         var data = google.visualization.arrayToDataTable([
-          ['Action taken', 'count'],
+          ['Action taken', 'count', 'number', { role: 'link' }],
           @foreach(session("actiontakens") as $key => $value)
-          ['{{$value->action_taken}}', {{$value->totalactiontaken}}],
+          ['{{$value->action_taken}}', {{$value->totalactiontaken}}, '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&action_taken=".$value->action_taken!!} @else {!!$string2 . "&action_taken=".$value->action_taken!!} @endif'],
           @endforeach
         ]);
 
@@ -158,6 +205,14 @@
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
         chart.draw(data, options);
       }
 
@@ -165,9 +220,9 @@
 
     function drawChart2() {
       var data = google.visualization.arrayToDataTable([
-        ["Report", "count", { role: "style" } ],
+        ["Report", "count", { role: "style" } , { role: 'link' }],
          @foreach(session("disposalrepors") as $key => $value)
-          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold"],
+          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold", '@if (request()->is("admin/woman/dashboard")) {!!$string3 . "&nreport=".$value->nreport!!} @else {!!$string3 . "&nreport=".$value->nreport!!} @endif'],
           @endforeach
       ]);
 
@@ -187,6 +242,14 @@
         legend: { position: "none" },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
       chart.draw(view, options);
   }
 

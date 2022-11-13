@@ -120,6 +120,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/woman/pview/{woman}', [WomanController::class, 'pview'])->middleware('permission:woman.view');
         Route::get('/woman/dashboard', [WomanController::class, 'dashboard'])->middleware('permission:woman.dashboard');
         Route::get('/woman/src', [WomanController::class, 'dashboardsc'])->middleware('permission:woman.dashboard');
+        Route::get('/woman/chart/data', [WomanController::class, 'womancclick'])->middleware('permission:woman.dashboard');
 
         Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);

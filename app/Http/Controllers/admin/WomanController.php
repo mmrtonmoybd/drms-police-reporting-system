@@ -141,19 +141,20 @@ class WomanController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
 
         $dateandtime = Carbon::createFromFormat('d/m/Y h:i A', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
-        $request->merge(['wdate' => $dateandtime,
-    'badi_age' => $this->reptpenum($request->input('badi_age')),
-'badi_phone' => $this->reptpenum($request->input('badi_phone')),
-'mobile_no' => $this->reptpenum($request->input('mobile_no')),
-'gd_no' => $this->reptpenum($request->input('gd_no')),
-'mamla_no' => $this->reptpenum($request->input('mamla_no')),
-'dhara' => $this->reptpenum($request->input('dhara')),
-'complaint_no' => $this->reptpenum($request->input('complaint_no')),
-'gd_date' => Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d'),
-'mamla_date' => Carbon::createFromFormat('d/m/Y', $request->input('mamla_date'))->format('Y-m-d'),
-'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
- 'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
-]);
+        $request->merge([
+                       'wdate' => $dateandtime,
+                       'badi_age' => $this->reptpenum($request->input('badi_age')),
+                       'badi_phone' => $this->reptpenum($request->input('badi_phone')),
+                       'mobile_no' => $this->reptpenum($request->input('mobile_no')),
+                       'gd_no' => $this->reptpenum($request->input('gd_no')),
+                       'mamla_no' => $this->reptpenum($request->input('mamla_no')),
+                       'dhara' => $this->reptpenum($request->input('dhara')),
+                       'complaint_no' => $this->reptpenum($request->input('complaint_no')),
+                       'gd_date' => Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d'),
+                       'mamla_date' => Carbon::createFromFormat('d/m/Y', $request->input('mamla_date'))->format('Y-m-d'),
+                       'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+                       'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
+                       ]);
         // dd($request->all());
 
         $request->request->remove('incident_time');
@@ -471,4 +472,107 @@ class WomanController extends Controller
 
         return view('admin/woman/womansr', $data);
     }
+
+    public function womancclick(Request $request)
+    {
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
+
+        if (!empty($request->input('districtID'))) {
+            $dkey = '=';
+            $dvalue = $request->input('districtID');
+        } else {
+            $dkey = '!=';
+            $dvalue = 'ss';
+        }
+
+        if (!empty($request->input('thanaID'))) {
+            $tkey = '=';
+            $tvalue = $request->input('thanaID');
+        } else {
+            $tkey = '!=';
+            $tvalue = 'ss';
+        }
+
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+        }
+
+        if (!empty($request->input('action_taken'))) {
+            $akey = '=';
+            $avalue = $request->input('action_taken');
+        } else {
+            $akey = '!=';
+            $avalue = 'ss';
+        }
+
+        if (!empty($request->input('nreport'))) {
+            $nkey = '=';
+            $nvalue = $request->input('nreport');
+        } else {
+            $nkey = '!=';
+            $nvalue = 'ss';
+        }
+
+        if (auth()->user()->hasRole('Super Admin')) {
+            //show data
+
+            $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->where('nreport', $nkey, $nvalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+            //show data
+
+            $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->where('nreport', $nkey, $nvalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+            //show data
+
+            $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
+        ->where('thanaID', auth()->user()->thanaID)
+        ->where('action_taken', $akey, $avalue)
+        ->where('nreport', $nkey, $nvalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+        }
+
+        return view('admin/woman/woman-chartlink', $data);
+    }
+
 }
