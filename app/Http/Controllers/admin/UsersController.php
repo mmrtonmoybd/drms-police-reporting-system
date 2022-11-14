@@ -20,24 +20,24 @@ class UsersController extends Controller
     {
         $query = User::toSql();
         //$query->orderBy('id', 'ASC');
-/* 
-        if ($name = $request->get('name')) {
-            $query->where('name', 'LIKE', '%'.$name.'%');
-        }
-        if ($phone = $request->get('phone')) {
-            $query->where('phone', 'LIKE', '%'.$phone.'%');
-        }
-        if ($email = $request->get('email')) {
-            $query->where('email', 'LIKE', '%'.$email.'%');
-        }
+        /*
+                if ($name = $request->get('name')) {
+                    $query->where('name', 'LIKE', '%'.$name.'%');
+                }
+                if ($phone = $request->get('phone')) {
+                    $query->where('phone', 'LIKE', '%'.$phone.'%');
+                }
+                if ($email = $request->get('email')) {
+                    $query->where('email', 'LIKE', '%'.$email.'%');
+                }
 
-        */
+                */
 
 
 
         // binding replaced
         $sql = $query;
-       // dd($sql);
+        // dd($sql);
         $data['users'] = $sql;
 
         $request->session()->put('data', $sql);
@@ -47,27 +47,24 @@ class UsersController extends Controller
 
     public function userdata(Request $request)
     {
-        
-            $data = $request->session()->get('data');
-           // $user = \DB::select($data);
-            return Datatables::of(User::with(['district', 'thana']))
-                ->setRowId('id')
-                ->addColumn('action', function($row){
-                    $actionBtn = '';
-                    if (auth()->user()->id !== $row->id) { 
+        $data = $request->session()->get('data');
+        // $user = \DB::select($data);
+        return Datatables::of(User::with(['district', 'thana']))
+            ->setRowId('id')
+            ->addColumn('action', function ($row) {
+                $actionBtn = '';
+                if (auth()->user()->id !== $row->id) {
                     if (auth()->user()->can('user.edit')) {
-                    $actionBtn .= '<a href="' . url("admin/users/uedit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                        $actionBtn .= '<a href="' . url("admin/users/uedit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                     }
                     if (auth()->user()->can('user.delete')) {
-                    $actionBtn .= '<a href="' . url("admin/users/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this user?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                        $actionBtn .= '<a href="' . url("admin/users/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this user?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                     }
-                    
-                    }
-                    return $actionBtn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        
+                }
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function addsaShow()

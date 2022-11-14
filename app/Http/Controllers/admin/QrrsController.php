@@ -40,10 +40,10 @@ class QrrsController extends Controller
             $thaexp = '=';
         }
 
-        $request->session()->put('disexp', $disexp); 
-        $request->session()->put('disid', $disid); 
-        $request->session()->put('thaexp', $thaexp); 
-        $request->session()->put('thaid', $thaid);                         
+        $request->session()->put('disexp', $disexp);
+        $request->session()->put('disid', $disid);
+        $request->session()->put('thaexp', $thaexp);
+        $request->session()->put('thaid', $thaid);
         $data['request'] =  $request;
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -56,7 +56,8 @@ class QrrsController extends Controller
         return view('admin/qrr/qrrs', $data);
     }
 
-    public function qrrinajax(Request $request) {
+    public function qrrinajax(Request $request)
+    {
         $disexp = $request->session()->get('disexp');
         $disid = $request->session()->get('disid');
         $thaexp = $request->session()->get('thaexp');
@@ -70,47 +71,47 @@ class QrrsController extends Controller
 
         return Datatables::of($qrr)
                 ->setRowId('id')
-                ->editColumn('date_time_of_incident', function($raw) {
+                ->editColumn('date_time_of_incident', function ($raw) {
                     return date('d/m/Y h:i A', strtotime($raw->date_time_of_incident));
                 })
-                ->editColumn('date_time_of_police_news', function($raw) {
+                ->editColumn('date_time_of_police_news', function ($raw) {
                     return date('d/m/Y h:i A', strtotime($raw->date_time_of_police_news));
                 })
-                ->editColumn('date_time_response', function($raw) {
+                ->editColumn('date_time_response', function ($raw) {
                     return date('d/m/Y h:i A', strtotime($raw->date_time_response));
                 })
-                ->editColumn('delay_in_response', function($raw) {
+                ->editColumn('delay_in_response', function ($raw) {
                     $minutes = $raw->delay_in_response;
                     $hours = intdiv($minutes, 60).':'. ($minutes % 60);
                     $minutes = $raw->delay_in_response;
                     $hours = floor($minutes / 60).':'.($minutes - floor($minutes / 60) * 60).':00';
                     return $hours;
                 })
-                ->editColumn('main_event', function($raw) {
+                ->editColumn('main_event', function ($raw) {
                     return Str::limit($raw->main_event, 20);
                 })
-                ->editColumn('short_dettails', function($raw) {
+                ->editColumn('short_dettails', function ($raw) {
                     return Str::limit($raw->short_dettails, 5);
                 })
-                ->editColumn('gd_date', function($raw) {
+                ->editColumn('gd_date', function ($raw) {
                     return date('d/m/Y', strtotime($raw->gd_date));
                 })
-                ->editColumn('case_date', function($raw) {
+                ->editColumn('case_date', function ($raw) {
                     return date('d/m/Y', strtotime($raw->case_date));
                 })
-                ->editColumn('comments', function($raw) {
+                ->editColumn('comments', function ($raw) {
                     return Str::limit($raw->comments, 5);
                 })
-                ->addColumn('action', function($row){
+                ->addColumn('action', function ($row) {
                     $actionBtn = '';
                     if (auth()->user()->can('qrr.view')) {
-                    $actionBtn .= '<a href="' . url("admin/qrrs/details/$row->id") .'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                        $actionBtn .= '<a href="' . url("admin/qrrs/details/$row->id") .'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                     }
-                   if (auth()->user()->can('qrr.edit')) {
-                    $actionBtn .= '<a href="' . url("admin/qrrs/edit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    if (auth()->user()->can('qrr.edit')) {
+                        $actionBtn .= '<a href="' . url("admin/qrrs/edit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                     }
                     if (auth()->user()->can('qrr.delete')) {
-                    $actionBtn .= '<a href="' . url("admin/qrrs/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this qrr?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                        $actionBtn .= '<a href="' . url("admin/qrrs/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this qrr?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                     }
                     return $actionBtn;
                 })
