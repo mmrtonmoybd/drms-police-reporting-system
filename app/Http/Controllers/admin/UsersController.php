@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\District;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
+use DataTables;
+use Illuminate\Support\Facades\Session as FacadesSession;
 
 class UsersController extends Controller
 {
     //This method list all users
     public function Index(Request $request)
     {
-        $query = User::query();
-        $query->orderBy('id', 'ASC');
-
+        $query = User::toSql();
+        //$query->orderBy('id', 'ASC');
+/* 
         if ($name = $request->get('name')) {
             $query->where('name', 'LIKE', '%'.$name.'%');
         }
@@ -29,11 +31,43 @@ class UsersController extends Controller
             $query->where('email', 'LIKE', '%'.$email.'%');
         }
 
+        */
 
 
-        $data['users'] = $query->paginate(10);
+
+        // binding replaced
+        $sql = $query;
+       // dd($sql);
+        $data['users'] = $sql;
+
+        $request->session()->put('data', $sql);
         $data['request'] =  $request;
         return view('admin/user/users', $data);
+    }
+
+    public function userdata(Request $request)
+    {
+        
+            $data = $request->session()->get('data');
+           // $user = \DB::select($data);
+            return Datatables::of(User::with(['district', 'thana']))
+                ->setRowId('id')
+                ->addColumn('action', function($row){
+                    $actionBtn = '';
+                    if (auth()->user()->id !== $row->id) { 
+                    if (auth()->user()->can('user.edit')) {
+                    $actionBtn .= '<a href="' . url("admin/users/uedit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    }
+                    if (auth()->user()->can('user.delete')) {
+                    $actionBtn .= '<a href="' . url("admin/users/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this user?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    }
+                    
+                    }
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        
     }
 
     public function addsaShow()

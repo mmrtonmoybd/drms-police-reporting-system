@@ -66,6 +66,7 @@ Route::prefix('admin')->group(function () {
 
         //admin qrrs route
         Route::get('/qrrs', [QrrsController::class, 'Index'])->middleware('permission:qrr.view');
+        Route::get('/qrrs/index/ajax', [QrrsController::class, 'qrrinajax'])->middleware('permission:qrr.view');
         Route::get('/qrrs/add', [QrrsController::class, 'AddQrr'])->middleware('permission:qrr.add');
         Route::post('/qrrs/add', [QrrsController::class, 'Create'])->middleware('permission:qrr.add');
         Route::get('/qrrs/delete/{id}', [QrrsController::class, 'Delete'])->middleware('permission:qrr.delete');
@@ -137,6 +138,7 @@ Route::prefix('admin')->group(function () {
             //
 
             Route::get('/', [UsersController::class, 'Index'])->middleware('permission:user.view');
+            Route::get('/getdata', [UsersController::class, 'userdata'])->middleware('permission:user.view');
             Route::get('/delete/{id}', [UsersController::class, 'Delete'])->middleware('permission:user.delete');
 
             Route::get('/uedit/{user}', [UsersController::class, 'ueditshow'])->middleware('permission:user.edit');

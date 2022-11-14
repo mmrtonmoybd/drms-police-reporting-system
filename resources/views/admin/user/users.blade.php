@@ -37,59 +37,26 @@
                                             </div>
                                           <!-- end col-->
                                         </div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-striped table-centered mb-0 yajra-datatable">
                                             <thead>
                                                 <tr>
+                                                    <th>id</th>
                                                     <th >Name</th>
+                                                    <th >Email</th>
                                                     <th>District</th>
                                                     <th>Thana</th>
-                                                    <th >Type</th>
-                                                    <th >Email</th>
-                                                    <th style="width: 86px">Action</th>
+                                                    <th>Role</th>
+                                                    <th style="width: 86px">action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            @if($users)
-                                            @foreach ($users as $user)
-                                                <tr>
-                                                    <td  class="table-user"> 
-                                                        <img src="{{ asset('storage/users/'.$user->picture) }}" alt="table-user" class="me-2 rounded-circle">
-
-                                                        <span style="color:#0acf97 !important"><i class="mdi mdi-account-circle"></i></span>
-
-                                                        {{$user->name}} 
-                                                    
-                                                    </td>
-                                                    <td>@if (!empty($user->district->bn_name)) {{$user->district->bn_name}} @endif</td>
-                                                    <td>@if (!empty($user->thana->bn_name)) {{$user->thana->bn_name}} @endif</td>
-                                                    <td >
-                                                        
-                                                            <span class="badge bg-success">{{$user->type}}</span>
-                                                        
-                                                    </td>
-                                                        
-                                                    <td >{{$user->email}}</td>
-                                                    
-                                                    <td class="table-action">
-                                                        @if (auth()->user()->id !== $user->id)
-                                                        <a href="{{url('admin/users/uedit/'.$user->id)}}" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a>
-                                                        <a href="{{url('admin/users/delete/'.$user->id)}}"  onclick="return confirm('Do you want to delete this user?')" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-
-                                            @endforeach
-                                            @endif
-
-
                                             
-
                                             </tbody>
                                         </table>
                                         
                                         <nav class="mt-3">
 
-                                        @if($users){{$users->appends(request()->input())->links()}} @endif
+                                        
                                       
                                         </nav>
                                     </div>
@@ -98,5 +65,31 @@
                         </div>
                         <!-- end row -->
 
-                     
+        @push('scripts')
+<script type="text/javascript">
+  $(function () {
+    
+    var table = $('.yajra-datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{!! url('/admin/users/getdata') !!}",
+        columns: [
+            {data: 'id', name: 'id', orderable: true},
+            {defaultContent: '', data: 'name', searchable: true, orderable: true},
+            {defaultContent: '', data: 'email', searchable: true, orderable: true},
+            {defaultContent: '', data: 'district.bn_name', searchable: true, orderable: true},
+            {defaultContent: '', data: 'thana.name', searchable: true, orderable: true},
+            {defaultContent: '', data: 'type', searchable: true, orderable: true},
+            {
+                data: 'action', 
+                name: 'action', 
+                orderable: false, 
+                searchable: false
+            },
+        ]
+    });
+    
+  });
+</script>
+        @endpush             
 <x-admin-footer/>
