@@ -33,7 +33,7 @@
  
    
    .stylish {
-   background: #26a59a;
+   background-color: #26a59a;
    color: #fff;
    border-radius: 20px;
    display: block;
@@ -43,6 +43,8 @@
    font-weight: 400;
    line-height: 1.5;
    text-align: center;
+   cursor:pointer;
+   
    }
    .stylish option {
    text-align: center;
@@ -253,7 +255,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
+                                                    <select name="districtID" id="districtID" class="droparrow form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -268,7 +270,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -298,7 +300,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish">
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish">
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -315,7 +317,7 @@ transform: scale(1.1);
             <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                  <select name="source_of_info" id="source_of_info" class="form-select stylish">
+                  <select name="source_of_info" id="source_of_info" class="droparrow form-select stylish">
                      <option value="">উৎস</option>
                      <option value="এলাকা"> এলাকা </option>
                      <option value="কোর্ট">কোর্ট</option>
@@ -436,7 +438,7 @@ transform: scale(1.1);
    <div class="col-sm-4 " style="padding: 0px 0px 0px 0px;">
       <div class="card" >
          <h5 class="chart-header-main"> Type of incident </h5>
-         <div id="chart_div2"></div>
+         <div id="chart_div2" style="margin-top: -39px;"></div>
       </div>
    </div>
    <!------2nd----->
@@ -494,7 +496,7 @@ transform: scale(1.1);
      
    </div>
    <!-- end row -->
-<div class="row">
+<div class="row" style="display:none;">
    <div class="card table-responsive">
       <!----
          <div id="chart_div"></div>

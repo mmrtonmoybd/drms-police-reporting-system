@@ -91,6 +91,8 @@
                                                         </td>
                                                     </tr>
                                                 </table>
+                                                <a target="_blank" href="{{url('admin/qrrs/excel-details/'.$qrr->id)}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> Excel</a>
+                                                <a target="_blank" href="{{url('admin/qrrs/pdf-details/'.$qrr->id)}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> pdf</a>
                                                 <a target="_blank" href="{{url('admin/qrrs/print-details/'.$qrr->id)}}" class="btn btn-success"><i class="uil uil-print"></i> Print</a>
                                             </div>
                                            

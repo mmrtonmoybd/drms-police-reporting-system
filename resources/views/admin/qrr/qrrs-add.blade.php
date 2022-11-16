@@ -836,7 +836,7 @@ body[mdtimepicker-display="on"] {
                                             <li class="breadcrumb-item active">Add QRR</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"> <i class="uil uil-plus"></i> Add QRR</h4>
+                                    <h4 class="page-title"> <i class="uil uil-plus"></i> QRR যুক্ত করুন </h4>
                                 </div>
                             </div>
                         </div>     

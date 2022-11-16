@@ -236,7 +236,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         var options = {
         title: "",
         width: "98%",
-        height: 300,
+        height: 350,
         bar: {groupWidth: "55%"},
         legend: { position: "none" },
       };

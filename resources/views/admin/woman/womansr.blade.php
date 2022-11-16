@@ -34,7 +34,7 @@
  
    
    .stylish {
-   background: #f42b1c;
+   background-color: #f42b1c;
    color: #fff;
    border-radius: 20px;
    display: block;
@@ -53,7 +53,7 @@
 
    
    .stylish:hover {
-   background: #ff0000e3;
+   background-color: #ff0000e3;
    color: #fff;
    border-radius: 20px;
    display: block;

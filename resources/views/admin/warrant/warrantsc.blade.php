@@ -34,7 +34,7 @@
  
    
    .stylish {
-   background: #f42b1c;
+   background-color: #f42b1c;
    color: #fff;
    border-radius: 20px;
    display: block;
@@ -52,7 +52,7 @@
 
 
    
-   .stylish:hover {
+   .stylish-color:hover {
    background: #ff0000e3;
    color: #fff;
    border-radius: 20px;
@@ -260,7 +260,7 @@ margin-top: -39px;
 												<div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                          <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id">
+                                                          <select name="districtID" id="districtID" class="droparrow form-select stylish"  v-model="district_id">
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -277,7 +277,7 @@ margin-top: -39px;
 												 <div class="col-sm-4">
                                                  <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish" >
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
@@ -294,7 +294,7 @@ margin-top: -39px;
 												<div class="col-sm-4">
                                                  <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish" >
                                                         <option value="">থানা</option>
                                                         @if($octhanacol)
 

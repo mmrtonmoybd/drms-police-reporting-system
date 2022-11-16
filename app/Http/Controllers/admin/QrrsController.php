@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use DataTables;
 use Illuminate\Support\Str;
+use App\Exports\QrrsviewExport;
+use App\Exports\QrrscExport;
+use \PDF;
 
 class QrrsController extends Controller
 {
@@ -247,6 +250,16 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
+        Session::put('dkey', $dkey);
+        Session::put('dvalue', $dvalue);
+        Session::put('tkey', $tkey);
+        Session::put('tvalue', $tvalue);
+        Session::put('skey', $skey);
+        Session::put('svalue', $svalue);
+        Session::put('fvalue', $fvalue);
+        Session::put('tovalue', $tovalue);
+        Session::save();
+
         // dd($data['qrrs'], $from, $to, \DB::getQueryLog());
 
         //dd(\DB::getQueryLog());
@@ -273,6 +286,23 @@ class QrrsController extends Controller
             }
 
             $request->session()->flash('spthana', $data['spthana']);
+
+            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+        Session::put('dkey', $disexp);
+        Session::put('dvalue', $disid);
+        Session::put('tkey', $tkey);
+        Session::put('tvalue', $tvalue);
+        Session::put('skey', $skey);
+        Session::put('svalue', $svalue);
+        Session::put('fvalue', $fvalue);
+        Session::put('tovalue', $tovalue);
+        Session::save();
+
+
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -287,6 +317,23 @@ class QrrsController extends Controller
             $request->session()->flash('octhananame', $octhana->bn_name);
             $request->session()->flash('octhanavalue', $val);
             $request->session()->flash('octhanaid', $octhana->id);
+
+            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+        ->where('thanaID', $thaexp, $thaid)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+        Session::put('dkey', $disexp);
+        Session::put('dvalue', $disid);
+        Session::put('tkey', $thaexp);
+        Session::put('tvalue', $thaid);
+        Session::put('skey', $skey);
+        Session::put('svalue', $svalue);
+        Session::put('fvalue', $fvalue);
+        Session::put('tovalue', $tovalue);
+        Session::save();
+
+        
         }
 
         //dd($data['qrrs']);
@@ -459,6 +506,46 @@ class QrrsController extends Controller
         return view('admin/qrr/qrrsg', $data);
     }
 
+    public function qrrscexcel(Request $request)
+    {
+        $dkey = Session::get('dkey');
+        $dvalue = Session::get('dvalue');
+        $tkey = Session::get('tkey');
+        $tvalue = Session::get('tvalue');
+        $skey = Session::get('skey');
+        $svalue = Session::get('svalue');
+        $fvalue = Session::get('fvalue');
+        $tovalue = Session::get('tovalue');
+
+        //dd(Session::all());
+
+        $name = uniqid('qrrsc_');
+
+        return (new QrrscExport($dkey, $dvalue, $tkey, $tvalue, $skey, $svalue, $fvalue, $tovalue))->download($name.'.xlsx');
+    }
+
+    public function qrrspdf(Request $request)
+    {
+        $dkey = Session::get('dkey');
+        $dvalue = Session::get('dvalue');
+        $tkey = Session::get('tkey');
+        $tvalue = Session::get('tvalue');
+        $skey = Session::get('skey');
+        $svalue = Session::get('svalue');
+        $fvalue = Session::get('fvalue');
+        $tovalue = Session::get('tovalue');
+
+        //dd(Session::all());
+
+        $data['qrrs'] =  Qrr::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->get();
+
+       // dd($this, $qry);
+       return view('admin/qrr/qrrscpdf', $data);
+    }
+
 
     public function chartdata(Request $request)
     {
@@ -563,6 +650,16 @@ class QrrsController extends Controller
         ->where('event_type', $ekey, $evalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
+        Session::put('dkey', $dkey);
+        Session::put('dvalue', $dvalue);
+        Session::put('tkey', $tkey);
+        Session::put('tvalue', $tvalue);
+        Session::put('skey', $skey);
+        Session::put('svalue', $svalue);
+        Session::put('fvalue', $fvalue);
+        Session::put('tovalue', $tovalue);
+        Session::save();
+
         // dd($data['qrrs'], $from, $to, \DB::getQueryLog());
 
         //dd(\DB::getQueryLog());
@@ -580,11 +677,41 @@ class QrrsController extends Controller
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
             $data['spthanas'] = $spthana;
+
+            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+        Session::put('dkey', $disexp);
+        Session::put('dvalue', $disid);
+        Session::put('tkey', $tkey);
+        Session::put('tvalue', $tvalue);
+        Session::put('skey', $skey);
+        Session::put('svalue', $svalue);
+        Session::put('fvalue', $fvalue);
+        Session::put('tovalue', $tovalue);
+        Session::save();
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $octhana = Thana::find(auth()->user()->thanaID);
             $data['octhana'] = $octhana;
+
+            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+        ->where('thanaID', $thaexp, $thaid)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+        Session::put('dkey', $disexp);
+        Session::put('dvalue', $disid);
+        Session::put('tkey', $thaexp);
+        Session::put('tvalue', $thaid);
+        Session::put('skey', $skey);
+        Session::put('svalue', $svalue);
+        Session::put('fvalue', $fvalue);
+        Session::put('tovalue', $tovalue);
+        Session::save();
         }
 
         return view('admin/qrr/qrrscdata', $data);
@@ -1030,5 +1157,38 @@ class QrrsController extends Controller
         }
         $data['request'] = $request;
         return view('admin/qrr/qrrs-print-view', $data);
+    }
+
+    public function excelView(Qrr $qrr) {
+        Gate::authorize('editdeleteqrr', $qrr);
+
+        $name = uniqid('qrrview_');
+
+        return (new QrrsviewExport)->forId($qrr->id)->download($name.'.xlsx');
+    }
+
+    public function pdfView(Request $request, Qrr $qrr)
+    {
+        $data['qrr'] = $qrr;
+
+        Gate::authorize('editdeleteqrr', $data['qrr']);
+
+        $data['request'] = $request;
+        $data['pdfname'] = uniqid('qrrview_').'.pdf';
+/* 
+        $pdf = PDF::loadView('admin/qrr/qrr-pdf-view', $data);
+        $name = uniqid('qrrview_');
+        //return $pdf->download($name.'.pdf');
+        return $pdf->stream();
+
+        
+
+        //header('Content-type: application/pdf');
+        //header('Content-Disposition: inline; filename="hhh.pdf"');
+        //header('Content-Transfer-Encoding: binary');
+        //header('Accept-Ranges: bytes');
+*/
+
+        return view('admin/qrr/qrr-pdf-view', $data);
     }
 }

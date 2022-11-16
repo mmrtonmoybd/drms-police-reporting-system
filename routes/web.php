@@ -74,9 +74,13 @@ Route::prefix('admin')->group(function () {
         Route::post('/qrrs/edit/{id}', [QrrsController::class, 'Update'])->middleware('permission:qrr.edit');
         Route::get('/qrrs/details/{id}', [QrrsController::class, 'View'])->middleware('permission:qrr.view');
         Route::get('/qrrs/print-details/{id}', [QrrsController::class, 'PrintView'])->middleware('permission:qrr.view');
+        Route::get('/qrrs/pdf-details/{qrr}', [QrrsController::class, 'pdfView'])->middleware('permission:qrr.view');
+        Route::get('/qrrs/excel-details/{qrr}', [QrrsController::class, 'excelView'])->middleware('permission:qrr.view');
         Route::get('/qrrs/charts', [QrrsController::class, 'chart'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/report/{report}', [QrrsController::class, 'report'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs', [QrrsController::class, 'srcs'])->middleware('permission:qrr.dashboard');
+        Route::get('/qrrs/srcs/excel', [QrrsController::class, 'qrrscexcel'])->middleware('permission:qrr.dashboard');
+        Route::get('/qrrs/srcs/pdf', [QrrsController::class, 'qrrspdf'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs/data', [QrrsController::class, 'chartdata'])->middleware('permission:qrr.dashboard');
 
         // Warrant router

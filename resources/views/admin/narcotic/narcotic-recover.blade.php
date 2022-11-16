@@ -2,95 +2,238 @@
 
 <x-admin-validation-errors :errors="$errors->all()"/>
 
-<form target="_blank" action="{{url('admin/narcotic/recover/src')}}" method="get">
 
-<div class="col-sm-4 " > 
+
+
+
+             
+<style>
+
+body {
+    background:#144f5d;
+     color:#fff;
+}
+
+.card {
+    background-color:transparent!important;
+    color:#fff;
+}
+
+
+.tcap {
+  background-color: brown;
+  padding: 11px;
+  text-align: center;
+  margin-bottom: 5px;
+  border: 2px dotted;
+  font-size: 18px;
+}
+ 
+   
+   .stylish {
+   background: #f42b1c;
+   color: #fff;
+   border-radius: 20px;
+   display: block;
+   width: 100%;
+   padding: 5px 7px 5px 5px;
+   font-size: .9rem;
+   font-weight: 400;
+   line-height: 1.5;
+   text-align: center;
+   }
+   .stylish option {
+   text-align: center;
+   }
+   
+
+
+   
+   .stylish:hover {
+   background: #ff0000e3;
+   color: #fff;
+   border-radius: 20px;
+   display: block;
+   width: 100%;
+   padding: 5px 7px 5px 5px;
+   font-size: .9rem;
+   font-weight: 400;
+   line-height: 1.5;
+   text-align: center;
+   }
+   .stylish option {
+   text-align: center;
+   }
+   
+
+
+
+
+   .datepicker {
+   border: 1px solid #ff0000e3;
+   color:#ff0000e3;
+   border-radius:20px;
+   }
+   input#date_time_response {
+   height: 33px;
+   border: 1px solid #ff0000e3;
+   }
+
+.tablestylenar {
+ 
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tablestylenar td, .tablestylenar th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.tablestylenar tr:nth-child(even){background-color: #176373;}
+
+.tablestylenar tr:hover {background-color: #176272;}
+
+.tablestylenar th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #22a598;
+  color: white;
+}
+</style>
+
+<div class="row">
+     <div class="card">
+ <div class="card-body ">
+     <h1 style="text-align:center;">মাদক উদ্ধারের তুলনা</h1>
+     
+     
+        </div>
+         </div>
+         
+         </div>
+         
+         <div class="row">
+   <div class="card">
+   
+                            <form target="_blank" action="{{url('admin/narcotic/recover/src')}}" method="get">
+                                                    
+                                                    <div class="" id="app">
+                                        <div class="row">
+										
+                               
+			
+												  <div class="col-sm-2 " >
+              
+            </div>
+		
+            
+												
+												
+											
+
+
+      
+
+
+
+												
+												
+												<div class="col-sm-3 " > 
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label"> Date range 1</label>
+                  <label for="source_of_info" class="form-label">প্রথম তারিখ</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control datepicker  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                 <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control datepicker  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
                      <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control datepicker  @error('to1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
-                  </div>
+                 
+                     </div>
                </div>
             </div>
-<br><br>
-
-<div class="col-sm-4 " > 
+            
+            
+            
+            
+            
+            
+            
+					
+							
+            												
+												<div class="col-sm-3 " > 
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label"> Date range 2</label>
+                  <label for="source_of_info" class="form-label">দ্বিতীয় তারিখ</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control datepicker  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+               <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control datepicker  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
                      <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control datepicker  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
-                  </div>
+               
+                      </div>
                </div>
             </div>
-
-<div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="org1" class="form-label">   অভিযান পরিচালনাকারী সংস্থা 1    </label>
-                                                    <select name="org1" id="org1" class="form-select" required>
-                                                        <option value="">Select</option>
-                                                        <option value="থানা পুলিশ"  {{ request('org1') =='থানা পুলিশ' ? 'selected' : ''  }}> থানা পুলিশ </option>
-                                                        <option value="ডিবি"  {{ request('org1') =='ডিবি' ? 'selected' : '' }} >ডিবি</option>
-                                                        <option value="র‍্যাব"  {{ request('org1') =='র‍্যাব' ? 'selected' : '' }} >র‍্যাব</option>
-                                                        <option value="এপিবিএন"  {{ request('org1') =='এপিবিএন' ? 'selected' : '' }} >এপিবিএন</option>
-                                                        <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ request('org1') =='মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর' ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
-                                                        <option value="কোস্টগার্ড" {{ request('org1') =='কোস্টগার্ড' ? 'selected' : '' }} >কোস্টগার্ড</option>
-                                                        <option value="অন্যান্য"  {{ request('org1') =='অন্যান্য' ? 'selected' : '' }} >অন্যান্য</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                            </div>
-
-
-                                            <br>
-                                            <h2 ><font color='red'> V.S</font></h2>
-                                            <br>
-
-
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="org2" class="form-label">   অভিযান পরিচালনাকারী সংস্থা   2  </label>
-                                                    <select name="org2" id="org2" class="form-select" required>
-                                                        <option value="">Select</option>
-                                                        <option value="থানা পুলিশ"  {{ request('org2') =='থানা পুলিশ' ? 'selected' : ''  }}> থানা পুলিশ </option>
-                                                        <option value="ডিবি"  {{ request('org2') =='ডিবি' ? 'selected' : '' }} >ডিবি</option>
-                                                        <option value="র‍্যাব"  {{ request('org2') =='র‍্যাব' ? 'selected' : '' }} >র‍্যাব</option>
-                                                        <option value="এপিবিএন"  {{ request('org2') =='এপিবিএন' ? 'selected' : '' }} >এপিবিএন</option>
-                                                        <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ request('org2') =='মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর' ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
-                                                        <option value="কোস্টগার্ড" {{ request('org2') =='কোস্টগার্ড' ? 'selected' : '' }} >কোস্টগার্ড</option>
-                                                        <option value="অন্যান্য"  {{ request('org2') =='অন্যান্য' ? 'selected' : '' }} >অন্যান্য</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                            </div>
-
-
-
+            
+            
             <div class="col-sm-2 " >
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label"></label>
+                  <label for="source_of_info" class="form-label">&nbsp;</label>
                   <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
                </div>
             </div>
-</form>
+            
+                <div class="col-sm-2 " >
+              
+            </div>
+            
+         </div>
+      </div>
+
+                                               </form>
+
+                                            <!----
+         <div id="chart_div"></div>
+         <div id="piechart"></div>
+         <div id="chart_div2"></div>
+         --->
 
 
+   </div>
+  
+         
+   </div>
+         
+         
+         
+         
+         
+         
+         
+      
 <div class="row">
-                            <div class="col-sm-12 ">
-                                <div class="card">
+
+
+
+                   <div class="card">
                                     <div class="card-body table-responsive">
+                                        
+                                        
+                                        <?php if(isset($_GET['form1'])) {
+                                            echo'';
+                                            
+                                        }
+                                        
+                                        else {
+                                            echo 'অনুগ্রহপূর্বক তারিখ নির্বাচন করুন';
+                                        }
+                                         ?>
 
-@if ($request->has('submit'))
+             @if ($request->has('submit'))
 
+             @if (!empty($request->input('form1')) || !empty($request->input('to1')))
 
+             <div class="tcap">{{$monnf1}} থেকে {{$monnt1}}  পর্যন্ত মাদক উদ্ধার</div> 
 
-
-                                    <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org1')}}</h2></font> Narcotic recover details</caption>
-
-            <table class="table table-bordered table-striped table-centered mb-0">
+            <table class="tablestylenar">
 
                                                
                                             <thead>
@@ -154,12 +297,16 @@
                                             </tbody>
                                         </table>
 
-                                        <br><br>
+                                        @endif
+
+            @if (!empty($request->input('form2')) || !empty($request->input('to2')))
 
 
-                                        <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org2')}}</h2></font> Narcotic recover details</caption>
+<h2 style="text-align:center;"><font color="red"> V.S</font></h2>
 
-            <table class="table table-bordered table-striped table-centered mb-0">
+
+     <div class="tcap" style="margin-top: 7px;">{{$monnf2}} থেকে {{$monnt2}}  পর্যন্ত মাদক উদ্ধার</div> 
+ <table class="tablestylenar">
 
                                                
                                             <thead>
@@ -183,7 +330,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                              @if ($narcotic2)
+
+                                            @if ($narcotic2)
 
                                             @foreach($narcotic2 as $narcotic)
                                                 <tr>
@@ -222,11 +370,9 @@
                                             </tbody>
                                         </table>
 
-
-                                        <br><br><br>
-
-
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        @endif
+<br><br>
+                                         <table class="tablestylenar">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -265,6 +411,10 @@
                                                     
                                                 </tr>
                                             </thead>
+                                    
+                                    
+                                    
+                                        
                                             <tbody>
 
                                             @if($narcoticdatas)
@@ -323,20 +473,48 @@
                                             
 
                                             </tbody>
+                                            
+                                   
                                         </table>
-                                        
+                                          <!---------->
                                         <nav class="mt-3">
 
                                         @if($narcoticdatas){{$narcoticdatas->appends(request()->input())->links()}} @endif
                                       
                                         </nav>
 
+                                   
 
+                                        @endif
 
-                                    
-@endif
-</div>
+                                         </div>
                                 </div>
+
+
+
+
+
+
+</div><!--- ----END OF COLUMN------>
+
+
+
+
+<!-----HIDDEN---
+
+ <div class="col-sm-3" > 
+
+
+</div>--->  <!-----END OF COLUMN------>
+
+
+
+
+</div>  <!--END OF ROW---->
+<div class="row">
+                            <div class="col-sm-12 ">
+
                             </div>
-</div>
+                                        </div>
+
 <x-admin-footer/>

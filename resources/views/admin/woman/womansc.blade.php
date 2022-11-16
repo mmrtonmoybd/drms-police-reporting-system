@@ -34,7 +34,7 @@
  
    
    .stylish {
-   background: #f42b1c;
+   background-color: #f42b1c;
    color: #fff;
    border-radius: 20px;
    display: block;
@@ -53,7 +53,7 @@
 
    
    .stylish:hover {
-   background: #ff0000e3;
+   background-color: #ff0000e3;
    color: #fff;
    border-radius: 20px;
    display: block;
@@ -259,7 +259,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
+                                                    <select name="districtID" id="districtID" class="droparrow form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -275,7 +275,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -287,7 +287,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish" >
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
@@ -304,7 +304,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish" >
                                                         <option value="" disabled >থানা</option>
                                                         @if($octhana)
 
@@ -319,7 +319,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="action_taken" class="form-label"></label>
-                                                    <select name="action_taken" id="action_taken" class="form-select stylish" >
+                                                    <select name="action_taken" id="action_taken" class="droparrow form-select stylish" >
                                                         <option value="">   গৃহীত ব্যবস্থা  </option>
                                                         <option value="অভিযোগ গ্রহন">অভিযোগ গ্রহন</option>
                                                         <option value="স্থানীয় মীমাংসা">স্থানীয় মীমাংসা</option>

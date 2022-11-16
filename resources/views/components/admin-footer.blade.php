@@ -5,14 +5,14 @@
 </div> <!-- content -->
 
 <!-- Footer Start -->
-<footer class="footer">
+<footer class="footer" >
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
                 <script>document.write(new Date().getFullYear())</script> © DRMS Management
             </div>
             <div class="col-md-6 text-end" style="font-size: .9rem;">
-                Developed By <a href="https://engineerbd.net/">Engineer BD Network</a>
+                Developed By <a style="color:black;" href="https://engineerbd.net/">Engineer BD Network</a>
             </div>
       
         </div>
@@ -88,8 +88,6 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
 <script>
     $(document).ready(function(){
         $('.datepicker').datepicker();
@@ -120,6 +118,12 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
  @stack('scripts')
+ 
+ 
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+ 
 </body>
 
 </html>

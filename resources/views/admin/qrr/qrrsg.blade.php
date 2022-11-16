@@ -593,7 +593,8 @@ transform: scale(1.1);
       ---->
       
       
-      
+      <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> Excel</a>
+      <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> pdf</a>
       
                                                   <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
@@ -828,31 +829,5 @@ transform: scale(1.1);
         });
 
     </script>
-    
-    
-    
-	  
-	  
-	  
-<script type="text/javascript" language="javascript" >
- $(document).ready(function(){
-
-  $('#customer_data').DataTable({
-   "processing" : true,
-   "serverSide" : true,
-   "ajax" : {
-    url:"fetching/alldata.php",
-    type:"POST"
-   },
-   dom: 'lBfrtip',
-   buttons: [
-    'excel', 'csv', 'pdf', 'copy'
-   ],
-   "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
-  });
-  
- });
- 
-</script>
 	  
 <x-admin-footer/>

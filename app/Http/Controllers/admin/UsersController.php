@@ -461,16 +461,22 @@ class UsersController extends Controller
         }
 
 
-        if ($request->file('picture')) {
+        if ($request->hasFile('picture')) {
             $request->validate(
                 [
                     'picture' => 'image'
                 ]
             );
-            $path = $request->file('picture')->store('public/users');
-            $path =str_replace("public/users", "", $path);
+            $file = $request->file("picture");           
+            $ext = $file->extension();
+            $name = uniqid("user") .'.' . $ext;
+           // $filename = $file->storeAs('/users/', \uniqid("user") .'.' . $ext,['disk' => 'public_uploads']);
+           $myimage = $request->picture->getClientOriginalName();
+           $request->picture->move(public_path('storage/users'), $myimage);
 
-            $insertAttr['picture'] = $path;
+            $insertAttr['picture'] = '/'.$myimage;
+
+            //dd($ext);
         }
 
         $data = User::find($id);

@@ -9,6 +9,33 @@ a<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0
     
 <style type="text/css">
 
+body {
+    color:black!important;
+}
+
+   .droparrow {
+       background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")!important;
+curson:pointer;
+}
+
+
+   .droparrow:hover {
+       background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")!important;
+curson:pointer;
+}
+
+
+
+.page-title-box .page-title {
+  font-size: 18px;
+  margin: 0;
+  line-height: 75px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: inherit;
+  text-align: center!important;
+}
 
 
 
@@ -182,18 +209,18 @@ a.side-nav-link.nav-link:hover {
                         <li class="side-nav-item nav-item">
                             <a href="{{ url('admin/dashboard') }}" class="side-nav-link nav-link">
                                <i class="fa-solid fa-gauge"></i>
-                                <span> Dashboard </span>
+                                <span> Home </span>
                             </a>
                         </li>
 
-
+<!--------
                         <li class="side-nav-item nav-item">
                             <a href="{{url('admin/cases')}}" class="side-nav-link nav-link">
                          <i class="fa-sharp fa-solid fa-database"></i>
                                 <span> Case Data </span>
                             </a>
                         </li>
-                        
+---->
                         
                         @canany(['qrr.dashboard', 'qrr.add', 'qrr.view'])
 
@@ -233,7 +260,7 @@ a.side-nav-link.nav-link:hover {
     @endcanany
 	
 	
-                        
+                      <!--------  
                         <li class="side-nav-item nav-item">
                             <a href="{{url('admin/pros')}}" class="side-nav-link nav-link">
                             <i class="mdi mdi-home-city-outline"></i>
@@ -241,7 +268,7 @@ a.side-nav-link.nav-link:hover {
                             </a>
                         </li>
 
-
+---->
 
 <!--------
                         <li class="side-nav-item nav-item ">
@@ -260,14 +287,14 @@ a.side-nav-link.nav-link:hover {
                         
                         --->
                         
-                        
+                        <!--------
                         <li class="side-nav-item nav-item">
                             <a href="{{url('admin/undeaths')}}" class="side-nav-link nav-link">
                             <i class="fa-solid fa-person-falling-burst"></i>
                                 <span> Unnatural Death </span>
                             </a>
                         </li>
-                    
+                    -->
 
                          @canany(['narcotic.add', 'narcotic.dashboard', 'narcotic.view'])
 
@@ -394,6 +421,8 @@ a.side-nav-link.nav-link:hover {
 	</li>
     @endcanany
 
+
+<!-------
                         @can('setting.view')
                     
                          <li class="side-nav-item nav-item">
@@ -403,7 +432,7 @@ a.side-nav-link.nav-link:hover {
                             </a>
                         </li>
                         @endcan
-
+-------->
                         @canany(['role.view', 'user.view'])
 
                         <li class="side-nav-item nav-item has-submenu ">

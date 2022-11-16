@@ -11,7 +11,7 @@
 
 body {
     background:#144f5d;
-     color:#fff;
+     color:#fff!important;
 }
 
 .card {
@@ -106,7 +106,8 @@ body {
 <div class="row">
      <div class="card">
  <div class="card-body ">
-     <h1 style="text-align:center;">মাদক উদ্ধারের তুলনা</h1>
+
+          <h1 style="text-align:center;">মাদক মামলার সংখ্যা</h1>
         </div>
          </div>
          
@@ -122,7 +123,7 @@ body {
 										
                                
 			
-												  <div class="col-sm-2 " >
+												  <div class="col-sm-1 " >
               
             </div>
 		
@@ -150,9 +151,20 @@ body {
                </div>
             </div>
             
-            
+         
 					
 							
+            														<div class="col-sm-2 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label">&nbsp;</label>
+                  <div class="text-center">
+                    
+         <center>  <font color="red"><h3> V.S </h3></font> </center>
+                      </div>
+               </div>
+            </div>
+            					
+            					
             												
 												<div class="col-sm-3 " > 
                <div class="mb-3">
@@ -174,7 +186,7 @@ body {
                </div>
             </div>
             
-                <div class="col-sm-2 " >
+                <div class="col-sm-1 " >
               
             </div>
             
@@ -224,7 +236,7 @@ body {
 
              @if (!empty($request->input('form1')) || !empty($request->input('to1')))
 
-             <div class="tcap">{{$monnf1}} থেকে {{$monnt1}}  পর্যন্ত মাদক উদ্ধার</div> 
+             <div class="tcap">{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'></font> <h2>{{request('org1')}}  পর্যন্ত মাদক উদ্ধারের বিবরণ</div> 
 
             <table class="tablestylenar">
 
@@ -293,6 +305,9 @@ body {
                                         @endif
 
             @if (!empty($request->input('form2')) || !empty($request->input('to2')))
+
+
+<h2 style="text-align:center;"><font color="red"> V.S</font></h2>
 
 
      <div class="tcap" style="margin-top: 7px;">{{$monnf2}} থেকে {{$monnt2}}  পর্যন্ত মাদক উদ্ধার</div> 
