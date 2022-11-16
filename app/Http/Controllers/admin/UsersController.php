@@ -467,12 +467,12 @@ class UsersController extends Controller
                     'picture' => 'image'
                 ]
             );
-            $file = $request->file("picture");           
+            $file = $request->file("picture");
             $ext = $file->extension();
             $name = uniqid("user") .'.' . $ext;
-           // $filename = $file->storeAs('/users/', \uniqid("user") .'.' . $ext,['disk' => 'public_uploads']);
-           $myimage = $request->picture->getClientOriginalName();
-           $request->picture->move(public_path('storage/users'), $myimage);
+            // $filename = $file->storeAs('/users/', \uniqid("user") .'.' . $ext,['disk' => 'public_uploads']);
+            $myimage = $request->picture->getClientOriginalName();
+            $request->picture->move(public_path('storage/users'), $myimage);
 
             $insertAttr['picture'] = '/'.$myimage;
 

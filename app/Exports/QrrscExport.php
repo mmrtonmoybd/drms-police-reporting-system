@@ -20,7 +20,8 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
     private $fvalue;
     private $tovalue;
 
-    public function __construct($dkey, $dvalue, $tkey, $tvalue, $skey, $svalue, $fvalue, $tovalue) {
+    public function __construct($dkey, $dvalue, $tkey, $tvalue, $skey, $svalue, $fvalue, $tovalue)
+    {
         $this->dkey = $dkey;
         $this->dvalue = $dvalue;
         $this->tkey = $tkey;
@@ -40,8 +41,8 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
         ->where('source_of_info', $this->skey, $this->svalue)
         ->whereBetween('date_time_of_police_news', [$this->fvalue, $this->tovalue])->get();
 
-       // dd($this, $qry);
-       return $qry;
+        // dd($this, $qry);
+        return $qry;
     }
 
     public function headings(): array

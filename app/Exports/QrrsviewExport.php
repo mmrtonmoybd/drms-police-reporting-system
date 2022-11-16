@@ -9,7 +9,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-
 class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
 {
     use Exportable;
@@ -18,10 +17,10 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
     public function forId(int $qrrid)
     {
         $this->qrrid = $qrrid;
-        
+
         return $this;
     }
-    
+
 
     public function query()
     {
@@ -29,37 +28,37 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
     }
 
      public function headings(): array
-    {
-        return [
-            'রেফারেন্স নং',
-            'জেলা',
-            'থানা',
-            'গ্রাম/ওয়ার্ড',
-            'তথ্য প্রাপ্তির উৎস',
-            'ঘটনার তারিখ ও সময়',
-            'পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়',
-            'রেসপন্সের তারিখ ও সময়',
-            'মূল ঘটনা',
-            'ঘটনার ধরণ',
-            'ঘটনার সূত্রপাত',
-            'ঘটনার সংক্ষিপ্ত বিবরন',
-            'জিডি নং',
-            'তারিখ',
-            'মামলা নং',
-            'তারিখ',
-            'ধারা',
-            'বাদীর/ সংবাদদাতার নাম',
-            'বাদীর মোবাইল নং',
-            'ভিকটিমের সংখ্যা',
-            'এজাহারভুক্ত আসামীর সংখ্যা',
-            'রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম',
-            'বিপি নং',
-            'মোবাইল নং',
-            'ছবি/ভিডিও প্রাপ্তি',
-            'সন্তুষ্টির মান',
-            'মন্তব্য'
-        ];
-    }
+     {
+         return [
+             'রেফারেন্স নং',
+             'জেলা',
+             'থানা',
+             'গ্রাম/ওয়ার্ড',
+             'তথ্য প্রাপ্তির উৎস',
+             'ঘটনার তারিখ ও সময়',
+             'পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়',
+             'রেসপন্সের তারিখ ও সময়',
+             'মূল ঘটনা',
+             'ঘটনার ধরণ',
+             'ঘটনার সূত্রপাত',
+             'ঘটনার সংক্ষিপ্ত বিবরন',
+             'জিডি নং',
+             'তারিখ',
+             'মামলা নং',
+             'তারিখ',
+             'ধারা',
+             'বাদীর/ সংবাদদাতার নাম',
+             'বাদীর মোবাইল নং',
+             'ভিকটিমের সংখ্যা',
+             'এজাহারভুক্ত আসামীর সংখ্যা',
+             'রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম',
+             'বিপি নং',
+             'মোবাইল নং',
+             'ছবি/ভিডিও প্রাপ্তি',
+             'সন্তুষ্টির মান',
+             'মন্তব্য'
+         ];
+     }
 
     public function map($qrrview): array
     {

@@ -15,7 +15,7 @@ use DataTables;
 use Illuminate\Support\Str;
 use App\Exports\QrrsviewExport;
 use App\Exports\QrrscExport;
-use \PDF;
+use PDF;
 
 class QrrsController extends Controller
 {
@@ -292,17 +292,15 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
-        Session::put('dkey', $disexp);
-        Session::put('dvalue', $disid);
-        Session::put('tkey', $tkey);
-        Session::put('tvalue', $tvalue);
-        Session::put('skey', $skey);
-        Session::put('svalue', $svalue);
-        Session::put('fvalue', $fvalue);
-        Session::put('tovalue', $tovalue);
-        Session::save();
-
-
+            Session::put('dkey', $disexp);
+            Session::put('dvalue', $disid);
+            Session::put('tkey', $tkey);
+            Session::put('tvalue', $tvalue);
+            Session::put('skey', $skey);
+            Session::put('svalue', $svalue);
+            Session::put('fvalue', $fvalue);
+            Session::put('tovalue', $tovalue);
+            Session::save();
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -323,17 +321,15 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
-        Session::put('dkey', $disexp);
-        Session::put('dvalue', $disid);
-        Session::put('tkey', $thaexp);
-        Session::put('tvalue', $thaid);
-        Session::put('skey', $skey);
-        Session::put('svalue', $svalue);
-        Session::put('fvalue', $fvalue);
-        Session::put('tovalue', $tovalue);
-        Session::save();
-
-        
+            Session::put('dkey', $disexp);
+            Session::put('dvalue', $disid);
+            Session::put('tkey', $thaexp);
+            Session::put('tvalue', $thaid);
+            Session::put('skey', $skey);
+            Session::put('svalue', $svalue);
+            Session::put('fvalue', $fvalue);
+            Session::put('tovalue', $tovalue);
+            Session::save();
         }
 
         //dd($data['qrrs']);
@@ -542,8 +538,8 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->get();
 
-       // dd($this, $qry);
-       return view('admin/qrr/qrrscpdf', $data);
+        // dd($this, $qry);
+        return view('admin/qrr/qrrscpdf', $data);
     }
 
 
@@ -683,15 +679,15 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
-        Session::put('dkey', $disexp);
-        Session::put('dvalue', $disid);
-        Session::put('tkey', $tkey);
-        Session::put('tvalue', $tvalue);
-        Session::put('skey', $skey);
-        Session::put('svalue', $svalue);
-        Session::put('fvalue', $fvalue);
-        Session::put('tovalue', $tovalue);
-        Session::save();
+            Session::put('dkey', $disexp);
+            Session::put('dvalue', $disid);
+            Session::put('tkey', $tkey);
+            Session::put('tvalue', $tvalue);
+            Session::put('skey', $skey);
+            Session::put('svalue', $svalue);
+            Session::put('fvalue', $fvalue);
+            Session::put('tovalue', $tovalue);
+            Session::save();
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -703,15 +699,15 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
 
-        Session::put('dkey', $disexp);
-        Session::put('dvalue', $disid);
-        Session::put('tkey', $thaexp);
-        Session::put('tvalue', $thaid);
-        Session::put('skey', $skey);
-        Session::put('svalue', $svalue);
-        Session::put('fvalue', $fvalue);
-        Session::put('tovalue', $tovalue);
-        Session::save();
+            Session::put('dkey', $disexp);
+            Session::put('dvalue', $disid);
+            Session::put('tkey', $thaexp);
+            Session::put('tvalue', $thaid);
+            Session::put('skey', $skey);
+            Session::put('svalue', $svalue);
+            Session::put('fvalue', $fvalue);
+            Session::put('tovalue', $tovalue);
+            Session::save();
         }
 
         return view('admin/qrr/qrrscdata', $data);
@@ -1159,12 +1155,13 @@ class QrrsController extends Controller
         return view('admin/qrr/qrrs-print-view', $data);
     }
 
-    public function excelView(Qrr $qrr) {
+    public function excelView(Qrr $qrr)
+    {
         Gate::authorize('editdeleteqrr', $qrr);
 
         $name = uniqid('qrrview_');
 
-        return (new QrrsviewExport)->forId($qrr->id)->download($name.'.xlsx');
+        return (new QrrsviewExport())->forId($qrr->id)->download($name.'.xlsx');
     }
 
     public function pdfView(Request $request, Qrr $qrr)
@@ -1175,19 +1172,19 @@ class QrrsController extends Controller
 
         $data['request'] = $request;
         $data['pdfname'] = uniqid('qrrview_').'.pdf';
-/* 
-        $pdf = PDF::loadView('admin/qrr/qrr-pdf-view', $data);
-        $name = uniqid('qrrview_');
-        //return $pdf->download($name.'.pdf');
-        return $pdf->stream();
+        /*
+                $pdf = PDF::loadView('admin/qrr/qrr-pdf-view', $data);
+                $name = uniqid('qrrview_');
+                //return $pdf->download($name.'.pdf');
+                return $pdf->stream();
 
-        
 
-        //header('Content-type: application/pdf');
-        //header('Content-Disposition: inline; filename="hhh.pdf"');
-        //header('Content-Transfer-Encoding: binary');
-        //header('Accept-Ranges: bytes');
-*/
+
+                //header('Content-type: application/pdf');
+                //header('Content-Disposition: inline; filename="hhh.pdf"');
+                //header('Content-Transfer-Encoding: binary');
+                //header('Accept-Ranges: bytes');
+        */
 
         return view('admin/qrr/qrr-pdf-view', $data);
     }

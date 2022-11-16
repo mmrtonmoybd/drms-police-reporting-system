@@ -12,6 +12,6 @@ class Test extends Controller
     {
         //echo Hash::make('123456');
 
-        return (new QrrsviewExport)->forId(12)->download('invoices.xlsx');
+        return (new QrrsviewExport())->forId(12)->download('invoices.xlsx');
     }
 }
