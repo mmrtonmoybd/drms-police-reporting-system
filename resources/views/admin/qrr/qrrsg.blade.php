@@ -477,18 +477,20 @@ transform: scale(1.1);
          
          
          
-         <div class="col-sm-4" style="padding: 1px;">
+          <div class="col-sm-4" style="padding: 1px;">
             <div class="card redbg">
-               <h6> Average Response Time</h6>
-               <h2>0:32:59</h2>
+               <h6> গড় সাড়াদানের সময় </h6>
+               <h2>{{$avgrest[0]}}</h2>
             </div>
          </div>
+         @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
          <div class="col-sm-4" style="padding: 1px;">
             <div class="card greenbg">
-               <h6> Average Reporting Delay</h6>
-               <h2>5:42:50</h2>
+               <h6> গড় রিপোর্টে বিলম্ব</h6>
+               <h2>{{$avgreport[0]}}</h2>
             </div>
          </div>
+         @endif
       </div>
       <div class="row">
          <div class="card" style="height: 213px;">
