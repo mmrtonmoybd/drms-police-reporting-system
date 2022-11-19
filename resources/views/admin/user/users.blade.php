@@ -43,6 +43,7 @@
                                                     <th>id</th>
                                                     <th >Name</th>
                                                     <th >Email</th>
+                                                    <th>Designation</th>
                                                     <th>District</th>
                                                     <th>Thana</th>
                                                     <th>Role</th>
@@ -77,6 +78,7 @@
             {data: 'id', name: 'id', orderable: true},
             {defaultContent: '', data: 'name', searchable: true, orderable: true},
             {defaultContent: '', data: 'email', searchable: true, orderable: true},
+            {defaultContent: '', data: 'designation', searchable: true, orderable: true},
             {defaultContent: '', data: 'district.bn_name', searchable: true, orderable: true},
             {defaultContent: '', data: 'thana.name', searchable: true, orderable: true},
             {defaultContent: '', data: 'type', searchable: true, orderable: true},

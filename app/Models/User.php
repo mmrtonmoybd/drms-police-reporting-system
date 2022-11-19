@@ -28,7 +28,8 @@ class User extends Authenticatable
         'type',
         'districtID',
         'thanaID',
-        'picture'
+        'picture',
+        'designation'
     ];
 
     /**

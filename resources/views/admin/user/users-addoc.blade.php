@@ -38,6 +38,13 @@
                                                     <input type="email" name="email"  value="{{old('email')}}" id="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Email" required>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="designation" class="form-label">User Designation</label>
+                                                    <input type="text" name="designation"  value="{{old('designation')}}" id="designation" class="form-control  @error('designation') is-invalid @enderror" placeholder="Designation" required>
+                                                </div>
+                                            </div>
                                             
 
                                             <div class="col-sm-4">

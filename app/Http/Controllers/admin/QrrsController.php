@@ -336,6 +336,8 @@ class QrrsController extends Controller
         //  return view('admin/qrr/qrrs-s', $data);
 
         if (auth()->user()->hasRole('Super Admin')) {
+            if (empty($request->input('districtID'))) {
+
             $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
             ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
@@ -360,6 +362,35 @@ class QrrsController extends Controller
             $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
             $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
             $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
+
+            }
+
+            if (!empty($request->input('thanaID'))) {
+            $disthana = Thana::find($request->input('thanaID'));
+
+            $dd = Qrr::where('thanaID', $disthana->id)->where('source_of_info', $skey, $svalue)
+                    ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+            $val =  ($dd !== 0) ? $dd : '';
+
+            $request->session()->flash('disthananame', $disthana->bn_name);
+            $request->session()->flash('disthanavalue', $val);
+            $request->session()->flash('disthanaid', $disthana->id);
+
+            } elseif (!empty($request->input('districtID'))) {
+
+            $disthana = Thana::where('district_id', $request->input('districtID'))->get();
+
+            foreach ($disthana as $key => $value) {
+                $dd = Qrr::where('thanaID', $value->id)->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+
+                $data['disthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name, $value->id];
+            }
+
+            $request->session()->flash('disthana', $data['disthana']);
+            }
+            
         }
 
         $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
@@ -371,6 +402,17 @@ class QrrsController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+
+        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `created_at` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgres")->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
+        $data['avgreport'] = explode('.', $avgreport->avgres);
+        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
+        $data['avgrest'] = explode('.', $avgrest->avgrestim);
 
 
         $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $dkey, $dvalue)
@@ -802,6 +844,10 @@ class QrrsController extends Controller
 
         $data['tin'] = Qrr::where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
         $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
+        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `created_at` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgres")->first();
+        $data['avgreport'] = explode('.', $avgreport->avgres);
+        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->first();
+        $data['avgrest'] = explode('.', $avgrest->avgrestim);
 
         $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
         $ins99 = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();

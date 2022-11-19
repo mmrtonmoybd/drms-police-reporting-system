@@ -836,7 +836,7 @@ body[mdtimepicker-display="on"] {
                                             <li class="breadcrumb-item active">Add QRR</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"> <i class="uil uil-plus"></i> QRR যুক্ত করুন </h4>
+                                    <h4 class="page-title"> <i class="uil uil-plus"></i> QRR Data Entry </h4>
                                 </div>
                             </div>
                         </div>     
@@ -1149,24 +1149,14 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <select name="number_of_victims" id="number_of_victims" class="form-select" >
-                                                        <option value="">Select</option>
-                                                        @for($i=1; $i<=50; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
+                                                    <input type="text" name="number_of_victims"  value="{{old('number_of_victims')}}" id="number_of_victims" class="form-control  @error('number_of_victims') is-invalid @enderror" placeholder="ভিকটিমের সংখ্যা ">
                                                 </div>
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="number_of_accused" class="form-label">   এজাহারভুক্ত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" >
-                                                        <option value="">Select</option>
-                                                        @for($i=1; $i<=50; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
+                                                    <label for="number_of_accused" class="form-label">  অভিযুক্তের  সংখ্যা   </label>
+                                                    <input type="text" name="number_of_accused"  value="{{old('number_of_accused')}}" id="number_of_accused" class="form-control  @error('number_of_accused') is-invalid @enderror" placeholder="অভিযুক্তের  সংখ্যা ">
                                                 </div>
                                             </div>
       
@@ -1222,15 +1212,7 @@ body[mdtimepicker-display="on"] {
                                             </div>
       
                                             
-                                            
-      
-      
-                                            <div class="col-sm-12">
-                                                <div class="mb-3">
-                                                    <label for="comments" class="form-label">মন্তব্য</label>
-                                                    <textarea name="comments"  class="form-control  @error('comments') is-invalid @enderror" id="address" rows="2" placeholder="মন্তব্য">{{old('comments')}}</textarea>
-                                                </div>
-                                            </div>
+                                    
                                             
                                             
                                                 <div class="col-sm-4">
@@ -1238,6 +1220,15 @@ body[mdtimepicker-display="on"] {
                                                     <label for="main_event" class="form-label"> মূল রিপোর্ট  </label>
                                                     
                                                     <textarea name="main_event"  class="form-control  @error('main_event') is-invalid @enderror" id="main_event" rows="2" placeholder="মূল ঘটনা" required>{{old('main_event')}}</textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                               <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                    <label for="comments" class="form-label">মন্তব্য</label>
+                                                    <textarea name="comments"  class="form-control  @error('comments') is-invalid @enderror" id="address" rows="2" placeholder="মন্তব্য">{{old('comments')}}</textarea>
                                                 </div>
                                             </div>
                                             

@@ -39,6 +39,13 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="designation" class="form-label">User Designation</label>
+                                                    <input type="text"  value="{{$user->designation}}" id="designation" class="form-control  @error('designation') is-invalid @enderror" placeholder="Designation" disabled>
+                                                </div>
+                                            </div>
+
                                             @if (auth()->user()->getRoleNames()[0] !== 'Super Admin')
 
                                             <div class="col-sm-4">

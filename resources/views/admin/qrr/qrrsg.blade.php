@@ -470,8 +470,8 @@ transform: scale(1.1);
           
             <div class="col-sm-4" style="padding: 1px;">
             <div class="card purplebg">
-               <h6> Total Incident</h6>
-               <h2>{{$tin}}</h2>
+               <h6> মোট রিপোর্ট</h6>
+               <h2><a href="{{url('/admin/qrrs/srcs/data')}}">{{$tin}}</a></h2>
             </div>
          </div>
          
@@ -566,24 +566,7 @@ transform: scale(1.1);
          <div id="piechart"></div>
          <div id="chart_div2"></div>
          --->
-      <div class="btn-group" role="group" aria-label="...">
-       <a href="{{url('admin/qrrs/report/মারামারি')}}" class="btn btn-danger">মারামারি</a>
-         <a href="{{url('admin/qrrs/report/খুন')}}" class="btn btn-danger">খুন</a>
-         <a href="{{url('admin/qrrs/report/চুরি')}}" class="btn btn-danger">চুরি</a>
-         <a href="{{url('admin/qrrs/report/ডাকাতি')}}" class="btn btn-danger">ডাকাতি</a>
-         <a href="{{url('admin/qrrs/report/বিরোধ')}}" class="btn btn-danger">বিরোধ</a>
-         <a href="{{url('admin/qrrs/report/নিখোঁজ-অপহরণ')}}" class="btn btn-danger">নিখোঁজ / অপহরণ</a>
-         <a href="{{url('admin/qrrs/report/দস্যুতা')}}" class="btn btn-danger">দস্যুতা</a>
-         <a href="{{url('admin/qrrs/report/জুয়া')}}" class="btn btn-danger">জুয়া</a>
-         <a href="{{url('admin/qrrs/report/সড়ক দুর্ঘটনা')}}" class="btn btn-danger">সড়ক দুর্ঘটনা</a>
-         <a href="{{url('admin/qrrs/report/নারী ও শিশু')}}" class="btn btn-danger">নারী ও শিশু</a>
-         <a href="{{url('admin/qrrs/report/অগ্নিকান্ড')}}" class="btn btn-danger">অগ্নিকান্ড</a>
-         <a href="{{url('admin/qrrs/report/মাদক')}}" class="btn btn-danger">মাদক</a>
-         <a href="{{url('admin/qrrs/report/সাইবার')}}" class="btn btn-danger">সাইবার</a>
-         <a href="{{url('admin/qrrs/report/প্রতারণা')}}" class="btn btn-danger">প্রতারণা</a>
-         <a href="{{url('admin/qrrs/report/দুর্ঘটনা')}}" class="btn btn-danger">দুর্ঘটনা</a>
-         <a href="{{url('admin/qrrs/report/অন্যান্য')}}" class="btn btn-danger">অন্যান্য</a>
-      </div>
+      
       
       <!-----
       <h3>Total incident: {{$tin}}</h3>

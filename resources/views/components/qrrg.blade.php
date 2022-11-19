@@ -23,14 +23,30 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         @if (empty(request()->input('districtID')))
          ['বরগুনা', {{session('borgona')}}, '#26a49a', '{{session("borgona")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
          ['বরিশাল', {{session('barisal')}}, '#e94236', '{{session("barisal")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
          ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d', '{{session("pirojpur")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
          ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001', '{{session("patuakhali")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
          ['ভোলা', {{session('bhola')}}, '#0c5295', '{{session("bhola")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
          ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47',  '{{session("jalokhati")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
-        
-       
+        @endif
+
+         @php 
+      $allin = request()->all();
+     $removarr = \Illuminate\Support\Arr::except($allin, 'thanaID');
+     $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
+      @endphp
+
+        @if (!empty(request()->input('thanaID')))
+        ['{{session("disthananame")}}', {{session('disthanavalue')}}, '#26a49a', '{{session("disthanavalue")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".session("disthanaid")!!} @else {!!$string1 . "&thanaID=".session("disthanaid")!!} @endif'],
+        @elseif(!empty(request()->input('districtID')))
+        @foreach(session("disthana") as $key => $value)
+
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+
+         @endforeach
+        @endif
       ]);
 
         // Set chart options
@@ -171,11 +187,11 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
       function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
-          ['Information source', 'count', { role: 'link' }],
-          ['এলাকা', {{session('insala')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=এলাকা"!!} @else {!!$string1 . "&source_of_info=এলাকা"!!} @endif'],
-          ['কোর্ট',  {{session('inscou')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=কোর্ট"!!} @else {!!$string1 . "&source_of_info=কোর্ট"!!} @endif'],
-          ['থানা',  {{session('instha')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=থানা"!!} @else {!!$string1 . "&source_of_info=থানা"!!} @endif'],
-          ['৯৯৯', {{session('ins99')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=৯৯৯"!!} @else {!!$string1 . "&source_of_info=৯৯৯"!!} @endif']
+          ['Information source', 'count', { role: 'link' }, {role: 'annotation', type: 'string'}],
+          ['এলাকা', {{session('insala')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=এলাকা"!!} @else {!!$string1 . "&source_of_info=এলাকা"!!} @endif', '{{session("insala")}}'],
+          ['কোর্ট',  {{session('inscou')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=কোর্ট"!!} @else {!!$string1 . "&source_of_info=কোর্ট"!!} @endif', '{{session("inscou")}}'],
+          ['থানা',  {{session('instha')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=থানা"!!} @else {!!$string1 . "&source_of_info=থানা"!!} @endif', '{{session("instha")}}'],
+          ['৯৯৯', {{session('ins99')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=৯৯৯"!!} @else {!!$string1 . "&source_of_info=৯৯৯"!!} @endif', '{{session("ins99")}}']
         ]);
 
         var options = {
@@ -183,6 +199,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
           is3D: true,
         width: "98%",
         height: "172",
+        pieSliceText: 'value',
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -214,22 +231,54 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['Crime Type', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         @if (session('etmara') > 0)
          ['মারামারি', {{session('etmara')}}, '#26a59a', '{{session("etmara")}}', '{!!$string . "&eventtype=মারামারি"!!}'],
+         @endif
+         @if (session('etkun') > 0)
          ['খুন', {{session('etkun')}}, '#26a59a', '{{session("etkun")}}', '{!!$string . "&eventtype=খুন"!!}'],
+         @endif
+         @if (session('etchori') > 0)
          ['চুরি', {{session('etchori')}}, '#26a59a', '{{session("etchori")}}', '{!!$string . "&eventtype=চুরি"!!}'],
+         @endif
+         @if (session('etdakati') > 0)
          ['ডাকাতি', {{session('etdakati')}}, 'color: #26a59a', '{{session("etdakati")}}', '{!!$string . "&eventtype=ডাকাতি"!!}'], 
+         @endif
+         @if (session('etsompds') > 0)
          ['বিরোধ', {{session('etsompds')}}, '#26a59a', '{{session("etsompds")}}', '{!!$string . "&eventtype=বিরোধ"!!}'],
+         @endif
+         @if (session('etnikoj') > 0)
          ['নিখোঁজ', {{session('etnikoj')}}, '#26a59a', '{{session("etnikoj")}}', '{!!$string . "&eventtype=নিখোঁজ"!!}'],
+         @endif
+         @if (session('etdusht') > 0)
          ['দস্যুতা', {{session('etdusht')}}, '#26a59a', '{{session("etdusht")}}', '{!!$string . "&eventtype=দস্যুতা"!!}'],
+         @endif
+         @if (session('etjua') > 0)
          ['জুয়া', {{session('etjua')}}, '#26a59a', '{{session("etjua")}}', '{!!$string . "&eventtype=জুয়া"!!}'],
+         @endif
+         @if (session('etsorokd') > 0)
          ['সড়ক দুর্ঘটনা', {{session('etsorokd')}}, '#26a59a', '{{session("etsorokd")}}', '{!!$string . "&eventtype=সড়ক দুর্ঘটনা"!!}'],
+         @endif
+         @if (session('etnarios') > 0)
          ['নারী ও শিশু', {{session('etnarios')}}, '#26a59a', '{{session("etnarios")}}', '{!!$string . "&eventtype=নারী ও শিশু"!!}'],
+         @endif
+         @if (session('etagun') > 0)
          ['অগ্নিকান্ড', {{session('etagun')}}, '#26a59a', '{{session("etagun")}}', '{!!$string . "&eventtype=অগ্নিকান্ড"!!}'],
+         @endif
+         @if (session('etmadok') > 0)
          ['মাদক', {{session('etmadok')}}, '#26a59a', '{{session("etmadok")}}', '{!!$string . "&eventtype=মাদক"!!}'],
+         @endif
+         @if (session('etcyber') > 0)
          ['সাইবার', {{session('etcyber')}}, '#26a59a', '{{session("etcyber")}}', '{!!$string . "&eventtype=সাইবার"!!}'],
+         @endif
+         @if (session('etprota') > 0)
          ['প্রতারণা', {{session('etprota')}}, '#26a59a', '{{session("etprota")}}', '{!!$string . "&eventtype=প্রতারণা"!!}'],
+         @endif
+         @if (session('etrajnoi') > 0)
          ['দুর্ঘটনা', {{session('etrajnoi')}}, '#26a59a', '{{session("etrajnoi")}}', '{!!$string . "&eventtype=দুর্ঘটনা"!!}'],
+         @endif
+         @if (session('etonno') > 0)
          ['অন্যান্য', {{session('etonno')}}, '#26a59a', '{{session("etonno")}}', '{!!$string . "&eventtype=অন্যান্য"!!}'],
+         @endif
       ]);
 
         // Set chart options

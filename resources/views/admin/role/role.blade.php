@@ -24,9 +24,9 @@
                                     <div class="card-body table-responsive">
                                         
                                         <div class="row">
-                                            <div class="col-sm-2">
+                                            <!--<div class="col-sm-2">
                                             <a href="{{url('admin/users/role/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Role</a>
-                                            </div>
+                                            </div> -->
 
                                            
                                             
@@ -74,10 +74,11 @@
                                                        user can not edit or delete own role
                                                         
                                     -->
+                                                        <a href="{{url('/admin/users/role/edit/'.$role->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="{{url('/admin/users/role/delete/'.$role->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
                                                         @endif
 
-                                                        <a href="{{url('/admin/users/role/edit/'.$role->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
-                                                        <a href="{{url('/admin/users/role/show/'.$role->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                        
                                                     </td>
                                                 </tr>
 

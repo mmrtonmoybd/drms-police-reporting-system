@@ -223,7 +223,7 @@ transform: scale(1.1);
                <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
             </div>
             <div class="centerimg">
-               <h1> Quick Response </h1>
+               <h1> Quick Response & Report </h1>
                <h3> Barisal Range, Barisal </h3>
                <br>
             </div>
@@ -378,7 +378,7 @@ transform: scale(1.1);
    
    <div class="col-sm-3 " style="padding: 0px 10px 0px 0px; width: 30%;">
       <div class="card">
-         <h5 class="chart-header-main">Number of Incident </h5>
+         <h5 class="chart-header-main">জেলা ভিত্তিক রিপোর্ট  </h5>
          <div id="chart_div"></div>
       </div>
    </div>
@@ -387,7 +387,7 @@ transform: scale(1.1);
    <div class="col-sm-2 ">
       <div class="row">
          <div class="card" style="height: 157px;">
-            <h3 class="chart-header xtrm">Total Incident</h3>
+            <h3 class="chart-header xtrm"> মোট রিপোর্ট </h3>
             <h1 style="color:red;">{{$tin}}</h1>
          </div>
       </div>
@@ -407,8 +407,8 @@ transform: scale(1.1);
           
             <div class="col-sm-4" style="padding: 1px;">
             <div class="card purplebg">
-               <h6> Total Incident</h6>
-               <h2>{{$tin}}</h2>
+               <h6>   মোট রিপোর্ট   </h6>
+               <h2><a href="{{url('/admin/qrrs/srcs/data')}}">{{$tin}}</a></h2>
             </div>
          </div>
          
@@ -416,20 +416,22 @@ transform: scale(1.1);
          
          <div class="col-sm-4" style="padding: 1px;">
             <div class="card redbg">
-               <h6> Average Response Time</h6>
-               <h2>0:32:59</h2>
+               <h6> গড় সাড়াদানের সময় </h6>
+               <h2>{{$avgrest[0]}}</h2>
             </div>
          </div>
+         @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
          <div class="col-sm-4" style="padding: 1px;">
             <div class="card greenbg">
-               <h6> Average Reporting Delay</h6>
-               <h2>5:42:50</h2>
+               <h6> গড় রিপোর্টে বিলম্ব</h6>
+               <h2>{{$avgreport[0]}}</h2>
             </div>
          </div>
+         @endif
       </div>
       <div class="row">
          <div class="card" style="height: 213px;">
-            <h5 class="chart-header-main">Source of information</h5>
+            <h5 class="chart-header-main"> তথ্য প্রাপ্তির উৎস </h5>
             <div id="piechart"></div>
          </div>
       </div>
@@ -437,7 +439,7 @@ transform: scale(1.1);
    <!------2nd----->
    <div class="col-sm-4 " style="padding: 0px 0px 0px 0px;">
       <div class="card" >
-         <h5 class="chart-header-main"> Type of incident </h5>
+         <h5 class="chart-header-main"> ঘটনার ধরন </h5>
          <div id="chart_div2" style="margin-top: -39px;"></div>
       </div>
    </div>
@@ -452,7 +454,7 @@ transform: scale(1.1);
       <div class="col-sm-3 ">
          <div class="row">
                 <div class="card">
-                   <h3 style="color:green;">Total Incident</h3>
+                   <h3 style="color:green;"> মোট রিপোর্ট </h3>
                    <h1>{{$tin}}</h1>
                 </div>
          </div>
@@ -472,7 +474,7 @@ transform: scale(1.1);
          <div class="row">
              <div class="col-sm-6">
             <div class="card redbg">
-               <h3> Average Response Time</h3>
+               <h3> গড় সাড়াদানের সময় </h3>
               <h2>0:32:59</h2>
             </div>
             </div>
@@ -480,7 +482,7 @@ transform: scale(1.1);
             
             <div class="col-sm-6">
             <div class="card greenbg">
-              <h3> Average Reporting Delay</h3>
+              <h3> গড় রিপোর্টে বিলম্ব  </h3>
               <h2>5:42:50</h2>
             </div>
             </div>
@@ -496,40 +498,7 @@ transform: scale(1.1);
      
    </div>
    <!-- end row -->
-<div class="row" style="display:none;">
-   <div class="card table-responsive">
-      <!----
-         <div id="chart_div"></div>
-         <div id="piechart"></div>
-         <div id="chart_div2"></div>
-         --->
-      <div class="btn-group" role="group" aria-label="...">
-         <a href="{{url('admin/qrrs/report/মারামারি')}}" class="btn btn-danger">মারামারি</a>
-         <a href="{{url('admin/qrrs/report/খুন')}}" class="btn btn-danger">খুন</a>
-         <a href="{{url('admin/qrrs/report/চুরি')}}" class="btn btn-danger">চুরি</a>
-         <a href="{{url('admin/qrrs/report/ডাকাতি')}}" class="btn btn-danger">ডাকাতি</a>
-         <a href="{{url('admin/qrrs/report/বিরোধ')}}" class="btn btn-danger">বিরোধ</a>
-         <a href="{{url('admin/qrrs/report/নিখোঁজ-অপহরণ')}}" class="btn btn-danger">নিখোঁজ / অপহরণ</a>
-         <a href="{{url('admin/qrrs/report/দস্যুতা')}}" class="btn btn-danger">দস্যুতা</a>
-         <a href="{{url('admin/qrrs/report/জুয়া')}}" class="btn btn-danger">জুয়া</a>
-         <a href="{{url('admin/qrrs/report/সড়ক দুর্ঘটনা')}}" class="btn btn-danger">সড়ক দুর্ঘটনা</a>
-         <a href="{{url('admin/qrrs/report/নারী ও শিশু')}}" class="btn btn-danger">নারী ও শিশু</a>
-         <a href="{{url('admin/qrrs/report/অগ্নিকান্ড')}}" class="btn btn-danger">অগ্নিকান্ড</a>
-         <a href="{{url('admin/qrrs/report/মাদক')}}" class="btn btn-danger">মাদক</a>
-         <a href="{{url('admin/qrrs/report/সাইবার')}}" class="btn btn-danger">সাইবার</a>
-         <a href="{{url('admin/qrrs/report/প্রতারণা')}}" class="btn btn-danger">প্রতারণা</a>
-         <a href="{{url('admin/qrrs/report/দুর্ঘটনা')}}" class="btn btn-danger">দুর্ঘটনা</a>
-         <a href="{{url('admin/qrrs/report/অন্যান্য')}}" class="btn btn-danger">অন্যান্য</a>
-      </div>
-      
-      <!-----
-      <h3>Total incident: {{$tin}}</h3>
-      <h3>Total case taken: {{$tcat}}</h3>
-      <nav class="mt-3">
-      </nav>
-      ---->
-   </div>
-</div>
+
 </div>
 <!-- end row -->
  @php
