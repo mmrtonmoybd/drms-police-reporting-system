@@ -337,60 +337,55 @@ class QrrsController extends Controller
 
         if (auth()->user()->hasRole('Super Admin')) {
             if (empty($request->input('districtID'))) {
+                $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
+                ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
-            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+                $barisal = Qrr::where('districtID', 35)->where('source_of_info', $skey, $svalue)
+                ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $barisal = Qrr::where('districtID', 35)->where('source_of_info', $skey, $svalue)
-            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+                $bhola = Qrr::where('districtID', 36)->where('source_of_info', $skey, $svalue)
+                ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $bhola = Qrr::where('districtID', 36)->where('source_of_info', $skey, $svalue)
-            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+                $jalokhati = Qrr::where('districtID', 37)->where('source_of_info', $skey, $svalue)
+                ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $jalokhati = Qrr::where('districtID', 37)->where('source_of_info', $skey, $svalue)
-            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+                $patuakhali = Qrr::where('districtID', 38)->where('source_of_info', $skey, $svalue)
+                ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $patuakhali = Qrr::where('districtID', 38)->where('source_of_info', $skey, $svalue)
-            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+                $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
+                ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $pirojpur = Qrr::where('districtID', 39)->where('source_of_info', $skey, $svalue)
-            ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
-
-            $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
-            $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
-            $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
-            $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
-            $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
-            $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
-
+                $request->session()->flash('borgona', ($borgona !== 0) ? $borgona : '');
+                $request->session()->flash('barisal', ($barisal !== 0) ? $barisal : '');
+                $request->session()->flash('bhola', ($bhola !== 0) ? $bhola : '');
+                $request->session()->flash('jalokhati', ($jalokhati !== 0) ? $jalokhati : '');
+                $request->session()->flash('patuakhali', ($patuakhali !== 0) ? $patuakhali : '');
+                $request->session()->flash('pirojpur', ($pirojpur !== 0) ? $pirojpur : '');
             }
 
             if (!empty($request->input('thanaID'))) {
-            $disthana = Thana::find($request->input('thanaID'));
+                $disthana = Thana::find($request->input('thanaID'));
 
-            $dd = Qrr::where('thanaID', $disthana->id)->where('source_of_info', $skey, $svalue)
-                    ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
+                $dd = Qrr::where('thanaID', $disthana->id)->where('source_of_info', $skey, $svalue)
+                        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-            $val =  ($dd !== 0) ? $dd : '';
+                $val =  ($dd !== 0) ? $dd : '';
 
-            $request->session()->flash('disthananame', $disthana->bn_name);
-            $request->session()->flash('disthanavalue', $val);
-            $request->session()->flash('disthanaid', $disthana->id);
-
+                $request->session()->flash('disthananame', $disthana->bn_name);
+                $request->session()->flash('disthanavalue', $val);
+                $request->session()->flash('disthanaid', $disthana->id);
             } elseif (!empty($request->input('districtID'))) {
+                $disthana = Thana::where('district_id', $request->input('districtID'))->get();
 
-            $disthana = Thana::where('district_id', $request->input('districtID'))->get();
-
-            foreach ($disthana as $key => $value) {
-                $dd = Qrr::where('thanaID', $value->id)->where('source_of_info', $skey, $svalue)
+                foreach ($disthana as $key => $value) {
+                    $dd = Qrr::where('thanaID', $value->id)->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->count();
 
-                $data['disthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name, $value->id];
-            }
+                    $data['disthana'][$key] =  [($dd !== 0) ? $dd : '', $value->bn_name, $value->id];
+                }
 
-            $request->session()->flash('disthana', $data['disthana']);
+                $request->session()->flash('disthana', $data['disthana']);
             }
-            
         }
 
         $data['tin'] = Qrr::where('districtID', $dkey, $dvalue)
