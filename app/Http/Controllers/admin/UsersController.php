@@ -52,8 +52,8 @@ class UsersController extends Controller
         return Datatables::of(User::with(['district', 'thana']))
             ->setRowId('id')
             ->editColumn('picture', function ($raw) {
-                    return '<img src="' . asset($raw->picture) . '" alt="table-user" class="me-2 rounded-circle">';
-                })
+                return '<img src="' . asset($raw->picture) . '" alt="table-user" class="me-2 rounded-circle">';
+            })
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->id !== $row->id) {
