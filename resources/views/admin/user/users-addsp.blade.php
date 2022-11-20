@@ -48,6 +48,13 @@
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
+                                                    <label for="bp_no" class="form-label">User BP No</label>
+                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="BP No" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
                                                     <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
                                                         <option value="">Select</option>

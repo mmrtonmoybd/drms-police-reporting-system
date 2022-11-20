@@ -12,8 +12,26 @@
 <div class="row">
    <div class="card">
       <div class="card-body  ">
-          
-          
+         User Profile img: <img src="{{ asset(auth()->user()->picture) }}" alt="user-image" class="rounded-circle"><br>
+         User Full name: {{auth()->user()->name}}
+         <br>
+         User Email: {{auth()->user()->email}}<br>
+         User Designation: {{auth()->user()->designation}} <br>     
+         User BP no: {{auth()->user()->bp_no}}<br>
+         @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+         @php 
+         $thana = App\Models\Thana::where('district_id', auth()->user()->districtID)->get();
+         @endphp
+         User District: {{auth()->user()->district->bn_name}}<br>
+         User Thana: @foreach ($thana as $ff)
+         {{$ff->name}},
+         @endforeach
+         @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+         User District: {{auth()->user()->district->bn_name}}<br>
+         User Thana: {{auth()->user()->thana->name}}
+         @endif
+         <br>
+         User Role: {{auth()->user()->type}}<br>  
           <style>
           
           #MyClockDisplay {

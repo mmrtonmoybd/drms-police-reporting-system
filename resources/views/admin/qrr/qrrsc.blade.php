@@ -378,7 +378,7 @@ transform: scale(1.1);
    
    <div class="col-sm-3 " style="padding: 0px 10px 0px 0px; width: 30%;">
       <div class="card">
-         <h5 class="chart-header-main">জেলা ভিত্তিক রিপোর্ট  </h5>
+         <h5 class="chart-header-main">@if (auth()->user()->hasRole('Super Admin')) জেলা @elseif((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) থানা @endif ভিত্তিক রিপোর্ট  </h5>
          <div id="chart_div"></div>
       </div>
    </div>

@@ -45,6 +45,13 @@
                                                     <input type="text" name="designation"  value="{{old('designation')}}" id="designation" class="form-control  @error('designation') is-invalid @enderror" placeholder="Designation" required>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="bp_no" class="form-label">User BP No</label>
+                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="BP No" required>
+                                                </div>
+                                            </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">

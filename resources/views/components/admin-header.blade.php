@@ -113,7 +113,7 @@ border-left: 3px solid #0ACF97!important;
                                 <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                     aria-expanded="false">
                                     <span class="account-user-avatar"> 
-                                        <img src="{{ asset('storage/users'.auth()->user()->picture) }}" alt="user-image" class="rounded-circle">
+                                        <img src="{{ asset(auth()->user()->picture) }}" alt="user-image" class="rounded-circle">
                                     </span>
                                     <span>
                                         <span class="account-user-name">{{auth()->user()->name}}</span>

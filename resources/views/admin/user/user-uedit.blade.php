@@ -66,6 +66,13 @@
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
+                                                    <label for="bp_no" class="form-label">User BP No</label>
+                                                    <input type="text" name="bp_no"  value="{{$user->bp_no}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="BP No" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
                                                     <label for="type" class="form-label "> Role </label>
                                                     <select name="type" id="type" class="form-select" required  >
                                                         <option value="">Select</option>

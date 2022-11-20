@@ -51,6 +51,9 @@ class UsersController extends Controller
         // $user = \DB::select($data);
         return Datatables::of(User::with(['district', 'thana']))
             ->setRowId('id')
+            ->editColumn('picture', function ($raw) {
+                    return '<img src="' . asset($raw->picture) . '" alt="table-user" class="me-2 rounded-circle">';
+                })
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->id !== $row->id) {
@@ -63,8 +66,13 @@ class UsersController extends Controller
                 }
                 return $actionBtn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'picture'])
             ->make(true);
+    }
+
+    private function reptpenum($sub)
+    {
+        return str_replace(['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], $sub);
     }
 
     public function addsaShow()
@@ -80,6 +88,8 @@ class UsersController extends Controller
            'name' => 'required',
            'password' => 'min:6|required_with:confirm-password|same:confirm-password',
            'confirm-password' => 'min:6',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -87,6 +97,8 @@ class UsersController extends Controller
             'email'=>$request->input('email'),
             'type'=> 'Super Admin',
             'password'=> Hash::make($request->input('password')),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -121,6 +133,8 @@ class UsersController extends Controller
             'password' => 'min:6|required_with:confirm-password|same:confirm-password',
             'confirm-password' => 'min:6',
             'districtID' => 'required',
+            'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -129,6 +143,8 @@ class UsersController extends Controller
             'type'=> 'SP',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -165,6 +181,8 @@ class UsersController extends Controller
            'confirm-password' => 'min:6',
            'districtID' => 'required',
            'thanaID' => 'required',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -173,7 +191,9 @@ class UsersController extends Controller
             'type'=> 'OC',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
-            'thanaID' => $request->input('thanaID')
+            'thanaID' => $request->input('thanaID'),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -208,6 +228,8 @@ class UsersController extends Controller
             'password' => 'min:6|required_with:confirm-password|same:confirm-password',
             'confirm-password' => 'min:6',
             'districtID' => 'required',
+            'designation' => 'required|string',
+            'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -216,6 +238,8 @@ class UsersController extends Controller
             'type'=> 'SP-Operator 1',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -250,6 +274,8 @@ class UsersController extends Controller
             'password' => 'min:6|required_with:confirm-password|same:confirm-password',
             'confirm-password' => 'min:6',
             'districtID' => 'required',
+            'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -258,6 +284,8 @@ class UsersController extends Controller
             'type'=> 'SP-Operator 2',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -295,6 +323,8 @@ class UsersController extends Controller
            'confirm-password' => 'min:6',
            'districtID' => 'required',
            'thanaID' => 'required',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -303,7 +333,9 @@ class UsersController extends Controller
             'type'=> 'OC-Operator 1',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
-            'thanaID' => $request->input('thanaID')
+            'thanaID' => $request->input('thanaID'),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -340,6 +372,8 @@ class UsersController extends Controller
            'confirm-password' => 'min:6',
            'districtID' => 'required',
            'thanaID' => 'required',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -348,7 +382,9 @@ class UsersController extends Controller
             'type'=> 'OC-Operator 2',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
-            'thanaID' => $request->input('thanaID')
+            'thanaID' => $request->input('thanaID'),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -385,6 +421,8 @@ class UsersController extends Controller
            'confirm-password' => 'min:6',
            'districtID' => 'required',
            'thanaID' => 'required',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         $insertAttr = [
@@ -393,7 +431,9 @@ class UsersController extends Controller
             'type'=> 'OC-Operator 3',
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
-            'thanaID' => $request->input('thanaID')
+            'thanaID' => $request->input('thanaID'),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         //dd($insertAttr);
@@ -467,6 +507,7 @@ class UsersController extends Controller
                     'picture' => 'image'
                 ]
             );
+            /*
             $file = $request->file("picture");
             $ext = $file->extension();
             $name = uniqid("user") .'.' . $ext;
@@ -475,6 +516,11 @@ class UsersController extends Controller
             $request->picture->move(public_path('storage/users'), $myimage);
 
             $insertAttr['picture'] = '/'.$myimage;
+
+            */
+
+            $image = $request->file('picture')->store('avaters');
+            $insertAttr['picture'] = '/'.$image;
 
             //dd($ext);
         }
@@ -527,7 +573,9 @@ class UsersController extends Controller
         $request->validate([
           'email' => 'required|email',
           'name' => 'required',
-          'type' => 'required'
+          'type' => 'required',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
         ]);
 
         if ($request->input('password')) {
@@ -561,7 +609,9 @@ class UsersController extends Controller
             'email'=>$request->input('email'),
             'type'=>$request->input('type'),
             'districtID' => $request->input('districtID'),
-            'thanaID' => $request->input('thanaID')
+            'thanaID' => $request->input('thanaID'),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
         ];
 
         if ($request->input('password')) {

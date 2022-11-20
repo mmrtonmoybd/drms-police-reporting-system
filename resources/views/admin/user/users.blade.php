@@ -41,9 +41,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>id</th>
-                                                    <th >Name</th>
-                                                    <th >Email</th>
+                                                    <th>Image</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
                                                     <th>Designation</th>
+                                                    <th>BP No</th>
                                                     <th>District</th>
                                                     <th>Thana</th>
                                                     <th>Role</th>
@@ -76,9 +78,11 @@
         ajax: "{!! url('/admin/users/getdata') !!}",
         columns: [
             {data: 'id', name: 'id', orderable: true},
+            {defaultContent: '', data: 'picture', className: 'table-user', searchable: false, orderable: false},
             {defaultContent: '', data: 'name', searchable: true, orderable: true},
             {defaultContent: '', data: 'email', searchable: true, orderable: true},
             {defaultContent: '', data: 'designation', searchable: true, orderable: true},
+            {defaultContent: '', data: 'bp_no', searchable: true, orderable: true},
             {defaultContent: '', data: 'district.bn_name', searchable: true, orderable: true},
             {defaultContent: '', data: 'thana.name', searchable: true, orderable: true},
             {defaultContent: '', data: 'type', searchable: true, orderable: true},
