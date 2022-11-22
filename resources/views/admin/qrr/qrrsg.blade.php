@@ -364,9 +364,9 @@
                                                     <td > @if(isset($qrr->thana->name)) {{$qrr->thana->name}} @endif</td>
                                                     <td > {{$qrr->village_word}}</td>
                                                     <td > {{$qrr->source_of_info}}</td>
-                                                    <td > @if($qrr->date_time_of_incident) {{date('d/m/Y h:i A', strtotime($qrr->date_time_of_incident))}} @endif</td>
-                                                    <td > @if($qrr->date_time_of_police_news) {{date('d/m/Y h:i A', strtotime($qrr->date_time_of_police_news))}} @endif</td>
-                                                    <td > @if($qrr->date_time_response) {{date('d/m/Y h:i A', strtotime($qrr->date_time_response))}} @endif</td>
+                                                    <td > @if(!empty($qrr->date_time_of_incident)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_incident))}} @endif</td>
+                                                    <td > @if(!empty($qrr->date_time_of_police_news)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_police_news))}} @endif</td>
+                                                    <td > @if(!empty($qrr->date_time_response)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_response))}} @endif</td>
                                                     <td >
                                                         
                                                     @php
@@ -387,9 +387,9 @@
                                                     <td > {{$qrr->begening_of_event}}</td>
                                                     <td > {{Str::limit($qrr->short_dettails, 5)}}</td>
                                                     <td > {{$qrr->gd_no}}</td>
-                                                    <td > @if($qrr->gd_date) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
+                                                    <td > @if(!empty($qrr->gd_date)) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
                                                     <td > {{$qrr->case_no}}</td>
-                                                    <td > @if($qrr->case_date) {{date('d/m/Y', strtotime($qrr->case_date))}} @endif</td>
+                                                    <td > @if(!empty($qrr->case_date)) {{date('d/m/Y', strtotime($qrr->case_date))}} @endif</td>
                                                     <td > {{$qrr->clause}}</td>
                                                     <td > {{$qrr->nopc}}</td>
                                                     <td > {{$qrr->plaintiff_mobile}}</td>

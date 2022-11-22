@@ -27,12 +27,12 @@ body{
                                                     <tr>
                                                         <td> <b> গ্রাম/ওয়ার্ড : </b> {{$qrr->village_word}}</td>
                                                         <td> <b>তথ্য প্রাপ্তির উৎস : </b> {{$qrr->source_of_info}}</td>
-                                                        <td> <b>ঘটনার তারিখ ও সময় : </b> @if($qrr->date_time_of_incident) {{date('d/m/Y h:i A', strtotime($qrr->date_time_of_incident))}} @endif</td>
+                                                        <td> <b>ঘটনার তারিখ ও সময় : </b> @if(!empty($qrr->date_time_of_incident)) {{date('d/m/Y h:i A', strtotime($qrr->date_time_of_incident))}} @endif</td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়  : </b> @if($qrr->date_time_of_police_news) {{date('d/m/Y h:i A', strtotime($qrr->date_time_of_police_news))}} @endif
+                                                        <td> <b> পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়  : </b> @if(!empty($qrr->date_time_of_police_news)) {{date('d/m/Y h:i A', strtotime($qrr->date_time_of_police_news))}} @endif
                                                         </td>
-                                                        <td> <b>রেসপন্সের তারিখ ও সময় : </b> @if($qrr->date_time_response) {{date('d/m/Y h:i A', strtotime($qrr->date_time_response))}} @endif
+                                                        <td> <b>রেসপন্সের তারিখ ও সময় : </b> @if(!empty($qrr->date_time_response)) {{date('d/m/Y h:i A', strtotime($qrr->date_time_response))}} @endif
                                                         </td>
                                                         <td> <b>রেসপন্সে বিলম্ব : </b> 
                                                         @php
@@ -55,11 +55,11 @@ body{
                                                     </tr>
                                                     <tr>
                                                         <td> <b> জিডি নং: </b>{{$qrr->gd_no}}</td>
-                                                        <td> <b>তারিখ: </b> @if($qrr->gd_date) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
+                                                        <td> <b>তারিখ: </b> @if(!empty($qrr->gd_date)) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
                                                         <td>  <b> মামলা নং : {{$qrr->case_no}}</b>  </td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> তারিখ: </b> @if($qrr->case_date) {{date('d/m/Y', strtotime($qrr->case_date))}} @endif</td>
+                                                        <td> <b> তারিখ: </b> @if(!empty($qrr->case_date)) {{date('d/m/Y', strtotime($qrr->case_date))}} @endif</td>
                                                         <td> <b>ধারা: </b> {{$qrr->clause}}</td>
                                                         <td>  <b>  বাদীর/ সংবাদদাতার নাম : {{$qrr->nopc}}</b>  </td>
                                                     </tr>

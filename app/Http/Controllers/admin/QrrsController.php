@@ -75,13 +75,30 @@ class QrrsController extends Controller
         return Datatables::of($qrr)
                 ->setRowId('id')
                 ->editColumn('date_time_of_incident', function ($raw) {
-                    return date('d/m/Y h:i A', strtotime($raw->date_time_of_incident));
+                    if (!empty($raw->date_time_of_incident)) {
+                        $date = date('d/m/Y H:i:s', strtotime($raw->date_time_of_incident));
+                    } else {
+                        $date = '';
+                    }
+                    return $date;
                 })
                 ->editColumn('date_time_of_police_news', function ($raw) {
-                    return date('d/m/Y h:i A', strtotime($raw->date_time_of_police_news));
+                    if (!empty($raw->date_time_of_police_news)) {
+                        $date = date('d/m/Y H:i:s', strtotime($raw->date_time_of_police_news));
+                    } else {
+                        $date = '';
+                    }
+                    return $date;
+                    //return date('d/m/Y h:i A', strtotime($raw->date_time_of_police_news));
                 })
                 ->editColumn('date_time_response', function ($raw) {
-                    return date('d/m/Y h:i A', strtotime($raw->date_time_response));
+                    if (!empty($raw->date_time_response)) {
+                        $date = date('d/m/Y H:i:s', strtotime($raw->date_time_response));
+                    } else {
+                        $date = '';
+                    }
+                    return $date;
+                    //return date('d/m/Y h:i A', strtotime($raw->date_time_response));
                 })
                 ->editColumn('delay_in_response', function ($raw) {
                     $minutes = $raw->delay_in_response;
@@ -936,6 +953,7 @@ class QrrsController extends Controller
             'comments'=>$request->input('comments'),
             'user_id' => $uid,
             'short_dettails' => $request->input('short_dettails'),
+            'action_taken' => $request->input('action_taken'),
 
         ];
 
@@ -1062,6 +1080,7 @@ class QrrsController extends Controller
             'image_video'=>$request->input('image_video'),
             'media_quality'=>$request->input('media_quality'),
             'comments'=>$request->input('comments'),
+            'action_taken' => $request->input('action_taken'),
 
         ];
 

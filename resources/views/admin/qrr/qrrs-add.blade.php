@@ -10,7 +10,7 @@
 .button-label {
   display: inline-block;
 padding:5px 10px;
-width:38px;
+width:;
   margin: 0.5em;
   cursor: pointer;
   color: #292929;
@@ -54,6 +54,10 @@ width:38px;
 }
 
 
+
+
+
+
 #myCheck:checked + .button-label {
   background: #2ECC71;
   color: #efefef;
@@ -61,6 +65,35 @@ width:38px;
 #myCheck:checked + .button-label:hover {
   background: #29b765;
   color: #e2e2e2;
+}
+
+
+
+
+#myCheckmim:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheckmim:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
+
+
+
+#myCheckain:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheckain:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+input:checked + .button-label h1{
+  color: #fff;
 }
 
 
@@ -77,7 +110,7 @@ width:38px;
 
 #no:checked + .button-label {
   background: #D91E18;
-  color: #efefef;
+  color: #fff;
 }
 #no:checked + .button-label:hover {
   background: #c21b15;
@@ -826,23 +859,9 @@ body[mdtimepicker-display="on"] {
 
 
                         <!-- start page title -->
-        <br>
-                                 <div class="row">
+                        <div class="row">
                             <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body" style="padding: 15px 10px 7px 10px;">
-                              <div class="row">
-                                  
-                                        
-                                <div class="col-sm-6">
-                                        <h4 class="page-title"><i class="dripicons-scale"></i> Add Qrr</h4>
-                       
-                              </div> 
-                              
-                              
-                                <div class="col-sm-6">
-                                    
-                                         <div class="page-title-box">
+                                <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             
@@ -850,24 +869,10 @@ body[mdtimepicker-display="on"] {
                                             <li class="breadcrumb-item active">Add QRR</li>
                                         </ol>
                                     </div>
-                                   
-                                 </div>
-                                 
-                                     </div> 
-                             
-                         
-                              
-                              
-                             </div> 
-                             
-                             
-                             
-                        </div> 
-                          </div> 
-                             </div> 
-                              </div> 
-                        <br>
-                        
+                                    <h4 class="page-title"> <i class="uil uil-plus"></i> QRR Data Entry </h4>
+                                </div>
+                            </div>
+                        </div>     
                         <!-- end page title --> 
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
@@ -1026,7 +1031,7 @@ body[mdtimepicker-display="on"] {
                                                         <option value="মাদক">মাদক</option>
                                                         <option value="সাইবার">সাইবার</option>
                                                         <option value="প্রতারণা">প্রতারণা</option>
-                                                        <option value="দুর্ঘটনা">দুর্ঘটনা</option>
+                                                        <option value="রাজনৈতিক">দুর্ঘটনা</option>
                                                         <option value="অন্যান্য">অন্যান্য</option>
                                                     </select>
                                                     
@@ -1059,30 +1064,135 @@ body[mdtimepicker-display="on"] {
                                                 </div>
                                             </div>
                                             
-                                            
+                                               <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label">  ঘটনার সংক্ষিপ্ত বিবরন   </label>
+                                                    <textarea type="text" name="short_dettails"  value="{{old('short_dettails')}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  "> </textarea>
+                                          
+
+ 
+ 
+ 
+											</div>
+                                            </div>
+											
+											
            
+                                           
+                                            
+                   
+      
+          <div class="col-sm-12" >
+                                             <hr>
+												
+                                            </div>
+      
+                        
+                                            
                                                 <div class="col-sm-12">
                                                 <div class="mb-3">
-                                              জিডি হয়েছেঃ
+                                               গৃহীত ব্যবস্থাঃ
                                                &nbsp; &nbsp;
-                                               <input class="hidden radio-label" type="radio" name="gd_check" id="myCheckgd" onclick="myFunction()">
+  <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckgd" value="জিডি" onclick="myFunction()">
     <label class="button-label" for="myCheckgd">
-      <h1>হ্যাঁ</h1>
+      <h1>জিডি</h1>
     </label>
-    <input class="hidden radio-label" type="radio" name="gd_check" id="nogd" onclick="myFunction()"    checked="checked" >
-    <label class="button-label" for="nogd">
-      <h1>না</h1>
-    </label>    
+	
+	
+    <input class="hidden radio-label" type="radio" name="action_taken" id="myCheck" value="মামলা" onclick="myFunction()" >
+    <label class="button-label" for="myCheck">
+      <h1>মামলা</h1>
+	   </label>
+	  
+	     <input class="hidden radio-label" type="radio" name="action_taken" value="স্থানীয় পর্যায়ে মীমাংসা" id="myCheckmim" onclick="myFunction()" >
+    <label class="button-label" for="myCheckmim">
+      <h1>স্থানীয় পর্যায়ে মীমাংসা</h1>
+	   </label>
+	   
+	       <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckain" value="আইনগত পরামর্শ" onclick="myFunction()"     >
+    <label class="button-label" for="myCheckain">
+      <h1>আইনগত পরামর্শ</h1>
+    </label>   
 
                                                
                                                
                                                 </div>
                                             </div>
                                             
+											
+											
+											
+				
+
+<script>
+
+
+function myFunction() {
+
+  var checkBoxgd = document.getElementById("myCheckgd");
+    var checkBox = document.getElementById("myCheck");
+  var checkBoxmim = document.getElementById("myCheckmim");
+  var checkBoxain = document.getElementById("myCheckain");
+  
+      var gd1 = document.getElementById("gd1");
+      var gd2 = document.getElementById("gd2");
+	   var gd3 = document.getElementById("gd3");
+   
+     var mam = document.getElementById("mam");
+     var mam2 = document.getElementById("mam2");
+     var mam3 = document.getElementById("mam3");
+     
+	 
+	var mim = document.getElementById("mim");
+     var ain = document.getElementById("ain");
+	 
+	 
+     
+   if (checkBox.checked == true){
+      mam.style.display = "block";
+      mam2.style.display = "block";
+      mam3.style.display = "block";
+  
+  } else {
+         mam.style.display = "none";
+         mam2.style.display = "none";
+         mam3.style.display = "none";
+         
+     
+  }
+  
+  
+  
+    if (checkBoxgd.checked == true){
+  
+      
+      gd1.style.display = "block";
+      gd2.style.display = "block";
+	   gd3.style.display = "block";
+  } else {
+
+         
+         gd1.style.display = "none";
+         gd2.style.display = "none";
+         gd3.style.display = "none";
+		 
+  }
+  
+  
+  
+  
+  
+  
+}
+
+
+
+</script>
+
                                             
                                             
-                                            
-                                            <div class="col-sm-4" id="gd1" style="display:none">
+                                
+								                               <div class="col-sm-4" id="gd1" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
                                                     <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
@@ -1092,39 +1202,21 @@ body[mdtimepicker-display="on"] {
                                             
                                             <div class="col-sm-4" id="gd2" style="display:none">
                                                 <div class="mb-3">
-                                                    <label for="gd_date" class="form-label">  তারিখ   </label>
+                                                    <label for="gd_date" class="form-label">  জিডির তারিখ   </label>
                                                     
                                                     <input type="text" name="gd_date"  value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
 
                                                 </div>
                                             </div>
-                                            
-                                            
-                                            
-                                                <div class="col-sm-12">
-                                                <div class="mb-3">
-                                              মামলা হয়েছেঃ
-                                               &nbsp; &nbsp;
-                                               <input class="hidden radio-label" type="radio" name="mam_check" id="myCheck" onclick="myFunction()">
-    <label class="button-label" for="myCheck">
-      <h1>হ্যাঁ</h1>
-    </label>
-    <input class="hidden radio-label" type="radio" name="mam_check" id="no" onclick="myFunction()"    checked="checked" >
-    <label class="button-label" for="no">
-      <h1>না</h1>
-    </label>   
-
-                                               
-                                               
-                                                </div>
+											
+											   <div class="col-sm-4" id="gd3" style="display:none">
+                                              
                                             </div>
-                                            
-
-
-
-                                            
-                                            
-                                
+											
+								
+								
+								
+								
                                             <div class="col-sm-4" id="mam" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
@@ -1133,9 +1225,9 @@ body[mdtimepicker-display="on"] {
                                             </div>
       
                                             
-                                            <div class="col-sm-4" id="mam2" style="display:none">
+                                            <div class="col-sm-4" id="mam2" style="display:none"> 
                                                 <div class="mb-3">
-                                                    <label for="case_date" class="form-label">  তারিখ  </label>
+                                                    <label for="case_date" class="form-label"> মামলার  তারিখ  </label>
                                            
                                                     <input type="text" name="case_date"  value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
@@ -1145,13 +1237,17 @@ body[mdtimepicker-display="on"] {
                                              
                                             <div class="col-sm-4" id="mam3" style="display:none">
                                                 <div class="mb-3">
-                                                    <label for="clause" class="form-label">ধারা </label>
+                                                    <label for="clause" class="form-label">মামলার ধারা </label>
                                                     <input type="text" name="clause"  value="{{old('clause')}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা">
                                                 </div>
+												
                                             </div>
       
       
-      
+          <div class="col-sm-12" >
+                                             <hr>
+												
+                                            </div>
       
       
       
@@ -1295,59 +1391,7 @@ body[mdtimepicker-display="on"] {
 
 
 
-<script>
 
-
-function myFunction() {
-  var checkBox = document.getElementById("myCheck");
-  
-  var checkBoxgd = document.getElementById("myCheckgd");
-  
-      var gd1 = document.getElementById("gd1");
-      var gd2 = document.getElementById("gd2");
-   
-     var mam = document.getElementById("mam");
-     var mam2 = document.getElementById("mam2");
-     var mam3 = document.getElementById("mam3");
-     
-     
-  if (checkBox.checked == true){
-      mam.style.display = "block";
-      mam2.style.display = "block";
-      mam3.style.display = "block";
-  
-  } else {
-         mam.style.display = "none";
-         mam2.style.display = "none";
-         mam3.style.display = "none";
-         
-     
-  }
-  
-  
-  
-    if (checkBoxgd.checked == true){
-  
-      
-      gd1.style.display = "block";
-      gd2.style.display = "block";
-  } else {
-
-         
-         gd1.style.display = "none";
-         gd2.style.display = "none";
-  }
-  
-  
-  
-  
-  
-  
-}
-
-
-
-</script>
 
 
   <script>
@@ -1788,3 +1832,14 @@ if ("undefined" == typeof jQuery) throw new Error("MDTimePicker: This plugin req
 
 
 <x-admin-footer/>
+<script>
+$("input[type='radio']").on("change", function(){
+   if($('#secondInput').is(':checked')){
+    $("input[type='text']").show();
+    $("input[type='text']").prop('required',true);
+  } else {
+    $("input[type='text']").hide();
+    $("input[type='text']").prop('required',false);
+  }
+});
+<script>
