@@ -64,37 +64,37 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
     public function map($qrrview): array
     {
         if (!empty($qrrview->date_time_of_incident)) {
-                        $date1 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_of_incident));
-                    } else {
-                        $date1 = '';
-                    }
+            $date1 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_of_incident));
+        } else {
+            $date1 = '';
+        }
 
         if (!empty($qrrview->date_time_of_police_news)) {
-                        $date2 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_of_police_news));
-                    } else {
-                        $date2 = '';
-                    }
+            $date2 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_of_police_news));
+        } else {
+            $date2 = '';
+        }
 
-        
+
 
         if (!empty($qrrview->date_time_response)) {
-                        $date3 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_response));
-                    } else {
-                        $date3 = '';
-                    }
-        
+            $date3 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_response));
+        } else {
+            $date3 = '';
+        }
+
 
         if (!empty($qrrview->gd_date)) {
-                        $date4 = date('d/m/Y', strtotime($qrrview->gd_date));
-                    } else {
-                        $date4 = '';
-                    }
+            $date4 = date('d/m/Y', strtotime($qrrview->gd_date));
+        } else {
+            $date4 = '';
+        }
 
         if (!empty($qrrview->case_date)) {
-                        $date5 = date('d/m/Y', strtotime($qrrview->case_date));
-                    } else {
-                        $date5 = '';
-                    }
+            $date5 = date('d/m/Y', strtotime($qrrview->case_date));
+        } else {
+            $date5 = '';
+        }
 
 
         return [
