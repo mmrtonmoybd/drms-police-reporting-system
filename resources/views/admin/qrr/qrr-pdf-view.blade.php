@@ -54,6 +54,7 @@ body{
                                                         <td>  <b>ঘটনার সংক্ষিপ্ত বিবরন: {{$qrr->short_dettails}}</b>  </td>
                                                     </tr>
                                                     <tr>
+                                                        <td> <b> গৃহীত ব্যবস্থা: </b>{{$qrr->action_taken}}</td>
                                                         <td> <b> জিডি নং: </b>{{$qrr->gd_no}}</td>
                                                         <td> <b>তারিখ: </b> @if(!empty($qrr->gd_date)) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
                                                         <td>  <b> মামলা নং : {{$qrr->case_no}}</b>  </td>

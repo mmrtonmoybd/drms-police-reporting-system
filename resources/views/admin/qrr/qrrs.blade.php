@@ -89,6 +89,7 @@ use Illuminate\Support\Str;
                                                     <th > ঘটনার ধরণ </th>
                                                     <th > ঘটনার সূত্রপাত </th>
                                                     <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
+                                                    <th>  গৃহীত ব্যবস্থা</th>
                                                     <th > জিডি নং </th>
                                                     <th > তারিখ </th>
                                                     <th > মামলা নং </th>
@@ -152,6 +153,7 @@ use Illuminate\Support\Str;
             {defaultContent: '', data: 'event_type', searchable: true, orderable: false},
             {defaultContent: '', data: 'begening_of_event', searchable: true, orderable: false},
             {defaultContent: '', data: 'short_dettails', searchable: false, orderable: false},
+            {defaultContent: '', data: 'action_taken', searchable: true, orderable: false},
             {defaultContent: '', data: 'gd_no', searchable: true, orderable: true},
             {defaultContent: '', data: 'gd_date', searchable: true, orderable: true},
             {defaultContent: '', data: 'case_no', searchable: true, orderable: true},

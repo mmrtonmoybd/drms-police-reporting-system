@@ -60,6 +60,7 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
             'ঘটনার ধরণ',
             'ঘটনার সূত্রপাত',
             'ঘটনার সংক্ষিপ্ত বিবরন',
+            'গৃহীত ব্যবস্থা',
             'জিডি নং',
             'তারিখ',
             'মামলা নং',
@@ -80,23 +81,58 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
 
     public function map($qrrsc): array
     {
+        if (!empty($qrrsc->date_time_of_incident)) {
+                        $date1 = date('d/m/Y H:i:s', strtotime($qrrsc->date_time_of_incident));
+                    } else {
+                        $date1 = '';
+                    }
+
+        if (!empty($qrrsc->date_time_of_police_news)) {
+                        $date2 = date('d/m/Y H:i:s', strtotime($qrrsc->date_time_of_police_news));
+                    } else {
+                        $date2 = '';
+                    }
+
+        
+
+        if (!empty($qrrsc->date_time_response)) {
+                        $date3 = date('d/m/Y H:i:s', strtotime($qrrsc->date_time_response));
+                    } else {
+                        $date3 = '';
+                    }
+        
+
+        if (!empty($qrrsc->gd_date)) {
+                        $date4 = date('d/m/Y', strtotime($qrrsc->gd_date));
+                    } else {
+                        $date4 = '';
+                    }
+
+        if (!empty($qrrsc->case_date)) {
+                        $date5 = date('d/m/Y', strtotime($qrrsc->case_date));
+                    } else {
+                        $date5 = '';
+                    }
+
+
         return [
             $qrrsc->id,
             $qrrsc->district->bn_name,
             $qrrsc->thana->name,
             $qrrsc->village_word,
             $qrrsc->source_of_info,
-            date('d/m/Y H:i:s', strtotime($qrrsc->date_time_of_incident)),
-            date('d/m/Y H:i:s', strtotime($qrrsc->date_time_of_police_news)),
-            date('d/m/Y H:i:s', strtotime($qrrsc->date_time_response)),
+            $date1,
+            $date2,
+            $date3,
             $qrrsc->main_event,
             $qrrsc->event_type,
             $qrrsc->begening_of_event,
             $qrrsc->short_dettails,
+            $qrrsc->action_taken,
             $qrrsc->gd_no,
-            date('d/m/Y', strtotime($qrrsc->gd_date)),
+            $date4,
             $qrrsc->case_no,
-            date('d/m/Y', strtotime($qrrsc->case_date)),
+            $date5,
             $qrrsc->clause,
             $qrrsc->nopc,
             $qrrsc->plaintiff_mobile,

@@ -98,6 +98,7 @@ use Illuminate\Support\Str;
                                                     <th > ঘটনার ধরণ </th>
                                                     <th > ঘটনার সূত্রপাত </th>
                                                     <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
+                                                    <th>  গৃহীত ব্যবস্থা</th>
                                                     <th > জিডি নং </th>
                                                     <th > তারিখ </th>
                                                     <th > মামলা নং </th>
@@ -160,6 +161,7 @@ use Illuminate\Support\Str;
                                                     <td > {{$qrr->event_type}}</td>
                                                     <td > {{$qrr->begening_of_event}}</td>
                                                     <td > {{Str::limit($qrr->short_dettails, 5)}}</td>
+                                                    <td > {{$qrr->action_taken}}</td>
                                                     <td > {{$qrr->gd_no}}</td>
                                                     <td > @if(!empty($qrr->gd_date)) {{date('d/m/Y', strtotime($qrr->gd_date))}} @endif</td>
                                                     <td > {{$qrr->case_no}}</td>
