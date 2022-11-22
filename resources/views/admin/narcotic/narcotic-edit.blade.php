@@ -42,7 +42,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select form-control"  v-model="district_id" @change="getUpozillasAndThana()"  required>
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -58,7 +58,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -70,7 +70,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         @if($spthanas)
 
@@ -87,7 +87,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -138,7 +138,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="name_of_investigator_org" class="form-label">   অভিযান পরিচালনাকারী সংস্থা     </label>
-                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="form-select" required>
+                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="থানা পুলিশ" {{$nar->name_of_investigator_org=='থানা পুলিশ' ? 'selected' : '' }}> থানা পুলিশ </option>
                                                         <option value="ডিবি" {{$nar->name_of_investigator_org=='ডিবি' ? 'selected' : '' }}>ডিবি</option>
@@ -249,7 +249,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">  গ্রেফতারকৃত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" required>
+                                                    <select name="number_of_accused" id="number_of_accused" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$nar->number_of_accused==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -268,7 +268,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="image_video" class="form-label">   ছবি তোলা হয়েছে </label>
-                                                    <select name="image_video" id="image_video" class="form-select" required>
+                                                    <select name="image_video" id="image_video" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="হ্যা" {{$nar->image_video=='হ্যা' ? 'selected' : '' }}>হ্যা</option>
                                                         <option value="না" {{$nar->image_video=='না' ? 'selected' : '' }}>না</option>
@@ -280,7 +280,7 @@
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="jobdo_list" class="form-label"> জব্দ তালিকা  </label>
-                                                    <select name="jobdo_list" id="jobdo_list" class="form-select" required>
+                                                    <select name="jobdo_list" id="jobdo_list" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="হ্যা" {{$nar->jobdo_list=='হ্যা' ? 'selected' : '' }}>হ্যা</option>
                                                         <option value="না" {{$nar->jobdo_list=='না' ? 'selected' : '' }}>না</option>

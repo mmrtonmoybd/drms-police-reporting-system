@@ -826,9 +826,23 @@ body[mdtimepicker-display="on"] {
 
 
                         <!-- start page title -->
-                        <div class="row">
+        <br>
+                                 <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box">
+                                <div class="card">
+                                    <div class="card-body" style="padding: 15px 10px 7px 10px;">
+                              <div class="row">
+                                  
+                                        
+                                <div class="col-sm-6">
+                                        <h4 class="page-title"><i class="dripicons-scale"></i> Add Qrr</h4>
+                       
+                              </div> 
+                              
+                              
+                                <div class="col-sm-6">
+                                    
+                                         <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             
@@ -836,10 +850,24 @@ body[mdtimepicker-display="on"] {
                                             <li class="breadcrumb-item active">Add QRR</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"> <i class="uil uil-plus"></i> QRR Data Entry </h4>
-                                </div>
-                            </div>
-                        </div>     
+                                   
+                                 </div>
+                                 
+                                     </div> 
+                             
+                         
+                              
+                              
+                             </div> 
+                             
+                             
+                             
+                        </div> 
+                          </div> 
+                             </div> 
+                              </div> 
+                        <br>
+                        
                         <!-- end page title --> 
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
@@ -855,7 +883,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select form-control"  v-model="district_id" @change="getUpozillasAndThana()"  required>
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -871,7 +899,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -883,7 +911,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         @if($spthanas)
 
@@ -900,7 +928,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="" disabled >Select</option>
                                                         @if($octhana)
 
@@ -923,7 +951,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="source_of_info" class="form-label">  তথ্য প্রাপ্তির উৎস </label>
-                                                    <select name="source_of_info" id="source_of_info" class="form-select" required>
+                                                    <select name="source_of_info" id="source_of_info" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="এলাকা"> এলাকা </option>
                                                         <option value="কোর্ট">কোর্ট</option>
@@ -982,7 +1010,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="event_type" class="form-label">   ঘটনার ধরণ     </label>
-                                                    <select name="event_type" id="event_type" class="form-select" required>
+                                                    <select name="event_type" id="event_type" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="মারামারি"> মারামারি </option>
                                                         <option value="খুন">খুন</option>
@@ -998,7 +1026,7 @@ body[mdtimepicker-display="on"] {
                                                         <option value="মাদক">মাদক</option>
                                                         <option value="সাইবার">সাইবার</option>
                                                         <option value="প্রতারণা">প্রতারণা</option>
-                                                        <option value="রাজনৈতিক">দুর্ঘটনা</option>
+                                                        <option value="দুর্ঘটনা">দুর্ঘটনা</option>
                                                         <option value="অন্যান্য">অন্যান্য</option>
                                                     </select>
                                                     
@@ -1010,7 +1038,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="begening_of_event" class="form-label">  ঘটনার সূত্রপাত  </label>
-                                                    <select name="begening_of_event" id="begening_of_event" class="form-select">
+                                                    <select name="begening_of_event" id="begening_of_event" class="form-select form-control">
                                                         <option value="">Select</option>
                                                         <option value="জমিজমা"> জমিজমা </option>
                                                         <option value="রাজনৈতিক">রাজনৈতিক</option>
@@ -1189,7 +1217,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="image_video" class="form-label">   ছবি/ভিডিও প্রাপ্তি    </label>
-                                                    <select name="image_video" id="image_video" class="form-select" >
+                                                    <select name="image_video" id="image_video" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="হ্যা">হ্যা</option>
                                                         <option value="না">না</option>
@@ -1201,7 +1229,7 @@ body[mdtimepicker-display="on"] {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="media_quality" class="form-label">   সন্তুষ্টির মান   </label>
-                                                    <select name="media_quality" id="media_quality" class="form-select" >
+                                                    <select name="media_quality" id="media_quality" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="সন্তুষ্ট"> সন্তুষ্ট </option>
                                                         <option value="মোটামুটি সন্তুষ্ট">মোটামুটি সন্তুষ্ট</option>

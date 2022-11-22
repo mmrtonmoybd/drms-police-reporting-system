@@ -285,7 +285,7 @@ transform: scale(1.1);
 												<div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                          <select name="districtID" id="districtID" class="form-select stylish"  v-model="district_id">
+                                                          <select name="districtID" id="districtID" class="form-select form-control stylish"  v-model="district_id">
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -302,7 +302,7 @@ transform: scale(1.1);
 												 <div class="col-sm-4">
                                                  <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
@@ -319,7 +319,7 @@ transform: scale(1.1);
 												<div class="col-sm-4">
                                                  <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         @if($octhanacol)
 

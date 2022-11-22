@@ -403,7 +403,7 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
         $data['avgreport'] = explode('.', $avgreport->avgres);
-        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
+        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
@@ -841,7 +841,7 @@ class QrrsController extends Controller
         $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
         $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `created_at` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgres")->first();
         $data['avgreport'] = explode('.', $avgreport->avgres);
-        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->first();
+        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgrestim")->first();
         $data['avgrest'] = explode('.', $avgrest->avgrestim);
 
         $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
@@ -901,6 +901,7 @@ class QrrsController extends Controller
     //this method for add new user
     public function Create(Request $request)
     {
+        //dd($request->all());
         $data['districts'] = District::where('division_id', 1)->get();
 
         $uid = auth()->user()->id;

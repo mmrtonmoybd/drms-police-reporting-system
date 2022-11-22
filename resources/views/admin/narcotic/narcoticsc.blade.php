@@ -270,7 +270,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="droparrow form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
+                                                    <select name="districtID" id="districtID" class="droparrow form-select form-control stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -288,7 +288,7 @@ margin-top: -39px;
 												 <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select stylish" >
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -304,7 +304,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
@@ -321,7 +321,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish">
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish">
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -339,7 +339,7 @@ margin-top: -39px;
 												            <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="name_of_investigator_org" class="form-label"></label>
-                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="droparrow form-select stylish" >
+                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="droparrow form-select form-control stylish" >
                                                         <option value="">সংস্থা</option>
                                                         <option value="থানা পুলিশ"> থানা পুলিশ </option>
                                                         <option value="ডিবি">ডিবি</option>
@@ -402,7 +402,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="droparrow form-select stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
+                                                    <select name="districtID" id="districtID" class="droparrow form-select form-control stylish"  v-model="district_id" @change="getUpozillasAndThana()"  >
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -420,7 +420,7 @@ margin-top: -39px;
 												 <div class="col-sm-2">
                                                <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select stylish" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish" required>
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -436,7 +436,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
@@ -453,7 +453,7 @@ margin-top: -39px;
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="droparrow form-select stylish">
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish">
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -471,7 +471,7 @@ margin-top: -39px;
 												            <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="name_of_investigator_org" class="form-label"></label>
-                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="droparrow form-select stylish" >
+                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="droparrow form-select form-control stylish" >
                                                         <option value="">সংস্থা</option>
                                                         <option value="থানা পুলিশ"> থানা পুলিশ </option>
                                                         <option value="ডিবি">ডিবি</option>

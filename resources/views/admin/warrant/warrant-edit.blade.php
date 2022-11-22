@@ -31,7 +31,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select form-control"  v-model="district_id" @change="getUpozillasAndThana()"  required>
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -47,7 +47,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -59,7 +59,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         @if($spthanas)
 
@@ -76,7 +76,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 

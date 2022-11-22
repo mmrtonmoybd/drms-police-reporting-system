@@ -1,281 +1,14 @@
-<x-admin-header />
 
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
-
-
-<!-- start page title -
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box">
-            <div class="page-title-right">
-               <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="{{url('admin/qrrs')}}">Qrrs</a></li>
-                  <li class="breadcrumb-item active">All Qrrs</li>
-               </ol>
-            </div>
-            <h4 class="page-title"><i class="dripicons-scale"></i> Qrrs</h4>
-         </div>
-      </div>
-   </div>
-   <!-- end page title -->
-<x-admin-validation-errors :errors="$errors->all()"/>
-<!------------secondery hedaer----------->
-
-
-<style>
-   .row {
-   width:100%;
-   overflow:none;
-   }
-   text {
-   font-family: Nunito, 'SolaimanLipi', sans-serif;
-   font-size: 11px;
-   }
-   
-   
- 
-   
-   .stylish {
-   background: #26a59a;
-   color: #fff;
-   border-radius: 20px;
-   display: block;
-   width: 100%;
-   padding: 5px 7px 5px 5px;
-   font-size: .9rem;
-   font-weight: 400;
-   line-height: 1.5;
-   text-align: center;
-   }
-   .stylish option {
-   text-align: center;
-   }
-   
-
-   .purplecol  {
-       
-       background: purple;
-       
-   }
-   
-   
-
-   
-   
-   
-   
-   
-   
-   
-   
-   .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, {
-   padding: 7px!important;
-   }
-   .sheader {
-   background:#26a59a; 
-   color:white;
-   height:120px;
-   }
-   .datepicker {
-   border: 1px solid #26a59a;
-   color:#26a59a;
-   border-radius:20px;
-   }
-   input#date_time_response {
-   height: 33px;
-   }
-   .redbg {
-   background:red; 
-   color:white;
-   height:120px;
-   text-align:center;
-     margin-bottom: 5px!important;
-   }
-   
-   
-      .purplebg {
-   background:purple; 
-   color:white;
-   height:120px;
-   text-align:center;
-   margin-bottom: 5px!important;
-   }
-   
-   
-   .greenbg {
-   background:green; 
-   color:white;
-   height:120px;
-   text-align:center;
-   margin-bottom: 5px!important;
-   }
-   .centerimg {
-   text-align:center;
-   width:100%;
-   }
-   .sheader h1 {
-   color:white;
-   }
-   .inliner {
-   display:inline-block;
-   }
-   .leftimg, .rightimg, .centerimg {
-   display:inline-block;
-   }
-   .leftimg {
-   float: left;
-   position: absolute;
-   }
-   .rightimg {
-   float: right;
-   position: absolute;
-   right: 17px;
-   }
-
-   
-   .chart-header-main {
-  color: #a05078;
-
-  font-size: 17px;
-  position: relative;
-  top: 25px;
-  z-index: 10;
-  left: 20px;
-    }
-       .chart-header {
-   color:#a05078;
-   margin: 21px 0px 0px 10px;
-   font-size: 17px;
-   }
-   .card {
-   border-radius: 0px;
-   border: 1px solid #ddd;
-   }
-   .xtrm {
-   margin-top:25px;
-   }
-   .button-menu-mobile { color:#fff!important;  }
-   
-   
-   
-.float{
-	position:fixed;
-	width:50px;
-	height:50px;
-	bottom:40px;
-	right:40px;
-	background-color:#04c;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	transition: transform .2s;
-}
-
-
-.float2{
-	position:fixed;
-	width:50px;
-	height:50px;
-	bottom:100px;
-	right:40px;
-	background-color:#f44336;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	text-decoration:none;
-		transition: transform .2s;
-}
-
-.float3 {
-  position: fixed;
-  width: 65px;
-  height: 130px;
-  bottom: 50%;
-  right: 0px;
-  background-color: #9d1b95;
-  color: #FFF;
-  border-radius: 7px 0px 0px 7px;
-  text-align: center;
-  box-shadow: 2px 2px 3px #999;
-  z-index: 1000;
-  text-decoration: none;
-  transition: transform .2s;
-}
-
-.float:hover{
-transform: scale(1.1);
-}
-
-
-.float2:hover{
-transform: scale(1.1);
-}
-
-
-
-.my-float3{
-	margin-top:0;
-	font-size:14px;
-	padding:10px;
-	text-decoration:none;
-}
-
-
-.my-float{
-	margin-top:22px;
-	font-size:30px;
-	text-decoration:none;
-}
-
-.my-float:hover {
-  color: #ddd;
-}
-   
-   .silverhover:hover {
-  color: #ddd;
-}
-
-   
-</style>
-<div class="row ">
-   <div class="col-sm-12 " style="padding: 5px 0px 0px 0px;">
-      <div class="card sheader">
-         <div class="card-body inliner">
-            <div class="leftimg">
-               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
-            </div>
-            <div class="centerimg">
-               <h1> Quick Response </h1>
-               <h3> Barisal Range, Barisal </h3>
-               <br>
-            </div>
-            <div class="rightimg">
-               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-
-<style>
-
-.sidetitle {
-    font-weight:bold;
-    color:#ffbfa0;
-}
-</style>
-
-
-<div class="row">
-   <div class="card">
+			<x-admin-header/>
+			
+			<!-- ============ Body content start ============= -->
+			
+			
+			
+			
+            <div class="main-content pt-4">
+                <div class="selectbox">
+                    
                 <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="get">
                
                <div class="" id="app">
@@ -301,7 +34,7 @@ transform: scale(1.1);
                                                    
                                                     
                                                     
-                                                    <select name="districtID" id="districtID" class="form-select stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
+                                                    <select name="districtID" id="districtID" class="droparrow form-control stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
                                                         <option value="">জেলা</option>
 
                                                         @php 
@@ -325,7 +58,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-control stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -338,7 +71,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-control stylish" >
                                                        @php 
                                                         if ($sthan !== 'খালি') {
                                                          $did = $sthan->id;
@@ -364,7 +97,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish">
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-control stylish">
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -377,16 +110,19 @@ transform: scale(1.1);
                                             @endif
 
 
+</form>
+
+
                                     
             <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                  <select name="source_of_info" id="source_of_info" class="form-select stylish">
+                  <select name="source_of_info" id="source_of_info" class="droparrow form-control stylish">
                      <option value="">উৎস</option>
-                     <option value="এলাকা" {{ ($ssoun == 'এলাকা') ? 'selected' : '' }} > এলাকা </option>
-                     <option value="কোর্ট" {{ ($ssoun == 'কোর্ট') ? 'selected' : '' }}>কোর্ট</option>
-                     <option value="থানা" {{ ($ssoun == 'থানা') ? 'selected' : '' }}>থানা</option>
-                     <option value="৯৯৯" {{ ($ssoun == '৯৯৯') ? 'selected' : '' }}>৯৯৯</option>
+                     <option value="এলাকা"> এলাকা </option>
+                     <option value="কোর্ট">কোর্ট</option>
+                     <option value="থানা">থানা</option>
+                     <option value="৯৯৯">৯৯৯</option>
                   </select>
                </div>
             </div>
@@ -394,173 +130,156 @@ transform: scale(1.1);
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{($ssdate !== 'খালি') ? $ssdate : ''}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{($stdate !== 'খালি') ? $stdate : ''}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
             
             <div class="col-sm-2 " >
                <div class="mb-3">
+			           <label for="source_of_info" class="form-label"></label>
                   <label for="source_of_info" class="form-label"></label>
-                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
+                  <button type="submit" name="submit" class="btn" style="width:100%;"> সার্চ করুন </button>
                </div>
             </div>
          </div>
       </div>
-      <!----
-         <div id="chart_div"></div>
-         <div id="piechart"></div>
-         <div id="chart_div2"></div>
-         --->
-
-
-   </div>
-</div>
-
-
-@can('qrr.add')
-<a href="add" class="float2 silverhover">
-    
-<i class="dripicons-plus  plus my-float"></i>
-</a>
-@endcan
-
-@can('qrr.view')
-
-<a href="../qrrs" class="float silverhover" style="padding: 7px;">
-<i style="font-size: 20px;" class="dripicons-view-list my-float"></i>
-</a>
-@endcan
-
-
-
-
-<div class="row">
-   
-   
-   <div class="col-sm-3 " style="padding: 0px 10px 0px 0px; width: 30%;">
-      <div class="card">
-         <h5 class="chart-header-main">Number of Incident </h5>
-         <div id="chart_div"></div>
-      </div>
-   </div>
-   
-     <!---
-   <div class="col-sm-2 ">
-      <div class="row">
-         <div class="card" style="height: 157px;">
-            <h3 class="chart-header xtrm">Total Incident</h3>
-            <h1 style="color:red;">{{$tin}}</h1>
-         </div>
-      </div>
-      <div class="row">
-         <div class="card" style="height: 158px;">
-            <br>
-            <h3 class="chart-header xtrm">Case Taken</h3>
-            <h1 style="color:green;">{{$tcat}}</h1>
-         </div>
-      </div>
-   </div>
- ---2nd----->
-   <div class="col-sm-5 " style="padding: 0px 0px 0px 13px; width:36.667%!important;">
-      <div class="row">
-          
-          
-          
-            <div class="col-sm-4" style="padding: 1px;">
-            <div class="card purplebg">
-               <h6> মোট রিপোর্ট</h6>
-               <h2><a href="{{url('/admin/qrrs/srcs/data')}}">{{$tin}}</a></h2>
-            </div>
-         </div>
-         
-         
-         
-          <div class="col-sm-4" style="padding: 1px;">
-            <div class="card redbg">
-               <h6> গড় সাড়াদানের সময় </h6>
-               <h2>{{$avgrest[0]}}</h2>
-            </div>
-         </div>
-         @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
-         <div class="col-sm-4" style="padding: 1px;">
-            <div class="card greenbg">
-               <h6> গড় রিপোর্টে বিলম্ব</h6>
-               <h2>{{$avgreport[0]}}</h2>
-            </div>
-         </div>
-         @endif
-      </div>
-      <div class="row">
-         <div class="card" style="height: 213px;">
-            <h5 class="chart-header-main">Source of information</h5>
-            <div id="piechart"></div>
-         </div>
-      </div>
-   </div>
-   <!------2nd----->
-   <div class="col-sm-4 " style="padding: 0px 0px 0px 0px;">
-      <div class="card" >
-         <h5 class="chart-header-main"> Type of incident </h5>
-         <div id="chart_div2"></div>
-      </div>
-   </div>
-   <!------2nd----->
-</div>
-<!-- end row -->
-
-
-
-<!------------
-   <div class="row">
-      <div class="col-sm-3 ">
-         <div class="row">
-                <div class="card">
-                   <h3 style="color:green;">Total Incident</h3>
-                   <h1>{{$tin}}</h1>
+	  
+	  
+					
                 </div>
-         </div>
-         
-           <div class="row">
-                <div class="card">
-                    <h3 style="color:red;">Case Taken</h3>
-                     <h1>{{$tcat}}</h1>
+                <div class="separator-breadcrumb border-top"></div>
+              
+
+
+			  <div class="row">
+                    <!-- ICON BG-->
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                            <a href="{{url('/admin/qrrs/srcs/data')}}">   
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">মোট রিপোর্ট </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$tin}}</p>
+                                </div>
+								</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Financial"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">গড় সাড়াদানের সময়</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$avgrest[0]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					  @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">গড় রিপোর্টে বিলম্ব</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$avgreport[0]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					@endif
+					<!--------
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Money-2"></i>
+                                <div class="content">
+                                    <p class="text-muted mt-2 mb-0">Expense</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">$1200</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					--->
                 </div>
-         </div>
-         
-         
-      </div>
-      <div class="col-sm-9 ">
-          
-          
-         <div class="row">
-             <div class="col-sm-6">
-            <div class="card redbg">
-               <h3> Average Response Time</h3>
-              <h2>0:32:59</h2>
-            </div>
-            </div>
-            
-            
-            <div class="col-sm-6">
-            <div class="card greenbg">
-              <h3> Average Reporting Delay</h3>
-              <h2>5:42:50</h2>
-            </div>
-            </div>
-            
-         </div>
-         
-         <div class="row">
-            <div class="card">
-               <div id="piechart"></div>
-            </div>
-         </div>
-      </div>
-     
-   </div>
-   <!-- end row -->
+				
+				
+				
+				<style>
+				.card-title {
+					z-index:2000;
+					position:relative;
+				}
+				</style>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title">জেলা ভিত্তিক রিপোর্ট </div>
+                              @if($qrrs->isNotEmpty())
+                                <div id="chart_div" style="margin-top: -39px;height: 300px;"></div>
+                                @else
+                                কোন তথ্য নেই
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title" > তথ্য প্রাপ্তির উৎস </div>
+                                
+                                   @if($qrrs->isNotEmpty())
+                               <div id="piechart" style="margin-top: -39px; height: 300px;"></div>
+                                @else
+                                কোন তথ্য নেই
+                                @endif
+                                
+                                
+                           
+                            </div>
+                        </div>
+                    </div>
+					
+					
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="card mb-4" style="@if($qrrs->isNotEmpty()) height: 354px; @endif" >
+                            <div class="card-body">
+                                <div class="card-title">ঘটনার ধরন</div>
+                                
+                                   @if($qrrs->isNotEmpty())
+                                <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
+                                @else
+                                কোন তথ্য নেই
+                                @endif
+                                
+                                
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if($qrrs->isNotEmpty())
+
+
 <div class="row">
    <div class="card table-responsive">
       <!----
@@ -576,12 +295,17 @@ transform: scale(1.1);
       <nav class="mt-3">
       </nav>
       ---->
+      <div style="text-align: right;margin: 16px;">
+                    
+                                          
+  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-success"><i class="fa fa-file-pdf"></i> PDF</a>
       
-      
-      <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> Excel</a>
-      <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> pdf</a>
-      
-                                                  <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">
+											
+											</div>
+    
+   
+                                <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -618,7 +342,8 @@ transform: scale(1.1);
                                             </thead>
                                             <tbody>
 
-                                            @if($qrrs)
+                                            @if($qrrs->isNotEmpty())
+                                            
                                             @foreach ($qrrs as $qrr)
                                                 <tr>
                                                     <td class="table-action">
@@ -700,7 +425,35 @@ transform: scale(1.1);
       
    </div>
 </div>
-</div>
+
+
+  @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+			
+			
+			
+            <div class="sidebar-overlay open"></div>
+			<!-- Footer Start -->
+			
+			
+			
+			
+			
+	
 <!-- end row -->
 
      @php

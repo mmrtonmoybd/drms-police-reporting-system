@@ -36,7 +36,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select form-control"  v-model="district_id" @change="getUpozillasAndThana()"  required>
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -52,7 +52,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -64,7 +64,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         @if($spthanas)
 
@@ -81,7 +81,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="" disabled >Select</option>
                                                         @if($octhana)
 
@@ -248,7 +248,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="problem_fix" class="form-label">   সমস্যা সমাধান হয়েছে কিনা    </label>
-                                                    <select name="problem_fix" id="problem_fix" class="form-select" >
+                                                    <select name="problem_fix" id="problem_fix" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="হ্যা">হ্যা</option>
                                                         <option value="না">না</option>
@@ -260,7 +260,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="action_taken" class="form-label">   গৃহীত ব্যবস্থা    </label>
-                                                    <select name="action_taken" id="action_taken" class="form-select" >
+                                                    <select name="action_taken" id="action_taken" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="অভিযোগ গ্রহন">অভিযোগ গ্রহন</option>
                                                         <option value="স্থানীয় মীমাংসা">স্থানীয় মীমাংসা</option>
@@ -274,7 +274,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="nreport" class="form-label">   নিষ্পত্তি রিপোর্ট    </label>
-                                                    <select name="nreport" id="nreport" class="form-select" >
+                                                    <select name="nreport" id="nreport" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="নিষ্পত্তি">নিষ্পত্তি</option>
                                                         <option value="মামলা">মামলা</option>

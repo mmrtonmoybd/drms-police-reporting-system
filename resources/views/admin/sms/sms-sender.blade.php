@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <div class="mb-3">
-                                                        <select @change="getBatches()" class="form-select" v-model="course_id" name="course_id" id="course_id">
+                                                        <select @change="getBatches()" class="form-select form-control" v-model="course_id" name="course_id" id="course_id">
                                                             <option value="">Select Course</option>
                                                             @if($courses)
                                                             @foreach($courses as $course)
@@ -62,7 +62,7 @@
 
                                                     <div class="col-sm-3">
                                                         <div class="mb-3">
-                                                            <select class="form-select" name="batch_id" v-model="batch_id" id="batch_id">
+                                                            <select class="form-select form-control" name="batch_id" v-model="batch_id" id="batch_id">
                                                             <option value="">Select Batche</option>
                                                             <option v-for="(batch,key,index) in batches" v-bind:value="batch.id"> @php echo '{{ batch.name }} ( {{ batch.batch_number }} )'; @endphp </option>
                                                             

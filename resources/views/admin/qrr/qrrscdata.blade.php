@@ -301,7 +301,7 @@ transform: scale(1.1);
                                                    
                                                     
                                                     
-                                                    <select name="districtID" id="districtID" class="form-select stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
+                                                    <select name="districtID" id="districtID" class="form-select form-control stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
                                                         <option value="">জেলা</option>
 
                                                         @php 
@@ -325,7 +325,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -338,7 +338,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish" >
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
                                                        @php 
                                                         if ($sthan !== 'খালি') {
                                                          $did = $sthan->id;
@@ -364,7 +364,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select stylish">
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish">
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -381,7 +381,7 @@ transform: scale(1.1);
             <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                  <select name="source_of_info" id="source_of_info" class="form-select stylish">
+                  <select name="source_of_info" id="source_of_info" class="form-select form-control stylish">
                      <option value="">উৎস</option>
                      <option value="এলাকা" {{ ($ssoun == 'এলাকা') ? 'selected' : '' }} > এলাকা </option>
                      <option value="কোর্ট" {{ ($ssoun == 'কোর্ট') ? 'selected' : '' }}>কোর্ট</option>

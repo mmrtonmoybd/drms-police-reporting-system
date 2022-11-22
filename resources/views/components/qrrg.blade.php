@@ -198,7 +198,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 

@@ -46,7 +46,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="type" class="form-label">Type</label>
-                                                    <select name="type" class="form-select " id="type" required>
+                                                    <select name="type" class="form-select form-control " id="type" required>
 
                                                         <option value="Admin">Admin</option>
                                                         <option value="Accountant">Accountant</option>

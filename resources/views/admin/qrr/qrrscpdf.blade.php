@@ -1,4 +1,12 @@
+
+<body>
+<!-- partial:index.partial.html -->
+
+
+
+
 <!doctype html>
+
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -13,8 +21,9 @@ body{
     </style>
 
     </head>
-    <body>
-        
+    <body onload="javascript:void(0)">
+        <div id="demo">
+
     <table>
                                             <thead>
                                                 <tr>
@@ -108,6 +117,59 @@ body{
 
                                             </tbody>
                                         </table>
+
+
+</div>
+<div class="flex">
+  <a href="javascript:void(0)" class="btn btn-download">Generate PDF</a>
+</div>
+
+
+
+
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js'></script>
+
+
+<script>
+
+const options = {
+  margin: 0.3,
+  filename: 'filename.pdf',
+  image: { 
+    type: 'jpeg', 
+    quality: 0.98 
+  },
+  html2canvas: { 
+    scale: 1 
+  },
+  jsPDF: { 
+    unit: 'in', 
+   
+    orientation: 'landscape' 
+  }
+}
+
+
+var content = document.getElementById('demo').innerHTML;
+
+
+$('.btn-download').click(function(e){
+  e.preventDefault();
+  var element = document.getElementById('demo');
+  //html2pdf().from(element).set(options).save();
+  //html2pdf(element);
+  html2pdf().from(content).set(options).save();
+});
+
+</script>
+
+
+
+
+
+
 
                                             </body>
    

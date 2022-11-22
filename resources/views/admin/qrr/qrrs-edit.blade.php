@@ -30,7 +30,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select"  v-model="district_id" @change="getUpozillasAndThana()"  required>
+                                                    <select name="districtID" id="districtID" class="form-select form-control"  v-model="district_id" @change="getUpozillasAndThana()"  required>
                                                         <option value="">Select</option>
                                                         @if($districts)
 
@@ -46,7 +46,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -58,7 +58,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         @if($spthanas)
 
@@ -75,7 +75,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control" required>
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -98,7 +98,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="source_of_info" class="form-label">  তথ্য প্রাপ্তির উৎস </label>
-                                                    <select name="source_of_info" id="source_of_info" class="form-select" required>
+                                                    <select name="source_of_info" id="source_of_info" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="এলাকা" {{$qrr->source_of_info=='এলাকা' ? 'selected' : '' }}> এলাকা </option>
                                                         <option value="কোর্ট" {{$qrr->source_of_info=='কোর্ট' ? 'selected' : '' }}>কোর্ট</option>
@@ -159,7 +159,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="event_type" class="form-label">   ঘটনার ধরণ     </label>
-                                                    <select name="event_type" id="event_type" class="form-select" required>
+                                                    <select name="event_type" id="event_type" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="মারামারি" {{$qrr->event_type=='মারামারি' ? 'selected' : ''}}> মারামারি </option>
                                                         <option value="খুন" {{$qrr->event_type=='খুন' ? 'selected' : ''}}>খুন</option>
@@ -187,7 +187,7 @@
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="begening_of_event" class="form-label">  ঘটনার সূত্রপাত  </label>
-                                                    <select name="begening_of_event" id="begening_of_event" class="form-select">
+                                                    <select name="begening_of_event" id="begening_of_event" class="form-select form-control">
                                                         <option value="">Select</option>
                                                         <option value="জমিজমা" {{$qrr->begening_of_event=='জমিজমা' ? 'selected' : ''}}> জমিজমা </option>
                                                         <option value="রাজনৈতিক" {{$qrr->begening_of_event=='রাজনৈতিক' ? 'selected' : ''}}>রাজনৈতিক</option>
@@ -273,7 +273,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <select name="number_of_victims" id="number_of_victims" class="form-select" >
+                                                    <select name="number_of_victims" id="number_of_victims" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$qrr->number_of_victims==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -285,7 +285,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">   এজাহারভুক্ত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select" >
+                                                    <select name="number_of_accused" id="number_of_accused" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$qrr->number_of_accused==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -323,7 +323,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="image_video" class="form-label">   ছবি/ভিডিও প্রাপ্তি    </label>
-                                                    <select name="image_video" id="image_video" class="form-select" >
+                                                    <select name="image_video" id="image_video" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="হ্যা"  {{$qrr->image_video=='হ্যা' ? 'selected' : ''}}>হ্যা</option>
                                                         <option value="না"  {{$qrr->image_video=='না' ? 'selected' : ''}}>না</option>
@@ -335,7 +335,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="media_quality" class="form-label">   সন্তুষ্টির মান   </label>
-                                                    <select name="media_quality" id="media_quality" class="form-select" >
+                                                    <select name="media_quality" id="media_quality" class="form-select form-control" >
                                                         <option value="">Select</option>
                                                         <option value="সন্তুষ্ট"  {{$qrr->media_quality=='সন্তুষ্ট' ? 'selected' : ''}}> সন্তুষ্ট </option>
                                                         <option value="মোটামুটি সন্তুষ্ট" {{$qrr->media_quality=='মোটামুটি সন্তুষ্ট' ? 'selected' : ''}}>মোটামুটি সন্তুষ্ট</option>
