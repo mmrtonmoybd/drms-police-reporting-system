@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Qrr extends Model
 {
     use HasFactory;
+    
+    public $timestamps = true;
+    
+    protected $guarded = ['id'];
+    
     public function district()
     {
         return $this->hasOne('App\Models\District', 'id', 'districtID');

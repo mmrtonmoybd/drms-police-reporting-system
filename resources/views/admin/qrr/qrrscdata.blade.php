@@ -1,281 +1,14 @@
-<x-admin-header />
 
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
-
-
-<!-- start page title -
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box">
-            <div class="page-title-right">
-               <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="{{url('admin/qrrs')}}">Qrrs</a></li>
-                  <li class="breadcrumb-item active">All Qrrs</li>
-               </ol>
-            </div>
-            <h4 class="page-title"><i class="dripicons-scale"></i> Qrrs</h4>
-         </div>
-      </div>
-   </div>
-   <!-- end page title -->
-<x-admin-validation-errors :errors="$errors->all()"/>
-<!------------secondery hedaer----------->
-
-
-<style>
-   .row {
-   width:100%;
-   overflow:none;
-   }
-   text {
-   font-family: Nunito, 'SolaimanLipi', sans-serif;
-   font-size: 11px;
-   }
-   
-   
- 
-   
-   .stylish {
-   background: #26a59a;
-   color: #fff;
-   border-radius: 20px;
-   display: block;
-   width: 100%;
-   padding: 5px 7px 5px 5px;
-   font-size: .9rem;
-   font-weight: 400;
-   line-height: 1.5;
-   text-align: center;
-   }
-   .stylish option {
-   text-align: center;
-   }
-   
-
-   .purplecol  {
-       
-       background: purple;
-       
-   }
-   
-   
-
-   
-   
-   
-   
-   
-   
-   
-   
-   .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, {
-   padding: 7px!important;
-   }
-   .sheader {
-   background:#26a59a; 
-   color:white;
-   height:120px;
-   }
-   .datepicker {
-   border: 1px solid #26a59a;
-   color:#26a59a;
-   border-radius:20px;
-   }
-   input#date_time_response {
-   height: 33px;
-   }
-   .redbg {
-   background:red; 
-   color:white;
-   height:120px;
-   text-align:center;
-     margin-bottom: 5px!important;
-   }
-   
-   
-      .purplebg {
-   background:purple; 
-   color:white;
-   height:120px;
-   text-align:center;
-   margin-bottom: 5px!important;
-   }
-   
-   
-   .greenbg {
-   background:green; 
-   color:white;
-   height:120px;
-   text-align:center;
-   margin-bottom: 5px!important;
-   }
-   .centerimg {
-   text-align:center;
-   width:100%;
-   }
-   .sheader h1 {
-   color:white;
-   }
-   .inliner {
-   display:inline-block;
-   }
-   .leftimg, .rightimg, .centerimg {
-   display:inline-block;
-   }
-   .leftimg {
-   float: left;
-   position: absolute;
-   }
-   .rightimg {
-   float: right;
-   position: absolute;
-   right: 17px;
-   }
-
-   
-   .chart-header-main {
-  color: #a05078;
-
-  font-size: 17px;
-  position: relative;
-  top: 25px;
-  z-index: 10;
-  left: 20px;
-    }
-       .chart-header {
-   color:#a05078;
-   margin: 21px 0px 0px 10px;
-   font-size: 17px;
-   }
-   .card {
-   border-radius: 0px;
-   border: 1px solid #ddd;
-   }
-   .xtrm {
-   margin-top:25px;
-   }
-   .button-menu-mobile { color:#fff!important;  }
-   
-   
-   
-.float{
-	position:fixed;
-	width:50px;
-	height:50px;
-	bottom:40px;
-	right:40px;
-	background-color:#04c;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	transition: transform .2s;
-}
-
-
-.float2{
-	position:fixed;
-	width:50px;
-	height:50px;
-	bottom:100px;
-	right:40px;
-	background-color:#f44336;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	text-decoration:none;
-		transition: transform .2s;
-}
-
-.float3 {
-  position: fixed;
-  width: 65px;
-  height: 130px;
-  bottom: 50%;
-  right: 0px;
-  background-color: #9d1b95;
-  color: #FFF;
-  border-radius: 7px 0px 0px 7px;
-  text-align: center;
-  box-shadow: 2px 2px 3px #999;
-  z-index: 1000;
-  text-decoration: none;
-  transition: transform .2s;
-}
-
-.float:hover{
-transform: scale(1.1);
-}
-
-
-.float2:hover{
-transform: scale(1.1);
-}
-
-
-
-.my-float3{
-	margin-top:0;
-	font-size:14px;
-	padding:10px;
-	text-decoration:none;
-}
-
-
-.my-float{
-	margin-top:22px;
-	font-size:30px;
-	text-decoration:none;
-}
-
-.my-float:hover {
-  color: #ddd;
-}
-   
-   .silverhover:hover {
-  color: #ddd;
-}
-
-   
-</style>
-<div class="row ">
-   <div class="col-sm-12 " style="padding: 5px 0px 0px 0px;">
-      <div class="card sheader">
-         <div class="card-body inliner">
-            <div class="leftimg">
-               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
-            </div>
-            <div class="centerimg">
-               <h1> Quick Response </h1>
-               <h3> Barisal Range, Barisal </h3>
-               <br>
-            </div>
-            <div class="rightimg">
-               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-
-<style>
-
-.sidetitle {
-    font-weight:bold;
-    color:#ffbfa0;
-}
-</style>
-
-
-<div class="row">
-   <div class="card">
+			<x-admin-header/>
+			
+			<!-- ============ Body content start ============= -->
+			
+			
+			
+			
+            <div class="main-content pt-4">
+                <div class="selectbox">
+                    
                 <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="get">
                
                <div class="" id="app">
@@ -301,7 +34,7 @@ transform: scale(1.1);
                                                    
                                                     
                                                     
-                                                    <select name="districtID" id="districtID" class="form-select form-control stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
+                                                    <select name="districtID" id="districtID" class="droparrow form-control stylish  @php echo $col; @endphp "  v-model="district_id" @change="getUpozillasAndThana()">
                                                         <option value="">জেলা</option>
 
                                                         @php 
@@ -325,7 +58,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control stylish" >
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-control stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -338,7 +71,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-control stylish" >
                                                        @php 
                                                         if ($sthan !== 'খালি') {
                                                          $did = $sthan->id;
@@ -364,7 +97,7 @@ transform: scale(1.1);
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish">
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-control stylish">
                                                         <option value="">থানা</option>
                                                         @if($octhana)
 
@@ -377,16 +110,19 @@ transform: scale(1.1);
                                             @endif
 
 
+</form>
+
+
                                     
             <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                  <select name="source_of_info" id="source_of_info" class="form-select form-control stylish">
+                  <select name="source_of_info" id="source_of_info" class="droparrow form-control stylish">
                      <option value="">উৎস</option>
-                     <option value="এলাকা" {{ ($ssoun == 'এলাকা') ? 'selected' : '' }} > এলাকা </option>
-                     <option value="কোর্ট" {{ ($ssoun == 'কোর্ট') ? 'selected' : '' }}>কোর্ট</option>
-                     <option value="থানা" {{ ($ssoun == 'থানা') ? 'selected' : '' }}>থানা</option>
-                     <option value="৯৯৯" {{ ($ssoun == '৯৯৯') ? 'selected' : '' }}>৯৯৯</option>
+                     <option value="এলাকা"> এলাকা </option>
+                     <option value="কোর্ট">কোর্ট</option>
+                     <option value="থানা">থানা</option>
+                     <option value="৯৯৯">৯৯৯</option>
                   </select>
                </div>
             </div>
@@ -394,58 +130,65 @@ transform: scale(1.1);
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{($ssdate !== 'খালি') ? $ssdate : ''}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{($stdate !== 'খালি') ? $stdate : ''}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
             
             <div class="col-sm-2 " >
                <div class="mb-3">
+			           <label for="source_of_info" class="form-label"></label>
                   <label for="source_of_info" class="form-label"></label>
-                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
+                  <button type="submit" name="submit" class="btn" style="width:100%;"> সার্চ করুন </button>
                </div>
             </div>
          </div>
       </div>
-      <!----
-         <div id="chart_div"></div>
-         <div id="piechart"></div>
-         <div id="chart_div2"></div>
-         --->
+	  
+	  
+					
+                </div>
+                <div class="separator-breadcrumb border-top"></div>
+              
 
 
-   </div>
-</div>
+				
+				
+				<style>
+				.card-title {
+					z-index:2000;
+					position:relative;
+				}
+				</style>
 
 
-@can('qrr.add')
-<a href="add" class="float2 silverhover">
-    
-<i class="dripicons-plus  plus my-float"></i>
-</a>
-@endcan
-
-@can('qrr.view')
-
-<a href="../qrrs" class="float silverhover" style="padding: 7px;">
-<i style="font-size: 20px;" class="dripicons-view-list my-float"></i>
-</a>
-@endcan
 
 
-<!-- end row -->
+
+
+
+
+
+
 
 
 
 
 <div class="row">
-   <div class="card table-responsive">
-    <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> Excel</a>
-      <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-success"><i class="uil fa-file-excel-o"></i> pdf</a>
+  <div class="card card-body table-responsive">
+
+      <div style="text-align: right;margin: 16px;">
+                    
+                                          
+  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-success"><i class="fa fa-file-pdf"></i> PDF</a>
       
-      
-                                                  <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">
+											
+											</div>
+    
+   
+                                <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -458,7 +201,10 @@ transform: scale(1.1);
                                                     <th > পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময় </th>
                                                     <th > রেসপন্সের তারিখ ও সময় </th>
                                                     <th > রেসপন্সে বিলম্ব  </th>
+                                                    <!---------------
                                                     <th > মূল ঘটনা</th>
+                                                    -------->
+                                                    
                                                     <th > ঘটনার ধরণ </th>
                                                     <th > ঘটনার সূত্রপাত </th>
                                                     <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
@@ -483,7 +229,8 @@ transform: scale(1.1);
                                             </thead>
                                             <tbody>
 
-                                            @if($qrrs)
+                                            @if($qrrs->isNotEmpty())
+                                            
                                             @foreach ($qrrs as $qrr)
                                                 <tr>
                                                     <td class="table-action">
@@ -511,10 +258,13 @@ transform: scale(1.1);
                                                         
                                                     @php
 
-                                                    $minutes = $qrr->delay_in_response;
-                                                    $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                                                    $minutes = $qrr->delay_in_response;
-                                                    $hours = floor($minutes / 60).':'.($minutes - floor($minutes / 60) * 60).':00';
+                                                        $minutes = $qrr->delay_in_response;
+                                                        $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+                                                        $minutes = $qrr->delay_in_response;
+                                                        $hour1 = floor($minutes / 60);
+                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                                                        $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                                                        $hours = $isohour.':00';
 
                                                     @endphp
                                                     
@@ -522,7 +272,12 @@ transform: scale(1.1);
                                                 
                                                 
                                                     </td>
+                                                    
+                                                    <!--------
                                                     <td > {{ Str::limit($qrr->main_event, 20)}}</td>
+                                                    
+                                                    ----------->
+                                                    
                                                     <td > {{$qrr->event_type}}</td>
                                                     <td > {{$qrr->begening_of_event}}</td>
                                                     <td > {{Str::limit($qrr->short_dettails, 5)}}</td>
@@ -554,7 +309,6 @@ transform: scale(1.1);
 
                                             </tbody>
                                         </table>
-      
                                         <nav class="mt-3">
 
                                         @if($qrrs){{$qrrs->appends(request()->input())->links()}} @endif
@@ -566,7 +320,35 @@ transform: scale(1.1);
       
    </div>
 </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+			
+			
+			
+            <div class="sidebar-overlay open"></div>
+			<!-- Footer Start -->
+			
+			
+			
+			
+			
+	
 <!-- end row -->
 
      @php
@@ -680,6 +462,5 @@ transform: scale(1.1);
         });
 
     </script>
-    
 	  
 <x-admin-footer/>

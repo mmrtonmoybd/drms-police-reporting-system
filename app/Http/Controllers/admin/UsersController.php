@@ -61,7 +61,7 @@ class UsersController extends Controller
                         $actionBtn .= '<a href="' . url("admin/users/uedit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                     }
                     if (auth()->user()->can('user.delete')) {
-                        $actionBtn .= '<a href="' . url("admin/users/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this user?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                        $actionBtn .= '<a href="' . url("admin/users/delete/$row->id") . '"  onclick="return confirm(\'Do you want to delete this user?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                     }
                 }
                 return $actionBtn;

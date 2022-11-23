@@ -9,7 +9,7 @@
             <div class="main-content pt-4">
                 <div class="selectbox">
                     
-                <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="get">
+                <form  action="{{url('admin/qrrs/charts')}}" method="get">
                
                <div class="" id="app">
                                         <div class="row">

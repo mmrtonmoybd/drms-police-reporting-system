@@ -38,7 +38,7 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
              'ঘটনার তারিখ ও সময়',
              'পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়',
              'রেসপন্সের তারিখ ও সময়',
-             'মূল ঘটনা',
+             'রেসপন্সে বিলম্ব',
              'ঘটনার ধরণ',
              'ঘটনার সূত্রপাত',
              'ঘটনার সংক্ষিপ্ত বিবরন',
@@ -96,6 +96,21 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
             $date5 = '';
         }
 
+        if (!empty($qrrview->delay_in_response)) {
+                    $minutes = $qrrview->delay_in_response;
+                    $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+                    $minutes = $qrrview->delay_in_response;
+
+                    $hour1 = floor($minutes / 60);
+                    $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                    $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                    $hours = $isohour.':00';
+                    //return $hours;
+            $date6 = $hours;
+        } else {
+            $date6 = '';
+        }
+
 
         return [
             $qrrview->id,
@@ -106,7 +121,7 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
             $date1,
             $date2,
             $date3,
-            $qrrview->main_event,
+            $date6,
             $qrrview->event_type,
             $qrrview->begening_of_event,
             $qrrview->short_dettails,

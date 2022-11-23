@@ -291,7 +291,10 @@
 
  @stack('scripts')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!-----
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+	
+	---->
 @else 
 
 <!-- 20 Nov 2022 10:11:33 GMT -->

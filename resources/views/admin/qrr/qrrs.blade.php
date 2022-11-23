@@ -85,7 +85,9 @@ use Illuminate\Support\Str;
                                                     <th > পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময় </th>
                                                     <th > রেসপন্সের তারিখ ও সময় </th>
                                                     <th > রেসপন্সে বিলম্ব  </th>
+                                                    <!-------------
                                                     <th > মূল ঘটনা</th>
+                                                    -->
                                                     <th > ঘটনার ধরণ </th>
                                                     <th > ঘটনার সূত্রপাত </th>
                                                     <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
@@ -109,7 +111,7 @@ use Illuminate\Support\Str;
                                             </thead>
                                             <tbody>
 
-                                            
+                                             
 
 
                                             
@@ -149,7 +151,9 @@ use Illuminate\Support\Str;
             {defaultContent: '', data: 'date_time_of_police_news', searchable: true, orderable: true},
             {defaultContent: '', data: 'date_time_response', searchable: true, orderable: true},
             {defaultContent: '', data: 'delay_in_response', searchable: true, orderable: true},
-            {defaultContent: '', data: 'main_event', searchable: true, orderable: false},
+            
+          //  {defaultContent: '', data: 'main_event', searchable: true, orderable: false},
+            
             {defaultContent: '', data: 'event_type', searchable: true, orderable: false},
             {defaultContent: '', data: 'begening_of_event', searchable: true, orderable: false},
             {defaultContent: '', data: 'short_dettails', searchable: false, orderable: false},

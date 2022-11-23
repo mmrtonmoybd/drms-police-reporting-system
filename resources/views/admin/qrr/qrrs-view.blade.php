@@ -1,21 +1,35 @@
 <x-admin-header />
                         
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/qrrs')}}">Qrrs</a></li>
-                                            <li class="breadcrumb-item active">View qrr</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"> <i class="mdi mdi-eye"></i> View qrr #{{$qrr->id}}</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title --> 
+   
+                        
+                            <!-- start page title -->
+<br>
+<div class="row">
+   <div class="col-12">
+      <div class="card">
+         <div class="card-body" style="padding: 15px 10px 7px 10px;">
+            <div class="row">
+               <div class="col-sm-6">
+                  <h4 class="page-title"><i class="dripicons-scale"></i>View qrr #{{$qrr->id}}</h4>
+               </div>
+               <div class="col-sm-6">
+                  <div class="page-title-box">
+                     <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                         <li class="breadcrumb-item"><a href="{{url('admin/qrrs')}}">QRR</a></li>
+                           <li class="breadcrumb-item active">View QRR</li>
+                        </ol>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<br>
+ <!-- start page title -->
+ 
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
 
@@ -47,7 +61,10 @@
                                                         $minutes = $qrr->delay_in_response;
                                                         $hours = intdiv($minutes, 60).':'. ($minutes % 60);
                                                         $minutes = $qrr->delay_in_response;
-                                                        $hours = floor($minutes / 60).':'.($minutes - floor($minutes / 60) * 60).':00';
+                                                        $hour1 = floor($minutes / 60);
+                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                                                        $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                                                        $hours = $isohour.':00';
 
                                                         @endphp
 

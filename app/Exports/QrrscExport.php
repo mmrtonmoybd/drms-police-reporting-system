@@ -56,7 +56,7 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
             'ঘটনার তারিখ ও সময়',
             'পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়',
             'রেসপন্সের তারিখ ও সময়',
-            'মূল ঘটনা',
+            'রেসপন্সে বিলম্ব',
             'ঘটনার ধরণ',
             'ঘটনার সূত্রপাত',
             'ঘটনার সংক্ষিপ্ত বিবরন',
@@ -114,6 +114,21 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
             $date5 = '';
         }
 
+        if (!empty($qrrsc->delay_in_response)) {
+                    $minutes = $qrrsc->delay_in_response;
+                    $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+                    $minutes = $qrrsc->delay_in_response;
+
+                    $hour1 = floor($minutes / 60);
+                    $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                    $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                    $hours = $isohour.':00';
+                    //return $hours;
+            $date6 = $hours;
+        } else {
+            $date6 = '';
+        }
+
 
         return [
             $qrrsc->id,
@@ -124,7 +139,7 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
             $date1,
             $date2,
             $date3,
-            $qrrsc->main_event,
+            $date6,
             $qrrsc->event_type,
             $qrrsc->begening_of_event,
             $qrrsc->short_dettails,

@@ -41,6 +41,8 @@
 
 <style>
 
+
+
 body {
 	    font-family: 'SolaimanLipi', Arial, sans-serif !important;
 }
@@ -126,9 +128,6 @@ border-radius: 0px;
    <x-admin-left-menu />
 
 		
-		
-		
-        <div class="switch-overlay"></div>
 		
 		
 		

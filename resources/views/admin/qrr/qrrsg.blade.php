@@ -281,7 +281,7 @@
 
 
 <div class="row">
-   <div class="card table-responsive">
+   <div class="card card-body table-responsive">
       <!----
          <div id="chart_div"></div>
          <div id="piechart"></div>
@@ -318,7 +318,9 @@
                                                     <th > পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময় </th>
                                                     <th > রেসপন্সের তারিখ ও সময় </th>
                                                     <th > রেসপন্সে বিলম্ব  </th>
+                                                    <!----------
                                                     <th > মূল ঘটনা</th>
+                                                    -----------> 
                                                     <th > ঘটনার ধরণ </th>
                                                     <th > ঘটনার সূত্রপাত </th>
                                                     <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
@@ -372,10 +374,13 @@
                                                         
                                                     @php
 
-                                                    $minutes = $qrr->delay_in_response;
-                                                    $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                                                    $minutes = $qrr->delay_in_response;
-                                                    $hours = floor($minutes / 60).':'.($minutes - floor($minutes / 60) * 60).':00';
+                                                        $minutes = $qrr->delay_in_response;
+                                                        $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+                                                        $minutes = $qrr->delay_in_response;
+                                                        $hour1 = floor($minutes / 60);
+                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                                                        $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                                                        $hours = $isohour.':00';
 
                                                     @endphp
                                                     
@@ -383,7 +388,9 @@
                                                 
                                                 
                                                     </td>
+                                                    <!--------
                                                     <td > {{ Str::limit($qrr->main_event, 20)}}</td>
+                                                    --------->
                                                     <td > {{$qrr->event_type}}</td>
                                                     <td > {{$qrr->begening_of_event}}</td>
                                                     <td > {{Str::limit($qrr->short_dettails, 5)}}</td>

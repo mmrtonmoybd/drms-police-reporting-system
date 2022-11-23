@@ -89,7 +89,7 @@ class QrrsController extends Controller
                         $date = '';
                     }
                     return $date;
-                    //return date('d/m/Y h:i A', strtotime($raw->date_time_of_police_news));
+                    //return date('d/m/Y H:i', strtotime($raw->date_time_of_police_news));
                 })
                 ->editColumn('date_time_response', function ($raw) {
                     if (!empty($raw->date_time_response)) {
@@ -98,13 +98,17 @@ class QrrsController extends Controller
                         $date = '';
                     }
                     return $date;
-                    //return date('d/m/Y h:i A', strtotime($raw->date_time_response));
+                    //return date('d/m/Y H:i', strtotime($raw->date_time_response));
                 })
                 ->editColumn('delay_in_response', function ($raw) {
                     $minutes = $raw->delay_in_response;
                     $hours = intdiv($minutes, 60).':'. ($minutes % 60);
                     $minutes = $raw->delay_in_response;
-                    $hours = floor($minutes / 60).':'.($minutes - floor($minutes / 60) * 60).':00';
+
+                    $hour1 = floor($minutes / 60);
+                    $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                    $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                    $hours = $isohour.':00';
                     return $hours;
                 })
                 ->editColumn('main_event', function ($raw) {
@@ -114,10 +118,22 @@ class QrrsController extends Controller
                     return Str::limit($raw->short_dettails, 5);
                 })
                 ->editColumn('gd_date', function ($raw) {
-                    return date('d/m/Y', strtotime($raw->gd_date));
+                    if (!empty($raw->gd_date)) {
+                        $date = date('d/m/Y', strtotime($raw->gd_date));
+                    } else {
+                        $date = '';
+                    }
+                    return $date;
+                    //return date('d/m/Y', strtotime($raw->gd_date));
                 })
                 ->editColumn('case_date', function ($raw) {
-                    return date('d/m/Y', strtotime($raw->case_date));
+                    if (!empty($raw->case_date)) {
+                        $date = date('d/m/Y', strtotime($raw->case_date));
+                    } else {
+                        $date = '';
+                    }
+                    return $date;
+                    //return date('d/m/Y', strtotime($raw->case_date));
                 })
                 ->editColumn('comments', function ($raw) {
                     return Str::limit($raw->comments, 5);
@@ -131,7 +147,7 @@ class QrrsController extends Controller
                         $actionBtn .= '<a href="' . url("admin/qrrs/edit/$row->id") .'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                     }
                     if (auth()->user()->can('qrr.delete')) {
-                        $actionBtn .= '<a href="' . url("admin/qrrs/delete/$row->id") . '"  onclick="return confirm("Do you want to delete this qrr?")" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                        $actionBtn .= '<a href="' . url("admin/qrrs/delete/$row->id") . '"  onclick="return confirm(\'Do you want to delete this qrr?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                     }
                     return $actionBtn;
                 })
@@ -415,12 +431,16 @@ class QrrsController extends Controller
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
-        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `created_at` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgres")->where('districtID', $dkey, $dvalue)
+        // গড় রিপোর্টে বিলম্ব
+        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_response` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgres")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
         $data['avgreport'] = explode('.', $avgreport->avgres);
-        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
+
+        // গড় সাড়াদানের সময় 
+
+        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_police_news` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
@@ -790,6 +810,7 @@ class QrrsController extends Controller
 
     public function srcs(Request $request)
     {
+        //dd(Carbon::now()->toDateTimeString());
         $disid = 9552;
         $disexp = '!=';
         $thaid = 8256;
@@ -856,10 +877,16 @@ class QrrsController extends Controller
 
         $data['tin'] = Qrr::where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
         $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
-        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `created_at` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgres")->first();
+
+        // গড় রিপোর্টে বিলম্ব
+        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_response` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgres")->first();
         $data['avgreport'] = explode('.', $avgreport->avgres);
-        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_incident` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgrestim")->first();
+
+        // গড় সাড়াদানের সময়
+        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_police_news` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->first();
         $data['avgrest'] = explode('.', $avgrest->avgrestim);
+
+
 
         $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
         $ins99 = Qrr::where('source_of_info', '৯৯৯')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
@@ -958,15 +985,15 @@ class QrrsController extends Controller
         ];
 
         if ($request->input('date_time_of_incident')) {
-            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
+            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y H:i', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d H:i');
         }
 
         if ($request->input('date_time_of_police_news')) {
-            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d H:s:i');
+            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y H:i', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d H:i');
         }
 
         if ($request->input('date_time_response')) {
-            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d H:s:i');
+            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y H:i', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d H:i');
         }
 
         if ($request->input('gd_date')) {
@@ -980,14 +1007,14 @@ class QrrsController extends Controller
 
         //delay count in  response
         if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
-            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_response']);
-            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_of_police_news']);
+            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
+            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
 
             $insertAttr['delay_in_response'] = $to->diffInMinutes($from);
         }
 
 
-        if (Qrr::insert($insertAttr)) {
+        if (Qrr::create($insertAttr)) {
             $request->session()->flash('success_msg', 'Data updated successfully');
             return redirect('admin/qrrs/add');
         } else {
@@ -1085,15 +1112,15 @@ class QrrsController extends Controller
         ];
 
         if ($request->input('date_time_of_incident')) {
-            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d h:i:s');
+            $insertAttr['date_time_of_incident'] = Carbon::createFromFormat('d/m/Y H:i', $request->input('date_time_of_incident').' '.$request->input('incident_time'))->format('Y-m-d H:i');
         }
 
         if ($request->input('date_time_of_police_news')) {
-            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d h:i:s');
+            $insertAttr['date_time_of_police_news'] = Carbon::createFromFormat('d/m/Y H:i', $request->input('date_time_of_police_news').' '.$request->input('police_news_time'))->format('Y-m-d H:i');
         }
 
         if ($request->input('date_time_response')) {
-            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y h:i A', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d h:i:s');
+            $insertAttr['date_time_response'] = Carbon::createFromFormat('d/m/Y H:i', $request->input('date_time_response').' '.$request->input('response_time'))->format('Y-m-d H:i');
         }
 
         if ($request->input('gd_date')) {
@@ -1106,9 +1133,10 @@ class QrrsController extends Controller
 
 
         //delay count in  response
+    
         if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
-            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_response']);
-            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $insertAttr['date_time_of_police_news']);
+            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
+            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
 
             $insertAttr['delay_in_response'] = $to->diffInMinutes($from);
         }
