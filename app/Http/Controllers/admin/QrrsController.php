@@ -432,7 +432,7 @@ class QrrsController extends Controller
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         // গড় রিপোর্টে বিলম্ব
-        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_response` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgres")->where('districtID', $dkey, $dvalue)
+        $avgreport = Qrr::selectRaw("TIMEDIFF(AVG(`created_at`), AVG( `date_time_response`)) AS avgres")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
@@ -440,7 +440,7 @@ class QrrsController extends Controller
 
         // গড় সাড়াদানের সময়
 
-        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_police_news` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
+        $avgrest = Qrr::selectRaw("TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`)) AS avgrestim")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
@@ -879,11 +879,11 @@ class QrrsController extends Controller
         $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         // গড় রিপোর্টে বিলম্ব
-        $avgreport = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_response` )) - AVG( TIME_TO_SEC( `created_at` )))) AS avgres")->first();
+        $avgreport = Qrr::selectRaw("TIMEDIFF(AVG(`created_at`), AVG( `date_time_response`)) AS avgres")->first();
         $data['avgreport'] = explode('.', $avgreport->avgres);
 
         // গড় সাড়াদানের সময়
-        $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_police_news` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->first();
+        $avgrest = Qrr::selectRaw("TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`)) AS avgrestim")->first();
         $data['avgrest'] = explode('.', $avgrest->avgrestim);
 
 

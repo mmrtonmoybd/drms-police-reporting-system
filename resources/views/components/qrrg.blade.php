@@ -66,7 +66,9 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
                 if (selection.length) {
                     var row = selection[0].row;
                     let link =data.getValue(row, 4);
-                    location.href = link;
+                    //window.open(link, '_blank');
+                    window.open(link, '_blank');
+                   
                 }
         });
         chart.draw(data, options);
@@ -119,7 +121,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
                 if (selection.length) {
                     var row = selection[0].row;
                     let link =data.getValue(row, 4);
-                    location.href = link;
+                    window.open(link, '_blank');
                 }
         });
         chart.draw(data, options);
@@ -168,7 +170,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
                 if (selection.length) {
                     var row = selection[0].row;
                     let link =data.getValue(row, 4);
-                    location.href = link;
+                    window.open(link, '_blank');
                 }
         });
         chart.draw(data, options);
@@ -209,7 +211,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
                 if (selection.length) {
                     var row = selection[0].row;
                     let link =data.getValue(row, 2);
-                    location.href = link;
+                    window.open(link, '_blank');
                 }
         });
 
@@ -297,7 +299,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
                 if (selection.length) {
                     var row = selection[0].row;
                     let link =data.getValue(row, 4);
-                    location.href = link;
+                    window.open(link, '_blank');
                 }
         });
         chart.draw(data, options);
