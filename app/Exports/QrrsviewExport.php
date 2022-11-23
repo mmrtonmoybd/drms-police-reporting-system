@@ -97,15 +97,15 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
         }
 
         if (!empty($qrrview->delay_in_response)) {
-                    $minutes = $qrrview->delay_in_response;
-                    $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                    $minutes = $qrrview->delay_in_response;
+            $minutes = $qrrview->delay_in_response;
+            $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+            $minutes = $qrrview->delay_in_response;
 
-                    $hour1 = floor($minutes / 60);
-                    $minutes2 = ($minutes - floor($minutes / 60) * 60);
-                    $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                    $hours = $isohour.':00';
-                    //return $hours;
+            $hour1 = floor($minutes / 60);
+            $minutes2 = ($minutes - floor($minutes / 60) * 60);
+            $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+            $hours = $isohour.':00';
+            //return $hours;
             $date6 = $hours;
         } else {
             $date6 = '';

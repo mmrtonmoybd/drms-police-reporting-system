@@ -115,15 +115,15 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
         }
 
         if (!empty($qrrsc->delay_in_response)) {
-                    $minutes = $qrrsc->delay_in_response;
-                    $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                    $minutes = $qrrsc->delay_in_response;
+            $minutes = $qrrsc->delay_in_response;
+            $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+            $minutes = $qrrsc->delay_in_response;
 
-                    $hour1 = floor($minutes / 60);
-                    $minutes2 = ($minutes - floor($minutes / 60) * 60);
-                    $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                    $hours = $isohour.':00';
-                    //return $hours;
+            $hour1 = floor($minutes / 60);
+            $minutes2 = ($minutes - floor($minutes / 60) * 60);
+            $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+            $hours = $isohour.':00';
+            //return $hours;
             $date6 = $hours;
         } else {
             $date6 = '';

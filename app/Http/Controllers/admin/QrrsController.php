@@ -438,7 +438,7 @@ class QrrsController extends Controller
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
         $data['avgreport'] = explode('.', $avgreport->avgres);
 
-        // গড় সাড়াদানের সময় 
+        // গড় সাড়াদানের সময়
 
         $avgrest = Qrr::selectRaw("SEC_TO_TIME(ABS(AVG( TIME_TO_SEC( `date_time_of_police_news` )) - AVG( TIME_TO_SEC( `date_time_response` )))) AS avgrestim")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
@@ -1133,7 +1133,7 @@ class QrrsController extends Controller
 
 
         //delay count in  response
-    
+
         if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
             $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
             $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
