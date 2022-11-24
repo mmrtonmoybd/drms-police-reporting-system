@@ -817,13 +817,7 @@ background: -moz-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%
                                                       
                                                       
                                            
-                        @error('email')
-<h3 style="color:red;">{{ $message }}</h3>
-                                @enderror        
-                                
-                                     @error('email')
-<h3 style="color:red;">{{ $message }}</h3>
-                                @enderror    
+                                  
 
 
                                                    </div>
@@ -834,12 +828,12 @@ background: -moz-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%
                                                  <!---------->
                                                       <div class="t-Form-fieldContainer t-Form-fieldContainer--hiddenLabel rel-col " id="P101_PASSWORD_CONTAINER">
                                                          <div class="t-Form-labelContainer t-Form-labelContainer--hiddenLabel col col-null">
-                                                            <label for="P101_PASSWORD" id="P101_PASSWORD_LABEL" class="t-Form-label u-VisuallyHidden">Email</label>
+                                                            <label for="P101_PASSWORD" id="P101_PASSWORD_LABEL" class="t-Form-label u-VisuallyHidden">BP No</label>
                                                          </div>
                                                          <div class="t-Form-inputContainer col col-null">
                                                             <div class="t-Form-itemWrapper">
-                                                                <input type="email" name="email"   id="P101_USERNAME" placeholder="Email" class="password&#x20;apex-item-text&#x20;apex-item-has-icon" /><span class="apex-item-icon fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Form-itemText t-Form-itemText--post"></span></div>
-                                                            <span id="P101_PASSWORD_error_placeholder" class="a-Form-error" data-template-id="451245492123761504_ET"></span>
+                                                                <input type="number" name="bp_no"   id="P101_USERNAME" placeholder="BP No" class="password&#x20;apex-item-text&#x20;apex-item-has-icon" autofocus/><span class="apex-item-icon fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Form-itemText t-Form-itemText--post"></span></div>
+                                                            @error('bp_no')<span id="P101_PASSWORD_error_placeholder" class="a-Form-error" data-template-id="451245492123761504_ET"><h5 style="color:red;">{{ $message }}</h5></span>@enderror
                                                          </div>
                                                       </div>
                                                  
@@ -850,18 +844,22 @@ background: -moz-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%
                                                          </div>
                                                          <div class="t-Form-inputContainer col col-null">
                                                             <div class="t-Form-itemWrapper"><input type="password" name="password" size="40" maxlength="100" value=""  id="P101_PASSWORD" placeholder="Password" class="password&#x20;apex-item-text&#x20;apex-item-has-icon"  onkeypress="return apex.submit({request:'P101_PASSWORD',submitIfEnter:event})"  /><span class="apex-item-icon fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Form-itemText t-Form-itemText--post"><i id="pass-status" class="fa fa-eye field-icon" aria-hidden="true" onClick="viewPassword()"></i></span></div>
-                                                            <span id="P101_PASSWORD_error_placeholder" class="a-Form-error" data-template-id="451245492123761504_ET"></span>
+                                                            @error('password') <span id="P101_PASSWORD_error_placeholder" class="a-Form-error" data-template-id="451245492123761504_ET"><h5 style="color:red;">{{ $message }}</h5></span> @enderror
                                                          </div>
                                                       </div>
                                             
                                             
                                      
-                                                                <input class="form-check-input" style="visibility:hidden;"type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> 
+                                                               <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
          
                                                                 
                                              
                                                       <button class="t-Button t-Button--icon t-Button--large&#x20;t-Button--iconRight&#x20;t-Button--stretch t-Button--hot" type="submit" id="P101_LOGIN"><span class="t-Icon t-Icon--left fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Button-label">LOGIN</span><span class="t-Icon t-Icon--right fa&#x20;fa-key" aria-hidden="true"></span></button>
-                                                      <button class="t-Button t-Button--icon t-Button--large&#x20;t-Button--iconRight&#x20;t-Button--stretch t-Button--hot"  onclick="apex.navigation.redirect(&#x27;f?p=100:7078:::NO:RP,7078::&#x27;);" type="button" id="P101_LOGIN"><span class="t-Icon t-Icon--left fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Button-label">Forgot Password</span><span class="t-Icon t-Icon--right fa&#x20;fa-key" aria-hidden="true"></span></button><span id='caps_lock_on'>Note: Your Caps Lock key is currently turned on</span>
+                                                      <button class="t-Button t-Button--icon t-Button--large&#x20;t-Button--iconRight&#x20;t-Button--stretch t-Button--hot"  onclick="apex.navigation.redirect(&#x27;{{ route('password.request') }}&#x27;);" type="button" id="P101_LOGIN"><span class="t-Icon t-Icon--left fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Button-label">Forgot Password</span><span class="t-Icon t-Icon--right fa&#x20;fa-key" aria-hidden="true"></span></button><span id='caps_lock_on'>Note: Your Caps Lock key is currently turned on</span>
                                                    </div>
                                                    <div class="t-Login-buttons">
                                                    </div>
