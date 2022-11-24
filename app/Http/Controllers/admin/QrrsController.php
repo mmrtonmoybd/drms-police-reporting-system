@@ -919,7 +919,7 @@ class QrrsController extends Controller
         $date_time_response2timestring = Carbon::createFromTimestamp($date_time_response2avg)->toTimeString();
         $date_time_response2parse = Carbon::parse($date_time_response2timestring);
 
-        //$cal1 = 
+        //$cal1 =
         $data['avgreportdelay'] = $created_atparse->diffInMinutes($date_time_response2parse);
 
         // গড় সাড়াদানের সময়
