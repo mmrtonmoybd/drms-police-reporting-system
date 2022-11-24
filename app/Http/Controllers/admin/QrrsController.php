@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use App\Exports\QrrsviewExport;
 use App\Exports\QrrscExport;
 use PDF;
+use Illuminate\Support\Facades\DB;
 
 class QrrsController extends Controller
 {
@@ -432,19 +433,47 @@ class QrrsController extends Controller
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         // গড় রিপোর্টে বিলম্ব
-        $avgreport = Qrr::selectRaw("TIMEDIFF(AVG(`created_at`), AVG( `date_time_response`)) AS avgres")->where('districtID', $dkey, $dvalue)
+
+        $created_atavg = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
-        $data['avgreport'] = explode('.', $avgreport->avgres);
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('created_at');
+        $created_attimestring = Carbon::createFromTimestamp($created_atavg)->toTimeString();
+        $created_atparse = Carbon::parse($created_attimestring);
+
+
+        $date_time_response2avg = Qrr::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('date_time_response');
+
+        $date_time_response2timestring = Carbon::createFromTimestamp($date_time_response2avg)->toTimeString();
+        $date_time_response2parse = Carbon::parse($date_time_response2timestring);
+
+        //$cal1 = $created_atparse->diffInMinutes($date_time_response2parse);
+        $data['avgreportdelay'] = $created_atparse->diffInMinutes($date_time_response2parse);
 
         // গড় সাড়াদানের সময়
-
-        $avgrest = Qrr::selectRaw("TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`)) AS avgrestim")->where('districtID', $dkey, $dvalue)
+        $date_time_responseavg = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->first();
-        $data['avgrest'] = explode('.', $avgrest->avgrestim);
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('date_time_response');
+
+        $date_time_responsetimestring = Carbon::createFromTimestamp($date_time_responseavg)->toTimeString();
+        $date_time_responseparse = Carbon::parse($date_time_responsetimestring);
+
+        $date_time_of_police_newsavg = Qrr::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('source_of_info', $skey, $svalue)
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('date_time_of_police_news');
+
+        $date_time_of_police_newstimestring = Carbon::createFromTimestamp($date_time_of_police_newsavg)->toTimeString();
+        $date_time_of_police_newsparse = Carbon::parse($date_time_of_police_newstimestring);
+
+        //$cal2 = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
+        $data['avgrespontime'] = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
+
+        //dd($date_time_of_police_newsavg, $date_time_responseavg);
 
 
         $inscou = Qrr::where('source_of_info', 'কোর্ট')->where('districtID', $dkey, $dvalue)
@@ -879,12 +908,40 @@ class QrrsController extends Controller
         $data['tcat'] = Qrr::whereNotNull('case_no')->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->count();
 
         // গড় রিপোর্টে বিলম্ব
-        $avgreport = Qrr::selectRaw("TIMEDIFF(AVG(`created_at`), AVG( `date_time_response`)) AS avgres")->first();
-        $data['avgreport'] = explode('.', $avgreport->avgres);
+
+        $created_atavg = Qrr::avg('created_at');
+        $created_attimestring = Carbon::createFromTimestamp($created_atavg)->toTimeString();
+        $created_atparse = Carbon::parse($created_attimestring);
+
+
+        $date_time_response2avg = Qrr::avg('date_time_response');
+
+        $date_time_response2timestring = Carbon::createFromTimestamp($date_time_response2avg)->toTimeString();
+        $date_time_response2parse = Carbon::parse($date_time_response2timestring);
+
+        //$cal1 = 
+        $data['avgreportdelay'] = $created_atparse->diffInMinutes($date_time_response2parse);
 
         // গড় সাড়াদানের সময়
-        $avgrest = Qrr::selectRaw("TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`)) AS avgrestim")->first();
-        $data['avgrest'] = explode('.', $avgrest->avgrestim);
+        $date_time_responseavg = Qrr::avg('date_time_response');
+
+        $date_time_responsetimestring = Carbon::createFromTimestamp($date_time_responseavg)->toTimeString();
+        $date_time_responseparse = Carbon::parse($date_time_responsetimestring);
+
+        $date_time_of_police_newsavg = Qrr::avg('date_time_of_police_news');
+
+        $date_time_of_police_newstimestring = Carbon::createFromTimestamp($date_time_of_police_newsavg)->toTimeString();
+        $date_time_of_police_newsparse = Carbon::parse($date_time_of_police_newstimestring);
+
+        //$cal2 = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
+        $data['avgrespontime'] = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
+
+        // TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`))
+
+
+        //$data['avgrest'] = explode('.', $avgrest->avgrestim);
+
+        //dd($avgrespontime);
 
 
 

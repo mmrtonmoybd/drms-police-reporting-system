@@ -110,7 +110,19 @@
          </div>
       </div>
 	  
-	  
+	  @php
+function hms ($value) {
+                                                        $minutes = $value;
+                                                        $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+                                                        $minutes = $value;
+                                                        $hour1 = floor($minutes / 60);
+                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
+                                                        $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                                                        $hours = $isohour.':00'; 
+
+                                                        return $hours;
+}
+@endphp
 					
                 </div>
                 <div class="separator-breadcrumb border-top"></div>
@@ -133,7 +145,7 @@
                             <div class="card-body text-center"><i class="i-Financial"></i>
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">গড় সাড়াদানের সময়</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$avgrest[0]}}</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{hms($avgrespontime)}}</p>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +157,7 @@
                             <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">গড় রিপোর্টে বিলম্ব</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$avgreport[0]}}</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{hms($avgreportdelay)}}</p>
                                 </div>
                             </div>
                         </div>
