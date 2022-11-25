@@ -150,21 +150,12 @@
 					
                 </div>
                 <div class="separator-breadcrumb border-top"></div>
-              
 @php
 function hms ($value) {
-                                                        $minutes = $value;
-                                                        $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                                                        $minutes = $value;
-                                                        $hour1 = floor($minutes / 60);
-                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
-                                                        //$isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                                                        $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT)); 
-
-                                                        return $hours[0].':'.str_pad(mt_rand(0,59), 2, '0', STR_PAD_LEFT);
+    $cal = floor($value / 3600 );
+    return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
 }
 @endphp
-
 			  <div class="row">
                     <!-- ICON BG-->
                     <div class="col-lg-4 col-md-6 col-sm-6">
@@ -382,26 +373,7 @@ function hms ($value) {
                                                     <td > @if(!empty($qrr->date_time_of_incident)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_incident))}} @endif</td>
                                                     <td > @if(!empty($qrr->date_time_of_police_news)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_police_news))}} @endif</td>
                                                     <td > @if(!empty($qrr->date_time_response)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_response))}} @endif</td>
-                                                    <td >
-                                                        
-                                                    @php
-
-                                                        $minutes = $qrr->delay_in_response;
-                                                        $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                                                        $minutes = $qrr->delay_in_response;
-                                                        $hour1 = floor($minutes / 60);
-                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
-                                                        //$isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                                                        $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT)); 
-
-                                                        
-
-                                                    @endphp
-                                                    
-                                                    {{$hours[0].':'.str_pad(mt_rand(0,59), 2, '0', STR_PAD_LEFT)}} 
-                                                
-                                                
-                                                    </td>
+                                                    <td >{{hms($qrr->delay_in_response)}} </td>
                                                     <!--------
                                                     <td > {{ Str::limit($qrr->main_event, 20)}}</td>
                                                     --------->

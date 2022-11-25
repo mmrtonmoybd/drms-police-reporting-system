@@ -26,7 +26,11 @@
         
         <center> 
          <h3 id=""> বরিশাল রেঞ্জ (ডিআরএমএস) সফটওয়্যারে আপনাকে স্বাগতম </h3>
-     <span id="MyDateDisplay"> Today is : 16 Nov 2022 </span>
+         @php
+         use Illuminate\Support\Carbon;
+         $now = Carbon::now()->format('l, d M Y');
+         @endphp
+     <span id="MyDateDisplay"> Today is : {{$now}} </span>
      
          <br>
          <div id="MyClockDisplay" class="clock" onload="showTime()"></div>

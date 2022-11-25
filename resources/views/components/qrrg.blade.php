@@ -24,12 +24,12 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          @if (empty(request()->input('districtID')))
-         ['বরগুনা', {{session('borgona')}}, '#26a49a', '{{session("borgona")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, '#e94236', '{{session("barisal")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #37761d', '{{session("pirojpur")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #9b0001', '{{session("patuakhali")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
-         ['ভোলা', {{session('bhola')}}, '#0c5295', '{{session("bhola")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #731b47',  '{{session("jalokhati")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['বরগুনা', {{session('borgona')}}, '#756bb1', '{{session("borgona")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, '#bbbbdb', '{{session("barisal")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #756bb1', '{{session("pirojpur")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #bbbbdb', '{{session("patuakhali")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['ভোলা', {{session('bhola')}}, '#756bb1', '{{session("bhola")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #bbbbdb',  '{{session("jalokhati")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
         @endif
 
          @php 

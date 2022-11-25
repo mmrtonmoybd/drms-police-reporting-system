@@ -112,15 +112,8 @@
 	  
 	  @php
 function hms ($value) {
-                                                        $minutes = $value;
-                                                        $hours = intdiv($minutes, 60).':'. ($minutes % 60);
-                                                        $minutes = $value;
-                                                        $hour1 = floor($minutes / 60);
-                                                        $minutes2 = ($minutes - floor($minutes / 60) * 60);
-                                                        // $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                                                        $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT)); 
-
-                                                        return $hours[0].':'.str_pad(mt_rand(0,59), 2, '0', STR_PAD_LEFT);
+    $cal = floor($value / 3600 );
+    return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
 }
 @endphp
 					

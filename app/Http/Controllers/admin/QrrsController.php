@@ -102,6 +102,7 @@ class QrrsController extends Controller
                     //return date('d/m/Y H:i', strtotime($raw->date_time_response));
                 })
                 ->editColumn('delay_in_response', function ($raw) {
+                    /*
                     $minutes = $raw->delay_in_response;
                     $hours = intdiv($minutes, 60).':'. ($minutes % 60);
                     $minutes = $raw->delay_in_response;
@@ -112,6 +113,10 @@ class QrrsController extends Controller
                     $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT));
 
                     return $hours[0].':'.str_pad(mt_rand(0, 59), 2, '0', STR_PAD_LEFT);
+
+                    */
+                    $cal = floor($raw->delay_in_response / 3600 );
+                    return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $raw->delay_in_response % 3600);
                 })
                 ->editColumn('main_event', function ($raw) {
                     return Str::limit($raw->main_event, 20);
@@ -452,7 +457,7 @@ class QrrsController extends Controller
         $date_time_response2parse = Carbon::parse($date_time_response2timestring);
 
         //$cal1 = $created_atparse->diffInMinutes($date_time_response2parse);
-        $data['avgreportdelay'] = $created_atparse->diffInMinutes($date_time_response2parse);
+        $data['avgreportdelay'] = $created_atparse->diffInSeconds($date_time_response2parse);
 
         // গড় সাড়াদানের সময়
         $delay_in_responseavg = Qrr::where('districtID', $dkey, $dvalue)
@@ -909,7 +914,7 @@ class QrrsController extends Controller
         $date_time_response2parse = Carbon::parse($date_time_response2timestring);
 
         //$cal1 =
-        $data['avgreportdelay'] = $created_atparse->diffInMinutes($date_time_response2parse);
+        $data['avgreportdelay'] = $created_atparse->diffInSeconds($date_time_response2parse);
 
         // গড় সাড়াদানের সময়
         $delay_in_responseavg = Qrr::avg('delay_in_response');
@@ -1060,7 +1065,7 @@ class QrrsController extends Controller
             $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
             $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
 
-            $insertAttr['delay_in_response'] = $to->diffInMinutes($from);
+            $insertAttr['delay_in_response'] = $to->diffInSeconds($from);
         }
 
 
@@ -1188,7 +1193,9 @@ class QrrsController extends Controller
             $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
             $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
 
-            $insertAttr['delay_in_response'] = $to->diffInMinutes($from);
+            $insertAttr['delay_in_response'] = $to->diffInSeconds($from);
+        } else {
+            $insertAttr['delay_in_response'] = 0;
         }
 
 
