@@ -97,10 +97,8 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
         }
 
         if (!empty($qrrview->delay_in_response)) {
-
-            $cal = floor($qrrview->delay_in_response / 3600 );  
+            $cal = floor($qrrview->delay_in_response / 3600);
             $date6 = str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $qrrview->delay_in_response % 3600);
-       
         } else {
             $date6 = '';
         }

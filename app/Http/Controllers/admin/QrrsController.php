@@ -115,7 +115,7 @@ class QrrsController extends Controller
                     return $hours[0].':'.str_pad(mt_rand(0, 59), 2, '0', STR_PAD_LEFT);
 
                     */
-                    $cal = floor($raw->delay_in_response / 3600 );
+                    $cal = floor($raw->delay_in_response / 3600);
                     return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $raw->delay_in_response % 3600);
                 })
                 ->editColumn('main_event', function ($raw) {
