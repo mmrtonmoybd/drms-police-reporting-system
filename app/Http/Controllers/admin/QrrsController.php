@@ -109,9 +109,9 @@ class QrrsController extends Controller
                     $hour1 = floor($minutes / 60);
                     $minutes2 = ($minutes - floor($minutes / 60) * 60);
                     //$isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                    $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT)); 
+                    $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT));
 
-                    return $hours[0].':'.str_pad(mt_rand(0,59), 2, '0', STR_PAD_LEFT);
+                    return $hours[0].':'.str_pad(mt_rand(0, 59), 2, '0', STR_PAD_LEFT);
                 })
                 ->editColumn('main_event', function ($raw) {
                     return Str::limit($raw->main_event, 20);
@@ -913,21 +913,21 @@ class QrrsController extends Controller
 
         // গড় সাড়াদানের সময়
         $delay_in_responseavg = Qrr::avg('delay_in_response');
-/*
-        $date_time_responsetimestring = Carbon::createFromTimestamp($date_time_responseavg)->toTimeString();
-        $date_time_responseparse = Carbon::parse($date_time_responsetimestring);
+        /*
+                $date_time_responsetimestring = Carbon::createFromTimestamp($date_time_responseavg)->toTimeString();
+                $date_time_responseparse = Carbon::parse($date_time_responsetimestring);
 
-        $date_time_of_police_newsavg = Qrr::avg('date_time_of_police_news');
+                $date_time_of_police_newsavg = Qrr::avg('date_time_of_police_news');
 
-        $date_time_of_police_newstimestring = Carbon::createFromTimestamp($date_time_of_police_newsavg)->toTimeString();
-        $date_time_of_police_newsparse = Carbon::parse($date_time_of_police_newstimestring);
+                $date_time_of_police_newstimestring = Carbon::createFromTimestamp($date_time_of_police_newsavg)->toTimeString();
+                $date_time_of_police_newsparse = Carbon::parse($date_time_of_police_newstimestring);
 
-        //$cal2 = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
-        $data['avgrespontime'] = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
+                //$cal2 = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
+                $data['avgrespontime'] = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
 
-        // TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`))
+                // TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`))
 
-        */
+                */
 
         $data['avgrespontime'] = $delay_in_responseavg;
 
