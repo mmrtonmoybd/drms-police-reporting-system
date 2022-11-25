@@ -13,6 +13,30 @@ body {
 }
 
 
+#errmsg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+#errdate{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
 .clockpicker-display-column {
   float: left;
   top: -3px;
@@ -177,6 +201,10 @@ input:checked + .button-label h1{
 
     <!-- start page title -->
 <br>
+
+
+  <div id="errmsg"></div>
+<div id="errdate"></div>
 <div class="row">
    <div class="col-12">
       <div class="card">
@@ -306,7 +334,7 @@ input:checked + .button-label h1{
 
                                                         <!-- Date dime -->
                                        
-                                                     <input  name="incident_time"  id="timepicker_ampm_dark" value="00:00" class="form-control timepicker" type="text" required>
+                                                     <input  name="incident_time"  id="timepicker_ampm_dark" value="00:00"   onchange="validateHhMm(this);"  class="form-control timepicker" type="text" required>
                                                  
                                                     </div>
                                                         
@@ -321,8 +349,8 @@ input:checked + .button-label h1{
                                                         <input type="text" name="date_time_of_police_news"  value="{{old('date_time_of_police_news')}}" id="date_time_of_police_news" class="form-control datepicker  @error('date_time_of_police_news') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="সংবাদ প্রাপ্তির তারিখ ও সময়" required>
 
                                                         <!-- Date dime -->
-                                  
-                                                           <input  name="police_news_time"  id="timepicker_ampm_dark" value="00:00" class="form-control timepicker" type="text" required>
+                                                              <input  name="police_news_time"  id="timepicker_ampm_dark" value="00:00"   onchange="validateHhMm(this);"  class="form-control timepicker" type="text" required>
+             
                                                     </div>
                                                 </div>
                                             </div>
@@ -337,7 +365,8 @@ input:checked + .button-label h1{
                                                              <input type="text" name="date_time_response"  value="{{old('date_time_response')}}" id="date_time_response" class="form-control datepicker  @error('date_time_response') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="রেসপন্সের তারিখ ও সময়" >
 
                                                         <!-- Date dime -->
-                                                          <input  name="response_time"  id="timepicker_ampm_dark" value="00:00" class="form-control timepicker" type="text">
+                                                                <input  name="response_time"  id="timepicker_ampm_dark" value="00:00"   onchange="validateHhMm(this);"  class="form-control timepicker" type="text" required>
+             
 
 <!---------------
                                                     <input  name="response_time"  id="timepicker_ampm_dark" value="00:00" class="form-control timepicker" type="time" required>
@@ -525,7 +554,7 @@ function myFunction() {
 								                               <div class="col-sm-4" id="gd1" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
+                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -534,7 +563,7 @@ function myFunction() {
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  জিডির তারিখ   </label>
                                                     
-                                                    <input type="text" name="gd_date"  value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
+                                                    <input type="text" name="gd_date"   value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
 
                                                 </div>
                                             </div>
@@ -550,7 +579,7 @@ function myFunction() {
                                             <div class="col-sm-4" id="mam" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
+                                                    <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="number form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       
@@ -559,7 +588,7 @@ function myFunction() {
                                                 <div class="mb-3">
                                                     <label for="case_date" class="form-label"> মামলার  তারিখ  </label>
                                            
-                                                    <input type="text" name="case_date"  value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
+                                                    <input type="text" name="case_date"   value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
                                             </div>
       
@@ -568,7 +597,7 @@ function myFunction() {
                                             <div class="col-sm-4" id="mam3" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="clause" class="form-label">মামলার ধারা </label>
-                                                    <input type="text" name="clause"  value="{{old('clause')}}" id="clause" class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা">
+                                                    <input type="text" name="clause"  value="{{old('clause')}}" id="clause"  class="form-control  @error('clause') is-invalid @enderror" placeholder=" ধারা">
                                                 </div>
 												
                                             </div>
@@ -595,7 +624,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="plaintiff_mobile" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
+                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="number form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
                                                 </div>
                                             </div>
       
@@ -603,14 +632,15 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <input type="text" name="number_of_victims"  value="{{old('number_of_victims')}}" id="number_of_victims" class="form-control  @error('number_of_victims') is-invalid @enderror" placeholder="ভিকটিমের সংখ্যা ">
+                                                    <input type="text" name="number_of_victims"  value="{{old('number_of_victims')}}" id="number_of_victims" class="number form-control  @error('number_of_victims') is-invalid @enderror" placeholder="ভিকটিমের সংখ্যা ">
+                                               
                                                 </div>
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">  অভিযুক্তের  সংখ্যা   </label>
-                                                    <input type="text" name="number_of_accused"  value="{{old('number_of_accused')}}" id="number_of_accused" class="form-control  @error('number_of_accused') is-invalid @enderror" placeholder="অভিযুক্তের  সংখ্যা ">
+                                                    <input type="text" name="number_of_accused"  value="{{old('number_of_accused')}}" id="number_of_accused" class="number form-control  @error('number_of_accused') is-invalid @enderror" placeholder="অভিযুক্তের  সংখ্যা ">
                                                 </div>
                                             </div>
       
@@ -618,7 +648,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="name_of_investigator" class="form-label">রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম   </label>
-                                                    <input type="text" name="name_of_investigator"  value="{{old('name_of_investigator')}}" id="name_of_investigator" class="form-control  @error('name_of_investigator') is-invalid @enderror" placeholder=" রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম " required>
+                                                    <input type="text" name="name_of_investigator"   value="{{old('name_of_investigator')}}" id="name_of_investigator" class="form-control  @error('name_of_investigator') is-invalid @enderror" placeholder=" রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম " required>
                                                 </div>
                                             </div>
       
@@ -626,7 +656,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং ">
+                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="number form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং ">
                                                 </div>
                                             </div>
       
@@ -634,7 +664,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label">  মোবাইল নং    </label>
-                                                    <input type="text"   minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
+                                                    <input type="text"   minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
                                                 </div>
                                             </div>
       
@@ -691,7 +721,8 @@ function myFunction() {
                                             
                                             <div class="col-sm-12">
                                                 <div>
-                                                    <button type="submit" name="submit" class="btn btn-primary"> Submit </button>
+                                                    
+                                                    <button type="submit" id="sbbtn" name="submit" class="btn btn-primary"> Submit </button>
                                                 </div>
                                                 
                                             </div>
@@ -922,10 +953,6 @@ $('.timepicker').keyup(function() {
 
 
   <script>
-  
-  
-  
-  
   //Using: https://github.com/chingyawhao/materialize-clockpicker/
 
 //Time Picker:
@@ -939,4 +966,49 @@ $('.timepickerx').pickatime({
   </script>
 
 
+
+
+
 <x-admin-footer/>
+
+
+
+
+
+<script>
+$(function(){
+   $(".number").keypress(function (e) {
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+      $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
+      return false;
+    }
+   });
+});
+</script>
+
+
+<script>
+
+function validateHhMm(inputField) {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);
+
+
+  var sbbtn = document.getElementById("sbbtn");
+  
+    if (isValid) {
+      inputField.style.backgroundColor = '#bfa';
+      sbbtn.disabled = false;
+       $("#errdate").html("Date format is invalid").stop().hide();
+     
+    } else {
+      inputField.style.backgroundColor = '#fba';
+        sbbtn.disabled = true;
+         $("#errdate").html("Date format is invalid<br> Use 10:05 format").stop().show();
+      return false;
+    }
+
+    return isValid;
+  }
+  
+  
+</script>

@@ -13,6 +13,31 @@ body {
 }
 
 
+#errmsg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+#errdate{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+
 .clockpicker-display-column {
   float: left;
   top: -3px;
@@ -174,6 +199,10 @@ input:checked + .button-label h1{
   display: none;
 }
 </style>         
+
+
+  <div id="errmsg"></div>
+<div id="errdate"></div>
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -291,8 +320,9 @@ input:checked + .button-label h1{
                                                         <input type="text" name="date_time_of_incident"  value="@if (!empty($qrr->date_time_of_incident)) {{date('d/m/Y', strtotime($qrr->date_time_of_incident))}} @endif" id="date_time_of_incident" class="form-control datepicker  @error('date_time_of_incident') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="ঘটনার তারিখ ও সময়  " required>
 
                                                         <!-- Date dime -->
-                                                            <input  name="incident_time"  id="timepicker_ampm_dark" value="@if (!empty($qrr->date_time_of_incident)) {{date('H:i', strtotime($qrr->date_time_of_incident))}} @endif" class="form-control timepicker" type="text" required>
-                                                    </div>
+                                                            <input  name="incident_time"   id="timepicker_ampm_dark"  onchange="validateHhMm(this);" value="@if (!empty($qrr->date_time_of_incident)) {{date('H:i',strtotime($qrr->date_time_of_incident))}} @endif" class="form-control timepicker" type="text" required>
+                                                 
+                                                </div>
                                                         
                                                 </div>
                                               
@@ -305,8 +335,8 @@ input:checked + .button-label h1{
                                                         <input type="text" name="date_time_of_police_news"  value="@if (!empty($qrr->date_time_of_police_news)) {{date('d/m/Y', strtotime($qrr->date_time_of_police_news))}} @endif" id="date_time_of_police_news" class="form-control datepicker  @error('date_time_of_police_news') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="সংবাদ প্রাপ্তির তারিখ ও সময়" required>
 
                                                         <!-- Date dime -->
-                                                   <input  name="police_news_time"  id="timepicker_ampm_dark"value="@if (!empty($qrr->date_time_of_police_news)) {{date('H:i', strtotime($qrr->date_time_of_police_news))}} @endif" class="form-control timepicker" type="text" required>
-                                                   
+                                                   <input  name="police_news_time"   id="timepicker_ampm_dark"  onchange="validateHhMm(this);" value="@if (!empty($qrr->date_time_of_police_news)) {{date('H:i', strtotime($qrr->date_time_of_police_news))}} @endif" class="form-control timepicker" type="text" required>
+                                                    
                                                     </div>
                                                 </div>
                                             </div>
@@ -320,7 +350,7 @@ input:checked + .button-label h1{
 
                                                         <!-- Date dime -->
                                              
-                                                     <input  name="response_time"  id="timepicker_ampm_dark" value="@if (!empty($qrr->date_time_response)) {{date('H:i', strtotime($qrr->date_time_response))}} @endif"  class="form-control timepicker" type="text">
+                                                     <input  name="response_time"  id="timepicker_ampm_dark"  onchange="validateHhMm(this);" value="@if (!empty($qrr->date_time_response)) {{date('H:i', strtotime($qrr->date_time_response))}} @endif"  class="form-control timepicker" type="text">
                                                     </div>
                                                 </div>
                                             </div>
@@ -569,7 +599,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <select name="number_of_victims" id="number_of_victims" class="form-select form-control" >
+                                                    <select name="number_of_victims" id="number_of_victims" class="number form-select form-control" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$qrr->number_of_victims==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -581,7 +611,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">   এজাহারভুক্ত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select form-control" >
+                                                    <select name="number_of_accused" id="number_of_accused" class="number form-select form-control" >
                                                         <option value="">Select</option>
                                                         @for($i=1; $i<=50; $i++)
                                                         <option value="{{$i}}" {{$qrr->number_of_accused==$i ? 'selected' : ''}}>{{$i}}</option>
@@ -602,7 +632,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="text" name="bp_no"  value="{{$qrr->bp_no}}" id="bp_no" class="form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " >
+                                                    <input type="text" name="bp_no"  value="{{$qrr->bp_no}}" id="bp_no" class="number form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " >
                                                 </div>
                                             </div>
       
@@ -610,7 +640,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label">  মোবাইল নং    </label>
-                                                    <input type="text" name="mobile_no" minlength="11" maxlength="11"  value="{{$qrr->mobile_no}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
+                                                    <input type="text" name="mobile_no" minlength="11" maxlength="11"  value="{{$qrr->mobile_no}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
                                                 </div>
                                             </div>
       
@@ -661,7 +691,7 @@ function myFunction() {
                                             
                                             <div class="col-sm-12">
                                                 <div>
-                                                    <button type="submit" name="submit" class="btn btn-primary"> Submit </button>
+                                                    <button type="submit" id="sbbtn" name="submit" class="btn btn-primary"> Submit </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -836,3 +866,43 @@ $('.timepickerx').pickatime({
   </script>
   
                      <x-admin-footer/>
+
+
+
+<script>
+$(function(){
+   $(".number").keypress(function (e) {
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+      $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
+      return false;
+    }
+   });
+});
+</script>
+
+
+<script>
+
+function validateHhMm(inputField) {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);
+
+
+  var sbbtn = document.getElementById("sbbtn");
+  
+    if (isValid) {
+      inputField.style.backgroundColor = '#bfa';
+      sbbtn.disabled = false;
+       $("#errdate").html("Date format is invalid").stop().hide();
+     
+    } else {
+      inputField.style.backgroundColor = '#fba';
+        sbbtn.disabled = true;
+         $("#errdate").html("Date format is invalid<br> Use 10:05 format").stop().show();
+      return false;
+    }
+
+    return isValid;
+  }
+  
+  
+</script>

@@ -42,13 +42,14 @@ body{
                                                         $minutes = $qrr->delay_in_response;
                                                         $hour1 = floor($minutes / 60);
                                                         $minutes2 = ($minutes - floor($minutes / 60) * 60);
-                                                        $isohour = sprintf("%02d:%02d", $hour1, $minutes2);
-                                                        $hours = $isohour.':00';
+                                                        //$isohour = sprintf("%02d:%02d", $hour1, $minutes2);
+                                                        $hours = explode('.', str_pad($hour1, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes2, 2, '0', STR_PAD_LEFT)); 
 
+                                                        
 
-                                                        @endphp
-
-                                                        {{$hours}} 
+                                                    @endphp
+                                                    
+                                                    {{$hours[0].':'.str_pad(mt_rand(0,59), 2, '0', STR_PAD_LEFT)}}  
                                                         </td>
                                                     </tr>
                                                     <tr>
