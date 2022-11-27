@@ -18,7 +18,8 @@ use Session;
 
 class Dashboard extends Controller
 {
-    public function home() {
+    public function home()
+    {
         return redirect('admin/dashboard');
     }
     //this method for index function
@@ -47,7 +48,8 @@ class Dashboard extends Controller
         return view('errors/404');
     }
 
-    public function admin() {
+    public function admin()
+    {
         return redirect('admin/dashboard');
     }
 
