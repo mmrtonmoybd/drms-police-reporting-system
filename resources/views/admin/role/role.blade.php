@@ -75,7 +75,10 @@
                                                         
                                     -->
                                                         <a href="{{url('/admin/users/role/edit/'.$role->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <!--
                                                         <a href="{{url('/admin/users/role/delete/'.$role->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+
+                                    -->
                                                         @endif
 
                                                         
