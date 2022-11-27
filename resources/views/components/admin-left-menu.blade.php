@@ -64,11 +64,11 @@
 									 @endcan
 									 
 								@can('narcotic.add')
-								  <li class="item-name"><a href="{{url('admin/narcotic/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add Qrr </span></a></li>
+								  <li class="item-name"><a href="{{url('admin/narcotic/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add Narcotics </span></a></li>
 							    @endcan
 								   
 								@can('narcotic.view')
-								 <li class="item-name"><a href="{{url('admin/narcotic')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">QRR List</span></a></li>
+								 <li class="item-name"><a href="{{url('admin/narcotic')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Narcotics List</span></a></li>
 							    @endcan
 									 
 									 

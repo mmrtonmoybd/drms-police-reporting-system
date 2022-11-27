@@ -976,6 +976,7 @@ $('.timepickerx').pickatime({
 
 
 <script>
+/*
 $(function(){
    $(".number").keypress(function (e) {
      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
@@ -984,7 +985,66 @@ $(function(){
     }
    });
 });
+*/
 </script>
+
+
+
+
+
+<script>
+
+
+var inputBox = document.getElementById("inputnumber");
+var invalidChars = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  "০",
+  "১",
+  "২",
+  "৩",
+  "৪",
+  "৫",
+  "৬",
+  "৭",
+  "৮",
+  "৯",
+   "",
+ 
+];
+
+
+
+   $(".number").keypress(function (e) {
+           if(invalidChars.includes(e.key) || e.which == 8 || event.key === 'Delete' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
+   }
+   
+
+  
+  else {
+   e.preventDefault();
+   
+         $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
+      return false;
+      
+      
+  }
+});
+
+</script>
+
+
+
+
+
 
 
 <script>

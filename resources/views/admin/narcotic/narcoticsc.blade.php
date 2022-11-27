@@ -871,7 +871,7 @@ margin-top: -39px;
                 if($request->input('thanaID'))
                     $thana_id = $request->input('thanaID');
 
-                @endphp
+
 @endphp
 @endif
 @if ($request->is('admin/narcotic/src'))
@@ -883,7 +883,7 @@ margin-top: -39px;
                 if($request->input('thanaID'))
                     $thana_id = $request->input('thanaID');
 
-                @endphp
+
 @endphp
 @endif
 @if ($request->is('admin/narcotic/dashboard') || ($request->is('admin/narcotic/src')))
