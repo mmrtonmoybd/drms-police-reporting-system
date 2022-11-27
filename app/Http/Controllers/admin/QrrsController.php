@@ -898,7 +898,7 @@ class QrrsController extends Controller
 
         // গড় সাড়াদানের সময়
         $delay_in_responseavg = Qrr::avg('delay_in_response');
-        
+
         $data['avgrespontime'] = $delay_in_responseavg;
 
 
