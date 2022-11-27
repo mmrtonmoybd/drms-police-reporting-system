@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Qrr;
 use App\Models\District;
 use App\Models\Thana;
-use Carbon\Carbon;
+//use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -440,24 +441,12 @@ class QrrsController extends Controller
 
         // গড় রিপোর্টে বিলম্ব
 
-        $created_atavg = Qrr::where('districtID', $dkey, $dvalue)
+        $avgreportdelay = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('created_at');
-        $created_attimestring = Carbon::createFromTimestamp($created_atavg)->toTimeString();
-        $created_atparse = Carbon::parse($created_attimestring);
+        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('delay_in_report');
 
-
-        $date_time_response2avg = Qrr::where('districtID', $dkey, $dvalue)
-        ->where('thanaID', $tkey, $tvalue)
-        ->where('source_of_info', $skey, $svalue)
-        ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->avg('date_time_response');
-
-        $date_time_response2timestring = Carbon::createFromTimestamp($date_time_response2avg)->toTimeString();
-        $date_time_response2parse = Carbon::parse($date_time_response2timestring);
-
-        //$cal1 = $created_atparse->diffInMinutes($date_time_response2parse);
-        $data['avgreportdelay'] = $created_atparse->diffInSeconds($date_time_response2parse);
+        $data['avgreportdelay'] = $avgreportdelay;
 
         // গড় সাড়াদানের সময়
         $delay_in_responseavg = Qrr::where('districtID', $dkey, $dvalue)
@@ -903,37 +892,13 @@ class QrrsController extends Controller
 
         // গড় রিপোর্টে বিলম্ব
 
-        $created_atavg = Qrr::avg('created_at');
-        $created_attimestring = Carbon::createFromTimestamp($created_atavg)->toTimeString();
-        $created_atparse = Carbon::parse($created_attimestring);
+        $avgreportdelay = Qrr::avg('delay_in_report');
 
-
-        $date_time_response2avg = Qrr::avg('date_time_response');
-
-        $date_time_response2timestring = Carbon::createFromTimestamp($date_time_response2avg)->toTimeString();
-        $date_time_response2parse = Carbon::parse($date_time_response2timestring);
-
-        //$cal1 =
-        $data['avgreportdelay'] = $created_atparse->diffInSeconds($date_time_response2parse);
+        $data['avgreportdelay'] = $avgreportdelay;
 
         // গড় সাড়াদানের সময়
         $delay_in_responseavg = Qrr::avg('delay_in_response');
-        /*
-                $date_time_responsetimestring = Carbon::createFromTimestamp($date_time_responseavg)->toTimeString();
-                $date_time_responseparse = Carbon::parse($date_time_responsetimestring);
-
-                $date_time_of_police_newsavg = Qrr::avg('date_time_of_police_news');
-
-                $date_time_of_police_newstimestring = Carbon::createFromTimestamp($date_time_of_police_newsavg)->toTimeString();
-                $date_time_of_police_newsparse = Carbon::parse($date_time_of_police_newstimestring);
-
-                //$cal2 = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
-                $data['avgrespontime'] = $date_time_responseparse->diffInMinutes($date_time_of_police_newsparse);
-
-                // TIMEDIFF(AVG(`date_time_response`), AVG( `date_time_of_police_news`))
-
-                */
-
+        
         $data['avgrespontime'] = $delay_in_responseavg;
 
 
@@ -1062,10 +1027,17 @@ class QrrsController extends Controller
 
         //delay count in  response
         if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
-            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
-            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
+            $to = Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
+            $from = Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
 
             $insertAttr['delay_in_response'] = $to->diffInSeconds($from);
+        }
+
+        if ($insertAttr['date_time_response']) {
+            $to = Carbon::createFromFormat('Y-m-d H:i', Carbon::now()->format('Y-m-d H:i'));
+            $from = Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
+
+            $insertAttr['delay_in_report'] = $to->diffInSeconds($from);
         }
 
 
@@ -1190,12 +1162,21 @@ class QrrsController extends Controller
         //delay count in  response
 
         if ($insertAttr['date_time_of_police_news'] and $insertAttr['date_time_response']) {
-            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
-            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
+            $to = Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
+            $from = Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_of_police_news']);
 
             $insertAttr['delay_in_response'] = $to->diffInSeconds($from);
         } else {
             $insertAttr['delay_in_response'] = 0;
+        }
+
+        if ($insertAttr['date_time_response']) {
+            $to = Carbon::createFromFormat('Y-m-d H:i', $qrrf->created_at->format('Y-m-d H:i'));
+            $from = Carbon::createFromFormat('Y-m-d H:i', $insertAttr['date_time_response']);
+
+            $insertAttr['delay_in_report'] = $to->diffInSeconds($from);
+        } else {
+            $insertAttr['delay_in_report'] = 0;
         }
 
 

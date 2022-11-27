@@ -111,15 +111,69 @@
                                                     <label for="wdate" class="form-label">   আগমনের তারিখ ও সময়  </label>
                                                    
                                                     <div class="input-group" id="timepicker-input-group1">
-                                                        <input type="text" name="wdate"  value="{{date('d/m/Y', strtotime($woman->wdate))}}" id="wdate" class="form-control datepicker  @error('wdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="আগমনের তারিখ ও সময়  " required>
+                                                        <input type="text" name="wdate"  value="@if (!empty($woman->wdate)) {{date('d/m/Y', strtotime($woman->wdate))}} @endif" id="wdate" class="form-control datepicker  @error('wdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="আগমনের তারিখ ও সময়  " required>
 
                                                         <!-- Date dime -->
-                                                        <input name="incident_time" id="timepicker" type="text" value="{{date('h:i A', strtotime($woman->wdate))}}" class="form-control timepicker" data-provide="timepicker" required>
+                                                        <input name="incident_time" id="timepicker" type="text" value="@if (!empty($woman->wdate)) {{date('H:i', strtotime($woman->wdate))}} @endif" class="form-control timepicker" data-provide="timepicker" required>
                                                     </div>
                                                         
                                                 </div>
                                               
                                             </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="event_type" class="form-label">   ঘটনার ধরণ     </label>
+                                                    <select name="event_type" id="event_type" class="form-select form-control" required>
+                                                        <option value="">Select</option>
+                                                        <option value="মারামারি" {{$woman->event_type=='মারামারি' ? 'selected' : ''}}> মারামারি </option>
+                                                        <option value="খুন" {{$woman->event_type=='খুন' ? 'selected' : ''}}>খুন</option>
+                                                        <option value="চুরি" {{$woman->event_type=='চুরি' ? 'selected' : ''}}>চুরি</option>
+                                                        <option value="ডাকাতি" {{$woman->event_type=='ডাকাতি' ? 'selected' : ''}}>ডাকাতি</option>
+                                                        <option value="বিরোধ" {{$woman->event_type=='বিরোধ' ? 'selected' : ''}}>বিরোধ</option>
+                                                        <option value="নিখোঁজ-অপহরণ" {{$woman->event_type=='নিখোঁজ-অপহরণ' ? 'selected' : ''}}>নিখোঁজ/ অপহরণ</option>
+                                                        <option value="দস্যুতা" {{$woman->event_type=='দস্যুতা' ? 'selected' : ''}}>দস্যুতা</option>
+                                                        <option value="জুয়া" {{$woman->event_type=='জুয়া' ? 'selected' : ''}}>জুয়া</option>
+                                                        <option value="সড়ক দুর্ঘটনা" {{$woman->event_type=='সড়ক দুর্ঘটনা' ? 'selected' : ''}}>সড়ক দুর্ঘটনা</option>
+                                                        <option value="নারী ও শিশু" {{$woman->event_type=='নারী ও শিশু' ? 'selected' : ''}}>নারী ও শিশু</option>
+                                                        <option value="অগ্নিকান্ড" {{$woman->event_type=='অগ্নিকান্ড' ? 'selected' : ''}}>অগ্নিকান্ড</option>
+                                                        <option value="মাদক" {{$woman->event_type=='মাদক' ? 'selected' : ''}}>মাদক</option>
+                                                        <option value="সাইবার" {{$woman->event_type=='সাইবার' ? 'selected' : ''}}>সাইবার</option>
+                                                        <option value="প্রতারণা" {{$woman->event_type=='প্রতারণা' ? 'selected' : ''}}>প্রতারণা</option>
+                                                        <option value="দুর্ঘটনা" {{$woman->event_type=='দুর্ঘটনা' ? 'selected' : ''}}>দুর্ঘটনা</option>
+                                                        <option value="অন্যান্য" {{$woman->event_type=='অন্যান্য' ? 'selected' : ''}}>অন্যান্য</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="begening_of_event" class="form-label">  ঘটনার সূত্রপাত  </label>
+                                                    <select name="begening_of_event" id="begening_of_event" class="form-select form-control">
+                                                        <option value="">Select</option>
+                                                        <option value="জমিজমা" {{$woman->begening_of_event=='জমিজমা' ? 'selected' : ''}}> জমিজমা </option>
+                                                        <option value="রাজনৈতিক" {{$woman->begening_of_event=='রাজনৈতিক' ? 'selected' : ''}}>রাজনৈতিক</option>
+                                                        <option value="পারিবারিক" {{$woman->begening_of_event=='পারিবারিক' ? 'selected' : ''}}>পারিবারিক</option>
+                                                        <option value="তুচ্ছ কারণ" {{$woman->begening_of_event=='তুচ্ছ কারণ' ? 'selected' : ''}}>তুচ্ছ কারণ</option>
+                                                        <option value="প্রেম ঘটিত" {{$woman->begening_of_event=='প্রেম ঘটিত' ? 'selected' : ''}}>প্রেম ঘটিত</option>
+                                                        <option value="লেনদেন সংক্রান্ত" {{$woman->begening_of_event=='লেনদেন সংক্রান্ত' ? 'selected' : ''}}>লেনদেন সংক্রান্ত</option>
+                                                        <option value="অসতর্কতা" {{$woman->begening_of_event=='অসতর্কতা' ? 'selected' : ''}}>অসতর্কতা</option>
+                                                        <option value="অন্যান্য" {{$woman->begening_of_event=='অন্যান্য' ? 'selected' : ''}}>অন্যান্য</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label">  ঘটনার সংক্ষিপ্ত বিবরন   </label>
+                                                    <input type="text" name="short_dettails"  value="{{$woman->short_dettails}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  ">
+                                                </div>
+                                            </div>
+
 
                                             <div class="col-sm-4" id="gd1" >
                                                 <div class="mb-3">
@@ -204,7 +258,7 @@
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  তারিখ   </label>
                                                     
-                                                    <input type="text" name="gd_date"  value="{{date('d/m/Y', strtotime($woman->gd_date))}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
+                                                    <input type="text" name="gd_date"  value="@if (!empty($woman->gd_date)) {{date('d/m/Y', strtotime($woman->gd_date))}} @endif" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
 
                                                 </div>
                                             </div>
@@ -225,7 +279,7 @@
                                                 <div class="mb-3">
                                                     <label for="mamla_date" class="form-label">  তারিখ  </label>
                                            
-                                                    <input type="text" name="mamla_date"  value="{{date('d/m/Y', strtotime($woman->mamla_date))}}" id="mamla_date" class="form-control datepicker  @error('mamla_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
+                                                    <input type="text" name="mamla_date"  value="@if (!empty($woman->mamla_date)) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif" id="mamla_date" class="form-control datepicker  @error('mamla_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
                                             </div>
       
@@ -281,6 +335,19 @@
                                                         <option value="নিষ্পত্তি" {{$woman->nreport == 'নিষ্পত্তি' ? 'selected' : ''}}>নিষ্পত্তি</option>
                                                         <option value="মামলা" {{$woman->nreport == 'মামলা' ? 'selected' : ''}}>মামলা</option>
                                                         <option value="মূলতবি" {{$woman->nreport == 'মূলতবি' ? 'selected' : ''}}>মূলতবি</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
+                                             <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="satisfy_rate" class="form-label">   সন্তুষ্টির মান   </label>
+                                                    <select name="satisfy_rate" id="satisfy_rate" class="form-select form-control" >
+                                                        <option value="">Select</option>
+                                                        <option value="সন্তুষ্ট"  {{$woman->satisfy_rate=='সন্তুষ্ট' ? 'selected' : ''}}> সন্তুষ্ট </option>
+                                                        <option value="মোটামুটি সন্তুষ্ট" {{$woman->satisfy_rate=='মোটামুটি সন্তুষ্ট' ? 'selected' : ''}}>মোটামুটি সন্তুষ্ট</option>
+                                                        <option value="অসন্তুষ্ট" {{$woman->satisfy_rate=='অসন্তুষ্ট' ? 'selected' : ''}}>অসন্তুষ্ট</option>
                                                     </select>
                                                     
                                                 </div>

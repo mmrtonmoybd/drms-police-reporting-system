@@ -44,6 +44,9 @@ use Illuminate\Support\Str;
                                                     <th > থানা </th>
                                                     <th > গ্রাম/ওয়ার্ড </th>
                                                     <th > আগমনের তারিখ ও সময় </th>
+                                                    <th>ঘটনার ধরণ</th>
+                                                    <th>ঘটনার সূত্রপাত</th>
+                                                    <th>ঘটনার সংক্ষিপ্ত বিবরন</th>
                                                     <th > বাদীর নাম </th>
                                                     <th > বাদীর বয়স </th>
                                                     <th > বাদীর ঠিকানা </th>
@@ -63,6 +66,7 @@ use Illuminate\Support\Str;
                                                     <th > সমস্যা সমাধান হয়েছে কিনা </th>
                                                     <th > গৃহীত ব্যবস্থা </th>
                                                     <th > নিষ্পত্তি রিপোর্ট </th>
+                                                    <th>সন্তুষ্টির মান</th>
                                                     <th > মন্তব্য </th>
                                                 </tr>
                                             </thead>
@@ -89,7 +93,10 @@ use Illuminate\Support\Str;
                                                     <td > @if(isset($woman->district->name)) {{$woman->district->bn_name}} @endif</td>
                                                     <td > @if(isset($woman->thana->name)) {{$woman->thana->name}} @endif</td>
                                                     <td > {{$woman->village_word}}</td>
-                                                    <td > @if($woman->wdate) {{date('d/m/Y h:i A', strtotime($woman->wdate))}} @endif</td>
+                                                    <td > @if(!empty($woman->wdate)) {{date('d/m/Y H:i', strtotime($woman->wdate))}} @endif</td>
+                                                    <td>  {{$woman->event_type}}</td>
+                                                    <td>  {{$woman->begening_of_event}}</td>
+                                                    <td>  {{Str::limit($woman->short_dettails, 10)}}</td>
                                                     <td > {{$woman->badi_name}}</td>
                                                     <td > {{$woman->badi_age}}</td>
                                                     <td > {{Str::limit($woman->badi_address, 10)}}</td>
@@ -109,6 +116,7 @@ use Illuminate\Support\Str;
                                                     <td > {{$woman->problem_fix}}</td>
                                                     <td > {{$woman->action_taken}}</td>
                                                     <td > {{$woman->nreport}}</td>
+                                                    <td>  {{$woman->satisfy_rate}}</td>
                                                     <td > {{Str::limit($woman->comment, 5)}}</td>
                                                        
                                                     

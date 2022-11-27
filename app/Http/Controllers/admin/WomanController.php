@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\District;
 use App\Models\Thana;
 use Illuminate\Support\Facades\Schema;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use App\Models\Woman;
 use Illuminate\Support\Facades\Gate;
 
@@ -66,7 +66,7 @@ class WomanController extends Controller
 
     public function create(Request $request)
     {
-        $dateandtime = Carbon::createFromFormat('d/m/Y h:i A', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
+        $dateandtime = Carbon::createFromFormat('d/m/Y H:i', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:i');
         $request->merge(['wdate' => $dateandtime,
     'badi_age' => $this->reptpenum($request->input('badi_age')),
 'badi_phone' => $this->reptpenum($request->input('badi_phone')),
@@ -140,7 +140,7 @@ class WomanController extends Controller
 
         $data['districts'] = District::where('division_id', 1)->get();
 
-        $dateandtime = Carbon::createFromFormat('d/m/Y h:i A', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:s:i');
+        $dateandtime = Carbon::createFromFormat('d/m/Y H:i', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:i');
         $request->merge([
                        'wdate' => $dateandtime,
                        'badi_age' => $this->reptpenum($request->input('badi_age')),

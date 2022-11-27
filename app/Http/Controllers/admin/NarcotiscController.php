@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Narcotic;
 use App\Models\District;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 use App\Models\Thana;
 use Illuminate\Support\Facades\Gate;

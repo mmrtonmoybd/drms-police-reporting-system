@@ -111,12 +111,64 @@
                                                     <div class="input-group" id="timepicker-input-group1">
                                                         <input type="text" name="wdate"  value="{{old('wdate')}}" id="wdate" class="form-control datepicker  @error('wdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="আগমনের তারিখ ও সময়  " required>
 
+                                                    
+
                                                         <!-- Date dime -->
-                                                        <input name="incident_time" id="timepicker" type="text" class="form-control timepicker" data-provide="timepicker" required>
+                                                                <input  name="incident_time"  id="timepicker" value="00:00"  class="form-control timepicker" type="text" required>
                                                     </div>
                                                         
                                                 </div>
                                               
+                                            </div>
+
+                                             <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="event_type" class="form-label">   ঘটনার ধরণ     </label>
+                                                    <select name="event_type" id="event_type" class="form-select form-control" required>
+                                                        <option value="">Select</option>
+                                                        <option value="মারামারি"> মারামারি </option>
+                                                        <option value="খুন">খুন</option>
+                                                        <option value="চুরি">চুরি</option>
+                                                        <option value="ডাকাতি">ডাকাতি</option>
+                                                        <option value="বিরোধ">বিরোধ</option>
+                                                        <option value="দস্যুতা">দস্যুতা</option>
+                                                        <option value="নিখোঁজ-অপহরণ">নিখোঁজ/ অপহরণ</option>
+                                                        <option value="জুয়া">জুয়া</option>
+                                                        <option value="সড়ক দুর্ঘটনা">সড়ক দুর্ঘটনা</option>
+                                                        <option value="নারী ও শিশু">নারী ও শিশু</option>
+                                                        <option value="অগ্নিকান্ড">অগ্নিকান্ড</option>
+                                                        <option value="মাদক">মাদক</option>
+                                                        <option value="সাইবার">সাইবার</option>
+                                                        <option value="প্রতারণা">প্রতারণা</option>
+                                                        <option value="রাজনৈতিক">দুর্ঘটনা</option>
+                                                        <option value="অন্যান্য">অন্যান্য</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="begening_of_event" class="form-label">  ঘটনার সূত্রপাত  </label>
+                                                    <select name="begening_of_event" id="begening_of_event" class="form-select form-control">
+                                                        <option value="">Select</option>
+                                                        <option value="জমিজমা"> জমিজমা </option>
+                                                        <option value="রাজনৈতিক">রাজনৈতিক</option>
+                                                        <option value="পারিবারিক">পারিবারিক</option>
+                                                        <option value="তুচ্ছ কারণ">তুচ্ছ কারণ</option>
+                                                        <option value="প্রেম ঘটিত">প্রেম ঘটিত</option>
+                                                        <option value="লেনদেন সংক্রান্ত">লেনদেন সংক্রান্ত</option>
+                                                        <option value="অসতর্কতা">অসতর্কতা</option>
+                                                        <option value="অন্যান্য">অন্যান্য</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label">  ঘটনার সংক্ষিপ্ত বিবরন   </label>
+                                                    <textarea type="text" name="short_dettails"  value="" id="short_dettails" class="form-control  " placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  "> </textarea>
+                                                </div>
                                             </div>
 
                                             <div class="col-sm-4" id="gd1" >
@@ -279,6 +331,19 @@
                                                         <option value="নিষ্পত্তি">নিষ্পত্তি</option>
                                                         <option value="মামলা">মামলা</option>
                                                         <option value="মূলতবি">মূলতবি</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="satisfy_rate" class="form-label">   সন্তুষ্টির মান   </label>
+                                                    <select name="satisfy_rate" id="satisfy_rate" class="form-select form-control" >
+                                                        <option value="">Select</option>
+                                                        <option value="সন্তুষ্ট"> সন্তুষ্ট </option>
+                                                        <option value="মোটামুটি সন্তুষ্ট">মোটামুটি সন্তুষ্ট</option>
+                                                        <option value="অসন্তুষ্ট">অসন্তুষ্ট</option>
                                                     </select>
                                                     
                                                 </div>
