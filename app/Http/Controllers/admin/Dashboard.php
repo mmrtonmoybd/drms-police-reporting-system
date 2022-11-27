@@ -18,6 +18,9 @@ use Session;
 
 class Dashboard extends Controller
 {
+    public function home() {
+        return redirect('admin/dashboard');
+    }
     //this method for index function
     public function Index(Request $request)
     {
@@ -42,6 +45,10 @@ class Dashboard extends Controller
     public function NotFound()
     {
         return view('errors/404');
+    }
+
+    public function admin() {
+        return redirect('admin/dashboard');
     }
 
     public function smsTest()

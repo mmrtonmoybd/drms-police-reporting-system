@@ -12,8 +12,6 @@ use App\Http\Controllers\admin\NarcotiscController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\WomanController;
 use App\Http\Controllers\Test;
-use App\Models\Woman;
-use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,23 +29,28 @@ Route::get('/clear', function () {
     $exitCode = Artisan::call('config:clear');
     $exitCode = Artisan::call('route:clear');
     $exitCode = Artisan::call('view:clear');
+    $exitCode = Artisan::call('event:clear');
+    // return what you want
+});
+
+Route::get('/cache', function () {
+    $exitCode = Artisan::call('config:cache');
+    $exitCode = Artisan::call('route:cache');
+    $exitCode = Artisan::call('view:cache');
+    $exitCode = Artisan::call('event:cache');
+    // return what you want
+});
+
+Route::get('/storagelink', function () {
     $exitCode = Artisan::call('storage:link');
     // return what you want
 });
 
-Route::get('/', function () {
-    return redirect('admin/dashboard');
-});
-
-
-
-
+Route::get('/', [Dashboard::class, 'home']);
 
 //apply middle ware for admin
 Route::fallback([Dashboard::class, 'NotFound']);
-Route::get('/admin', function () {
-    return redirect('admin/dashboard');
-});
+Route::get('/admin', [Dashboard::class, 'admin']);
 Route::prefix('admin')->group(function () {
     Auth::routes(['register' => false, 'logout' => false]);
     Route::get('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
@@ -181,4 +184,4 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::get('/test', [Test::class, 'index'])->name('home');
+Route::get('/test', [Test::class, 'index']);
