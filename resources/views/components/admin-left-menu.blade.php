@@ -1,5 +1,13 @@
    
 <style>
+
+.card-body.table-responsive {
+  overflow: auto;
+  height: 90vh;
+}
+
+
+
 .item-name a:hover {
   background: aliceblue;
 }
@@ -35,15 +43,15 @@
 							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Qrr</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/qrrs/*') || request()->is('admin/qrrs')) mm-show @endif">
                                   @can('qrr.dashboard')
-									<li class="item-name "><a href="{{url('admin/qrrs/srcs')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Qrr Dashboard</span></a></li>
+									<li class="item-name "><a href="{{url('admin/qrrs/srcs')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
                                   @endcan
 								  
 								    @can('qrr.add')
-								   <li class="item-name"><a href="{{url('admin/qrrs/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add Qrr </span></a></li>
+								   <li class="item-name"><a href="{{url('admin/qrrs/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">New</span></a></li>
                                    @endcan
 								   
 								    @can('qrr.view')
-								  <li class="item-name"><a href="{{url('admin/qrrs')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">QRR List</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/qrrs')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -57,18 +65,18 @@
                                 <ul class="mm-collapse @if(request()->is('admin/narcotic/*') || request()->is('admin/narcotic')) mm-show @endif">
                                   @can('narcotic.dashboard')
 								  
-								  <li class="item-name"><a href="{{url('admin/narcotic/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Narcotics Dashboard</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/narcotic/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
 
 								  <li class="item-name"><a href="{{url('admin/narcotic/totalcase')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Narcotics case number </span></a></li>
 								  <li class="item-name"><a href="{{url('admin/narcotic/recover')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Narcotics recover</span></a></li>
 									 @endcan
 									 
 								@can('narcotic.add')
-								  <li class="item-name"><a href="{{url('admin/narcotic/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add Narcotics </span></a></li>
+								  <li class="item-name"><a href="{{url('admin/narcotic/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">New</span></a></li>
 							    @endcan
 								   
 								@can('narcotic.view')
-								 <li class="item-name"><a href="{{url('admin/narcotic')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Narcotics List</span></a></li>
+								 <li class="item-name"><a href="{{url('admin/narcotic')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
 							    @endcan
 									 
 									 
@@ -89,11 +97,11 @@
                                   @endcan
 								  
 								    @can('woman.add')
-								   <li class="item-name"><a href="{{url('admin/woman/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add Women & child </span></a></li>
+								   <li class="item-name"><a href="{{url('admin/woman/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">New</span></a></li>
                                    @endcan
 								   
 								    @can('woman.view')
-								  <li class="item-name"><a href="{{url('admin/woman')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Women & child List</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/woman')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -105,6 +113,7 @@
 						  
 						  
   @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
+  <!-----------
 							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-handcuffs text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Warrant</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/warrant/*') || request()->is('admin/warrant')) mm-show @endif">
                                   @can('warrant.dashboard')
@@ -120,6 +129,8 @@
 									@endcan
                                 </ul>
                             </li> 
+                            
+                            ------------>
 					    @endcanany
 						
 						

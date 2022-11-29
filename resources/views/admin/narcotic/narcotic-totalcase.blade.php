@@ -443,7 +443,7 @@ body {
                                                     <td > @if(isset($nar->district->name)) {{$nar->district->bn_name}} @endif</td>
                                                     <td > @if(isset($nar->thana->name)) {{$nar->thana->name}} @endif</td>
                                                     <td > {{$nar->village_word}}</td>
-                                                    <td > {{date('d/m/Y', strtotime($nar->sdate))}}</td>
+                                                    <td > @if(!empty($nar->sdate)) {{date('d/m/Y', strtotime($nar->sdate))}} @endif</td>
                                                     <td > {{$nar->case_no}}</td>
                                                     <td > {{$nar->nopc}}</td>
                                                     <td > {{$nar->name_of_investigator_org}}</td>
@@ -466,7 +466,7 @@ body {
                                                     <td > {{$nar->jobdo_list}}</td>
                                                     <td > {{$nar->narocotic_test_report}}</td>
                                                     <td > {{$nar->investigate_result}}</td>
-                                                    <td > {{date('d/m/Y', strtotime($nar->tdate))}}</td>
+                                                    <td > @if(!empty($nar->tdate)) {{ date('d/m/Y', strtotime($nar->tdate)) }} @endif</td>
                                                     <td > {{Str::limit($nar->comment, 5)}}</td>
                                                     
                                                 </tr>

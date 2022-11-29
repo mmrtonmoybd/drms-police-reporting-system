@@ -464,7 +464,7 @@ margin-top: -39px;
                                                     <td > {{$nar->jobdo_list}}</td>
                                                     <td > {{$nar->narocotic_test_report}}</td>
                                                     <td > {{$nar->investigate_result}}</td>
-                                                    <td > {{date('d/m/Y', strtotime($nar->tdate))}}</td>
+                                                    <td > @if(!empty($nar->tdate)) {{ date('d/m/Y', strtotime($nar->tdate)) }} @endif</td>
                                                     <td > {{Str::limit($nar->comment, 5)}}</td>
                                                     
                                                 </tr>
@@ -494,7 +494,7 @@ margin-top: -39px;
                 if($request->input('thanaID'))
                     $thana_id = $request->input('thanaID');
 
-                @endphp
+
 @endphp
 
 

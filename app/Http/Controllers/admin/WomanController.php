@@ -67,21 +67,36 @@ class WomanController extends Controller
     public function create(Request $request)
     {
         $dateandtime = Carbon::createFromFormat('d/m/Y H:i', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:i');
-        $request->merge(['wdate' => $dateandtime,
-    'badi_age' => $this->reptpenum($request->input('badi_age')),
-'badi_phone' => $this->reptpenum($request->input('badi_phone')),
-'mobile_no' => $this->reptpenum($request->input('mobile_no')),
-'gd_no' => $this->reptpenum($request->input('gd_no')),
-'mamla_no' => $this->reptpenum($request->input('mamla_no')),
-'dhara' => $this->reptpenum($request->input('dhara')),
-'complaint_no' => $this->reptpenum($request->input('complaint_no')),
-'gd_date' => Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d'),
-'mamla_date' => Carbon::createFromFormat('d/m/Y', $request->input('mamla_date'))->format('Y-m-d'),
-'user_id' => auth()->user()->id,
-'divisionID' => 1,
- 'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
- 'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
-]);
+        $request->merge([
+            'wdate' => $dateandtime,
+            'badi_age' => $this->reptpenum($request->input('badi_age')),
+            'badi_phone' => $this->reptpenum($request->input('badi_phone')),
+            'mobile_no' => $this->reptpenum($request->input('mobile_no')),
+            'gd_no' => $this->reptpenum($request->input('gd_no')),
+            'mamla_no' => $this->reptpenum($request->input('mamla_no')),
+            'dhara' => $this->reptpenum($request->input('dhara')),
+            'complaint_no' => $this->reptpenum($request->input('complaint_no')),
+            'user_id' => auth()->user()->id,
+            'divisionID' => 1,
+            'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
+            'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
+        ]);
+
+        $wdatamerge = [];
+        
+        if ($request->filled('gd_date')) {
+            $wdatamerge['gd_date'] = Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d');
+        }
+
+        if ($request->filled('mamla_date')) {
+            $wdatamerge['mamla_date'] = Carbon::createFromFormat('d/m/Y', $request->input('mamla_date'))->format('Y-m-d');
+        }
+
+        if ($request->filled('complaint_date')) {
+            $wdatamerge['complaint_date'] = Carbon::createFromFormat('d/m/Y', $request->input('complaint_date'))->format('Y-m-d');
+        }
+
+        $request->merge($wdatamerge);
         // dd($request->all());
 
         $request->request->remove('incident_time');
@@ -150,12 +165,26 @@ class WomanController extends Controller
                        'mamla_no' => $this->reptpenum($request->input('mamla_no')),
                        'dhara' => $this->reptpenum($request->input('dhara')),
                        'complaint_no' => $this->reptpenum($request->input('complaint_no')),
-                       'gd_date' => Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d'),
-                       'mamla_date' => Carbon::createFromFormat('d/m/Y', $request->input('mamla_date'))->format('Y-m-d'),
                        'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
                        'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
                        ]);
         // dd($request->all());
+
+         $wdatamerge = [];
+        
+        if ($request->filled('gd_date')) {
+            $wdatamerge['gd_date'] = Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d');
+        }
+
+        if ($request->filled('mamla_date')) {
+            $wdatamerge['mamla_date'] = Carbon::createFromFormat('d/m/Y', $request->input('mamla_date'))->format('Y-m-d');
+        }
+
+        if ($request->filled('complaint_date')) {
+            $wdatamerge['complaint_date'] = Carbon::createFromFormat('d/m/Y', $request->input('complaint_date'))->format('Y-m-d');
+        }
+
+        $request->merge($wdatamerge);
 
         $request->request->remove('incident_time');
         $request->request->remove('_token');

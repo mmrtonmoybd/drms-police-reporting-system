@@ -142,7 +142,7 @@ border-radius: 0px;
                     </div>
 					
 					
-				<h3>	Welcome </h3>
+				<h3>	{{ headertitle() }} </h3>
  				
 					
 				             </div>
@@ -191,6 +191,27 @@ border-radius: 0px;
 				  </a>
             </header>
 			
-			
+			<!---
+    Send a GET request to "admin/adminsidebarcollapase"
+
+    For hideing sidebar GET request to: "admin/adminsidebarcollapase?sidebar=1"
+    For disable hiding sidebar request to: "admin/adminsidebarcollapase?sidebar=0"
+    -->
+
+    <!-- 
+
+    Condition for hiding/showing sidebar with backend power:
+
+      @if (session("sidebar") == 1)
+      
+      This condition is hiding sidebar. 
+      use CSS menu class to hide sidebar exampla: hide
+
+      @else 
+      This condition is showing sidebar. 
+      use CSS menu class to show sidebar exampla: show
+
+      @endif
+    -->
 
 @endif

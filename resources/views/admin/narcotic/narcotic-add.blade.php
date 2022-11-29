@@ -109,25 +109,29 @@
                                             </div>
 
                                             
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="sdate" class="form-label">   ঘটনার তারিখ  </label>
-                                                   
-                                                    <div class="input-group" id="timepicker-input-group1">
-                                                        <input type="text" name="sdate"  value="{{old('sdate')}}" id="sdate" class="form-control datepicker  @error('sdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="ঘটনার তারিখ  " required>
-                                                    </div>
-                                                        
-                                                </div>
-                                              
-                                            </div>
-
-                                            <div class="col-sm-4">
+                                            
+                                                 <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
                                                     <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
                                                 </div>
                                             </div>
       
+      
+      
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="sdate" class="form-label">  তারিখ  </label>
+                                                   
+                                                    <div class="input-group" id="timepicker-input-group1">
+                                                        <input type="text" name="sdate"  value="{{old('sdate')}}" id="sdate" class="form-control datepicker  @error('sdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ  " required>
+                                                    </div>
+                                                        
+                                                </div>
+                                              
+                                            </div>
+
+                                       
       
                                             
                                             <div class="col-sm-4">
@@ -176,6 +180,26 @@
                                                 </div>
                                             </div>
       
+                                            
+                                                                                        <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="accused" class="form-label">  অভিযুক্তের নাম </label>
+                                                    <input type="text" name="accused"  value="{{old('accused')}}" id="accused" class="form-control  @error('accused') is-invalid @enderror" placeholder=" অভিযুক্ত " required>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                        <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="number_of_accused" class="form-label">  গ্রেফতারকৃত আসামীর সংখ্যা   </label>
+                                                    <input type="text" name="number_of_accused" id="number_of_accused" class="form-select form-control" required>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                            
                                             
                                             
                                             <div class="col-sm-4">
@@ -248,28 +272,13 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="number_of_accused" class="form-label">  গ্রেফতারকৃত আসামীর সংখ্যা   </label>
-                                                    <select name="number_of_accused" id="number_of_accused" class="form-select form-control" required>
-                                                        <option value="">Select</option>
-                                                        @for($i=1; $i<=50; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    
+
+
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="accused" class="form-label">  অভিযুক্ত  </label>
-                                                    <input type="text" name="accused"  value="{{old('accused')}}" id="accused" class="form-control  @error('accused') is-invalid @enderror" placeholder=" অভিযুক্ত " required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="image_video" class="form-label">   ছবি তোলা হয়েছে </label>
+                                                    <label for="image_video" class="form-label">   ছবি প্রাপ্তি </label>
                                                     <select name="image_video" id="image_video" class="form-select form-control" required>
                                                         <option value="">Select</option>
                                                         <option value="হ্যা">হ্যা</option>

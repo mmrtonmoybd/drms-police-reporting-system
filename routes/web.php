@@ -12,6 +12,8 @@ use App\Http\Controllers\admin\NarcotiscController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\WomanController;
 use App\Http\Controllers\Test;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,12 @@ Route::prefix('admin')->group(function () {
 
 
     Route::group(['middleware'=> 'auth'], function () {
+        Route::get('/adminsidebarcollapase', function (Request $request)
+        {
+            if ($request->filled('sidebar')) {
+                Session::put('sidebar', $request->input('sidebar'));
+            }
+        });
         Route::get('/dashboard', [Dashboard::class, 'Index'])->name('home');
 
         Route::get('/districts/{division_id}', [AreaController::class, 'getDistricts']);

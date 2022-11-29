@@ -63,6 +63,7 @@ use Illuminate\Support\Str;
                                                     <th > তারিখ </th>
                                                     <th > ধারা </th>
                                                     <th > অভিযোগ নং </th>
+                                                    <th> তারিখ </th>
                                                     <th > সমস্যা সমাধান হয়েছে কিনা </th>
                                                     <th > গৃহীত ব্যবস্থা </th>
                                                     <th > নিষ্পত্তি রিপোর্ট </th>
@@ -74,7 +75,7 @@ use Illuminate\Support\Str;
 
                                             @if($womans)
                                             @foreach ($womans as $woman)
-                                                <tr>
+                                                <tr @if(!$woman->satisfy_rate=='') style="background: #9afdc0de;" @endif >
                                                     <td class="table-action">
                                                         @can('woman.view')
                                                         <a href="{{url('admin/woman/view/'.$woman->id)}}"  class="action-icon text-primary">
@@ -108,11 +109,12 @@ use Illuminate\Support\Str;
                                                     <td>  {{$woman->investigator_title}}</td>
                                                     <td>  {{$woman->mobile_no}}</td>
                                                     <td > {{$woman->gd_no}}</td>
-                                                    <td > @if($woman->gd_date) {{date('d/m/Y', strtotime($woman->gd_date))}} @endif</td>
+                                                    <td > @if(!empty($woman->gd_date)) {{date('d/m/Y', strtotime($woman->gd_date))}} @endif</td>
                                                     <td > {{$woman->mamla_no}}</td>
-                                                    <td > @if($woman->mamla_date) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif</td>
+                                                    <td > @if(!empty($woman->mamla_date)) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif</td>
                                                     <td > {{$woman->dhara}}</td>
                                                     <td > {{$woman->complaint_no}}</td>
+                                                    <td>  @if(!empty($woman->complaint_date)) {{date('d/m/Y', strtotime($woman->complaint_date))}} @endif</td>
                                                     <td > {{$woman->problem_fix}}</td>
                                                     <td > {{$woman->action_taken}}</td>
                                                     <td > {{$woman->nreport}}</td>

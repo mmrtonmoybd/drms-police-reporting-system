@@ -1,22 +1,228 @@
 <x-admin-header />
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/woman/add')}}">Women and children Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Add Women and children Dashboard</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"> <i class="uil uil-plus"></i> Add Women and children Dashboard</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title --> 
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+  <link rel='stylesheet' href='https://cdn.rawgit.com/chingyawhao/materialize-clockpicker/master/dist/css/materialize.clockpicker.css'>
+
+
+
+<style>
+
+body {
+	overflow:auto!important;
+}
+
+
+#errmsg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+#errdate{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+.clockpicker-display-column {
+  float: left;
+  top: -3px;
+  position: absolute;
+  right: 57px;
+}
+.picker__footer button {
+    background: #639;
+border: 1px solid #5d0eac;
+margin: 0px 5px!important;
+padding: 5px 10px;
+color: #fff;
+border-radius: 5px;
+}
+
+.picker__footer {
+  text-align: right;
+}
+
+
+.clockpicker-display-column button {
+  float: left;
+  top: -3px;
+  position: absolute;
+  right: 57px;
+}
+
+
+.clockpicker.picker.picker--opened {
+  position: absolute;
+  z-index: 1000;
+  top: 50px;
+  box-shadow: 0px 1px 8px -1px #7265c885;
+  padding: 10px;
+  background: #fff;
+}
+.button-label {
+  display: inline-block;
+padding:5px 10px;
+width:;
+  margin: 0.5em;
+  cursor: pointer;
+  color: #292929;
+  border-radius: 0.25em;
+  background: #efefef;
+  box-shadow:  inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.button-label h1 {
+  font-size: 14px;
+  text-align: center;
+
+}
+.button-label:hover {
+  background: #d6d6d6;
+  color: #101010;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+}
+.button-label:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22);
+}
+@media (max-width: 40em) {
+  .button-label {
+    padding: 0em 1em 3px;
+    margin: 0.25em;
+  }
+}
+
+
+
+#myCheckovi:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheckovi:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
+
+
+#myCheckgd:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheckgd:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
+
+
+
+
+#myCheck:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheck:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
+
+
+#myCheckmim:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheckmim:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
+
+
+
+
+
+#myCheckain:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#myCheckain:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+input:checked + .button-label h1{
+  color: #fff;
+}
+
+
+#nogd:checked + .button-label {
+  background: #D91E18;
+  color: #efefef;
+}
+#nogd:checked + .button-label:hover {
+  background: #c21b15;
+  color: #e2e2e2;
+}
+
+
+
+#no:checked + .button-label {
+  background: #D91E18;
+  color: #fff;
+}
+#no:checked + .button-label:hover {
+  background: #c21b15;
+  color: #e2e2e2;
+}
+
+
+#maybe-button:checked + .button-label {
+  background: #4183D7;
+  color: #efefef;
+}
+#maybe-button:checked + .button-label:hover {
+  background: #2c75d2;
+  color: #e2e2e2;
+}
+
+
+.hidden {
+  display: none;
+}
+</style>
+
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
+
+<br>
+
+  <div id="errmsg"></div>
+<div id="errdate"></div>
+
 
                         <div class="row">
                             <div class="col-sm-12 ">
@@ -27,8 +233,8 @@
 
                                         <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="reference_no" class="form-label"> রেফারেন্স নং </label>
-                                                    <input type="text" name="reference_no"  value="{{old('reference_no')}}" id="reference_no" class="form-control  @error('reference_no') is-invalid @enderror" placeholder="রেফারেন্স নং">
+                                                    <label for="reference_no" class="form-label"> থানা রেজিস্টার নং </label>
+                                                    <input type="text" name="reference_no"  value="{{old('reference_no')}}" id="reference_no" class="number form-control  @error('reference_no') is-invalid @enderror" placeholder="থানা রেজিস্টার নং">
                                                 </div>
                                             </div>
 
@@ -95,7 +301,7 @@
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="village_word" class="form-label"> গ্রাম/ওয়ার্ড </label>
+                                                    <label for="village_word" class="form-label"> ঘটনার স্থলের ঠিকানা </label>
                                                     <input type="text" name="village_word"  value="{{old('village_word')}}" id="village_word" class="form-control  @error('village_word') is-invalid @enderror" placeholder="গ্রাম/ওয়ার্ড">
                                                 </div>
                                             </div>
@@ -114,7 +320,7 @@
                                                     
 
                                                         <!-- Date dime -->
-                                                                <input  name="incident_time"  id="timepicker" value="00:00"  class="form-control timepicker" type="text" required>
+                                                                <input  name="incident_time"  id="timepicker" value="00:00"   onchange="validateHhMm(this);"  class="form-control timepicker" type="text" required>
                                                     </div>
                                                         
                                                 </div>
@@ -171,21 +377,21 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" id="gd1" >
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="badi_name" class="form-label">  বাদীর নাম   </label>
                                                     <input type="text" name="badi_name"  value="{{old('badi_name')}}" id="badi_name" class="form-control  @error('badi_name') is-invalid @enderror" placeholder="  বাদীর নাম  ">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" id="gd1" >
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="badi_age" class="form-label">  বাদীর বয়স   </label>
                                                     <input type="text" name="badi_age"  value="{{old('badi_age')}}" id="badi_age" class="form-control  @error('badi_age') is-invalid @enderror" placeholder="  বাদীর বয়স  ">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" id="gd1" >
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="badi_address" class="form-label">  বাদীর ঠিকানা   </label>
                                                     <input type="text" name="badi_address"  value="{{old('badi_address')}}" id="badi_address" class="form-control  @error('badi_address') is-invalid @enderror" placeholder="  বাদীর ঠিকানা  ">
@@ -199,53 +405,233 @@
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4" id="gd1" >
+                                             <div class="col-sm-4" >
                                                 <div class="mb-3">
                                                     <label for="vbadi_name" class="form-label">  বিবাদীর নাম   </label>
-                                                    <input type="text" name="vbadi_name"  value="{{old('vbadi_name')}}" id="vbadi_name" class="form-control  @error('vbadi_name') is-invalid @enderror" placeholder="   বিবাদীর নাম  ">
+                                                    <textarea type="text" name="vbadi_name"  id="vbadi_name" class="form-control  @error('vbadi_name') is-invalid @enderror" placeholder="বিবাদীর নাম">{{old('vbadi_name')}}</textarea>
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" id="gd1" >
+                                            <div class="col-sm-4"  >
                                                 <div class="mb-3">
                                                     <label for="vbadi_address" class="form-label">  বিবাদীর ঠিকানা   </label>
                                                     <input type="text" name="vbadi_address"  value="{{old('vbadi_address')}}" id="vbadi_address" class="form-control  @error('vbadi_address') is-invalid @enderror" placeholder="   বিবাদীর ঠিকানা  ">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" id="gd1" >
+                                            <div class="col-sm-4" >
                                                 <div class="mb-3">
-                                                    <label for="complaint_reson" class="form-label">  অভিযোগের কারন   </label>
-                                                    <input type="text" name="complaint_reson"  value="{{old('complaint_reson')}}" id="complaint_reson" class="form-control  @error('complaint_reson') is-invalid @enderror" placeholder="   অভিযোগের কারন  ">
+                                                    <label for="complaint_reson" class="form-label">অভিযুক্তের সংখ্যা</label>
+                                                    <input type="text" name="complaint_reson"  value="{{old('complaint_reson')}}" id="complaint_reson" class="number form-control  @error('complaint_reson') is-invalid @enderror" placeholder="   অভিযুক্তের সংখ্যা  ">
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4" id="gd1" >
+                                             <div class="col-sm-4"  >
                                                 <div class="mb-3">
-                                                    <label for="investigator_name" class="form-label">  তদন্তকারী কর্মকর্তার নাম   </label>
-                                                    <input type="text" name="investigator_name"  value="{{old('investigator_name')}}" id="investigator_name" class="form-control  @error('investigator_name') is-invalid @enderror" placeholder="  তদন্তকারী কর্মকর্তার নাম  ">
+                                                    <label for="investigator_name" class="form-label">  তদন্তকারী কর্মকর্তার নাম ও পদবি  </label>
+                                                    <input type="text" name="investigator_name"  value="{{old('investigator_name')}}" id="investigator_name" class="form-control  @error('investigator_name') is-invalid @enderror" placeholder="  তদন্তকারী কর্মকর্তার নাম পদবি  ">
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4" id="gd1" >
+                                             <div class="col-sm-4"  >
                                                 <div class="mb-3">
-                                                    <label for="investigator_title" class="form-label">  তদন্তকারী কর্মকর্তার পদবী  </label>
-                                                    <input type="text" name="investigator_title"  value="{{old('investigator_title')}}" id="investigator_title" class="form-control  @error('investigator_title') is-invalid @enderror" placeholder="   তদন্তকারী কর্মকর্তার পদবী  ">
+                                                    <label for="investigator_title" class="form-label">  তদন্তকারী কর্মকর্তার বিপি নাম্বার  </label>
+                                                    <input type="text" name="investigator_title"  value="{{old('investigator_title')}}" id="investigator_title" class="number form-control  @error('investigator_title') is-invalid @enderror" placeholder="   তদন্তকারী কর্মকর্তার বিপি নাম্বার  ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label"> মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " >
+                                                    <input type="text" minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " >
                                                 </div>
                                             </div>
                                             
                                             
-                                            <div class="col-sm-4" id="gd1" >
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                    <div class="col-sm-12" >
+                                             <hr>
+												
+                                            </div>
+                                            
+                                            
+                                            
+                                         
+                                            
+                                                <div class="col-sm-12">
+                                                <div class="mb-3">
+                                               গৃহীত ব্যবস্থাঃ
+                                               &nbsp; &nbsp;
+                                               
+                                               
+                                               
+       <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckovi" value="অভিযোগ গ্রহণ" onclick="myFunction()" >
+    <label class="button-label" for="myCheckovi">
+      <h1>অভিযোগ গ্রহণ</h1>
+	   </label>
+	   
+	   
+                                               
+  <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckgd" value="জিডি" onclick="myFunction()">
+    <label class="button-label" for="myCheckgd">
+      <h1>জিডি</h1>
+    </label>
+	
+	
+    <input class="hidden radio-label" type="radio" name="action_taken" id="myCheck" value="মামলা" onclick="myFunction()" >
+    <label class="button-label" for="myCheck">
+      <h1>মামলা</h1>
+	   </label>
+	  
+	     <input class="hidden radio-label" type="radio" name="action_taken" value="স্থানীয় পর্যায়ে মীমাংসা" id="myCheckmim" onclick="myFunction()" >
+    <label class="button-label" for="myCheckmim">
+      <h1>স্থানীয় পর্যায়ে মীমাংসা</h1>
+	   </label>
+	   
+	       <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckain" value="আইনগত পরামর্শ" onclick="myFunction()"     >
+    <label class="button-label" for="myCheckain">
+      <h1>আইনগত পরামর্শ</h1>
+    </label>   
+
+                                               
+                                               
+                                                </div>
+                                            </div>
+                                            
+											
+											
+											
+				
+
+<script>
+
+
+function myFunction() {
+    
+var checkBoxovi = document.getElementById("myCheckovi");
+  var checkBoxgd = document.getElementById("myCheckgd");
+    var checkBox = document.getElementById("myCheck");
+  var checkBoxmim = document.getElementById("myCheckmim");
+  var checkBoxain = document.getElementById("myCheckain");
+  
+      var gd1 = document.getElementById("gd1");
+      var gd2 = document.getElementById("gd2");
+	   var gd3 = document.getElementById("gd3");
+   
+     var mam = document.getElementById("mam");
+     var mam2 = document.getElementById("mam2");
+     var mam3 = document.getElementById("mam3");
+     
+	 
+       var mim = document.getElementById("mim");
+       var ain = document.getElementById("ain");
+	 
+	 
+	   var ovi1 = document.getElementById("ovi1");
+	   var ovi2 = document.getElementById("ovi2");
+       var ovi3 = document.getElementById("ovi3");
+     
+     
+     
+   if (checkBoxovi.checked == true){
+  
+      
+      ovi1.style.display = "block";
+      ovi2.style.display = "block";
+	   ovi3.style.display = "block";
+  } else {
+
+         
+         ovi1.style.display = "none";
+         ovi2.style.display = "none";
+         ovi3.style.display = "none";
+		 
+  }
+  
+  
+     
+     
+     
+   if (checkBox.checked == true){
+      mam.style.display = "block";
+      mam2.style.display = "block";
+      mam3.style.display = "block";
+  
+  } else {
+         mam.style.display = "none";
+         mam2.style.display = "none";
+         mam3.style.display = "none";
+         
+     
+  }
+  
+  
+  
+    if (checkBoxgd.checked == true){
+  
+      
+      gd1.style.display = "block";
+      gd2.style.display = "block";
+	   gd3.style.display = "block";
+  } else {
+
+         
+         gd1.style.display = "none";
+         gd2.style.display = "none";
+         gd3.style.display = "none";
+		 
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+}
+
+
+
+</script>
+
+                                                              
+
+                                             <div class="col-sm-4" id="ovi1" style="display:none">
+                                                <div class="mb-3">
+                                                    <label for="complaint_no" class="form-label">অভিযোগ নং </label>
+                                                    <input type="text" name="complaint_no"  value="{{old('complaint_no')}}" id="complaint_no" class="number form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4" id="ovi2" style="display:none">
+                                                <div class="mb-3">
+                                                    <label for="complaint_no" class="form-label">অভিযোগ  তারিখ </label>
+                                               
+                                                  <input type="text" name="complaint_date"  value="{{old('complaint_date')}}" id="complaint_date" class="form-control datepicker  @error('complaint_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="অভিযোগের তারিখ" required>
+                                                </div>
+                                            </div>
+
+
+                                             <div class="col-sm-4" id="ovi3" style="display:none">
+                                              
+                                            </div>
+											
+											
+											
+                                       <div class="col-sm-4" id="gd1" >
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
+                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -259,14 +645,22 @@
                                                 </div>
                                             </div>
                                             
-                                            
-                                            
-                                            
+      
+                                     
+											
+											   <div class="col-sm-4" id="gd3" style="display:none">
+                                              
+                                            </div>
+											
+								
+								
+								
+					                          
                                 
                                             <div class="col-sm-4" id="mam" >
                                                 <div class="mb-3">
                                                     <label for="mamla_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="mamla_no"  value="{{old('mamla_no')}}" id="mamla_no" class="form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
+                                                    <input type="text" name="mamla_no"  value="{{old('mamla_no')}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       
@@ -288,16 +682,16 @@
                                                 </div>
                                             </div>
 
-
-                                             <div class="col-sm-4" id="mam3">
-                                                <div class="mb-3">
-                                                    <label for="complaint_no" class="form-label">অভিযোগ নং </label>
-                                                    <input type="text" name="complaint_no"  value="{{old('complaint_no')}}" id="complaint_no" class="form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
-                                                </div>
+      
+      
+          <div class="col-sm-12" >
+                                             <hr>
+												
                                             </div>
+                                            
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" style="display:none;">>
                                                 <div class="mb-3">
                                                     <label for="problem_fix" class="form-label">   সমস্যা সমাধান হয়েছে কিনা    </label>
                                                     <select name="problem_fix" id="problem_fix" class="form-select form-control" >
@@ -309,19 +703,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="action_taken" class="form-label">   গৃহীত ব্যবস্থা    </label>
-                                                    <select name="action_taken" id="action_taken" class="form-select form-control" >
-                                                        <option value="">Select</option>
-                                                        <option value="অভিযোগ গ্রহন">অভিযোগ গ্রহন</option>
-                                                        <option value="স্থানীয় মীমাংসা">স্থানীয় মীমাংসা</option>
-                                                        <option value="মামলা">মামলা</option>
-                                                        <option value="জিডি">জিডি</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                            </div>
+                                   
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
@@ -336,7 +718,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" >
                                                 <div class="mb-3">
                                                     <label for="satisfy_rate" class="form-label">   সন্তুষ্টির মান   </label>
                                                     <select name="satisfy_rate" id="satisfy_rate" class="form-select form-control" >
@@ -360,7 +742,7 @@
                                             
                                             <div class="col-sm-12">
                                                 <div>
-                                                    <button type="submit" name="submit" class="btn btn-primary"> Submit </button>
+                                                       <button type="submit" id="sbbtn" name="submit" class="btn btn-primary"> Submit </button>
                                                 </div>
                                                 
                                             </div>
@@ -390,59 +772,6 @@
 
 
 
-<script>
-
-
-function myFunction() {
-  var checkBox = document.getElementById("myCheck");
-  
-  var checkBoxgd = document.getElementById("myCheckgd");
-  
-      var gd1 = document.getElementById("gd1");
-      var gd2 = document.getElementById("gd2");
-   
-     var mam = document.getElementById("mam");
-     var mam2 = document.getElementById("mam2");
-     var mam3 = document.getElementById("mam3");
-     
-     
-  if (checkBox.checked == true){
-      mam.style.display = "block";
-      mam2.style.display = "block";
-      mam3.style.display = "block";
-  
-  } else {
-         mam.style.display = "none";
-         mam2.style.display = "none";
-         mam3.style.display = "none";
-         
-     
-  }
-  
-  
-  
-    if (checkBoxgd.checked == true){
-  
-      
-      gd1.style.display = "block";
-      gd2.style.display = "block";
-  } else {
-
-         
-         gd1.style.display = "none";
-         gd2.style.display = "none";
-  }
-  
-  
-  
-  
-  
-  
-}
-
-
-
-</script>
 
 
   <script>
@@ -546,4 +875,161 @@ function myFunction() {
     </script>
 
 
+
+<script>
+
+$(function() {
+  $('#datetimepicker1').datetimepicker({
+            format: 'HH:mm'
+  });
+  
+  $('#datetimepicker2').datetimepicker({
+            format: 'MM/DD/YYYY HH:mm'
+  });
+  $('#datetimepicker3').datetimepicker({
+      format: 'hh:mm A',
+  });
+});
+</script>
+
+
+
+  <script src='https://cdn.rawgit.com/chingyawhao/materialize-clockpicker/master/dist/js/materialize.clockpicker.js'></script>
+
+
+  <script>
+$('.timepicker').keyup(function() {
+
+  var foo = $(this).val().split(" ").join(""); // remove hyphens
+
+  if (foo.length < 3) {
+    foo = foo.replace(/^(.{2})(.*)$/, "$1:");
+  } 
+
+  $(this).val(foo);
+});
+
+</script>
+
+
+
+  <script>
+  //Using: https://github.com/chingyawhao/materialize-clockpicker/
+
+//Time Picker:
+$('.timepickerx').pickatime({
+    default: 'now',
+    twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+    donetext: 'OK',
+  autoclose: true,
+  vibrate: true // vibrate the device when dragging clock hand
+});
+  </script>
+
+
+
+
+
 <x-admin-footer/>
+
+
+
+
+
+<script>
+/*
+$(function(){
+   $(".number").keypress(function (e) {
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+      $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
+      return false;
+    }
+   });
+});
+*/
+</script>
+
+
+
+
+
+<script>
+
+
+var inputBox = document.getElementById("inputnumber");
+var invalidChars = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  "০",
+  "১",
+  "২",
+  "৩",
+  "৪",
+  "৫",
+  "৬",
+  "৭",
+  "৮",
+  "৯",
+   "",
+ 
+];
+
+
+
+   $(".number").keypress(function (e) {
+           if(invalidChars.includes(e.key) || e.which == 8 || event.key === 'Delete' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
+   }
+   
+
+  
+  else {
+   e.preventDefault();
+   
+         $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
+      return false;
+      
+      
+  }
+});
+
+</script>
+
+
+
+
+
+
+
+<script>
+
+function validateHhMm(inputField) {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);
+
+
+  var sbbtn = document.getElementById("sbbtn");
+  
+    if (isValid) {
+      inputField.style.backgroundColor = '#bfa';
+      sbbtn.disabled = false;
+       $("#errdate").html("Date format is invalid").stop().hide();
+     
+    } else {
+      inputField.style.backgroundColor = '#fba';
+        sbbtn.disabled = true;
+         $("#errdate").html("Date format is invalid<br> Use 10:05 format").stop().show();
+      return false;
+    }
+
+    return isValid;
+  }
+  
+  
+</script>

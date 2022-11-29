@@ -11,6 +11,7 @@ use App\Models\District;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session as FacadesSession;
 
 class UsersController extends Controller
@@ -483,20 +484,24 @@ class UsersController extends Controller
            'name' => 'required',
         ]);
 
-        if ($request->input('password')) {
-            $request->validate(
-                [
-                    'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-                    'confirm-password' => 'min:6'
-                ]
-            );
-        }
-
         $insertAttr = [
             'name'=>$request->input('name'),
         ];
 
         if ($request->input('password')) {
+            $auth = Auth::user();
+            $request->validate(
+                [
+                    'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+                    'confirm-password' => 'min:6',
+                    'current_password' => ['required', function ($attribute, $value, $fail) use ($auth) {
+            if (!Hash::check($value, $auth->password)) {
+                $fail('Your password was not updated, since the provided current password does not match.');
+            }
+        }]
+                ]
+            );
+
             $insertAttr['password'] = Hash::make($request->input('password'));
         }
 
@@ -507,17 +512,7 @@ class UsersController extends Controller
                     'picture' => 'image'
                 ]
             );
-            /*
-            $file = $request->file("picture");
-            $ext = $file->extension();
-            $name = uniqid("user") .'.' . $ext;
-            // $filename = $file->storeAs('/users/', \uniqid("user") .'.' . $ext,['disk' => 'public_uploads']);
-            $myimage = $request->picture->getClientOriginalName();
-            $request->picture->move(public_path('storage/users'), $myimage);
-
-            $insertAttr['picture'] = '/'.$myimage;
-
-            */
+            
 
             $image = $request->file('picture')->store('avaters');
             $insertAttr['picture'] = '/'.$image;
@@ -578,15 +573,6 @@ class UsersController extends Controller
            'bp_no' => 'required',
         ]);
 
-        if ($request->input('password')) {
-            $request->validate(
-                [
-                    'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-                    'confirm-password' => 'min:6'
-                ]
-            );
-        }
-
         if ($request->input('type') == 'SP' || $request->input('type') == 'SP-Operator 1' || $request->input('type') == 'SP-Operator 2') {
             $request->validate(
                 [
@@ -615,6 +601,19 @@ class UsersController extends Controller
         ];
 
         if ($request->input('password')) {
+            $auth = Auth::user();
+            $request->validate(
+                [
+                    'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+                    'confirm-password' => 'min:6',
+                    'current_password' => ['required', function ($attribute, $value, $fail) use ($auth) {
+            if (!Hash::check($value, $auth->password)) {
+                $fail('Your password was not updated, since the provided current password does not match.');
+            }
+        }]
+                ]
+            );
+
             $insertAttr['password'] = Hash::make($request->input('password'));
         }
 

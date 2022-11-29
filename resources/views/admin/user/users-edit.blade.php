@@ -83,14 +83,21 @@
 
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
+                                                    <label for="password" class="form-label">Current Password</label>
+                                                    <input type="password" name="current_password" id="password" class="form-control  @error('current_password') is-invalid @enderror" placeholder="Current Password" >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
                                                     <label for="password" class="form-label">Password</label>
-                                                    <input type="password" name="password" id="password" class="form-control  @error('password') is-invalid @enderror" placeholder="Password"  value="{{old('password')}}">
+                                                    <input type="password" name="password" id="password" class="form-control  @error('password') is-invalid @enderror" placeholder="Password" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="confirm-password" class="form-label">Confirm password</label>
-                                                    <input type="password" name="confirm-password"  value="{{old('confirm-password')}}" id="confirm-password" class="form-control  @error('password') is-invalid @enderror" placeholder="Confirm Password" >
+                                                    <input type="password" name="confirm-password" id="confirm-password" class="form-control  @error('password') is-invalid @enderror" placeholder="Confirm Password" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">

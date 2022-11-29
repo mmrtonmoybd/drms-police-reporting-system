@@ -351,6 +351,7 @@ margin-top: -39px;
                                                     <th > তারিখ </th>
                                                     <th > ধারা </th>
                                                     <th > অভিযোগ নং </th>
+                                                    <th > তারিখ </th>
                                                     <th > সমস্যা সমাধান হয়েছে কিনা </th>
                                                     <th > গৃহীত ব্যবস্থা </th>
                                                     <th > নিষ্পত্তি রিপোর্ট </th>
@@ -401,6 +402,7 @@ margin-top: -39px;
                                                     <td > @if($woman->mamla_date) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif</td>
                                                     <td > {{$woman->dhara}}</td>
                                                     <td > {{$woman->complaint_no}}</td>
+                                                    <td>  @if(!empty($woman->complaint_date)) {{date('d/m/Y', strtotime($woman->complaint_date))}} @endif</td>
                                                     <td > {{$woman->problem_fix}}</td>
                                                     <td > {{$woman->action_taken}}</td>
                                                     <td > {{$woman->nreport}}</td>
