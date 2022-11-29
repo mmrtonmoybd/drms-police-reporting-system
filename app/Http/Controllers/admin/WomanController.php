@@ -83,7 +83,7 @@ class WomanController extends Controller
         ]);
 
         $wdatamerge = [];
-        
+
         if ($request->filled('gd_date')) {
             $wdatamerge['gd_date'] = Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d');
         }
@@ -170,8 +170,8 @@ class WomanController extends Controller
                        ]);
         // dd($request->all());
 
-         $wdatamerge = [];
-        
+        $wdatamerge = [];
+
         if ($request->filled('gd_date')) {
             $wdatamerge['gd_date'] = Carbon::createFromFormat('d/m/Y', $request->input('gd_date'))->format('Y-m-d');
         }

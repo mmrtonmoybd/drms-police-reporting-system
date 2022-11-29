@@ -1,7 +1,9 @@
-<?php 
+<?php
+
 
 if (! function_exists('headertitle')) {
-    function headertitle() {
+    function headertitle()
+    {
         $title = 'Welcome';
         if (\request()->is('admin')) {
             $title = 'Home page';
@@ -14,5 +16,3 @@ if (! function_exists('headertitle')) {
         return $title;
     }
 }
-
-?>

@@ -62,8 +62,7 @@ Route::prefix('admin')->group(function () {
 
 
     Route::group(['middleware'=> 'auth'], function () {
-        Route::get('/adminsidebarcollapase', function (Request $request)
-        {
+        Route::get('/adminsidebarcollapase', function (Request $request) {
             if ($request->filled('sidebar')) {
                 Session::put('sidebar', $request->input('sidebar'));
             }

@@ -495,10 +495,10 @@ class UsersController extends Controller
                     'password' => 'min:6|required_with:confirm-password|same:confirm-password',
                     'confirm-password' => 'min:6',
                     'current_password' => ['required', function ($attribute, $value, $fail) use ($auth) {
-            if (!Hash::check($value, $auth->password)) {
-                $fail('Your password was not updated, since the provided current password does not match.');
-            }
-        }]
+                        if (!Hash::check($value, $auth->password)) {
+                            $fail('Your password was not updated, since the provided current password does not match.');
+                        }
+                    }]
                 ]
             );
 
@@ -512,7 +512,7 @@ class UsersController extends Controller
                     'picture' => 'image'
                 ]
             );
-            
+
 
             $image = $request->file('picture')->store('avaters');
             $insertAttr['picture'] = '/'.$image;
@@ -607,10 +607,10 @@ class UsersController extends Controller
                     'password' => 'min:6|required_with:confirm-password|same:confirm-password',
                     'confirm-password' => 'min:6',
                     'current_password' => ['required', function ($attribute, $value, $fail) use ($auth) {
-            if (!Hash::check($value, $auth->password)) {
-                $fail('Your password was not updated, since the provided current password does not match.');
-            }
-        }]
+                        if (!Hash::check($value, $auth->password)) {
+                            $fail('Your password was not updated, since the provided current password does not match.');
+                        }
+                    }]
                 ]
             );
 
