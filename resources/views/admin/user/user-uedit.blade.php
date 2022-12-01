@@ -114,13 +114,7 @@
                                                 </div>
                                             </div>
 
-                                        
-                                            <div class="col-sm-6">
-                                                <div class="mb-3">
-                                                    <label for="password" class="form-label">Current Password</label>
-                                                    <input type="password" name="current_password" id="password" class="form-control  @error('current_password') is-invalid @enderror" placeholder="Current Password" >
-                                                </div>
-                                            </div>
+                                    
                                         
 
                                             <div class="col-sm-6">

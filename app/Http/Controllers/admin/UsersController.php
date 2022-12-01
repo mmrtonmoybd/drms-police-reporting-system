@@ -601,16 +601,11 @@ class UsersController extends Controller
         ];
 
         if ($request->input('password')) {
-            $auth = Auth::user();
+            
             $request->validate(
                 [
                     'password' => 'min:6|required_with:confirm-password|same:confirm-password',
-                    'confirm-password' => 'min:6',
-                    'current_password' => ['required', function ($attribute, $value, $fail) use ($auth) {
-                        if (!Hash::check($value, $auth->password)) {
-                            $fail('Your password was not updated, since the provided current password does not match.');
-                        }
-                    }]
+                    'confirm-password' => 'min:6'
                 ]
             );
 
