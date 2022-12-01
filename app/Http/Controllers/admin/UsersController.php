@@ -601,7 +601,6 @@ class UsersController extends Controller
         ];
 
         if ($request->input('password')) {
-            
             $request->validate(
                 [
                     'password' => 'min:6|required_with:confirm-password|same:confirm-password',
