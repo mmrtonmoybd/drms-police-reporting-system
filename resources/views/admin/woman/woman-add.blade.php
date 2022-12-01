@@ -315,7 +315,7 @@ input:checked + .button-label h1{
                                                     <label for="wdate" class="form-label">   আগমনের তারিখ ও সময়  </label>
                                                    
                                                     <div class="input-group" id="timepicker-input-group1">
-                                                        <input type="text" name="wdate"  value="{{old('wdate')}}" id="wdate" class="form-control datepicker  @error('wdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="আগমনের তারিখ ও সময়  " required>
+                                                        <input type="text" name="wdate"  value="{{old('wdate')}}" id="wdate" class="datepicker form-control   @error('wdate') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="আগমনের তারিখ ও সময়  " required>
 
                                                     
 
@@ -617,7 +617,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                                 <div class="mb-3">
                                                     <label for="complaint_no" class="form-label">অভিযোগ  তারিখ </label>
                                                
-                                                  <input type="text" name="complaint_date"  value="{{old('complaint_date')}}" id="complaint_date" class="form-control datepicker  @error('complaint_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="অভিযোগের তারিখ" required>
+                                                  <input type="text" name="complaint_date"  value="{{old('complaint_date')}}" id="complaint_date" class="form-control datepicker  @error('complaint_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="অভিযোগের তারিখ" >
                                                 </div>
                                             </div>
 
@@ -628,7 +628,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
 											
 											
 											
-                                       <div class="col-sm-4" id="gd1" >
+                                       <div class="col-sm-4" id="gd1"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
                                                     <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
@@ -636,7 +636,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             </div>
       
                                             
-                                            <div class="col-sm-4" id="gd2" >
+                                            <div class="col-sm-4" id="gd2"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  তারিখ   </label>
                                                     
@@ -657,7 +657,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
 								
 					                          
                                 
-                                            <div class="col-sm-4" id="mam" >
+                                            <div class="col-sm-4" id="mam"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="mamla_no" class="form-label">  মামলা নং   </label>
                                                     <input type="text" name="mamla_no"  value="{{old('mamla_no')}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
@@ -665,7 +665,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             </div>
       
                                             
-                                            <div class="col-sm-4" id="mam2" >
+                                            <div class="col-sm-4" id="mam2"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="mamla_date" class="form-label">  তারিখ  </label>
                                            
@@ -675,7 +675,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
       
       
                                              
-                                            <div class="col-sm-4" id="mam3">
+                                            <div class="col-sm-4" id="mam3"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="dhara" class="form-label">ধারা </label>
                                                     <input type="text" name="dhara"  value="{{old('dhara')}}" id="dhara" class="form-control  @error('dhara') is-invalid @enderror" placeholder=" ধারা">

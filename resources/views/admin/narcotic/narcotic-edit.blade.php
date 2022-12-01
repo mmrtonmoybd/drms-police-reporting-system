@@ -1,34 +1,233 @@
 <x-admin-header />
-                        
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/narcotic')}}">Narcotic</a></li>
-                                            <li class="breadcrumb-item active">Edit narcotic</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"> <i class=" dripicons-document-edit "></i> Edit narcotic</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title --> 
+                       
+                 
+<style>
+
+body {
+	overflow:auto!important;
+}
+
+
+#errmsg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+#errdate{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+.clockpicker-display-column {
+  float: left;
+  top: -3px;
+  position: absolute;
+  right: 57px;
+}
+.picker__footer button {
+    background: #639;
+border: 1px solid #5d0eac;
+margin: 0px 5px!important;
+padding: 5px 10px;
+color: #fff;
+border-radius: 5px;
+}
+
+.picker__footer {
+  text-align: right;
+}
+
+
+.clockpicker-display-column button {
+  float: left;
+  top: -3px;
+  position: absolute;
+  right: 57px;
+}
+
+
+.clockpicker.picker.picker--opened {
+  position: absolute;
+  z-index: 1000;
+  top: 50px;
+  box-shadow: 0px 1px 8px -1px #7265c885;
+  padding: 10px;
+  background: #fff;
+}
+.button-label {
+  display: inline-block;
+padding:5px 10px;
+width:;
+  margin: 0.5em;
+  cursor: pointer;
+  color: #292929;
+  border-radius: 0.25em;
+  background: #efefef;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.button-label h1 {
+  font-size: 14px;
+  text-align: center;
+
+}
+.button-label:hover {
+  background: #d6d6d6;
+  color: #101010;
+  border: 1px solid #147fdd;
+ 
+}
+.button-label:active {
+  transform: translateY(2px);
+ 
+}
+@media (max-width: 40em) {
+  .button-label {
+    padding: 0em 1em 3px;
+    margin: 0.25em;
+  }
+}
+
+
+
+#myCheckovi:checked + .button-label {
+  background: #0C2DB0;
+  color: #efefef;
+}
+#myCheckovi:checked + .button-label:hover {
+  background: #0C2DB0;
+  color: #e2e2e2;
+}
+
+
+
+
+#myCheckgd:checked + .button-label {
+  background: #0C2DB0;
+  color: #efefef;
+}
+#myCheckgd:checked + .button-label:hover {
+  background: #0C2DB0;
+  color: #e2e2e2;
+}
+
+
+
+
+
+
+#myCheck:checked + .button-label {
+  background: #0C2DB0;
+  color: #efefef;
+}
+#myCheck:checked + .button-label:hover {
+  background: #0C2DB0;
+  color: #e2e2e2;
+}
+
+
+
+
+#myCheckmim:checked + .button-label {
+  background: #0C2DB0;
+  color: #efefef;
+}
+#myCheckmim:checked + .button-label:hover {
+  background: #0C2DB0;
+  color: #e2e2e2;
+}
+
+
+
+
+
+
+
+#myCheckain:checked + .button-label {
+  background: #0C2DB0;
+  color: #efefef;
+}
+#myCheckain:checked + .button-label:hover {
+  background: #0C2DB0;
+  color: #e2e2e2;
+}
+
+input:checked + .button-label h1{
+  color: #fff;
+}
+
+
+#nogd:checked + .button-label {
+  background: #D91E18;
+  color: #efefef;
+}
+#nogd:checked + .button-label:hover {
+  background: #c21b15;
+  color: #e2e2e2;
+}
+
+
+
+#no:checked + .button-label {
+  background: #D91E18;
+  color: #fff;
+}
+#no:checked + .button-label:hover {
+  background: #c21b15;
+  color: #e2e2e2;
+}
+
+
+#maybe-button:checked + .button-label {
+  background: #4183D7;
+  color: #efefef;
+}
+#maybe-button:checked + .button-label:hover {
+  background: #2c75d2;
+  color: #e2e2e2;
+}
+
+
+.hidden {
+  display: none;
+}
+</style>
+      
+                       
+                       
+      
+
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
-
+<br>
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <form action="{{url('admin/narcotic/edit/'.$nar->id)}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card card-body" id="app">
                                         <div class="row">
-                                             <div class="col-sm-4">
+                                             <div class="col-sm-4" style="display:none;">
                                                 <div class="mb-3">
                                                     <label for="serial" class="form-label">  ক্রমিক নং </label>
-                                                    <input type="text" name="serial"  value="{{$nar->serial}}" id="serial" class="form-control  @error('serial') is-invalid @enderror" placeholder="  ক্রমিক নং  " required>
+                                                    <input type="text" name="serial"  value="{{$nar->serial}}" id="serial" class="form-control  @error('serial') is-invalid @enderror" placeholder="  ক্রমিক নং  " >
                                                 </div>
                                             </div> 
 
@@ -197,75 +396,331 @@
 
 
 
-                                            <div class="col-sm-4">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    <div class="col-sm-12" >
+                                             <hr>
+												
+                                            </div>
+                                            
+                                            
+                                            
+                                         
+                                            
+                                                <div class="col-sm-12">
                                                 <div class="mb-3">
+                                               উদ্ধারকৃত মাদকঃ
+                                               &nbsp; &nbsp;
+                                               
+                                               
+                                               
+       <input class="hidden radio-label" type="checkbox" name="action_taken" id="myCheckovi" value="গাজা"   onclick="myFunction()" {{$nar->gaza =='' ? '' : 'checked'}}  {{$nar->gaza_tree =='' ? '' : 'checked'}} >
+    <label class="button-label" for="myCheckovi">
+      <h1>গাজা</h1>
+	   </label>
+	   
+	   
+                                               
+  <input class="hidden radio-label" type="checkbox" name="action_taken" id="myCheckgd" value="ইয়াবা" onclick="myFunction()" {{$nar->yaba =='' ? '' : 'checked'}} > 
+    <label class="button-label" for="myCheckgd">
+      <h1>ইয়াবা</h1>
+    </label>
+	
+	
+    <input class="hidden radio-label" type="checkbox" name="action_taken" id="myCheck" value="মামলা" onclick="myFunction()" {{$nar->heroine =='' ? '' : 'checked'}}   {{$nar->fansdel =='' ? '' : 'checked'}} >
+    <label class="button-label" for="myCheck">
+      <h1>হিরোইন/ফেনসিডিল</h1>
+	   </label>
+	  
+	     <input class="hidden radio-label" type="checkbox" name="action_taken" value="স্থানীয় পর্যায়ে মীমাংসা" id="myCheckmim" onclick="myFunction()" {{$nar->cholai_alcohol =='' ? '' : 'checked'}}   {{$nar->bidesh_alcohol =='' ? '' : 'checked'}} >
+    <label class="button-label" for="myCheckmim">
+      <h1>মদ</h1>
+	   </label>
+	   
+	       <input class="hidden radio-label" type="checkbox" name="action_taken" id="myCheckain" value="আইনগত পরামর্শ" onclick="myFunction()"    {{$nar->lsd =='' ? '' : 'checked'}}    {{$nar->ice =='' ? '' : 'checked'}}   > 
+    <label class="button-label" for="myCheckain">
+      <h1>এলএসডি/ আইস</h1>
+    </label>   
+
+                                               
+                                               
+                                                </div>
+                                            </div>
+                                            
+											
+											
+											
+				
+
+<script>
+
+
+
+
+
+  window.onload = function myFunction() {
+    
+var checkBoxovi = document.getElementById("myCheckovi");
+  var checkBoxgd = document.getElementById("myCheckgd");
+    var checkBox = document.getElementById("myCheck");
+  var checkBoxmim = document.getElementById("myCheckmim");
+  var checkBoxain = document.getElementById("myCheckain");
+  
+      var gd1 = document.getElementById("gd1");
+     
+     var mam = document.getElementById("mam");
+     var mam2 = document.getElementById("mam2");
+     
+     
+	 
+       var mim = document.getElementById("mim");
+       var mim2 = document.getElementById("mim2");
+     
+       var ain = document.getElementById("ain");
+	 var ain2 = document.getElementById("ain2");
+	 
+	   var ovi1 = document.getElementById("ovi1");
+	   var ovi2 = document.getElementById("ovi2");
+       var ovi3 = document.getElementById("ovi3");
+     
+     
+
+    setInterval(function(){
+     
+
+
+   if (checkBoxovi.checked == true){
+  
+      
+      ovi1.style.display = "block";
+      ovi2.style.display = "block";
+	 
+  } else {
+
+         
+         ovi1.style.display = "none";
+         ovi2.style.display = "none";
+      
+		 
+  }
+  
+  
+     
+     
+     
+   if (checkBox.checked == true){
+      mam.style.display = "block";
+      mam2.style.display = "block";
+ 
+  
+  } else {
+         mam.style.display = "none";
+         mam2.style.display = "none";
+      
+         
+     
+  }
+  
+  
+  
+    if (checkBoxgd.checked == true){
+  
+      
+      gd1.style.display = "block";
+ 
+  } else {
+
+         
+         gd1.style.display = "none";
+      
+		 
+  }
+  
+  
+  
+  
+    
+    if (checkBoxmim.checked == true){
+  
+      
+      mim.style.display = "block";
+       mim2.style.display = "block";
+ 
+  } else {
+
+          mim.style.display = "none";
+         mim2.style.display = "none";
+      
+		 
+  }
+  
+      
+    if (checkBoxain.checked == true){
+  
+      
+      ain.style.display = "block";
+       ain2.style.display = "block";
+ 
+  } else {
+
+           ain.style.display = "none";
+         ain2.style.display = "none";
+      
+		 
+  }
+  
+  
+    },500); 
+  
+};
+
+
+</script>
+                          
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                     <div class="col-sm-4" id="ovi1"  style="display:none">
+                                                   <div class="mb-3">
                                                     <label for="gaza" class="form-label">  গাঁজা (গ্রাম)  </label>
                                                     <input type="text" name="gaza"  value="{{$nar->gaza}}" id="gaza" class="form-control  @error('gaza') is-invalid @enderror" placeholder=" গাঁজা (গ্রাম) ">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="ovi2" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gaza_tree" class="form-label">  গাঁজা গাছ (সংখ্যা)  </label>
                                                     <input type="text" name="gaza_tree"  value="{{$nar->gaza_tree}}" id="gaza_tree" class="form-control  @error('gaza_tree') is-invalid @enderror" placeholder=" গাঁজা গাছ (সংখ্যা) ">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
+
+
+											
+                                       <div class="col-sm-4" id="gd1"  style="display:none">
+                                              <div class="mb-3">
                                                     <label for="yaba" class="form-label">  ইয়াবা (পিচ)  </label>
                                                     <input type="text" name="yaba"  value="{{$nar->yaba}}" id="yaba" class="form-control  @error('gaza_tree') is-invalid @enderror" placeholder=" ইয়াবা (পিচ) ">
                                                 </div>
                                             </div>
+      
+  
 
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="heroine" class="form-label">  ইরোইন (গ্রাম)  </label>
-                                                    <input type="text" name="heroine"  value="{{$nar->heroine}}" id="heroine" class="form-control  @error('heroine') is-invalid @enderror" placeholder=" ইরোইন (গ্রাম) ">
-                                                </div>
+                                         
+					                          
+                                
+                                            <div class="col-sm-4" id="mam"  style="display:none">
+                                               <div class="mb-3">
+                                                    <label for="heroine" class="form-label">  হিরোইন (গ্রাম)  </label>
+                                                       <input type="text" name="heroine"  value="{{$nar->heroine}}" id="heroine" class="form-control  @error('heroine') is-invalid @enderror" placeholder=" ইরোইন (গ্রাম) ">
+                                               </div>
                                             </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
+      
+                                            
+                                            
+                                            <div class="col-sm-4" id="mam2"  style="display:none">
+                                                 <div class="mb-3">
                                                     <label for="fansdel" class="form-label">  ফেনসিডিল (বোতল)  </label>
-                                                    <input type="text" name="fansdel"  value="{{$nar->fansdel}}" id="fansdel" class="form-control  @error('fansdel') is-invalid @enderror" placeholder=" ফেনসিডিল (বোতল) ">
-                                                </div>
+                                                   <input type="text" name="fansdel"  value="{{$nar->fansdel}}" id="fansdel" class="form-control  @error('fansdel') is-invalid @enderror" placeholder=" ফেনসিডিল (বোতল) ">
+                                                 </div>
                                             </div>
+      
+      
+                                   
 
-                                             <div class="col-sm-4">
-                                                <div class="mb-3">
+
+
+
+
+                                   
+                                         
+                                             <div class="col-sm-4" id="mim" style="display:none">
+                                               <div class="mb-3">
                                                     <label for="cholai_alcohol" class="form-label"> চোলাই মদ (লিটার)   </label>
                                                     <input type="text" name="cholai_alcohol"  value="{{$nar->cholai_alcohol}}" id="cholai_alcohol" class="form-control  @error('cholai_alcohol') is-invalid @enderror" placeholder=" চোলাই মদ (লিটার) ">
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4">
-                                                <div class="mb-3">
+                                             <div class="col-sm-4" id="mim2" style="display:none">
+                                               <div class="mb-3">
                                                     <label for="bidesh_alcohol" class="form-label"> বিদেশী মদ (লিটার)   </label>
                                                     <input type="text" name="bidesh_alcohol"  value="{{$nar->bidesh_alcohol}}" id="bidesh_alcohol" class="form-control  @error('bidesh_alcohol') is-invalid @enderror" placeholder=" বিদেশী মদ (লিটার) ">
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4">
-                                                <div class="mb-3">
+                                             <div class="col-sm-4" id="ain" style="display:none">
+                                               <div class="mb-3">
                                                     <label for="lsd" class="form-label">  এলএসডি (মাইক্রোগ্রাম)  </label>
                                                     <input type="text" name="lsd"  value="{{$nar->lsd}}" id="lsd" class="form-control  @error('lsd') is-invalid @enderror" placeholder=" এলএসডি (মাইক্রোগ্রাম) ">
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4">
-                                                <div class="mb-3">
+                                             <div class="col-sm-4" id="ain2" style="display:none">
+                                               <div class="mb-3">
                                                     <label for="ice" class="form-label">  আইস (মাইক্রোগ্রাম)  </label>
                                                     <input type="text" name="ice"  value="{{$nar->ice}}" id="ice" class="form-control  @error('ice') is-invalid @enderror" placeholder=" আইস (মাইক্রোগ্রাম) ">
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4">
+                                             <div class="col-sm-4" >
                                                 <div class="mb-3">
                                                     <label for="otherd" class="form-label"> আন্যান্য   </label>
-                                                    <input type="text" name="otherd"  value="{{$nar->otherd}}" id="otherd" class="form-control  @error('otherd') is-invalid @enderror" placeholder=" আন্যান্য ">
+                                                    <input type="text" name="otherd"  value="{{old('otherd')}}" id="otherd" class="form-control  @error('otherd') is-invalid @enderror" placeholder=" আন্যান্য ">
                                                 </div>
                                             </div>
+
+
+
+
+
+      
+      
+          <div class="col-sm-12" >
+                                             <hr>
+												
+                                            </div>                
+                                            
+                                            
+                                            
+                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                  
@@ -282,10 +737,10 @@
                                                 </div>
                                             </div>
 
-                                             <div class="col-sm-4">
+                                             <div class="col-sm-4" style="display:none;">
                                                 <div class="mb-3">
                                                     <label for="jobdo_list" class="form-label"> জব্দ তালিকা  </label>
-                                                    <select name="jobdo_list" id="jobdo_list" class="form-select form-control" required>
+                                                    <select name="jobdo_list" id="jobdo_list" class="form-select form-control">
                                                         <option value="">Select</option>
                                                         <option value="হ্যা" {{$nar->jobdo_list=='হ্যা' ? 'selected' : '' }}>হ্যা</option>
                                                         <option value="না" {{$nar->jobdo_list=='না' ? 'selected' : '' }}>না</option>

@@ -203,30 +203,7 @@ input:checked + .button-label h1{
 <br>
   <div id="errmsg"></div>
 <div id="errdate"></div>
-<div class="row">
-   <div class="col-12">
-      <div class="card">
-         <div class="card-body" style="padding: 15px 10px 7px 10px;">
-            <div class="row">
-               <div class="col-sm-6">
-                  <h4 class="page-title"><i class="dripicons-scale"></i>Edit qrr</h4>
-               </div>
-               <div class="col-sm-6">
-                  <div class="page-title-box">
-                     <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                         <li class="breadcrumb-item"><a href="{{url('admin/qrrs')}}">QRR</a></li>
-                           <li class="breadcrumb-item active">Edit qrr</li>
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-<br>
+
  <!-- start page title -->
  
  

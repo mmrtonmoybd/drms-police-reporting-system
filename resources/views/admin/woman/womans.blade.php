@@ -3,24 +3,9 @@
 @php 
 use Illuminate\Support\Str;
 @endphp
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/woman')}}">Women and children Dashboard</a></li>
-                                            <li class="breadcrumb-item active">All Women and children Dashboard</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"><i class="dripicons-scale"></i> Women and children Dashboard</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title -->
-
+                 
                         <x-admin-validation-errors :errors="$errors->all()"/>
-
+<br>
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">

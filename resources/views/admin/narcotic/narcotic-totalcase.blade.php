@@ -1,24 +1,14 @@
-<x-admin-header />
 
-<x-admin-validation-errors :errors="$errors->all()"/>
-
-
-
-
-
-             
+			<x-admin-header/>
+			
+			<!-- ============ Body content start ============= -->
+			
+			    
 <style>
-
 body {
     background:#144f5d;
-     color:#fff!important;
+     color:#000!important;
 }
-
-.card {
-    background-color:transparent!important;
-    color:#fff;
-}
-
 
 .tcap {
   background-color: brown;
@@ -30,95 +20,40 @@ body {
 }
  
    
-   .stylish {
-   background: #f42b1c;
-   color: #fff;
-   border-radius: 20px;
-   display: block;
-   width: 100%;
-   padding: 5px 7px 5px 5px;
-   font-size: .9rem;
-   font-weight: 400;
-   line-height: 1.5;
-   text-align: center;
-   }
-   .stylish option {
-   text-align: center;
-   }
    
-
-
-   
-   .stylish:hover {
-   background: #ff0000e3;
-   color: #fff;
-   border-radius: 20px;
-   display: block;
-   width: 100%;
-   padding: 5px 7px 5px 5px;
-   font-size: .9rem;
-   font-weight: 400;
-   line-height: 1.5;
-   text-align: center;
-   }
-   .stylish option {
-   text-align: center;
-   }
-   
-
-
-
-
-   .datepicker {
-   border: 1px solid #ff0000e3;
-   color:#ff0000e3;
-   border-radius:20px;
-   }
-   input#date_time_response {
-   height: 33px;
-   border: 1px solid #ff0000e3;
-   }
-
+  
 .tablestylenar {
  
   border-collapse: collapse;
   width: 100%;
 }
-
 .tablestylenar td, .tablestylenar th {
   border: 1px solid #ddd;
   padding: 8px;
 }
-
 .tablestylenar tr:nth-child(even){background-color: #176373;}
-
 .tablestylenar tr:hover {background-color: #176272;}
-
 .tablestylenar th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
   background-color: #22a598;
-  color: white;
+  color: #000;
 }
 </style>
-
-<div class="row">
-     <div class="card">
- <div class="card-body ">
-
-          <h1 style="text-align:center;">মাদক মামলার সংখ্যা</h1>
-        </div>
-         </div>
-         
-         </div>
-         
-         <div class="row">
-   <div class="card">
-   
-                                   	<form target="_blank" action="{{url('admin/narcotic/totalcase/src')}}" method="get">
-                                                    
-                                                    <div class="" id="app">
+			
+			
+            <div class="main-content pt-4">
+                <div class="selectbox">
+                    
+              
+               
+               <div class="" id="app">
+                   
+                   
+                   
+                   	<form target="_blank" action="{{url('admin/narcotic/totalcase/src')}}" method="get">
+                          
                                         <div class="row">
 										
                                
@@ -182,7 +117,7 @@ body {
             <div class="col-sm-2 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label">&nbsp;</label>
-                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
+                  <button type="submit" name="submit" class="btn" style="width:100%;" > সার্চ করুন </button>
                </div>
             </div>
             
@@ -191,46 +126,54 @@ body {
             </div>
             
          </div>
+         
+         
+         
+         
+         </form>
+    
+   
+         
+      
       </div>
+	  
 
-                                               </form>
+					
+                </div>
+                <div class="separator-breadcrumb border-top"></div>
+             
+		
+             
 
-                                            <!----
-         <div id="chart_div"></div>
-         <div id="piechart"></div>
-         <div id="chart_div2"></div>
-         --->
 
 
-   </div>
-  
-         
-   </div>
-         
-         
-         
-         
-         
-         
-         
+
+
+
+
       
 <div class="row">
 
+                            <div class="col-sm-12 ">
 
 
                    <div class="card">
-                                    <div class="card-body table-responsive">
+                       
+                       
+                       
+                                   
                                         
                                         
-                                        <?php if(isset($_GET['form1'])) {
-                                            echo'';
+                                        <?php if(isset($_GET['form1'])) {   ?>
+                                           
+                                           <div class="card-body table-responsive">
                                             
-                                        }
+                                        <?php }   else { ?>
                                         
-                                        else {
-                                            echo 'অনুগ্রহপূর্বক তারিখ নির্বাচন করুন';
-                                        }
-                                         ?>
+                                         <div class="card-body table-responsive" style="height:50px;">
+                                           অনুগ্রহপূর্বক তারিখ নির্বাচন করুন
+                                        
+                                         <?php } ?>
 
              @if ($request->has('submit'))
 
@@ -502,24 +445,27 @@ body {
 
 </div><!--- ----END OF COLUMN------>
 
-
-
-
-<!-----HIDDEN---
-
- <div class="col-sm-3" > 
-
-
-</div>--->  <!-----END OF COLUMN------>
+</div>
 
 
 
 
-</div>  <!--END OF ROW---->
-<div class="row">
-                            <div class="col-sm-12 ">
 
-                            </div>
-                                        </div>
 
-<x-admin-footer/>
+
+
+
+
+
+            </div>
+			
+			
+			
+            <div class="sidebar-overlay open"></div>
+			<!-- Footer Start -->
+			
+			
+			
+			
+			
+                                        <x-admin-footer/>

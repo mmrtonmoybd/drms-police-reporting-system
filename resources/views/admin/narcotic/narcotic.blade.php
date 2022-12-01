@@ -3,22 +3,7 @@
 @php 
 use Illuminate\Support\Str;
 @endphp
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/narcotic')}}">Narcotics</a></li>
-                                            <li class="breadcrumb-item active">All Narcotics</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"><i class="dripicons-scale"></i> Narcotics</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title -->
-
+          <br>
                         <x-admin-validation-errors :errors="$errors->all()"/>
 
                         <div class="row">
@@ -41,7 +26,7 @@ use Illuminate\Support\Str;
                                                     <th style="width: 86px">Action</th>
                                                     <th > রেফারেন্স নং </th>
                                                     <th > ট্র্যাকিং নং </th>
-                                                    <th> ক্রমিক নং </th>
+                                                  
                                                     <th > ফোল্ডার নং </th>
                                                     <th > জেলা </th>
                                                     <th > থানা </th>
@@ -92,7 +77,7 @@ use Illuminate\Support\Str;
                                                     </td>
                                                     <td > {{$nar->id}}</td>
                                                     <td > {{$nar->trakingID}}</td>
-                                                    <td> {{$nar->serial}}</td>
+                                                   
                                                     <td > {{$nar->folder_no}}</td>
                                                     <td > @if(isset($nar->district->name)) {{$nar->district->bn_name}} @endif</td>
                                                     <td > @if(isset($nar->thana->name)) {{$nar->thana->name}} @endif</td>

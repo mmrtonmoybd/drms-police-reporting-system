@@ -33,7 +33,7 @@ body{
                                                    <tr>
                                                         <td> <b>রেফারেন্স নং : </b> {{$nar->id}}</td>
                                                         <td> <b>ট্র্যাকিং নং : </b> {{$nar->trakingID}}</td>
-                                                        <td> <b>ক্রমিক নং : </b> {{$nar->serial}}</td>
+                                                    
                                                         
                                                     </tr>
                                                     <tr>

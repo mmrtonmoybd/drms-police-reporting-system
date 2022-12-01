@@ -1,21 +1,5 @@
 <x-admin-header />
-                        
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/woman')}}">Women and children Dashboard</a></li>
-                                            <li class="breadcrumb-item active">View Women and children Dashboard</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"> <i class="mdi mdi-eye"></i> View Women and children Dashboard #{{$woman->id}}</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title --> 
+       
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
 
@@ -65,7 +49,8 @@
                                                     <tr>
                                                         <td> <b>  ধারা: </b> {{$woman->dhara}}</td>
                                                         <td> <b> অভিযোগ নং: </b>  {{$woman->complaint_no}}</td>
-                                                        <td>  <b>  সমস্যা সমাধান হয়েছে কিনা:</b> {{$woman->problem_fix}}  </td>
+                                                         <td> <b> অভিযোগ  তারিখ: </b>  {{date('d/m/Y', strtotime($woman->complaint_date))}} </td>
+                                                      
                                                     </tr>
                                                     <tr>
                                                         <td> <b>   গৃহীত ব্যবস্থা: </b>{{$woman->action_taken}}</td>
@@ -75,9 +60,11 @@
                                                     </tr>
 
                                                     <tr>
+                                                          <td>  <b>  সমস্যা সমাধান হয়েছে কিনা:</b> {{$woman->problem_fix}}  </td>
                                                         <td colspan="3">
                                                         <b>   মন্তব্য: </b>  {{$woman->comment}}
                                                         </td>
+                                                        
                                                     </tr>
                                                 </table>
                                                 <a target="_blank" href="{{url('admin/woman/pview/'.$woman->id)}}" class="btn btn-success"><i class="uil uil-print"></i> Print</a>

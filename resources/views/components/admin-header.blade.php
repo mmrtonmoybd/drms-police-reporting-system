@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-          <title> DRMS | Management</title>
+          <title>{{ headertitle() . ' | ' . config('app.name') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900') }}" rel="stylesheet" />
     <link href="{{ asset('dist-assets/css/themes/lite-purple.css') }}" rel="stylesheet" />
     <link href="{{ asset('dist-assets/css/plugins/perfect-scrollbar.css') }}" rel="stylesheet" />
@@ -33,7 +33,7 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   
       @include('components.qrrg')
-      @include('components.warrantg')
+      @include('components.warrantg') 
       @include('components.narcoticg')
       @include('components.womang')
 
@@ -115,24 +115,46 @@ border-bottom: 2px solid blue;
 border-radius: 0px;
 }
 
+
+
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
+  z-index: 5000 !important;
+  position: absolute!important;
+}
 </style>
 
 
 </head>
 
 <body class="text-left">
-    <div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
+
+
+	    @if (session("sidebar") == 1)
+<div class="app-admin-wrap layout-sidebar-vertical show sidebar-compact-onhover sidebar-closed sidebar-compact">
+   
+
+      @else 
+<div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
+
+      @endif
+		
+
 
 
 
    <x-admin-left-menu />
 
 		
+		    @if (session("sidebar") == 1)
+<div class="main-content-wrap mobile-menu-content bg-off-white m-0 sidebar-full">
+   
+
+      @else 
+ <div class="main-content-wrap mobile-menu-content bg-off-white m-0">
+
+      @endif
 		
-		
-		
-		
-        <div class="main-content-wrap mobile-menu-content bg-off-white m-0">
+
             <header class="main-header bg-white d-flex justify-content-between p-2">
                 <div class="header-toggle">
                     <div class="menu-toggle mobile-menu-icon">
@@ -191,27 +213,5 @@ border-radius: 0px;
 				  </a>
             </header>
 			
-			<!---
-    Send a GET request to "admin/adminsidebarcollapase"
-
-    For hideing sidebar GET request to: "admin/adminsidebarcollapase?sidebar=1"
-    For disable hiding sidebar request to: "admin/adminsidebarcollapase?sidebar=0"
-    -->
-
-    <!-- 
-
-    Condition for hiding/showing sidebar with backend power:
-
-      @if (session("sidebar") == 1)
-      
-      This condition is hiding sidebar. 
-      use CSS menu class to hide sidebar exampla: hide
-
-      @else 
-      This condition is showing sidebar. 
-      use CSS menu class to show sidebar exampla: show
-
-      @endif
-    -->
 
 @endif

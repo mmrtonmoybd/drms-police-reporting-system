@@ -18,10 +18,21 @@
 </style>
 
    <div class="sidebar-panel">
+       
             <div class="gull-brand pr-3 text-center mt-4 mb-2 d-flex justify-content-center align-items-center"><img class="pl-3" src="{{url('logo-drms.jpg')}}" alt="alt" /><span class="item-name" style="color: #1b1769;font-size: 33px;font-weight: bold;">DRMS</span>
      
 	 <!--  <span class=" item-name text-20 text-primary font-weight-700">GULL</span> -->
-                <div class="sidebar-compact-switch ml-auto"><span></span></div>
+   
+	    @if (session("sidebar") == 1)
+  <a href="{{ url('admin/adminsidebarcollapase?sidebar=0') }}"> 
+   
+      @else 
+         <a href="{{ url('admin/adminsidebarcollapase?sidebar=1') }}">   
+
+      @endif
+		
+            
+            <div class="sidebar-compact-switch ml-auto"><span></span></div> </a>
             </div>
             <!--  user -->
             <div class="scroll-nav ps ps--active-y" data-perfect-scrollbar="data-perfect-scrollbar" data-suppress-scroll-x="true">
@@ -40,7 +51,7 @@
 						
 						
 					   @canany(['qrr.dashboard', 'qrr.add', 'qrr.view'])
-							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Qrr</span></a>
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Qrr</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/qrrs/*') || request()->is('admin/qrrs')) mm-show @endif">
                                   @can('qrr.dashboard')
 									<li class="item-name "><a href="{{url('admin/qrrs/srcs')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
@@ -61,14 +72,20 @@
 							
 						
 						@canany(['narcotic.add', 'narcotic.dashboard', 'narcotic.view'])
-							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-tablets text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Narcotics</span></a>
+						
+						
+						
+					
+      
+						<!-----has-arrow without-after-element------->
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tablets text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Narcotics</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/narcotic/*') || request()->is('admin/narcotic')) mm-show @endif">
                                   @can('narcotic.dashboard')
 								  
 								  <li class="item-name"><a href="{{url('admin/narcotic/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
 
-								  <li class="item-name"><a href="{{url('admin/narcotic/totalcase')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Narcotics case number </span></a></li>
-								  <li class="item-name"><a href="{{url('admin/narcotic/recover')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Narcotics recover</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/narcotic/totalcase')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Case number </span></a></li>
+								  <li class="item-name"><a href="{{url('admin/narcotic/recover')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Recover</span></a></li>
 									 @endcan
 									 
 								@can('narcotic.add')
@@ -90,7 +107,7 @@
 
 
   @canany(['woman.dashboard', 'woman.add', 'woman.view'])
-							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-children text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Women & child</span></a>
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-children text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Women & child</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/woman/*') || request()->is('admin/woman')) mm-show @endif">
                                   @can('woman.dashboard')
 									<li class="item-name "><a href="{{url('admin/woman/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
@@ -114,7 +131,7 @@
 						  
   @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
   <!-----------
-							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-handcuffs text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Warrant</span></a>
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-handcuffs text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Warrant</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/warrant/*') || request()->is('admin/warrant')) mm-show @endif">
                                   @can('warrant.dashboard')
 									<li class="item-name "><a href="{{url('admin/warrant/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
@@ -137,7 +154,7 @@
 						
 						
 						 @canany(['role.view', 'user.view'])
-							<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa-solid fa-user-group text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">User Manage</span></a>
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-user-group text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">User Manage</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/role/*') || request()->is('admin/role')) mm-show @endif">
                                   @can('role.view')
 									<li class="item-name"><a  href="{{url('admin/users/role')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Role</span></a></li>

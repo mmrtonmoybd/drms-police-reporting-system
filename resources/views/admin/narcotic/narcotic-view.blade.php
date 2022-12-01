@@ -1,21 +1,6 @@
 <x-admin-header />
                         
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            
-                                            <li class="breadcrumb-item"><a href="{{url('admin/narcotic')}}">Narcotic</a></li>
-                                            <li class="breadcrumb-item active">View narcotic</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"> <i class="mdi mdi-eye"></i> View narcotic #{{$nar->id}}</h4>
-                                </div>
-                            </div>
-                        </div>     
-                        <!-- end page title --> 
+                  <br>
 
                         <x-admin-validation-errors :errors="$errors->all()"/>
 
@@ -29,7 +14,7 @@
                                                     <tr>
                                                         <td> <b>রেফারেন্স নং : </b> {{$nar->id}}</td>
                                                         <td> <b>ট্র্যাকিং নং : </b> {{$nar->trakingID}}</td>
-                                                        <td> <b>ক্রমিক নং : </b> {{$nar->serial}}</td>
+                                                    
                                                         
                                                     </tr>
                                                     <tr>

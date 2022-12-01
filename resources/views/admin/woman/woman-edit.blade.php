@@ -478,13 +478,13 @@ input:checked + .button-label h1{
 	   
 	   
                                                
-  <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckgd" value="জিডি" onclick="myFunction()" {{$woman->action_taken=='জিডি' ? 'checked' : ''}}>
+  <input class="hidden radio-label" type="radio" name="action_taken" id="myCheckgd" value="জিডি" onclick="myFunction()" {{$woman->action_taken=='জিডি' ? 'checked' : ''}} >
     <label class="button-label" for="myCheckgd">
       <h1>জিডি</h1>
     </label>
 	
 	
-    <input class="hidden radio-label" type="radio" name="action_taken" id="myCheck" value="মামলা" onclick="myFunction()" {{$woman->action_taken=='মামলা' ? 'checked' : ''}}>
+    <input class="hidden radio-label" type="radio" name="action_taken" id="myCheck" value="মামলা" onclick="myFunction()" {{$woman->action_taken=='মামলা' ? 'checked' : ''}}  >
     <label class="button-label" for="myCheck">
       <h1>মামলা</h1>
 	   </label>
@@ -603,17 +603,17 @@ var checkBoxovi = document.getElementById("myCheckovi");
 
                                                               
 
-                                             <div class="col-sm-4" id="ovi1" style="display:none">
+                                             <div class="col-sm-4" id="ovi1"  {{$woman->action_taken=='অভিযোগ গ্রহণ' ? '' : 'style=display:none'}} >
                                                 <div class="mb-3">
                                                     <label for="complaint_no" class="form-label">অভিযোগ নং </label>
                                                     <input type="text" name="complaint_no" value="{{$woman->complaint_no}}"  id="complaint_no" class="number form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" id="ovi2" style="display:none">
+                                            <div class="col-sm-4" id="ovi2"  {{$woman->action_taken=='অভিযোগ গ্রহণ' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="complaint_no" class="form-label">অভিযোগ  তারিখ </label>
-                                                 <input type="text" name="complaint_date"  value="@if (!empty($woman->complaint_date)) {{date('d/m/Y', strtotime($woman->complaint_date))}} @endif" id="complaint_date" class="form-control datepicker  @error('complaint_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="অভিযোগের তারিখ" required>
+                                                 <input type="text" name="complaint_date"  value="@if (!empty($woman->complaint_date)) {{date('d/m/Y', strtotime($woman->complaint_date))}} @endif" id="complaint_date" class="form-control datepicker  @error('complaint_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="অভিযোগের তারিখ" >
                                                 
                                             
                                               </div>
@@ -626,7 +626,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
 											
 											
 											
-                                       <div class="col-sm-4" id="gd1" >
+                                       <div class="col-sm-4" id="gd1"   {{$woman->action_taken=='জিডি' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
                                                     <input type="text" name="gd_no"  value="{{$woman->gd_no}}"  id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
@@ -634,7 +634,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             </div>
       
                                             
-                                            <div class="col-sm-4" id="gd2" >
+                                            <div class="col-sm-4" id="gd2"   {{$woman->action_taken=='জিডি' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  তারিখ   </label>
                                                     
@@ -655,7 +655,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
 								
 					                          
                                 
-                                            <div class="col-sm-4" id="mam" >
+                                            <div class="col-sm-4" id="mam"   {{$woman->action_taken=='মামলা' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="mamla_no" class="form-label">  মামলা নং   </label>
                                                     <input type="text" name="mamla_no"  value="{{$woman->mamla_no}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
@@ -663,7 +663,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             </div>
       
                                             
-                                            <div class="col-sm-4" id="mam2" >
+                                            <div class="col-sm-4" id="mam2"   {{$woman->action_taken=='মামলা' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="mamla_date" class="form-label">  তারিখ  </label>
                                            
@@ -673,7 +673,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
       
       
                                              
-                                            <div class="col-sm-4" id="mam3">
+                                            <div class="col-sm-4" id="mam3"  {{$woman->action_taken=='মামলা' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="dhara" class="form-label">ধারা </label>
                                                     <input type="text" name="dhara"   value="{{$woman->dhara}}" id="dhara" class="form-control  @error('dhara') is-invalid @enderror" placeholder=" ধারা">
