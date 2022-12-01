@@ -65,7 +65,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/adminsidebarcollapase', function (Request $request) {
             if ($request->filled('sidebar')) {
                 Session::put('sidebar', $request->input('sidebar'));
-                
+
                 return \redirect()->back();
             }
         });
