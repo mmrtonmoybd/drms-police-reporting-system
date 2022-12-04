@@ -32,6 +32,13 @@ use Illuminate\Support\Str;
                                            
                                             
                                         </div>
+                                        <div style="text-align: right;margin: 16px;">
+                    
+                                          
+  <a target="_blank" href="{{url('admin/qrrs/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
+      
+											
+											</div>
                                         <table class="tablestyle table-bordered table-striped table-centered yajra-datatable">
 
                                             <thead>

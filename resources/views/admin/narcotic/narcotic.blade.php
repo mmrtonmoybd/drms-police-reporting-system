@@ -20,6 +20,13 @@ use Illuminate\Support\Str;
                                            
                                             
                                         </div>
+                                        <div style="text-align: right;margin: 16px;">
+                    
+                                          
+  <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
+      
+											
+											</div>
                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
@@ -81,12 +88,12 @@ use Illuminate\Support\Str;
                                                     <td > {{$nar->folder_no}}</td>
                                                     <td > @if(isset($nar->district->name)) {{$nar->district->bn_name}} @endif</td>
                                                     <td > @if(isset($nar->thana->name)) {{$nar->thana->name}} @endif</td>
-                                                    <td > {{$nar->village_word}}</td>
+                                                    <td > {{Str::limit($nar->village_word, 10)}}</td>
                                                     <td > @if(!empty($nar->sdate)) {{date('d/m/Y', strtotime($nar->sdate))}} @endif</td>
                                                     <td > {{$nar->case_no}}</td>
-                                                    <td > {{$nar->nopc}}</td>
+                                                    <td > {{Str::limit($nar->nopc, 10)}}</td>
                                                     <td > {{$nar->name_of_investigator_org}}</td>
-                                                    <td > {{$nar->name_of_investigator}}</td>
+                                                    <td > {{Str::limit($nar->name_of_investigator, 10)}}</td>
                                                     <td > {{$nar->bp_no}}</td>
                                                     <td > {{$nar->mobile_no}}</td>
                                                     <td > {{$nar->gaza}}</td>
@@ -100,11 +107,11 @@ use Illuminate\Support\Str;
                                                     <td > {{$nar->ice}}</td>
                                                     <td > {{$nar->otherd}}</td>
                                                     <td > {{$nar->number_of_accused}}</td>
-                                                    <td > {{Str::limit($nar->accused)}}</td>
+                                                    <td > {{Str::limit($nar->accused, 10)}}</td>
                                                     <td > {{$nar->image_video}}</td>
                                                     <td > {{$nar->jobdo_list}}</td>
-                                                    <td > {{$nar->narocotic_test_report}}</td>
-                                                    <td > {{$nar->investigate_result}}</td>
+                                                    <td > {{Str::limit($nar->narocotic_test_report, 10)}}</td>
+                                                    <td > {{Str::limit($nar->investigate_result, 15)}}</td>
                                                     <td > @if(!empty($nar->tdate)) {{ date('d/m/Y', strtotime($nar->tdate)) }} @endif</td>
                                                     <td > {{Str::limit($nar->comment, 5)}}</td>
                                                     

@@ -3,7 +3,121 @@
 			
 			<!-- ============ Body content start ============= -->
 			
-			
+			<div class="main-content pt-4">
+                <div class="selectbox">
+                    
+                <form  action="{{url('admin/woman/src')}}" method="get">
+               
+               <div class="" id="app">
+                                                                 <div class="row">
+                                          @if (auth()->user()->hasRole('Super Admin'))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="districtID" class="form-label "></label>
+                                                    
+                                                    
+                                                    
+                                                    <select name="districtID" id="districtID" class="form-select form-control stylish "  v-model="district_id" @change="getUpozillasAndThana()">
+                                                        <option value="">জেলা</option>
+
+                                                        @php 
+                                                        if (request()->input('districtID') !== 'খালি') {
+                                                         $did = request()->input('districtID');
+                                                        } else {
+                                                         $did = 82625;
+                                                        }
+                                                        @endphp
+
+                                                        @if($districts)
+
+                                                        @foreach($districts as $district)
+                                                        <option value="{{$district->id}}" {{ ($district->id == $did) ? 'selected' : '' }} >{{$district->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control stylish" >
+                                                        <option value="">থানা</option>
+                                                        <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            @endif
+
+                                            @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
+                                                      
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}"  {{ ($thnsp->id == request()->input('thanaID')) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                             @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish">
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+
+                                    
+           <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="action_taken" class="form-label"></label>
+                                                    <select name="action_taken" id="action_taken" class="form-select form-control stylish" >
+                                                        <option value="">   গৃহীত ব্যবস্থা  </option>
+                                                        <option value="অভিযোগ গ্রহন" {{ ( request()->input('action_taken') == 'অভিযোগ গ্রহন') ? 'selected' : '' }}>অভিযোগ গ্রহন</option>
+                                                        <option value="স্থানীয় মীমাংসা" {{ ( request()->input('action_taken') == 'অভিযোগ গ্রহন') ? 'selected' : '' }}>স্থানীয় মীমাংসা</option>
+                                                        <option value="মামলা" {{ ( request()->input('action_taken') == 'মামলা') ? 'selected' : '' }}>মামলা</option>
+                                                        <option value="জিডি" {{ ( request()->input('action_taken') == 'জিডি') ? 'selected' : '' }}>জিডি</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <div class="input-group" id="timepicker-input-group2">
+                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                  </div>
+               </div>
+            </div>
+            
+            <div class="col-sm-2 " >
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                 <button type="submit" name="submit" class="btn" style="width: 100%;"> সার্চ করুন </button>
+               </div>
+            </div>
+         </div>
+      </div>
 			
 			
             <div class="main-content pt-4">
@@ -95,9 +209,9 @@
                                                     <th > বাদীর মোবাইল নং  </th>
                                                     <th > বিবাদীর নাম</th>
                                                     <th > বিবাদীর ঠিকানা </th>
-                                                    <th > অভিযোগের কারন </th>
-                                                    <th>  তদন্তকারী কর্মকর্তার নাম</th>
-                                                    <th > তদন্তকারী কর্মকর্তার পদবী </th>
+                                                    <th > অভিযুক্তের সংখ্যা </th>
+                                                    <th>  তদন্তকারী কর্মকর্তার নাম ও পদবি</th>
+                                                    <th > তদন্তকারী কর্মকর্তার বিপি নাম্বার </th>
                                                     <th > মোবাইল নং </th>
                                                     <th > জিডি নং </th>
                                                     <th > তারিখ </th>
@@ -105,7 +219,7 @@
                                                     <th > তারিখ </th>
                                                     <th > ধারা </th>
                                                     <th > অভিযোগ নং </th>
-                                                    <th > তারিখ </th>
+                                                    <th> তারিখ </th>
                                                     <th > সমস্যা সমাধান হয়েছে কিনা </th>
                                                     <th > গৃহীত ব্যবস্থা </th>
                                                     <th > নিষ্পত্তি রিপোর্ট </th>
@@ -135,27 +249,27 @@
                                                     <td > {{$woman->reference_no}}</td>
                                                     <td > @if(isset($woman->district->name)) {{$woman->district->bn_name}} @endif</td>
                                                     <td > @if(isset($woman->thana->name)) {{$woman->thana->name}} @endif</td>
-                                                    <td > {{$woman->village_word}}</td>
+                                                    <td > {{Str::limit($woman->village_word, 10)}}</td>
                                                     <td > @if(!empty($woman->wdate)) {{date('d/m/Y H:i', strtotime($woman->wdate))}} @endif</td>
                                                     <td>  {{$woman->event_type}}</td>
                                                     <td>  {{$woman->begening_of_event}}</td>
                                                     <td>  {{Str::limit($woman->short_dettails, 10)}}</td>
-                                                    <td > {{$woman->badi_name}}</td>
+                                                    <td > {{Str::limit($woman->badi_name, 10)}}</td>
                                                     <td > {{$woman->badi_age}}</td>
                                                     <td > {{Str::limit($woman->badi_address, 10)}}</td>
                                                     <td > {{ $woman->badi_phone}}</td>
-                                                    <td > {{$woman->vbadi_name}}</td>
-                                                    <td > {{$woman->vbadi_address}}</td>
-                                                    <td > {{Str::limit($woman->complaint_reson, 5)}}</td>
-                                                    <td>  {{$woman->investigator_name}}</td>
+                                                    <td > {{Str::limit($woman->vbadi_name, 10)}}</td>
+                                                    <td > {{Str::limit($woman->vbadi_address, 10)}}</td>
+                                                    <td > {{$woman->complaint_reson}}</td>
+                                                    <td>  {{Str::limit($woman->investigator_name, 10)}}</td>
                                                     <td>  {{$woman->investigator_title}}</td>
                                                     <td>  {{$woman->mobile_no}}</td>
-                                                    <td > {{$woman->gd_no}}</td>
-                                                    <td > @if($woman->gd_date) {{date('d/m/Y', strtotime($woman->gd_date))}} @endif</td>
-                                                    <td > {{$woman->mamla_no}}</td>
-                                                    <td > @if($woman->mamla_date) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif</td>
-                                                    <td > {{$woman->dhara}}</td>
-                                                    <td > {{$woman->complaint_no}}</td>
+                                                    <td > {{Str::limit($woman->gd_no, 15)}}</td>
+                                                    <td > @if(!empty($woman->gd_date)) {{date('d/m/Y', strtotime($woman->gd_date))}} @endif</td>
+                                                    <td > {{Str::limit($woman->mamla_no, 15)}}</td>
+                                                    <td > @if(!empty($woman->mamla_date)) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif</td>
+                                                    <td > {{Str::limit($woman->dhara, 10)}}</td>
+                                                    <td > {{Str::limit($woman->complaint_no, 15)}}</td>
                                                     <td>  @if(!empty($woman->complaint_date)) {{date('d/m/Y', strtotime($woman->complaint_date))}} @endif</td>
                                                     <td > {{$woman->problem_fix}}</td>
                                                     <td > {{$woman->action_taken}}</td>
@@ -203,6 +317,120 @@
 			
 			
 
+ @php
+ $sdisn = request()->input('districtID');
+ $sthan = request()->input('thanaID');
+                
+                  $division_id = 1;
+                if(($sdisn !== 'খালি'))
+                    $district_id = $sdisn;
+                if(($sthan !== 'খালি'))
+                    $thana_id = $sthan;
 
+                @endphp
+    <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
+    <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
+
+  <script>
+    var app = new Vue({
+          el: '#app',
+          data: {
+            message: 'Hello Vue!',
+            ajax_url: '<?php echo url('admin'); ?>',
+           
+              
+            divisions:null,
+            districts:null,
+            upozillas:null,
+            thanas:null,
+            
+            division_id:'@if(isset($division_id) and $division_id){{$division_id}}@endif',
+            district_id:'@if(isset($district_id) and $district_id){{$district_id}}@endif',
+            upozilla_id:'@if(isset($upozilla_id) and $upozilla_id){{$upozilla_id}}@endif',
+            thana_id:'@if(isset($thana_id) and $thana_id){{$thana_id}}@endif',
+
+
+          },
+
+            created(){
+                
+                if(this.division_id!=""){
+                    this.getDistricts();
+                }
+                if(this.district_id!=""){
+                    this.getThanas();
+                }
+                
+            },
+
+
+            methods:{
+
+                
+                // send message to account customer
+                getDivisions(){
+                     axios.get(this.ajax_url+'/divisions')
+                    .then(res => {
+                        this.divisions = res.data;
+                    })
+                    .catch(err => {console.log(err); });
+                    
+                },
+                
+                
+                //this method for get districts
+                getDistricts(){
+                    if(this.division_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/districts/'+this.division_id)
+                        .then(res => {
+                            this.districts = res.data;
+                        })
+                        .catch(err => {console.log(err); });
+                      
+                   }
+                    
+                },
+
+                getUpozillasAndThana(){
+                    //this.getUpozillas();
+                    this.getThanas();
+                },
+                
+                //this method for get medicals
+                getUpozillas(){
+                    if(this.district_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/upazilas/'+this.district_id)
+                        .then(res => {
+                            this.upozillas = res.data;
+                        })
+                        .catch(err => {console.log(err); }); 
+                   }
+                    
+                },
+
+                
+                //this method for get medicals
+                getThanas(){
+                    if(this.district_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/thanas/'+this.district_id)
+                        .then(res => {
+                            this.thanas = res.data;
+                        })
+                        .catch(err => {console.log(err); }); 
+                   }
+                    
+                },
+                
+
+            }
+
+        });
+
+    </script>
+
+    
 		<x-admin-footer/>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports;
+namespace App\Exports\Qrr;
 
 use App\Models\Qrr;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -8,41 +8,34 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-class QrrscExport implements FromCollection, WithMapping, WithHeadings
+class QrrListExport implements FromCollection, WithMapping, WithHeadings
 {
     use Exportable;
-    private $dkey;
-    private $dvalue;
-    private $tkey;
-    private $tvalue;
-    private $skey;
-    private $svalue;
-    private $fvalue;
-    private $tovalue;
-
-    public function __construct($dkey, $dvalue, $tkey, $tvalue, $skey, $svalue, $fvalue, $tovalue)
-    {
-        $this->dkey = $dkey;
-        $this->dvalue = $dvalue;
-        $this->tkey = $tkey;
-        $this->tvalue = $tvalue;
-        $this->skey = $skey;
-        $this->svalue = $svalue;
-        $this->fvalue = $fvalue;
-        $this->tovalue = $tovalue;
-    }
+    
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        $qry =  Qrr::with(['district', 'thana'])->where('districtID', $this->dkey, $this->dvalue)
-        ->where('thanaID', $this->tkey, $this->tvalue)
-        ->where('source_of_info', $this->skey, $this->svalue)
-        ->whereBetween('date_time_of_police_news', [$this->fvalue, $this->tovalue])->get();
+        $disid = 9552;
+        $disexp = '!=';
+        $thaid = 8256;
+        $thaexp = '!=';
 
-        // dd($this, $qry);
-        return $qry;
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $disid = auth()->user()->districtID;
+            $disexp = '=';
+            $thaid = auth()->user()->thanaID;
+            $thaexp = '=';
+        }
+
+
+        return Qrr::with(['district', 'thana'])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->get();
     }
 
     public function headings(): array
@@ -153,4 +146,5 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
             $qrrsc->comments
         ];
     }
+
 }

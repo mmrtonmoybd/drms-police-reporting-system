@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use DataTables;
 use Illuminate\Support\Str;
-use App\Exports\QrrsviewExport;
-use App\Exports\QrrscExport;
+use App\Exports\Qrr\QrrsviewExport;
+use App\Exports\Qrr\QrrscExport;
 use PDF;
 use Illuminate\Support\Facades\DB;
 

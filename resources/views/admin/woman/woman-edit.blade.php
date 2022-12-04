@@ -423,8 +423,8 @@ input:checked + .button-label h1{
 
                                             <div class="col-sm-4" >
                                                 <div class="mb-3">
-                                                    <label for="complaint_reson" class="form-label">  অভিযোগের কারন   </label>
-                                                    <input type="text" name="complaint_reson"  value="{{$woman->complaint_reson}}" id="complaint_reson" class="form-control  @error('complaint_reson') is-invalid @enderror" placeholder="   অভিযোগের কারন  ">
+                                                    <label for="complaint_reson" class="form-label">  অভিযুক্তের সংখ্যা   </label>
+                                                    <input type="text" name="complaint_reson"  value="{{$woman->complaint_reson}}" id="complaint_reson" class="form-control  @error('complaint_reson') is-invalid @enderror" placeholder="   অভিযুক্তের সংখ্যা  ">
                                                 </div>
                                             </div>
 

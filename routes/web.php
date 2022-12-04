@@ -14,6 +14,9 @@ use App\Http\Controllers\admin\WomanController;
 use App\Http\Controllers\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Exports\Qrr\QrrListExport;
+use App\Exports\Woman\WomanListExport;
+use App\Exports\Narcotic\NarcoticListExport;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +97,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/qrrs/srcs/excel', [QrrsController::class, 'qrrscexcel'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs/pdf', [QrrsController::class, 'qrrspdf'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs/data', [QrrsController::class, 'chartdata'])->middleware('permission:qrr.dashboard');
+        Route::get('/qrrs/excel', function () {
+            $name = uniqid('qrrlist_');
+
+            return (new QrrListExport())->download($name.'.xlsx');
+        });
 
         // Warrant router
         Route::get('/warrant/add', [WarrantController::class, 'addShow'])->middleware('permission:warrant.add');
@@ -124,6 +132,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/narcotic/totalcase/src', [NarcotiscController::class, 'tcsrc'])->middleware('permission:narcotic.dashboard');
         Route::get('/narcotic/recover', [NarcotiscController::class, 'narrecover'])->middleware('permission:narcotic.dashboard');
         Route::get('/narcotic/recover/src', [NarcotiscController::class, 'narrecoversrc'])->middleware('permission:narcotic.dashboard');
+        Route::get('/narcotic/excel', function () {
+            $name = uniqid('narcoticlist_');
+
+            return (new NarcoticListExport())->download($name.'.xlsx');
+        });
 
 
         // Woman router
@@ -138,6 +151,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/woman/dashboard', [WomanController::class, 'dashboard'])->middleware('permission:woman.dashboard');
         Route::get('/woman/src', [WomanController::class, 'dashboardsc'])->middleware('permission:woman.dashboard');
         Route::get('/woman/chart/data', [WomanController::class, 'womancclick'])->middleware('permission:woman.dashboard');
+        Route::get('/woman/excel', function () {
+            $name = uniqid('womanlist_');
+
+            return (new WomanListExport())->download($name.'.xlsx');
+        });
 
         Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);
@@ -148,7 +166,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/role/add', [RoleController::class, 'addData'])->middleware('permission:role.add');
             Route::get('/role/edit/{role}', [RoleController::class, 'editShow'])->middleware('permission:role.edit');
             Route::post('/role/edit/{role}', [RoleController::class, 'editUpdate'])->middleware('permission:role.edit');
-            Route::get('/role/delete/{role}', [RoleController::class, 'delete'])->middleware('permission:role.delete');
+            //Route::get('/role/delete/{role}', [RoleController::class, 'delete'])->middleware('permission:role.delete');
             Route::get('/role/show/{role}', [RoleController::class, 'show'])->middleware('permission:role.view');
 
             //

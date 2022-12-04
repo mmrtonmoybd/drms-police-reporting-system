@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports;
+namespace App\Exports\Qrr;
 
 use App\Models\Qrr;
 use Maatwebsite\Excel\Concerns\FromCollection;

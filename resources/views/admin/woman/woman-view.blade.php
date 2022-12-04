@@ -19,8 +19,8 @@
                                                         <td> <b> গ্রাম/ওয়ার্ড : </b> {{$woman->village_word}}</td>
                                                         <td> <b>আগমনের তারিখ ও সময় : </b> @if(!empty($woman->wdate)) {{date('d/m/Y H:i', strtotime($woman->wdate))}} @endif</td>
                                                         <td> <b>ঘটনার ধরণ: </b> {{$woman->event_type}}</td>
-                                                        <td>  <b>ঘটনার সূত্রপাত: {{$woman->begening_of_event}}</b>  </td>
-                                                        <td>  <b>ঘটনার সংক্ষিপ্ত বিবরন: {{$woman->short_dettails}}</b>  </td>
+                                                        <td>  <b>ঘটনার সূত্রপাত:</b> {{$woman->begening_of_event}}  </td>
+                                                        <td>  <b>ঘটনার সংক্ষিপ্ত বিবরন:</b> {{$woman->short_dettails}}  </td>
                                                         <td> <b>বাদীর নাম : </b> {{$woman->badi_name}}</td>
                                                     </tr>
                                                     <tr>
@@ -33,23 +33,23 @@
                                                     <tr>
                                                         <td> <b>বিবাদীর নাম: </b>{{$woman->vbadi_name}}</td>
                                                         <td> <b>বিবাদীর ঠিকানা: </b> {{$woman->vbadi_address}}</td>
-                                                        <td>  <b>অভিযোগের কারন:</b> {{$woman->complaint_reson}}  </td>
-                                                        <td>  <b>তদন্তকারী কর্মকর্তার নাম:</b> {{$woman->investigator_name}}  </td>
+                                                        <td>  <b>অভিযুক্তের সংখ্যা:</b> {{$woman->complaint_reson}}  </td>
+                                                        <td>  <b>তদন্তকারী কর্মকর্তার নাম ও পদবি:</b> {{$woman->investigator_name}}  </td>
                                                     </tr>
                                                     <tr>
-                                                        <td> <b> তদন্তকারী কর্মকর্তার পদবী: </b>{{$woman->investigator_title}}</td>
+                                                        <td> <b> তদন্তকারী কর্মকর্তার বিপি নাম্বার: </b>{{$woman->investigator_title}}</td>
                                                         <td> <b>মোবাইল নং: </b> {{$woman->mobile_no}}</td>
                                                         <td>  <b> জিডি নং :</b> {{$woman->gd_no}}  </td>
                                                     </tr>
                                                     <tr>
                                                         <td> <b> তারিখ: </b> @if(!empty($woman->gd_date)) {{date('d/m/Y', strtotime($woman->gd_date))}} @endif</td>
                                                         <td> <b>মামলা নং: </b> {{$woman->mamla_no}}</td>
-                                                        <td>  <b>তারিখ : @if(!empty($woman->mamla_date)) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif</b>  </td>
+                                                        <td>  <b>তারিখ :</b> @if(!empty($woman->mamla_date)) {{date('d/m/Y', strtotime($woman->mamla_date))}} @endif  </td>
                                                     </tr>
                                                     <tr>
                                                         <td> <b>  ধারা: </b> {{$woman->dhara}}</td>
                                                         <td> <b> অভিযোগ নং: </b>  {{$woman->complaint_no}}</td>
-                                                         <td> <b> অভিযোগ  তারিখ: </b>  {{date('d/m/Y', strtotime($woman->complaint_date))}} </td>
+                                                         <td> <b> অভিযোগ  তারিখ: </b>  @if(!empty($woman->complaint_date)) {{date('d/m/Y', strtotime($woman->complaint_date))}} @endif</td>
                                                       
                                                     </tr>
                                                     <tr>

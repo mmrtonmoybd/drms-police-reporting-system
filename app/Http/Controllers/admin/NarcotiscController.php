@@ -592,10 +592,37 @@ class NarcotiscController extends Controller
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
+        if ($request->filled('districtID')) {
+             // Number of case graph
+
+            $numofcase = Narcotic::with(['district', 'thana'])->selectRaw("COUNT(case_no) AS totalcase, districtID, thanaID")
+                         ->where('name_of_investigator_org', $skey, $svalue)
+                         ->where('districtID', $request->input('districtID'))
+                         ->where('thanaID', $tkey, $tvalue)
+                         ->whereBetween('sdate', [$fvalue, $tovalue])->whereNotNull('case_no')->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            // arrest by unit
+
+            $arrastbyu = Narcotic::with(['district', 'thana'])->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")
+                         ->where('name_of_investigator_org', $skey, $svalue)
+                         ->where('districtID', $request->input('districtID'))
+                         ->where('thanaID', $tkey, $tvalue)
+                         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        } else {
             // Number of case graph
 
-            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID") ->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+        $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID") ->where('name_of_investigator_org', $skey, $svalue)
+                     ->whereBetween('sdate', [$fvalue, $tovalue])->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
+
+        // arrest by unit
+
+            $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")
+                           ->where('name_of_investigator_org', $skey, $svalue)
+                           ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+        }
+            
 
             $request->session()->flash('numofcase', $numofcase);
 
@@ -608,12 +635,7 @@ class NarcotiscController extends Controller
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
 
-            // arrest by unit
-
-            $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")
-        ->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
-
+           // arrest by unit
             $request->session()->flash('arrastbyu', $arrastbyu);
 
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', $dkey, $dvalue)

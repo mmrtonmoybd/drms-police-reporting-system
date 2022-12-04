@@ -318,6 +318,9 @@ class WomanController extends Controller
 
     public function dashboardsc(Request $request)
     {
+        $data['districts'] = District::where('division_id', 1)->get();
+        $data['request'] = $request;
+
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
@@ -369,11 +372,25 @@ class WomanController extends Controller
         }
 
         if (auth()->user()->hasRole('Super Admin')) {
-            // Number of complain graph
+
+            if ($request->filled('districtID')) {
+
+                // Number of complain graph
+            $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID, thanaID")
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->where('districtID', $request->input('districtID'))
+        ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('thanaID')->orderBy('thanaID', 'ASC')->get();
+
+            } else {
+
+                // Number of complain graph
             $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
+
+            }
 
             //dd($totalcomplain);
             $request->session()->flash('totalcomplains', $totalcomplains);
@@ -412,6 +429,10 @@ class WomanController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
             // Number of complain graph
             $totalcomplains = Woman::with('thana')->selectRaw("COUNT(id) AS totalcomplain, thanaID")
             ->where('districtID', auth()->user()->districtID)
@@ -456,6 +477,11 @@ class WomanController extends Controller
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+
+
             // Number of complain graph
             $totalcomplains = Woman::with('thana')->selectRaw("COUNT(id) AS totalcomplain, thanaID")
             ->where('districtID', auth()->user()->districtID)

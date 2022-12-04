@@ -312,7 +312,7 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title">জেলা ভিত্তিক রিপোর্ট </div>
+                                <div class="card-title">{{ (request()->filled('districtID') || (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? 'থানা' : 'জেলা' }}  ভিত্তিক রিপোর্ট </div>
                                 <div id="chart_div" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
