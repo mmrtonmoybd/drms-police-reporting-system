@@ -74,8 +74,8 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
         ];
     }
 
-    public function map($nar): array {
-
+    public function map($nar): array
+    {
         if (!empty($nar->sdate)) {
             $date1 = date('d/m/Y', strtotime($nar->sdate));
         } else {
@@ -122,5 +122,4 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
             $nar->comment
         ];
     }
-
 }

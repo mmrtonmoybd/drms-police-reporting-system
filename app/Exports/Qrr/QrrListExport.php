@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 class QrrListExport implements FromCollection, WithMapping, WithHeadings
 {
     use Exportable;
-    
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -146,5 +146,4 @@ class QrrListExport implements FromCollection, WithMapping, WithHeadings
             $qrrsc->comments
         ];
     }
-
 }
