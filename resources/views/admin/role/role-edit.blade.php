@@ -202,6 +202,45 @@
 
                                             <br>
 
+                                             <div class="col-sm-12">
+                                                <label for="name" class="form-label"> <b> Case permission</b> </label>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="case.dashboard" {{getPermi($role->id, 'case.dashboard') == 1 ? 'checked' : ''}}>Case Dashboard
+                                                   </label>
+                                                  </div>
+
+
+                                                <div class="form-check">
+                                           <label class="form-check-label">
+                                           <input type="checkbox" name="models[]" class="form-check-input" value="case.view" {{getPermi($role->id, 'case.view') == 1 ? 'checked' : ''}}>Case view
+                                            </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="case.add" {{getPermi($role->id, 'case.add') == 1 ? 'checked' : ''}}>Case add
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="case.edit" {{getPermi($role->id, 'case.edit') == 1 ? 'checked' : ''}}>Case edit
+                                                   </label>
+                                                  </div>
+
+                                                  <div class="form-check">
+                                                <label class="form-check-label">
+                                                 <input type="checkbox" name="models[]" class="form-check-input" value="case.delete" {{getPermi($role->id, 'case.delete') == 1 ? 'checked' : ''}}>Case delete
+                                                   </label>
+                                                  </div>
+
+                                                  
+                                            </div>
+
+                                            <br>
+
                                             <div class="col-sm-12">
                                                 <label for="name" class="form-label"> <b>Role permission</b> </label>
                                                 

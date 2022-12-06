@@ -48,6 +48,24 @@
 						  <li class="Ul_li--hover"><a href="{{url('admin/cases')}}"><i class="fa-sharp fa-solid fa-database text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Case Data</span></a></li>
 						-->
 						
+
+            @canany(['case.dashboard', 'case.add', 'case.view'])
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Case</span></a>
+                                <ul class="mm-collapse @if(request()->is('admin/case/*') || request()->is('admin/case')) mm-show @endif">
+                                  @can('case.dashboard')
+									<!-- <li class="item-name "><a href="{{url('admin/qrrs/srcs')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li> -->
+                                  @endcan
+								  
+								    @can('case.add')
+								   <li class="item-name"><a href="{{url('admin/case/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">New</span></a></li>
+                                   @endcan
+								   
+								    @can('case.view')
+								  <li class="item-name"><a href="{{url('admin/case')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
+									@endcan
+                                </ul>
+                            </li> 
+					    @endcanany
 						
 						
 					   @canany(['qrr.dashboard', 'qrr.add', 'qrr.view'])
@@ -130,7 +148,7 @@
 						  
 						  
   @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
-  <!-----------
+  
 							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-handcuffs text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Warrant</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/warrant/*') || request()->is('admin/warrant')) mm-show @endif">
                                   @can('warrant.dashboard')
@@ -147,7 +165,7 @@
                                 </ul>
                             </li> 
                             
-                            ------------>
+                            
 					    @endcanany
 						
 						

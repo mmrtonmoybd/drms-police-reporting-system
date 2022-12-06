@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use App\Exports\Qrr\QrrListExport;
 use App\Exports\Woman\WomanListExport;
 use App\Exports\Narcotic\NarcoticListExport;
+use App\Http\Controllers\admin\CaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/districts/{division_id}', [AreaController::class, 'getDistricts']);
         Route::get('/upazilas/{district_id}', [AreaController::class, 'getUpazilas']);
         Route::get('/thanas/{district_id}', [AreaController::class, 'getThanas']);
+        Route::get('/circles/{district_id}', [AreaController::class, 'getCircles']);
+        Route::get('/circles/thanas/{circle_id}', [AreaController::class, 'getCircleThanas']);
+        Route::get('/casesub/type/{parent_id}', [AreaController::class, 'getCasesubType']);
 
 
         //admin qrrs route
@@ -157,6 +161,20 @@ Route::prefix('admin')->group(function () {
             return (new WomanListExport())->download($name.'.xlsx');
         });
 
+
+        // Case router
+        Route::get('/case', [CaseController::class, 'index']);
+        Route::get('/case/add', [CaseController::class, 'addShow']);
+        Route::post('/case/add', [CaseController::class, 'create']);
+        Route::get('/case/edit/{casedb}', [CaseController::class, 'editShow']);
+        Route::post('/case/edit/{casedb}', [CaseController::class, 'update']);
+        Route::get('/delete/{casedb}', [CaseController::class, 'delete']);
+        Route::get('/case/view/{casedb}', [CaseController::class, 'caseView']);
+        Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint']);
+        
+
+        
+        // User and Role router
         Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);
             Route::post('/edit/{id}', [UsersController::class, 'Update']);

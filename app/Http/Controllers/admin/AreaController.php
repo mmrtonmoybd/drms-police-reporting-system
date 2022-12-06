@@ -8,6 +8,8 @@ use App\Models\Division;
 use App\Models\District;
 use App\Models\Upazila;
 use App\Models\Thana;
+use App\Models\Circle;
+use App\Models\CaseType;
 
 class AreaController extends Controller
 {
@@ -51,6 +53,39 @@ class AreaController extends Controller
             $data = Thana::where('district_id', $district_id)->get();
         } else {
             $data = Thana::get();
+        }
+        return response()->json($data);
+    }
+
+    public function getCircles(Request $request, $district_id=null)
+    {
+        $data = array();
+        if ($district_id) {
+            $data = Circle::where('district_id', $district_id)->get();
+        } else {
+            $data = Circle::get();
+        }
+        return response()->json($data);
+    }
+
+    public function getCircleThanas(Request $request, $circle_id=null)
+    {
+        $data = array();
+        if ($circle_id) {
+            $data = Thana::where('circle_id', $circle_id)->get();
+        } else {
+            $data = Thana::get();
+        }
+        return response()->json($data);
+    }
+
+    public function getCasesubType(Request $request, $parent_id=null)
+    {
+        $data = array();
+        if ($parent_id) {
+            $data = CaseType::where('parent_id', $parent_id)->get();
+        } else {
+            $data = CaseType::get();
         }
         return response()->json($data);
     }

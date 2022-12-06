@@ -102,7 +102,7 @@ class WomanController extends Controller
         $request->request->remove('incident_time');
 
         if (Woman::create($request->all())) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
+            $request->session()->flash('success_msg', 'Data added successfully');
             return redirect('admin/woman/add');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
