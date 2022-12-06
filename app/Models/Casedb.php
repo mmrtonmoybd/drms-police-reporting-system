@@ -9,7 +9,7 @@ class Casedb extends Model
 {
     use HasFactory;
 
-    
+
     public $timestamps = true;
 
     protected $guarded = ['id'];

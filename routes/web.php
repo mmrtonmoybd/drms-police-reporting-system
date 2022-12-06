@@ -171,9 +171,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{casedb}', [CaseController::class, 'delete']);
         Route::get('/case/view/{casedb}', [CaseController::class, 'caseView']);
         Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint']);
-        
 
-        
+
+
         // User and Role router
         Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {
             Route::get('/edit/{id}', [UsersController::class, 'Edit']);

@@ -13,7 +13,6 @@ use Illuminate\Support\Carbon;
 
 class CaseController extends Controller
 {
-
     public function index()
     {
         if (auth()->user()->hasRole('Super Admin')) {
@@ -50,13 +49,12 @@ class CaseController extends Controller
         $data['request'] = $request;
         if (auth()->user()->hasRole('Super Admin')) {
             $data['districts'] = District::where('division_id', 1)->get();
-
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
         } else {
             $data['thanades'] = Thana::find(auth()->user()->thanaID);
         }
-        
+
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
 
         return view('admin/case/case-add', $data);
@@ -128,18 +126,17 @@ class CaseController extends Controller
     public function editShow(Request $request, Casedb $casedb)
     {
         $data['case'] = $casedb;
-        
-        
+
+
         $data['request'] = $request;
         if (auth()->user()->hasRole('Super Admin')) {
             $data['districts'] = District::where('division_id', 1)->get();
-
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
         } else {
             $data['thanades'] = Thana::find(auth()->user()->thanaID);
         }
-        
+
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
 
         return view('admin/case/case-edit', $data);
@@ -249,7 +246,7 @@ class CaseController extends Controller
 
     public function delete(Casedb $casedb)
     {
-         if ($casedb->delete()) {
+        if ($casedb->delete()) {
             return redirect('admin/case')->with('success_msg', 'Data deleted successfully');
         } else {
             return redirect()->back()->with('error_msg', 'Something wrong. Please try again');
