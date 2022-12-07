@@ -90,7 +90,7 @@ use Illuminate\Support\Str;
                                                     <td>{{Str::limit($case->dhara, 10)}}</td>
                                                     <td>@if (!empty($case->case_date)) {{date('d/m/Y', strtotime($case->case_date))}} @endif</td>
                                                     <td>{{$case->casetype->type}}</td>
-                                                    <td>{{$case->casesubtype->type}}</td>
+                                                    <td>@if (!empty($case->casesubtype)) {{$case->casesubtype->type}} @endif</td>
                                                      <td>@if (!empty($case->incident_date_time)) {{date('d/m/Y', strtotime($case->incident_date_time))}} @endif</td>
                                                     <td>{{Str::limit($case->short_dettails, 10)}}</td>
                                                     <td>{{Str::limit($case->azahar_namio_victims, 10)}}</td>

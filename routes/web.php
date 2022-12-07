@@ -171,6 +171,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{casedb}', [CaseController::class, 'delete']);
         Route::get('/case/view/{casedb}', [CaseController::class, 'caseView']);
         Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint']);
+        Route::get('/case/dashboard', [CaseController::class, 'dashboard']);
+        Route::get('/case/dashboard/search', [CaseController::class, 'dashboardsc']);
 
 
 
