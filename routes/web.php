@@ -163,16 +163,16 @@ Route::prefix('admin')->group(function () {
 
 
         // Case router
-        Route::get('/case', [CaseController::class, 'index']);
-        Route::get('/case/add', [CaseController::class, 'addShow']);
-        Route::post('/case/add', [CaseController::class, 'create']);
-        Route::get('/case/edit/{casedb}', [CaseController::class, 'editShow']);
-        Route::post('/case/edit/{casedb}', [CaseController::class, 'update']);
-        Route::get('/delete/{casedb}', [CaseController::class, 'delete']);
-        Route::get('/case/view/{casedb}', [CaseController::class, 'caseView']);
-        Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint']);
-        Route::get('/case/dashboard', [CaseController::class, 'dashboard']);
-        Route::get('/case/dashboard/search', [CaseController::class, 'dashboardsc']);
+        Route::get('/case', [CaseController::class, 'index'])->middleware('permission:case.view');
+        Route::get('/case/add', [CaseController::class, 'addShow'])->middleware('permission:case.add');
+        Route::post('/case/add', [CaseController::class, 'create'])->middleware('permission:case.add');
+        Route::get('/case/edit/{casedb}', [CaseController::class, 'editShow'])->middleware('permission:case.edit');
+        Route::post('/case/edit/{casedb}', [CaseController::class, 'update'])->middleware('permission:case.edit');
+        Route::get('/delete/{casedb}', [CaseController::class, 'delete'])->middleware('permission:case.delete');
+        Route::get('/case/view/{casedb}', [CaseController::class, 'caseView'])->middleware('permission:case.view');
+        Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint'])->middleware('permission:case.view');
+        Route::get('/case/dashboard', [CaseController::class, 'dashboard'])->middleware('permission:case.dashboard');
+        Route::get('/case/dashboard/search', [CaseController::class, 'dashboardsc'])->middleware('permission:case.dashboard');
 
 
 

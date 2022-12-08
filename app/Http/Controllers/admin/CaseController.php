@@ -480,6 +480,8 @@ class CaseController extends Controller
                 //dd($diswisecase);
                 $request->session()->flash('diswisecase', $diswisecase);
             // District wise case end
+
+            
             } elseif (!empty($request->input('districtID')) && (empty($request->input('thanaID')) && empty($request->input('circleID')))) {
                 // Circle wise case start
 
@@ -685,6 +687,14 @@ class CaseController extends Controller
         ->sum('azahar_vukto_invistigate');
         // Ak nojora case details end
         //dd($lastthreemonthcase);
+
+        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
+                          ->where('districtID', $dkey, $dvalue)
+                          ->where('circleID', $ckey, $cvalue)
+                          ->where('thanaID', $tkey, $tvalue)
+                          ->whereBetween('case_date', [$fvalue, $tovalue])
+                          ->orderBy('id', 'desc')
+                          ->paginate(20);
 
         return view('admin/case/case-dashsc', $data);
     }

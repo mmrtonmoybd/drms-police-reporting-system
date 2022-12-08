@@ -53,7 +53,7 @@
 							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Case</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/case/*') || request()->is('admin/case')) mm-show @endif">
                                   @can('case.dashboard')
-									<!-- <li class="item-name "><a href="{{url('admin/qrrs/srcs')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li> -->
+									 <li class="item-name "><a href="{{url('admin/case/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
                                   @endcan
 								  
 								    @can('case.add')

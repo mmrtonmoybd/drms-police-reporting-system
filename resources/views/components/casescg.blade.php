@@ -1,0 +1,238 @@
+@if ( request()->is('admin/case/dashboard/search'))
+
+<script type="text/javascript">
+// Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      @if (auth()->user()->hasRole('Super Admin'))
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['District', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+
+         @if (empty(request()->input('districtID')) && empty(request()->input('thanaID')) && empty(request()->input('circleID')))
+         
+         @foreach(session("diswisecase") as $key => $value)
+
+         
+         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @elseif(!empty(request()->input('districtID')) && (empty(request()->input('thanaID')) && empty(request()->input('circleID'))))
+        
+         @foreach(session("circlewisecase") as $key => $value)
+
+         
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @elseif((!empty(request()->input('districtID')) && !empty(request()->input('circleID'))) && empty(request()->input('thanaID')))
+
+        @foreach(session("circlewisethanacase") as $key => $value)
+
+         
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @elseif(!empty(request()->input('districtID')) && !empty(request()->input('circleID')) && !empty(request()->input('thanaID')))
+
+         @foreach(session("searchthanacase") as $key => $value)
+
+         
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @endif
+       
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "Number of case",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+        
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      @elseif(auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+   
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+
+         @if (empty(request()->input('circleID')) && empty(request()->input('thanaID')))
+         
+         @foreach(session("circlewisecase") as $key => $value)
+
+         
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @elseif(!empty(request()->input('circleID')) && empty(request()->input('thanaID')))
+
+         @foreach(session("circlethanawisecase") as $key => $value)
+
+         
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @elseif(!empty(request()->input('circleID')) && !empty(request()->input('thanaID')))
+
+         @foreach(session("searchthanacase") as $key => $value)
+
+         
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+
+         @endif
+        
+       
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "Number of case",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+        
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      @else
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         
+         @foreach(session("octhanacase") as $key => $value)
+
+         
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         @endforeach
+        
+       
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "Number of case",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+        
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+
+      @endif
+
+
+      @php 
+      function intconber($value) {
+        $mm = (int) $value;
+        return $mm;
+      }
+      @endphp
+
+
+      google.charts.setOnLoadCallback(drawChart3);
+
+      function drawChart3() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Case type', 'count', 'number', { role: 'link' }],
+          @foreach(session("caseendingtypes") as $key => $value)
+          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '#'],
+          @endforeach
+        ]);
+
+        var options = {
+          title: 'Nispotti type',
+          is3D: true,
+        width: "98%",
+        height: "172",
+        pieSliceText: 'value',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+</script>
+
+@endif

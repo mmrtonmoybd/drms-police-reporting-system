@@ -123,7 +123,7 @@ use Illuminate\Support\Str;
                                         
                                         <nav class="mt-3">
 
-                                        
+                                        @if($cases){{$cases->appends(request()->input())->links()}} @endif
                                       
                                         </nav>
                                     </div>

@@ -37,6 +37,7 @@
       @include('components.narcoticg')
       @include('components.womang')
       @include('components.caseg')
+      @include('components.casescg')
 
 
 
