@@ -480,8 +480,6 @@ class CaseController extends Controller
                 //dd($diswisecase);
                 $request->session()->flash('diswisecase', $diswisecase);
             // District wise case end
-
-            
             } elseif (!empty($request->input('districtID')) && (empty($request->input('thanaID')) && empty($request->input('circleID')))) {
                 // Circle wise case start
 
