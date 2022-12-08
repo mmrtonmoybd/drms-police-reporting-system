@@ -20,35 +20,40 @@
 
          @if (empty(request()->input('districtID')) && empty(request()->input('thanaID')) && empty(request()->input('circleID')))
          
+         @if (!is_null(session("diswisecase")))
          @foreach(session("diswisecase") as $key => $value)
 
          
          ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
 
          @elseif(!empty(request()->input('districtID')) && (empty(request()->input('thanaID')) && empty(request()->input('circleID'))))
-        
+        @if (!is_null(session("circlewisecase")))
          @foreach(session("circlewisecase") as $key => $value)
 
          
          ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
 
          @elseif((!empty(request()->input('districtID')) && !empty(request()->input('circleID'))) && empty(request()->input('thanaID')))
-
+          @if (!is_null(session("circlewisethanacase")))
         @foreach(session("circlewisethanacase") as $key => $value)
 
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
 
          @elseif(!empty(request()->input('districtID')) && !empty(request()->input('circleID')) && !empty(request()->input('thanaID')))
-
+         @if (!is_null(session("searchthanacase")))
          @foreach(session("searchthanacase") as $key => $value)
 
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
 
          @endif
        
@@ -92,29 +97,31 @@
          ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
 
          @if (empty(request()->input('circleID')) && empty(request()->input('thanaID')))
-         
+         @if (!is_null(session("circlewisecase")))
          @foreach(session("circlewisecase") as $key => $value)
 
          
          ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
 
          @elseif(!empty(request()->input('circleID')) && empty(request()->input('thanaID')))
-
+         @if(!is_null(session("circlethanawisecase")))
          @foreach(session("circlethanawisecase") as $key => $value)
 
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
 
          @elseif(!empty(request()->input('circleID')) && !empty(request()->input('thanaID')))
-
+         @if (!is_null(session("searchthanacase")))
          @foreach(session("searchthanacase") as $key => $value)
 
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
-
+         @endif
          @endif
         
        
@@ -156,12 +163,13 @@
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
-         
+         @if(!is_null(session("octhanacase")))
          @foreach(session("octhanacase") as $key => $value)
 
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
         
        
       ]);
@@ -207,9 +215,11 @@
 
         var data = google.visualization.arrayToDataTable([
           ['Case type', 'count', 'number', { role: 'link' }],
+          @if (!is_null(session("caseendingtypes")))
           @foreach(session("caseendingtypes") as $key => $value)
           ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '#'],
           @endforeach
+          @endif
         ]);
 
         var options = {

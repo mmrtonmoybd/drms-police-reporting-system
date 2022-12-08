@@ -17,12 +17,16 @@
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['District', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+
+         @if (!is_null(session("diswisecase")))
          
          @foreach(session("diswisecase") as $key => $value)
 
          
          ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+
+         @endif
         
        
       ]);
@@ -64,11 +68,13 @@
         var data = google.visualization.arrayToDataTable([
          ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          
+         @if (!is_null(session("circlewise")))
          @foreach(session("circlewise") as $key => $value)
 
          
          ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
+         @endif
         
        
       ]);
@@ -109,13 +115,13 @@
         // Create the data table.
         var data = google.visualization.arrayToDataTable([
          ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
-         
+         @if (!is_null(session("thanawise")))
          @foreach(session("thanawise") as $key => $value)
-
+   
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
          @endforeach
-        
+        @endif
        
       ]);
 
@@ -158,9 +164,11 @@
       function drawChart2() {
         var data = google.visualization.arrayToDataTable([
           ['Month', 'Cases', { role: 'link' }],
+          @if (!is_null(session("lastthreemonthcase")))
           @foreach(session("lastthreemonthcase") as $key => $value)
           ['{{$value->month}}',  {{intconber($value->totalcase)}}, '#'],
           @endforeach
+          @endif
           
         ]);
 
@@ -189,9 +197,11 @@
 
         var data = google.visualization.arrayToDataTable([
           ['Case type', 'count', 'number', { role: 'link' }],
+          @if (!is_null(session("caseendingtypes")))
           @foreach(session("caseendingtypes") as $key => $value)
           ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '#'],
           @endforeach
+          @endif
         ]);
 
         var options = {
