@@ -9,7 +9,6 @@ use Illuminate\Support\Carbon;
 
 class Test extends Controller
 {
-
     public function lasttmon($monthyear, string $type)
     {
         $carbon = Carbon::parse($monthyear);
@@ -31,14 +30,13 @@ class Test extends Controller
 
     public function index()
     {
-
         $arr = ['districtID' => 34, 'thanaID' => 1, 'circleID' => 12];
         $hh = \Illuminate\Support\Arr::except($arr, ['districtID', 'thanaID']);
 
         dd($hh);
 
 
-       // echo $this->lasttmon(0, 'enddate');
+        // echo $this->lasttmon(0, 'enddate');
 
         //return (new QrrsviewExport())->forId(12)->download('invoices.xlsx');
     }

@@ -150,7 +150,7 @@ class CaseController extends Controller
             $cdms_pg_id_result_final = strtoupper($cdms_pg_id_result);
         }
 
-   
+
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $thana = Thana::find($request->input('thanaID'));
@@ -173,7 +173,7 @@ class CaseController extends Controller
             'circleID' => $circleid,
             'case_type' => $request->input('caseTypeID'),
             'casesub_type' => $request->input('casesubID'),
-         
+
             'cs_or_fr_no' => $this->reptpenum($request->input('cs_or_fr_no')),
             'police_report_victim' => $this->reptpenum($request->input('police_report_victim')),
             'number_of_accused' => $this->reptpenum($request->input('number_of_accused')),
@@ -219,19 +219,19 @@ class CaseController extends Controller
 
 
 
-  if ($request->filled('nispotti_date') && $request->filled('case_date')) {
+        if ($request->filled('nispotti_date') && $request->filled('case_date')) {
             $to = Carbon::createFromFormat('Y-m-d', $nispotti_date);
             $from = Carbon::createFromFormat('Y-m-d', $case_date);
 
             $nispottisecond = $to->diffInSeconds($from);
-            
-            
-              $request->merge([
-              'nispottisecond' => $nispottisecond
+
+
+            $request->merge([
+            'nispottisecond' => $nispottisecond
             ]);
         }
-        
-        
+
+
 
         $request->request->remove('_token');
         $request->request->remove('submit');
@@ -715,7 +715,6 @@ class CaseController extends Controller
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
         if (auth()->user()->hasRole('Super Admin')) {
-
             $data['districts'] = District::where('division_id', 1)->get();
 
 
@@ -827,7 +826,5 @@ class CaseController extends Controller
                           ->paginate(20);
 
         return view('admin/case/case-data', $data);
-
-
     }
 }
