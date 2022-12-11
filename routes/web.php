@@ -168,7 +168,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/case/add', [CaseController::class, 'create'])->middleware('permission:case.add');
         Route::get('/case/edit/{casedb}', [CaseController::class, 'editShow'])->middleware('permission:case.edit');
         Route::post('/case/edit/{casedb}', [CaseController::class, 'update'])->middleware('permission:case.edit');
-        Route::get('/delete/{casedb}', [CaseController::class, 'delete'])->middleware('permission:case.delete');
+        Route::get('/case/delete/{casedb}', [CaseController::class, 'delete'])->middleware('permission:case.delete');
         Route::get('/case/view/{casedb}', [CaseController::class, 'caseView'])->middleware('permission:case.view');
         Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint'])->middleware('permission:case.view');
         Route::get('/case/dashboard', [CaseController::class, 'dashboard'])->middleware('permission:case.dashboard');

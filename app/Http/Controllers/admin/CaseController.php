@@ -101,6 +101,7 @@ class CaseController extends Controller
             'dhara' => $this->reptpenum($request->input('dhara')),
             'azahar_namio_victims' => $this->reptpenum($request->input('azahar_namio_victims')),
             'nispotti_or_multobi' => 'মুলতবি',
+            'nispotti_type' => 0,
             'divisionID' => 1,
             'user_id' => auth()->user()->id,
             'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
@@ -159,6 +160,12 @@ class CaseController extends Controller
             $circleid = $request->input('circleID');
         }
 
+        if ($request->filled('nispotti_type')) {
+            $nispotti_type = $request->input('nispotti_type');
+        } else {
+            $nispotti_type = 0;
+        }
+
         $request->merge([
             'cdms_pg_id' => $cdms_pg_id_result_final,
             'gr_no' => $this->reptpenum($request->input('gr_no')),
@@ -173,7 +180,7 @@ class CaseController extends Controller
             'circleID' => $circleid,
             'case_type' => $request->input('caseTypeID'),
             'casesub_type' => $request->input('casesubID'),
-
+            'nispotti_type' => $nispotti_type,
             'cs_or_fr_no' => $this->reptpenum($request->input('cs_or_fr_no')),
             'police_report_victim' => $this->reptpenum($request->input('police_report_victim')),
             'number_of_accused' => $this->reptpenum($request->input('number_of_accused')),
