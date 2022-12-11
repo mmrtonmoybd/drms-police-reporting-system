@@ -12,7 +12,22 @@ body {
 	overflow:auto!important;
 }
 
+
+
+#errdateneg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
 </style>
+
+
 
     <!-- start page title -->
 <br>
@@ -22,6 +37,11 @@ body {
 
                     
                         <x-admin-validation-errors :errors="$errors->all()"/>
+
+
+
+<span id="errdateneg">মামলার তারিখ ঘটনার তারিখের থেকে পরে হতে পারবে না </span>
+
 
                         <div class="row">
                             <div class="col-sm-12 ">
@@ -109,8 +129,8 @@ body {
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="cdms_pg_id" class="form-label"> CDMS PG ID </label>
-                                                    <input type="text" name="cdms_pg_id"  value="{{$case->cdms_pg_id}}" id="cdms_pg_id" class="form-control  @error('cdms_pg_id') is-invalid @enderror" placeholder="CDMS PG ID">
+                                                    <label for="cdms_pg_id" class="form-label">  মামলার কোড (CDMS)  </label>
+                                                    <input type="text" name="cdms_pg_id"  value="{{$case->cdms_pg_id}}" id="cdms_pg_id" class="form-control  @error('cdms_pg_id') is-invalid @enderror" placeholder=" মামলার কোড (CDMS) ">
                                                 </div>
                                             </div>
 
@@ -157,7 +177,7 @@ body {
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
-                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                    <select name="caseTypeID" id="caseTypeID"  onchange="myFunction2()" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
                                                         <option value="">Select</option>
                                                         @if($caseparenttypes)
 
@@ -170,7 +190,7 @@ body {
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hidecs">
                                                 <div class="mb-3">
                                                     <label for="casesubID" class="form-label">মামলার উপধরন</label>
                                                     <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
@@ -188,12 +208,6 @@ body {
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="short_dettails" class="form-label"> মামলার সারসংক্ষেপ </label>
-                                                    <input type="text" name="short_dettails"  value="{{$case->short_dettails}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="মামলার সারসংক্ষেপ">
-                                                </div>
-                                            </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
@@ -202,10 +216,20 @@ body {
                                                 </div>
                                             </div>
 
+
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label"> মামলার সারসংক্ষেপ </label>
+                                                    <textarea type="text" name="short_dettails"   id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="মামলার সারসংক্ষেপ"> {{$case->short_dettails}} </textarea>
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="nispotti_or_multobi" class="form-label">  নিস্পত্তি / মুলতবি </label>
-                                                    <select name="nispotti_or_multobi" id="nispotti_or_multobi" class="form-select form-control @error('nispotti_or_multobi') is-invalid @enderror">
+                                                    <select name="nispotti_or_multobi" id="nispotti_or_multobi"  onchange="myFunction()" class="form-select form-control @error('nispotti_or_multobi') is-invalid @enderror">
                                                         <option value="">Select</option>
                                                         <option value="নিস্পত্তি" {{ ( $case->nispotti_or_multobi == 'নিস্পত্তি') ? 'selected' : '' }}>নিস্পত্তি</option>
                                                         <option value="মুলতবি" {{ ( $case->nispotti_or_multobi == 'মুলতবি') ? 'selected' : '' }}>মুলতবি</option>
@@ -213,10 +237,23 @@ body {
                                                 </div>
                                             </div>
 
-                                            <br> <br>
-                                            <font color='red'><================================  Rashad task(নিস্পত্তি select krla nichar field gula show krba)  ======></font> <br><br>
 
-                                            <div class="col-sm-4">
+                                  
+                                  
+                                  
+                                  <hr>
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+
+                                            <div class="col-sm-4" id="hide1">
                                                 <div class="mb-3">
                                                     <label for="nispotti_type" class="form-label">  নিস্পত্তির ধরন </label>
                                                     <select name="nispotti_type" id="nispotti_type" class="form-select form-control @error('nispotti_type') is-invalid @enderror">
@@ -227,14 +264,14 @@ body {
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide2"> 
                                                 <div class="mb-3">
                                                     <label for="cs_or_fr_no" class="form-label"> সিএস/এফ আর নং </label>
                                                     <input type="text" name="cs_or_fr_no"  value="{{$case->cs_or_fr_no}}" id="cs_or_fr_no" class="form-control  @error('cs_or_fr_no') is-invalid @enderror" placeholder="সিএস/এফ আর নং">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4"> 
+                                            <div class="col-sm-4" id="hide3"> 
                                                 <div class="mb-3">
                                                     <label for="nispotti_date" class="form-label"> নিস্পত্তির তারিখ  </label>
                                            
@@ -242,63 +279,63 @@ body {
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide4">
                                                 <div class="mb-3">
                                                     <label for="police_report_victim" class="form-label"> পুলিশ রিপোর্ট আসামির সংখ্যা </label>
                                                     <input type="number" name="police_report_victim"  value="{{$case->police_report_victim}}" id="police_report_victim" class="form-control  @error('police_report_victim') is-invalid @enderror" placeholder="পুলিশ রিপোর্ট আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide5">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label"> গ্রেফতারকৃত আসামির সংখ্যা </label>
                                                     <input type="number" name="number_of_accused"  value="{{$case->number_of_accused}}" id="number_of_accused" class="form-control  @error('number_of_accused') is-invalid @enderror" placeholder="গ্রেফতারকৃত আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide6">
                                                 <div class="mb-3">
                                                     <label for="jamin_prapto" class="form-label"> জামিন প্রাপ্ত </label>
                                                     <input type="number" name="jamin_prapto"  value="{{$case->jamin_prapto}}" id="jamin_prapto" class="form-control  @error('jamin_prapto') is-invalid @enderror" placeholder="জামিন প্রাপ্ত">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide7">
                                                 <div class="mb-3">
                                                     <label for="polatok" class="form-label"> পলাতক </label>
                                                     <input type="number" name="polatok"  value="{{$case->polatok}}" id="polatok" class="form-control  @error('polatok') is-invalid @enderror" placeholder="পলাতক">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide8">
                                                 <div class="mb-3">
                                                     <label for="azahar_vukto_invistigate" class="form-label"> এজাহার বহির্ভুত তদন্তে প্রাপ্ত </label>
                                                     <input type="number" name="azahar_vukto_invistigate"  value="{{$case->azahar_vukto_invistigate}}" id="azahar_vukto_invistigate" class="form-control  @error('azahar_vukto_invistigate') is-invalid @enderror" placeholder="এজাহার বহির্ভুত তদন্তে প্রাপ্ত">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide9">
                                                 <div class="mb-3">
                                                     <label for="ovohoti" class="form-label"> অব্যহিত প্রাপ্ত </label>
                                                     <input type="number" name="ovohoti"  value="{{$case->ovohoti}}" id="ovohoti" class="form-control  @error('ovohoti') is-invalid @enderror" placeholder="অব্যহিত প্রাপ্ত">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide10">
                                                 <div class="mb-3">
                                                     <label for="sixtyone_recive" class="form-label"> ১৬১ গ্রহন (পাবলিক) </label>
                                                     <input type="number" name="sixtyone_recive"  value="{{$case->sixtyone_recive}}" id="sixtyone_recive" class="form-control  @error('sixtyone_recive') is-invalid @enderror" placeholder="১৬১ গ্রহন (পাবলিক)">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide11">
                                                 <div class="mb-3">
                                                     <label for="sixtyfour_recive" class="form-label"> ১৬৪ গ্রহন </label>
                                                     <input type="number" name="sixtyfour_recive"  value="{{$case->sixtyfour_recive}}" id="sixtyfour_recive" class="form-control  @error('sixtyfour_recive') is-invalid @enderror" placeholder="১৬৪ গ্রহন">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hide12">
                                                 <div class="mb-3">
                                                     <label for="invistigate_rate" class="form-label">  তদন্তের মান </label>
                                                     <select name="invistigate_rate" id="invistigate_rate" class="form-select form-control @error('invistigate_rate') is-invalid @enderror">
@@ -310,14 +347,243 @@ body {
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-12" id="hide13">
                                                 <div class="mb-3">
                                                     <label for="comment" class="form-label">মন্তব্য</label>
                                                     <textarea name="comment"  class="form-control  @error('comment') is-invalid @enderror" id="comment" rows="2" placeholder="মন্তব্য">{{$case->comment}}</textarea>
                                                 </div>
                                             </div>
 
-                                            <font color='red'><=============================  Rashad task( end )  =======================================></font><br><br>
+                             
+
+
+
+
+
+
+
+<script>
+
+
+
+
+  var nispotti_or_multobi = document.getElementById("nispotti_or_multobi").value;
+  
+      var hide1 = document.getElementById("hide1");
+      var hide2 = document.getElementById("hide2");
+      var hide3 = document.getElementById("hide3");
+      var hide4 = document.getElementById("hide4");
+      var hide5 = document.getElementById("hide5");
+      var hide6 = document.getElementById("hide6");
+      var hide7 = document.getElementById("hide7");
+      var hide8 = document.getElementById("hide8");
+      var hide9 = document.getElementById("hide9");
+      var hide10 = document.getElementById("hide10");
+      var hide11 = document.getElementById("hide11");
+      var hide12 = document.getElementById("hide12");
+      var hide13 = document.getElementById("hide13");
+	 
+	 
+     
+   if (nispotti_or_multobi == 'নিস্পত্তি'){
+      hide1.style.display = "block";
+      hide2.style.display = "block";
+      hide3.style.display = "block";
+      hide4.style.display = "block";
+      hide5.style.display = "block";
+      hide6.style.display = "block";
+      hide7.style.display = "block";
+      hide8.style.display = "block";
+      hide9.style.display = "block";
+      hide10.style.display = "block";
+      hide11.style.display = "block";
+      hide12.style.display = "block";
+      hide13.style.display = "block";
+
+  
+  } else {
+      hide1.style.display = "none";
+      hide2.style.display = "none";
+      hide3.style.display = "none";
+      hide4.style.display = "none";
+      hide5.style.display = "none";
+      hide6.style.display = "none";
+      hide7.style.display = "none";
+      hide8.style.display = "none";
+      hide9.style.display = "none";
+      hide10.style.display = "none";
+      hide11.style.display = "none";
+      hide12.style.display = "none";
+      hide13.style.display = "none";
+   
+         
+     
+  }
+  
+
+
+
+function myFunction() {
+    
+    
+  var nispotti_or_multobi = document.getElementById("nispotti_or_multobi").value;
+  
+      var hide1 = document.getElementById("hide1");
+      var hide2 = document.getElementById("hide2");
+      var hide3 = document.getElementById("hide3");
+      var hide4 = document.getElementById("hide4");
+      var hide5 = document.getElementById("hide5");
+      var hide6 = document.getElementById("hide6");
+      var hide7 = document.getElementById("hide7");
+      var hide8 = document.getElementById("hide8");
+      var hide9 = document.getElementById("hide9");
+      var hide10 = document.getElementById("hide10");
+      var hide11 = document.getElementById("hide11");
+      var hide12 = document.getElementById("hide12");
+      var hide13 = document.getElementById("hide13");
+	 
+	 
+     
+   if (nispotti_or_multobi == 'নিস্পত্তি'){
+      hide1.style.display = "block";
+      hide2.style.display = "block";
+      hide3.style.display = "block";
+      hide4.style.display = "block";
+      hide5.style.display = "block";
+      hide6.style.display = "block";
+      hide7.style.display = "block";
+      hide8.style.display = "block";
+      hide9.style.display = "block";
+      hide10.style.display = "block";
+      hide11.style.display = "block";
+      hide12.style.display = "block";
+      hide13.style.display = "block";
+
+  
+  } else {
+      hide1.style.display = "none";
+      hide2.style.display = "none";
+      hide3.style.display = "none";
+      hide4.style.display = "none";
+      hide5.style.display = "none";
+      hide6.style.display = "none";
+      hide7.style.display = "none";
+      hide8.style.display = "none";
+      hide9.style.display = "none";
+      hide10.style.display = "none";
+      hide11.style.display = "none";
+      hide12.style.display = "none";
+      hide13.style.display = "none";
+   
+         
+     
+  }
+  
+
+  
+}
+
+
+
+</script>
+
+
+  
+  
+              
+
+<script>
+
+
+
+
+
+
+function myFunction2() {
+    
+  var caseTypeID = document.getElementById("caseTypeID").value;
+  var hidecs = document.getElementById("hidecs");
+
+
+
+//alert(caseTypeID);
+   if (caseTypeID == '2'){
+      hidecs.style.display = "block";
+  } else if (caseTypeID == '4') {
+     hidecs.style.display = "block";
+  } else if (caseTypeID == '5') {
+     hidecs.style.display = "block";
+  } else if (caseTypeID == '6') {
+     hidecs.style.display = "block";
+  } else {
+      hidecs.style.display = "none";
+  }
+  
+  
+}
+var myInterval = setInterval(myFunction2, 500);
+
+
+</script>
+
+
+
+<script>
+function datecheckmax(){ 
+ 
+     var sbbtn = document.getElementById("sbbtn");
+      var dix = document.getElementById("incident_date_time").value;
+      var diy = document.getElementById("case_date").value;
+      
+         var dixx = document.getElementById("incident_date_time");
+         var diyx = document.getElementById("case_date");
+
+// const dix = '24/09/2022';
+// const diy = '21/09/2022';
+
+
+var [day, month, year] = dix.split('/');
+var resultd1 = [year, month, day].join('/');
+
+
+
+
+var [dayy, monthy, yeary] = diy.split('/');
+var resultd2 = [yeary, monthy, dayy].join('/');
+
+var d1 = new Date(resultd1);   
+var d2 = new Date(resultd2);   
+
+var diff = d2.getTime() - d1.getTime();   
+    
+var daydiff = diff / (1000 * 60 * 60 * 24);   
+
+  
+
+if (daydiff<0) {
+    sbbtn.disabled = true;
+    $('#errdateneg').show();
+//alert('Value is negetive')
+ dixx.classList.add("redbdr");
+ diyx.classList.add("redbdr");
+
+
+}else {
+        sbbtn.disabled = false;
+    $('#errdateneg').hide();
+     dixx.classList.remove("redbdr");
+ diyx.classList.remove("redbdr");
+
+}
+
+
+
+
+  
+};
+var myInterval = setInterval(datecheckmax, 500);
+</script>  
+
 
 
                                             <div class="col-sm-12">

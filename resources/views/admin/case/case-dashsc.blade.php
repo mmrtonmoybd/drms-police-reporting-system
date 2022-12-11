@@ -1,41 +1,24 @@
-<x-admin-header />
 
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-
-  <link rel='stylesheet' href='https://cdn.rawgit.com/chingyawhao/materialize-clockpicker/master/dist/css/materialize.clockpicker.css'>
-
-
-
-<style>
-
-body {
-	overflow:auto!important;
-}
-
-</style>
-
-    <!-- start page title -->
-<br>
-
- <!-- start page title -->
- 
-
+			<x-admin-header/>
+			
+			<!-- ============ Body content start ============= -->
+			
+			
+			
+			
+            <div class="main-content pt-4">
+                <div class="selectbox">
                     
-                        <x-admin-validation-errors :errors="$errors->all()"/>
-
-                        <div class="row">
-                            <div class="col-sm-12 ">
-                                <form action="{{url('/admin/case/dashboard/search')}}" method="GET">
-                                    
-                                    <div class="card card-body" id="app">
+                <form action="{{url('/admin/case/dashboard/search')}}" method="GET">
+               
+               <div class="" id="app">
                                         <div class="row">
-
-                                      @if (auth()->user()->hasRole('Super Admin'))
-                                            <div class="col-sm-4">
+                                                                         @if (auth()->user()->hasRole('Super Admin'))
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="districtID" class="form-label "> জেলা </label>
-                                                    <select name="districtID" id="districtID" class="form-select form-control @error('districtID') is-invalid @enderror"  v-model="district_id" @change="getCircles()" >
-                                                        <option value="">Select</option>
+                                                    <label for="districtID" class="form-label "></label>
+                                                    <select name="districtID" id="districtID" class="droparrow form-select form-control stylish @error('districtID') is-invalid @enderror"  v-model="district_id" @change="getCircles()" >
+                                                        <option value="">জেলা</option>
                                                         @if($districts)
 
                                                         @foreach($districts as $district)
@@ -46,31 +29,31 @@ body {
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="circleID" class="form-label">সার্কেল</label>
-                                                    <select name="circleID" id="circleID"  v-model="circle_id" class="form-select form-control @error('circleID') is-invalid @enderror" @change="getUpozillasAndThana()">
-                                                        <option value="">Select</option>
+                                                    <label for="circleID" class="form-label"></label>
+                                                    <select name="circleID" id="circleID"  v-model="circle_id" class="droparrow form-select form-control stylish @error('circleID') is-invalid @enderror" @change="getUpozillasAndThana()">
+                                                        <option value="">সার্কেল</option>
                                                         <option v-for="(circle,key,index) in circles" v-bind:value="circle.id"> @php echo '{{ circle.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control @error('thanaID') is-invalid @enderror">
-                                                        <option value="">Select</option>
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control  stylish @error('thanaID') is-invalid @enderror">
+                                                        <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             @elseif(auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="circleID" class="form-label">সার্কেল</label>
-                                                    <select name="circleID" id="circleID"  v-model="circle_id" class="form-select form-control @error('circleID') is-invalid @enderror" @change="getUpozillasAndThana()">
-                                                        <option value="">Select</option>
+                                                    <label for="circleID" class="form-label"></label>
+                                                    <select name="circleID" id="circleID"  v-model="circle_id" class="droparrow form-select form-control stylish  @error('circleID') is-invalid @enderror" @change="getUpozillasAndThana()">
+                                                        <option value="">সার্কেল</option>
                                                         @if($circledbs)
 
                                                         @foreach($circledbs as $circledb)
@@ -81,20 +64,20 @@ body {
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control @error('thanaID') is-invalid @enderror" >
-                                                        <option value="">Select</option>
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish  @error('thanaID') is-invalid @enderror" >
+                                                        <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             @else
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="thanaID" class="form-label">থানা</label>
-                                                    <select name="thanaID" id="thanaID" class="form-select form-control @error('thanaID') is-invalid @enderror">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror">
                                                         
                                                         <option value="{{$thanades->id}}" selected>{{$thanades->bn_name}}</option>
                                                     </select>
@@ -106,84 +89,227 @@ body {
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
 
 
-                                            <div class="col-sm-12">
-                                                <div>
-                                                       <button type="submit" id="sbbtn" name="submit" class="btn btn-primary"> Submit </button>
-                                                </div>
-                                                
-                                            </div>
 
-                                  
-                                        </div>
-                                    </div>
-     
-                                </form>
-                                
-                                
-                                
+                           <div class="col-sm-2 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <div class="input-group" id="timepicker-input-group2">
+                     <button type="submit" name="submit" class="btn btn-primary" style="width:100%;"> সার্চ করুন </button>
+                  </div>
+               </div>
+            </div>
+                                          
+
+
+         </div>
+      </div>
+	  
+
+					
+                </div>
+                <div class="separator-breadcrumb border-top"></div>
+                <div class="row">
+                    <!-- ICON BG-->
+                    
+                    
+                    
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                            <a href="{{url('/admin/qrrs/srcs/data')}}">   
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">মোট  কেস </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$totalcase}}</p>
+                                </div>
+								</a>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Financial"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">মোট কেস নিস্পত্তি</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$totalendingcase}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
 
-                            <div id="chart_div"></div>
-                            <div id="chart_div2"></div>
-                            <div id="piechart"></div>
-
-
-                            <div>Total case: {{$totalcase}}
-                                <br>
-                                Total ending case: {{$totalendingcase}}
-                                <br>
-                                Total multovi: {{$totalmultobicase}}
-
-@php
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">মোট মুলতবি</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$totalmultobicase}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+			
+			
+			
+			@php
 function hms ($value) {
     $cal = floor($value / 3600 );
     return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
 }
 @endphp
 
-                            
-<br>
-                           Avg case ending time: {{hms($avgendingcasetime)}}
+			
+			
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                            <a href="{{url('/admin/qrrs/srcs/data')}}">   
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">গড় নিস্পত্তি সময় </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{hms($avgendingcasetime)}}</p>
+                                </div>
+								</a>
                             </div>
-                            <br><br>
-
-                            <div>
-
-                            Ak nojora Case info <br>
-
-                            Azahar namio asami: {{$azaharnamioasami}}
-                            <br>
-                            Arrased asami: {{$accusedasami}}
-                            <br>
-                            Jamin Prapto: {{$jaminprapto}}
-                            <br>
-                            Ovohoti prapto: {{$ovohotiprapto}}
-                            <br>
-                            Azahar invistigate prapto: {{$azaharnewinvistigateprapto}}
-                            </div>
-
-
-                            <div class="card">
-                                    <div class="card-body table-responsive">
-
-                                           
-                                            
-                                        </div>
-                                              <div style="text-align: right;margin: 16px;">
+                        </div>
+                    </div>
                     
-                                          
-  <!-- <a target="_blank" href="" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a> -->
+                    
+                    
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Financial"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">এজহার ভুক্ত আসামি</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$azaharnamioasami}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">আটক সংখ্যা</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$accusedasami}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+			
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">জামিন সংখ্যা</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$jaminprapto}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+			
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">অব্যহতিপ্রাপ্ত সংখ্যা</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$ovohotiprapto}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+			
+			
+			      <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">এজহার তদন্ত</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$azaharnewinvistigateprapto}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+			
+			
+					<!--------
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Money-2"></i>
+                                <div class="content">
+                                    <p class="text-muted mt-2 mb-0">Expense</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">$1200</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					--->
+                </div>
+				
+				
+				
+				<style>
+				.card-title {
+					z-index:2000;
+					position:relative;
+				}
+				</style>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title">মোট কেস </div>
+                                <div id="chart_div" style="margin-top: -39px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+		
+                    
+                    
+                    			
+					<div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title" >নিস্পত্তির ধরন </div>
+                                <div id="piechart" style="margin-top: -39px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+					
+					
+                </div>
+           
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+   <div class="card card-body table-responsive">
+
+      <div style="text-align: right;margin: 16px;">
+                    
+
       
 											
 											</div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+    
+   
+   <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -252,7 +378,7 @@ function hms ($value) {
                                                     <td>{{Str::limit($case->short_dettails, 10)}}</td>
                                                     <td>{{Str::limit($case->azahar_namio_victims, 10)}}</td>
                                                     <td>{{Str::limit($case->nispotti_or_multobi, 10)}}</td>
-                                                     <td>{{$case->nispotti_type}}</td>
+                                                     <td>@if ($case->nispotti_type != 0) {{$case->nispotti_type}} @endif</td>
                                                     <td>{{Str::limit($case->cs_or_fr_no, 10)}}</td>
                                                     <td>@if (!empty($case->nispotti_date)) {{date('d/m/Y', strtotime($case->nispotti_date))}} @endif</td>
                                                     <td>{{Str::limit($case->police_report_victim, 10)}}</td>
@@ -282,14 +408,33 @@ function hms ($value) {
 
                                         @if($cases){{$cases->appends(request()->input())->links()}} @endif
                                       
+                                      
                                         </nav>
-                                    </div>
-                                </div>
+      
+      
+      
+      
+   </div>
+</div>
 
 
-                        </div>
 
 
+
+
+            </div>
+			
+			
+			
+            <div class="sidebar-overlay open"></div>
+			<!-- Footer Start -->
+			
+			
+			
+			
+			
+			
+			
                         <!-- end row -->
                         @php
                         if (auth()->user()->hasRole('Super Admin')) {

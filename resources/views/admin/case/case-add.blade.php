@@ -12,6 +12,21 @@ body {
 	overflow:auto!important;
 }
 
+
+.redbdr {
+    border:1px solid red;
+}
+#errdateneg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
 </style>
 
     <!-- start page title -->
@@ -23,6 +38,8 @@ body {
                     
                         <x-admin-validation-errors :errors="$errors->all()"/>
 
+
+<span id="errdateneg">মামলার তারিখ ঘটনার তারিখের থেকে পরে হতে পারবে না </span>
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <form action="{{url('admin/case/add')}}" method="POST" enctype="multipart/form-data">
@@ -105,8 +122,8 @@ body {
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
-                                                    <label for="cdms_pg_id" class="form-label"> CDMS PG ID </label>
-                                                    <input type="text" name="cdms_pg_id"  value="{{old('cdms_pg_id')}}" id="cdms_pg_id" class="form-control  @error('cdms_pg_id') is-invalid @enderror" placeholder="CDMS PG ID">
+                                                    <label for="cdms_pg_id" class="form-label"> মামলার কোড (CDMS) </label>
+                                                    <input type="text" name="cdms_pg_id"  value="{{old('cdms_pg_id')}}" id="cdms_pg_id" class="form-control  @error('cdms_pg_id') is-invalid @enderror" placeholder="মামলার কোড (CDMS)">
                                                 </div>
                                             </div>
 
@@ -146,14 +163,14 @@ body {
                                                 <div class="mb-3">
                                                     <label for="case_date" class="form-label"> মামলার  তারিখ  </label>
                                            
-                                                    <input type="text" name="case_date"   value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
+                                                    <input type="text" name="case_date" value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
-                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                    <select name="caseTypeID" id="caseTypeID"  onchange="myFunction2()" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
                                                         <option value="">Select</option>
                                                         @if($caseparenttypes)
 
@@ -166,7 +183,7 @@ body {
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="hidecs">
                                                 <div class="mb-3">
                                                     <label for="casesubID" class="form-label">মামলার উপধরন</label>
                                                     <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
@@ -183,21 +200,31 @@ body {
                                                     <input type="text" name="incident_date_time"   value="{{old('incident_date_time')}}" id="incident_date_time" class="form-control datepicker  @error('incident_date_time') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="ঘটনার তারিখ" >
                                                 </div>
                                             </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="short_dettails" class="form-label"> মামলার সারসংক্ষেপ </label>
-                                                    <input type="text" name="short_dettails"  value="{{old('short_dettails')}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="মামলার সারসংক্ষেপ">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
+                                            
+                                            
+                                            
+                                            
+                                                   <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="azahar_namio_victims" class="form-label"> এজাহার নামীয় আসামির সংখ্যা </label>
                                                     <input type="number" name="azahar_namio_victims"  value="{{old('azahar_namio_victims')}}" id="azahar_namio_victims" class="form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
+
+
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="short_dettails" class="form-label"> মামলার সারসংক্ষেপ </label>
+                                                    <textarea type="text" name="short_dettails"  id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="মামলার সারসংক্ষেপ">{{old('short_dettails')}} </textarea>
+                                              
+                                              
+                                                </div>
+                                            </div>
+
+                                     
 
                                             <div class="col-sm-12">
                                                 <div>
@@ -216,6 +243,126 @@ body {
                                 
                             </div>
                         </div>
+                        
+                        
+                        
+                        
+              
+              
+              
+              
+
+<script>
+
+
+
+
+
+function myFunction2() {
+    
+  var caseTypeID = document.getElementById("caseTypeID").value;
+  var hidecs = document.getElementById("hidecs");
+
+//alert(caseTypeID);
+   if (caseTypeID == '2'){
+      hidecs.style.display = "block";
+  } else if (caseTypeID == '4') {
+     hidecs.style.display = "block";
+  } else if (caseTypeID == '5') {
+     hidecs.style.display = "block";
+  } else if (caseTypeID == '6') {
+     hidecs.style.display = "block";
+  } else {
+      hidecs.style.display = "none";
+  }
+  
+  
+}
+var myInterval = setInterval(myFunction2, 500);
+
+
+
+</script>
+
+
+              
+              
+              
+              
+<script>
+
+
+
+function datecheckmax(){ 
+ 
+
+
+     var sbbtn = document.getElementById("sbbtn");
+      var dix = document.getElementById("incident_date_time").value;
+      var diy = document.getElementById("case_date").value;
+      
+         var dixx = document.getElementById("incident_date_time");
+         var diyx = document.getElementById("case_date");
+// const dix = '24/09/2022';
+// const diy = '21/09/2022';
+
+
+var [day, month, year] = dix.split('/');
+var resultd1 = [year, month, day].join('/');
+
+
+
+
+var [dayy, monthy, yeary] = diy.split('/');
+var resultd2 = [yeary, monthy, dayy].join('/');
+
+
+ 
+
+
+var d1 = new Date(resultd1);   
+var d2 = new Date(resultd2);   
+
+
+
+var diff = d2.getTime() - d1.getTime();   
+    
+var daydiff = diff / (1000 * 60 * 60 * 24);   
+
+  
+
+if (daydiff<0) {
+    sbbtn.disabled = true;
+    $('#errdateneg').show();
+//alert('Value is negetive')
+ dixx.classList.add("redbdr");
+ diyx.classList.add("redbdr");
+
+}else {
+        sbbtn.disabled = false;
+    $('#errdateneg').hide();
+         dixx.classList.remove("redbdr");
+ diyx.classList.remove("redbdr");
+   
+}
+
+
+
+
+  
+};
+var myInterval = setInterval(datecheckmax, 500);
+
+
+
+
+
+
+</script>  
+
+                        
+                        
+                        
                         <!-- end row -->
                         @php
                         if (auth()->user()->hasRole('Super Admin')) {

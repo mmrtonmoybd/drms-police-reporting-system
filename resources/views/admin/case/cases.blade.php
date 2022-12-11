@@ -95,7 +95,7 @@ use Illuminate\Support\Str;
                                                     <td>{{Str::limit($case->short_dettails, 10)}}</td>
                                                     <td>{{Str::limit($case->azahar_namio_victims, 10)}}</td>
                                                     <td>{{Str::limit($case->nispotti_or_multobi, 10)}}</td>
-                                                     <td>{{$case->nispotti_type}}</td>
+                                                     <td>@if ($case->nispotti_type != 0) {{$case->nispotti_type}} @endif</td>
                                                     <td>{{Str::limit($case->cs_or_fr_no, 10)}}</td>
                                                     <td>@if (!empty($case->nispotti_date)) {{date('d/m/Y', strtotime($case->nispotti_date))}} @endif</td>
                                                     <td>{{Str::limit($case->police_report_victim, 10)}}</td>

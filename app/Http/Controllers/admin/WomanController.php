@@ -67,6 +67,19 @@ class WomanController extends Controller
     public function create(Request $request)
     {
         $dateandtime = Carbon::createFromFormat('d/m/Y H:i', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:i');
+
+        if ($request->filled('nreport')) {
+            $nreport = $request->input('nreport');
+        } else {
+            $nreport = 0;
+        }
+
+        if ($request->filled('action_taken')) {
+            $action_taken = $request->input('action_taken');
+        } else {
+            $action_taken = 0;
+        }
+
         $request->merge([
             'wdate' => $dateandtime,
             'badi_age' => $this->reptpenum($request->input('badi_age')),
@@ -78,6 +91,8 @@ class WomanController extends Controller
             'complaint_no' => $this->reptpenum($request->input('complaint_no')),
             'user_id' => auth()->user()->id,
             'divisionID' => 1,
+            'nreport' => $nreport,
+            'action_taken' => $action_taken,
             'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
             'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
         ]);
@@ -156,6 +171,20 @@ class WomanController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
 
         $dateandtime = Carbon::createFromFormat('d/m/Y H:i', $request->input('wdate').' '.$request->input('incident_time'))->format('Y-m-d H:i');
+
+        if ($request->filled('nreport')) {
+            $nreport = $request->input('nreport');
+        } else {
+            $nreport = 0;
+        }
+
+        if ($request->filled('action_taken')) {
+            $action_taken = $request->input('action_taken');
+        } else {
+            $action_taken = 0;
+        }
+
+
         $request->merge([
                        'wdate' => $dateandtime,
                        'badi_age' => $this->reptpenum($request->input('badi_age')),
@@ -165,6 +194,8 @@ class WomanController extends Controller
                        'mamla_no' => $this->reptpenum($request->input('mamla_no')),
                        'dhara' => $this->reptpenum($request->input('dhara')),
                        'complaint_no' => $this->reptpenum($request->input('complaint_no')),
+                       'nreport' => $nreport,
+                       'action_taken' => $action_taken,
                        'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
                        'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
                        ]);
@@ -243,13 +274,13 @@ class WomanController extends Controller
             // end number of complain
 
             // Number of action taken graph
-            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
+            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
             //end Number of action taken
 
             // Number of disposal report graph
-            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
+            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
@@ -271,13 +302,13 @@ class WomanController extends Controller
             // end number of complain
 
             // Number of action taken graph
-            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
+            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
             //end Number of action taken
 
             // Number of disposal report graph
-            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
+            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
@@ -298,13 +329,13 @@ class WomanController extends Controller
             // end number of complain
 
             // Number of action taken graph
-            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
+            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
             //end Number of action taken
 
             // Number of disposal report graph
-            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
+            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
@@ -395,6 +426,7 @@ class WomanController extends Controller
             $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
+        ->where('action_taken', '!=', '0')
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
@@ -404,6 +436,7 @@ class WomanController extends Controller
             $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
+        ->where('nreport', '!=', '0')
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
@@ -443,6 +476,7 @@ class WomanController extends Controller
             $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
+        ->where('action_taken', '!=', '0')
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
@@ -452,6 +486,7 @@ class WomanController extends Controller
             $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
+        ->where('nreport', '!=', '0')
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
@@ -491,6 +526,7 @@ class WomanController extends Controller
             $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
+        ->where('action_taken', '!=', '0')
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
@@ -500,6 +536,7 @@ class WomanController extends Controller
             $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
+        ->where('nreport', '!=', '0')
         ->whereBetween('wdate', [$fvalue, $tovalue])->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report

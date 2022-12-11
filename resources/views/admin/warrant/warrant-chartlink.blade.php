@@ -1,280 +1,12 @@
 <x-admin-header />
 	  
-	  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
-
 
 <x-admin-validation-errors :errors="$errors->all()"/>
 <!------------secondery hedaer----------->
 
 
-<style>
-   .row {
-   width:100%;
-   overflow:none;
-   }
-   text {
-   font-family: Nunito, 'SolaimanLipi', sans-serif;
-   font-size: 11px;
-   }
-   
-   
- 
-   
-   .stylish {
-   background: #f42b1c;
-   color: #fff;
-   border-radius: 20px;
-   display: block;
-   width: 100%;
-   padding: 5px 7px 5px 5px;
-   font-size: .9rem;
-   font-weight: 400;
-   line-height: 1.5;
-   text-align: center;
-   }
-   .stylish option {
-   text-align: center;
-   }
-   
-
-   
-   
-   .stylish:hover {
-   background: #ff0000e3;
-   color: #fff;
-   border-radius: 20px;
-   display: block;
-   width: 100%;
-   padding: 5px 7px 5px 5px;
-   font-size: .9rem;
-   font-weight: 400;
-   line-height: 1.5;
-   text-align: center;
-   }
-   .stylish option {
-   text-align: center;
-   }
-   
-   
-   
-   
-
-   
-   
-   
-   
-   
-   
-   
-   
-   .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, {
-   padding: 7px!important;
-   }
-   .sheader {
-   background:#930cc4; 
-   color:white;
-   height:120px;
-   }
-   .datepicker {
-   border: 1px solid #ff0000e3;
-   color:#ff0000e3;
-   border-radius:20px;
-   }
-   input#date_time_response {
-   height: 33px;
-
-   border: 1px solid #ff0000e3;
-   
-   }
-   .redbg {
-   background:red; 
-   color:white;
-   height:120px;
-   text-align:center;
-     margin-bottom: 5px!important;
-   }
-   
-   
-      .purplebg {
-   background:purple; 
-   color:white;
-   height:120px;
-   text-align:center;
-   margin-bottom: 5px!important;
-   }
-   
-   
-   .greenbg {
-   background:green; 
-   color:white;
-   height:120px;
-   text-align:center;
-   margin-bottom: 5px!important;
-   }
-   .centerimg {
-   text-align:center;
-   width:100%;
-   }
-   .sheader h1 {
-   color:white;
-   }
-   .inliner {
-   display:inline-block;
-   }
-   .leftimg, .rightimg, .centerimg {
-   display:inline-block;
-   }
-   .leftimg {
-   float: left;
-   position: absolute;
-   }
-   .rightimg {
-   float: right;
-   position: absolute;
-   right: 17px;
-   }
-
-   
-   .chart-header-main {
-  color: #a05078;
-
-  font-size: 17px;
-  position: relative;
-  top: 25px;
-  z-index: 10;
-  left: 20px;
-    }
-       .chart-header {
-   color:#a05078;
-   margin: 21px 0px 0px 10px;
-   font-size: 17px;
-   }
-   .card {
-   border-radius: 0px;
-   border: 1px solid #ddd;
-   }
-   .xtrm {
-   margin-top:25px;
-   }
-   .button-menu-mobile { color:#fff!important;  }
-   
-   
-   
-.float{
-	position:fixed;
-	width:50px;
-	height:50px;
-	bottom:40px;
-	right:40px;
-	background-color:#04c;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	transition: transform .2s;
-}
 
 
-.float2{
-	position:fixed;
-	width:50px;
-	height:50px;
-	bottom:100px;
-	right:40px;
-	background-color:#f44336;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-	z-index:1000;
-	text-decoration:none;
-		transition: transform .2s;
-}
-
-.float3 {
-  position: fixed;
-  width: 65px;
-  height: 130px;
-  bottom: 50%;
-  right: 0px;
-  background-color: #9d1b95;
-  color: #FFF;
-  border-radius: 7px 0px 0px 7px;
-  text-align: center;
-  box-shadow: 2px 2px 3px #999;
-  z-index: 1000;
-  text-decoration: none;
-  transition: transform .2s;
-}
-
-.float:hover{
-transform: scale(1.1);
-}
-
-
-.float2:hover{
-transform: scale(1.1);
-}
-
-
-
-.my-float3{
-	margin-top:0;
-	font-size:14px;
-	padding:10px;
-	text-decoration:none;
-}
-
-
-.my-float{
-	margin-top:22px;
-	font-size:30px;
-	text-decoration:none;
-}
-
-.my-float:hover {
-  color: #ddd;
-}
-   
-   .silverhover:hover {
-  color: #ddd;
-}
-
-   
-</style>
-
-<div class="row ">
-   <div class="col-sm-12 " style="padding: 5px 0px 0px 0px;">
-      <div class="card sheader">
-         <div class="card-body inliner">
-            <div class="leftimg">
-               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
-            </div>
-       <div class="centerimg">
-               <h1> Warrant Dashboard </h1>
-               <h3> Barisal Range, Barisal </h3>
-               <br>
-            </div>
-            <div class="rightimg">
-               <img src="https://www.pinclipart.com/picdir/middle/400-4008891_final-police-logo-blue-police-week-2019-bangladesh.png" width="80px'">
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-
-     <style>
-
-.sidetitle {
-    font-weight:bold;
-    color:#ffbfa0;
-}
-</style>    
 
 <form target="_blank" action="{{url('/admin/warrant/search')}}" method="get">
                                                     
@@ -285,7 +17,7 @@ transform: scale(1.1);
 												<div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                          <select name="districtID" id="districtID" class="form-select form-control stylish"  v-model="district_id">
+                                                          <select name="districtID" id="districtID" class="form-select form-control "  v-model="district_id">
                                                         <option value="">জেলা</option>
                                                         @if($districts)
 
@@ -302,7 +34,7 @@ transform: scale(1.1);
 												 <div class="col-sm-4">
                                                  <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control " >
                                                         <option value="">থানা</option>
                                                         @if($spthanas)
 
@@ -319,7 +51,7 @@ transform: scale(1.1);
 												<div class="col-sm-4">
                                                  <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control " >
                                                         <option value="">থানা</option>
                                                         @if($octhanacol)
 
@@ -337,8 +69,8 @@ transform: scale(1.1);
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                    <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date start" >
-                    <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date end" >
+                    <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="শুরুর তারিখ" >
+                    <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="শেষ তারিখ" >
                   </div>
                </div>
             </div>
@@ -346,7 +78,7 @@ transform: scale(1.1);
             <div class="col-sm-4 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
+                  <button type="submit" name="submit" class="btn " style="width:100%;"> সার্চ করুন </button>
                </div>
             </div>
          </div>
@@ -369,7 +101,7 @@ transform: scale(1.1);
 
 
 <div class="row">
-   <div class="card table-responsive">
+
                             <div class="col-sm-12 ">
                                 <div class="card">
                                     <div class="card-body table-responsive">
@@ -474,7 +206,7 @@ function thana($id) {
 
                                     </div>
                             </div>
-                        </div>
+
                         <!-- end row -->
 						
 						<script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>

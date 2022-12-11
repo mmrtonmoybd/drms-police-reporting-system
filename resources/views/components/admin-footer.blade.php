@@ -1,3 +1,4 @@
+
 @if (auth()->check())
                      
 
@@ -187,6 +188,30 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+
+
+<script>
+$(function() {
+    $( ".datepicker" ).datepicker({   format: 'mm-dd-yyyy',
+        endDate: '+0d',
+        format: 'dd/mm/yyyy',
+        autoclose: true });
+  }
+  );
+
+
+$(function() {
+    $( ".searchdatepick" ).datepicker({   format: 'yyyy-mm-dd',
+        endDate: '+0d',
+        format: 'yyyy/mm/dd',
+        autoclose: true });
+  }
+  );
+
+</script>
+
+
 <script>
     $( function() {
     $( "#sortable" ).sortable({ axis: "y" });
@@ -226,8 +251,6 @@
 
     $('#message').countSms('#sms-counter');
 </script>
-
-
 
 
 <script>

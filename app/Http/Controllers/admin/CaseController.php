@@ -150,14 +150,7 @@ class CaseController extends Controller
             $cdms_pg_id_result_final = strtoupper($cdms_pg_id_result);
         }
 
-        $nispottisecond = '';
-
-        if ($request->filled('nispotti_date') && $request->filled('case_date')) {
-            $to = Carbon::createFromFormat('Y-m-d', $nispotti_date);
-            $from = Carbon::createFromFormat('Y-m-d', $case_date);
-
-            $nispottisecond = $to->diffInSeconds($from);
-        }
+   
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $thana = Thana::find($request->input('thanaID'));
@@ -180,7 +173,7 @@ class CaseController extends Controller
             'circleID' => $circleid,
             'case_type' => $request->input('caseTypeID'),
             'casesub_type' => $request->input('casesubID'),
-            'nispottisecond' => $nispottisecond,
+         
             'cs_or_fr_no' => $this->reptpenum($request->input('cs_or_fr_no')),
             'police_report_victim' => $this->reptpenum($request->input('police_report_victim')),
             'number_of_accused' => $this->reptpenum($request->input('number_of_accused')),
@@ -204,6 +197,8 @@ class CaseController extends Controller
 
 
 
+
+
         if ($request->filled('incident_date_time')) {
             $incident_date_time = Carbon::createFromFormat('d/m/Y', $request->input('incident_date_time'))->format('Y-m-d');
 
@@ -222,6 +217,21 @@ class CaseController extends Controller
             ]);
         }
 
+
+
+  if ($request->filled('nispotti_date') && $request->filled('case_date')) {
+            $to = Carbon::createFromFormat('Y-m-d', $nispotti_date);
+            $from = Carbon::createFromFormat('Y-m-d', $case_date);
+
+            $nispottisecond = $to->diffInSeconds($from);
+            
+            
+              $request->merge([
+              'nispottisecond' => $nispottisecond
+            ]);
+        }
+        
+        
 
         $request->request->remove('_token');
         $request->request->remove('submit');
@@ -318,7 +328,7 @@ class CaseController extends Controller
 
         // Case ending typyes start
 
-        $caseendingtypes = Casedb::selectRaw('COUNT(nispotti_type) AS countnispotti_type, nispotti_type')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereNotNull('nispotti_type')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
+        $caseendingtypes = Casedb::selectRaw('COUNT(nispotti_type) AS countnispotti_type, nispotti_type')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('nispotti_type', '!=', '0')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
 
         $request->session()->flash('caseendingtypes', $caseendingtypes);
         // Case ending typyes start
@@ -347,7 +357,7 @@ class CaseController extends Controller
         $last_three_month = Carbon::now()->startOfMonth()->subMonth(3);
         $this_month = Carbon::now()->endOfMonth();
 
-        $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month,$this_month])->groupBy('month')->get();
+        $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, DATE_FORMAT(case_date, "%Y-%b") AS monthyear, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month,$this_month])->groupBy('monthyear')->orderBy(\DB::raw('MONTH(case_date)'), 'ASC')->get();
         //echo $this_month;
 
         //dd($lastthreemonthcase);
@@ -601,7 +611,7 @@ class CaseController extends Controller
                               ->where('circleID', $ckey, $cvalue)
                               ->where('thanaID', $tkey, $tvalue)
                               ->whereBetween('case_date', [$fvalue, $tovalue])
-                              ->whereNotNull('nispotti_type')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
+                              ->where('nispotti_type', '!=', '0')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
 
         $request->session()->flash('caseendingtypes', $caseendingtypes);
         // Case ending typyes start
@@ -695,5 +705,129 @@ class CaseController extends Controller
                           ->paginate(20);
 
         return view('admin/case/case-dashsc', $data);
+    }
+
+
+    public function chartdata(Request $request)
+    {
+        $data['request'] = $request;
+        $to = Carbon::parse($request->input('to'))->toDateTimeString();
+        $from = Carbon::parse($request->input('form'))->toDateTimeString();
+
+        if (auth()->user()->hasRole('Super Admin')) {
+
+            $data['districts'] = District::where('division_id', 1)->get();
+
+
+            if (!empty($request->input('districtID'))) {
+                $dkey = '=';
+                $dvalue = $request->input('districtID');
+            } else {
+                $dkey = '!=';
+                $dvalue = 'ss';
+            }
+
+            if (!empty($request->input('circleID'))) {
+                $ckey = '=';
+                $cvalue = $request->input('circleID');
+            } else {
+                $ckey = '!=';
+                $cvalue = 'cc';
+            }
+
+            if (!empty($request->input('thanaID'))) {
+                $tkey = '=';
+                $tvalue = $request->input('thanaID');
+            } else {
+                $tkey = '!=';
+                $tvalue = 'jj';
+            }
+        } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
+
+            $dkey = '=';
+            $dvalue = auth()->user()->districtID;
+
+            if (!empty($request->input('circleID'))) {
+                $ckey = '=';
+                $cvalue = $request->input('circleID');
+            } else {
+                $ckey = '!=';
+                $cvalue = 'cc';
+            }
+
+            if (!empty($request->input('thanaID'))) {
+                $tkey = '=';
+                $tvalue = $request->input('thanaID');
+            } else {
+                $tkey = '!=';
+                $tvalue = 'jj';
+            }
+        } else {
+            $data['thanades'] = Thana::find(auth()->user()->thanaID);
+            // oc
+
+            $dkey = '=';
+            $dvalue = auth()->user()->districtID;
+
+            $tvalue = auth()->user()->thanaID;
+            $tkey = '=';
+
+            $thana = Thana::find($request->input('thanaID'));
+            $cvalue = $thana->circle_id;
+            $ckey = '=';
+
+
+
+            // oc
+        }
+
+
+
+        if (!empty($request->input('form'))) {
+            $fkey = '=';
+            $fvalue = $from;
+
+            $date = Carbon::parse($fvalue);
+            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+        //dd($ggg);
+        } else {
+            $fkey = '=';
+            $fvalue = '1971-01-01 11:45:00';
+        }
+
+        if (!empty($request->input('to'))) {
+            $tokey = '=';
+            $tovalue = $to;
+
+            $date = Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = Carbon::now()->toDateTimeString();
+        }
+
+
+        if (!empty($request->input('nispotti_type'))) {
+            $nispotti_type = $request->input('nispotti_type');
+            $nispotti_type_key = '=';
+        } else {
+            $nispotti_type = 'DD';
+            $nispotti_type_key = '!=';
+        }
+
+
+        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
+                          ->where('districtID', $dkey, $dvalue)
+                          ->where('circleID', $ckey, $cvalue)
+                          ->where('thanaID', $tkey, $tvalue)
+                          ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
+                          ->whereBetween('case_date', [$fvalue, $tovalue])
+                          ->orderBy('id', 'desc')
+                          ->paginate(20);
+
+        return view('admin/case/case-data', $data);
+
+
     }
 }

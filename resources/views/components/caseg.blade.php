@@ -23,7 +23,7 @@
          @foreach(session("diswisecase") as $key => $value)
 
          
-         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?districtID=". $value->district->id!!}'],
          @endforeach
 
          @endif
@@ -32,8 +32,9 @@
       ]);
 
         // Set chart options
+            // মোট কেস 
         var options = {
-        title: "Number of case",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -72,7 +73,7 @@
          @foreach(session("circlewise") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?circleID=". $value->circle->id!!}'],
          @endforeach
          @endif
         
@@ -80,8 +81,9 @@
       ]);
 
         // Set chart options
+           // মোট কেস 
         var options = {
-        title: "Number of case",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -119,15 +121,16 @@
          @foreach(session("thanawise") as $key => $value)
    
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{ $value->countcase}}', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?thanaID=". $value->thana->id!!}'],
          @endforeach
         @endif
        
       ]);
 
         // Set chart options
+           // মোট কেস 
         var options = {
-        title: "Number of case",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -159,31 +162,53 @@
         $mm = (int) $value;
         return $mm;
       }
+
+      function lastthreemon($monthyear, string $type)
+    {
+        $carbon = \Illuminate\Support\Carbon::parse($monthyear);
+
+        if ($type == 'start') {
+            return $carbon->startOfMonth()->format('Y/m/d');
+        } elseif ($type == 'end') {
+            return $carbon->endOfMonth()->format('Y/m/d');
+        }
+    }
+
       @endphp
 
       function drawChart2() {
         var data = google.visualization.arrayToDataTable([
-          ['Month', 'Cases', { role: 'link' }],
+          ['Month', 'Cases', { role: "style" }, { role: 'link' }],
           @if (!is_null(session("lastthreemonthcase")))
           @foreach(session("lastthreemonthcase") as $key => $value)
-          ['{{$value->month}}',  {{intconber($value->totalcase)}}, '#'],
+          ['{{$value->month}}',  {{intconber($value->totalcase)}}, 'gold', '{!! url("/admin/case/dashboard/chart/data") . "?form=". lastthreemon($value->monthyear, "start") . "&to=". lastthreemon($value->monthyear, "end") !!}'],
           @endforeach
           @endif
           
         ]);
+        
+   // শেষ ৩ মাসের কেস
+        var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
 
-        var options = {
-          title: 'Last three month cases',
-          hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
-        google.visualization.events.addListener(chart, 'select', function (e) {
+      var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("chart_div2"));
+       google.visualization.events.addListener(chart, 'select', function (e) {
             var selection = chart.getSelection();
                 if (selection.length) {
                     var row = selection[0].row;
-                    let link =data.getValue(row, 2);
+                    let link =data.getValue(row, 3);
                     location.href = link;
                 }
         });
@@ -199,13 +224,17 @@
           ['Case type', 'count', 'number', { role: 'link' }],
           @if (!is_null(session("caseendingtypes")))
           @foreach(session("caseendingtypes") as $key => $value)
-          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '#'],
+          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?nispotti_type=". $value->nispotti_type !!}'],
           @endforeach
           @endif
         ]);
 
+
+   // নিস্পত্তির ধরন
+   
+   
         var options = {
-          title: 'Nispotti type',
+          title: '',
           is3D: true,
         width: "98%",
         height: "172",

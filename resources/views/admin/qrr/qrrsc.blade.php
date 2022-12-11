@@ -94,8 +94,8 @@
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -135,7 +135,7 @@ function hms ($value) {
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Financial"></i>
+                            <div class="card-body text-center"><i class="i-Clock"></i>
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">গড় সাড়াদানের সময়</p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{hms($avgrespontime)}}</p>
@@ -147,7 +147,7 @@ function hms ($value) {
 					  @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                            <div class="card-body text-center"><i class="i-Clock-Forward"></i>
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">গড় রিপোর্টে বিলম্ব</p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{hms($avgreportdelay)}}</p>

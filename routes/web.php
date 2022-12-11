@@ -173,6 +173,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/case/view/print/{casedb}', [CaseController::class, 'casePrint'])->middleware('permission:case.view');
         Route::get('/case/dashboard', [CaseController::class, 'dashboard'])->middleware('permission:case.dashboard');
         Route::get('/case/dashboard/search', [CaseController::class, 'dashboardsc'])->middleware('permission:case.dashboard');
+        Route::get('/case/dashboard/chart/data', [CaseController::class, 'chartdata'])->middleware('permission:case.dashboard');
 
 
 

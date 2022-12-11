@@ -40,7 +40,7 @@
                                                     </tr>
 
                                                     <tr>
-                                                    <td><b>নিস্পত্তির ধরন :</b>{{$case->nispotti_type}}</td>
+                                                    <td><b>নিস্পত্তির ধরন :</b>@if ($case->nispotti_type != 0) {{$case->nispotti_type}} @endif</td>
                                                     <td><b>সিএক্স/এফ আর নং :</b>{{$case->cs_or_fr_no}}</td>
                                                     <td><b>তারিখ :</b>@if (!empty($case->nispotti_date)) {{date('d/m/Y', strtotime($case->nispotti_date))}} @endif</td>
                                                     <td><b>পুলিশ রিপোর্ট আসামির সংখ্যা :</b>{{$case->police_report_victim}}</td>

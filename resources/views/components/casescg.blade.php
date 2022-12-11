@@ -1,5 +1,15 @@
 @if ( request()->is('admin/case/dashboard/search'))
 
+@php
+function removeArr(...$arg)
+    {
+        $arr = request()->all();
+        $hh = \Illuminate\Support\Arr::except($arr, $arg);
+        $string1 = url('/admin/case/dashboard/chart/data') .'?'. http_build_query($hh);
+        return $string1;
+    }
+@endphp
+
 <script type="text/javascript">
 // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
@@ -24,7 +34,7 @@
          @foreach(session("diswisecase") as $key => $value)
 
          
-         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("districtID") !!}&districtID={{$value->district->id}}'],
          @endforeach
          @endif
 
@@ -33,7 +43,7 @@
          @foreach(session("circlewisecase") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID", "circleID") !!}&circleID={{$value->circle->id}}'],
          @endforeach
          @endif
 
@@ -42,7 +52,7 @@
         @foreach(session("circlewisethanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
@@ -51,7 +61,7 @@
          @foreach(session("searchthanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
@@ -101,7 +111,7 @@
          @foreach(session("circlewisecase") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("circleID") !!}&circleID={{$value->circle->id}}'],
          @endforeach
          @endif
 
@@ -110,7 +120,7 @@
          @foreach(session("circlethanawisecase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
@@ -119,7 +129,7 @@
          @foreach(session("searchthanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
          @endif
@@ -167,7 +177,7 @@
          @foreach(session("octhanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '#'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
         
@@ -217,13 +227,15 @@
           ['Case type', 'count', 'number', { role: 'link' }],
           @if (!is_null(session("caseendingtypes")))
           @foreach(session("caseendingtypes") as $key => $value)
-          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '#'],
+          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '{!! removeArr("nispotti_type") !!}&nispotti_type={{$value->nispotti_type}}'],
           @endforeach
           @endif
         ]);
 
+
+// নিস্পত্তি টাইপ
         var options = {
-          title: 'Nispotti type',
+          title: '',
           is3D: true,
         width: "98%",
         height: "172",
