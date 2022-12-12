@@ -219,7 +219,7 @@ function hms ($value) {
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title">জেলা ভিত্তিক রিপোর্ট </div>
+                                <div class="card-title">থানা ভিত্তিক রিপোর্ট </div>
                               @if($qrrs->isNotEmpty())
                                 <div id="chart_div" style="margin-top: -39px;height: 300px;"></div>
                                 @else

@@ -34,7 +34,7 @@ use Illuminate\Support\Str;
                                                     <th> জেলা</th>
                                                     <th> সার্কেল</th>
                                                     <th> থানা</th>
-                                                    <th> CDMS PG ID</th>
+                                                    <th>  	মামলার কোড (CDMS)</th>
                                                     <th> উৎস</th>
                                                     <th> জি আর নং</th>
                                                     <th> মামলা নং</th>

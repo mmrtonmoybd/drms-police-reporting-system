@@ -40,8 +40,9 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
       ]);
 
         // Set chart options
+           // title: "Number of complain",
         var options = {
-        title: "Number of complain",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -113,8 +114,10 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
                          role: "annotation" },
                        2]);
 
+
+//Disposal Report
       var options = {
-        title: "Disposal report",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "95%"},
@@ -164,8 +167,9 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
       ]);
 
         // Set chart options
+        //Number OF complain
         var options = {
-        title: "Number of complain",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -236,9 +240,9 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
                          type: "string",
                          role: "annotation" },
                        2]);
-
+        // title: "Disposal report",
       var options = {
-        title: "Disposal report",
+        title: "",
         width: 600,
         height: 400,
         bar: {groupWidth: "95%"},
@@ -282,8 +286,9 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
       ]);
 
         // Set chart options
+         //   title: "Number of complain",
         var options = {
-        title: "Number of complain",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -338,9 +343,9 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
                          type: "string",
                          role: "annotation" },
                        2]);
-
+ // title: "Disposal report",
       var options = {
-        title: "Disposal report",
+        title: "",
         width: 600,
         height: 400,
         bar: {groupWidth: "95%"},

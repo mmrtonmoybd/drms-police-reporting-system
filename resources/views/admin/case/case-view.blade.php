@@ -19,7 +19,7 @@
                                                     </tr>
 
                                                     <tr>
-                                                    <td><b>CDMS PG ID :</b>{{$case->cdms_pg_id}}</td>
+                                                    <td><b>মামলার কোড (CDMS) :</b>{{$case->cdms_pg_id}}</td>
                                                     <td><b>উৎস :</b>{{$case->source_of_info}}</td>
                                                     <td><b>জি আর নং :</b>{{$case->gr_no}}</td>
                                                     <td><b>মামলা নং :</b>{{$case->case_no}}</td>

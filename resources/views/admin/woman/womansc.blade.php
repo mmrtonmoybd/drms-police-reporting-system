@@ -152,7 +152,7 @@
 					<div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" > তথ্য প্রাপ্তির উৎস </div>
+                                <div class="card-title" > গৃহীত ব্যবস্থা </div>
                                 <div id="piechart" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                     <div class="col-lg-4 col-sm-12">
                         <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
-                                <div class="card-title">ঘটনার ধরন</div>
+                                <div class="card-title">নিস্পত্তি রিপোর্ট</div>
                                 <div id="columnchart_values" style="margin-top: -71px;height: 300px;"></div>
                             </div>
                         </div>

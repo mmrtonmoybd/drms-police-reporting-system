@@ -321,7 +321,7 @@
 					<div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" > তথ্য প্রাপ্তির উৎস </div>
+                                <div class="card-title" > গ্রেপ্তারকৃত আসামির সংখ্যা </div>
                                 <div id="piechart" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
@@ -331,7 +331,7 @@
                     <div class="col-lg-4 col-sm-12">
                         <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
-                                <div class="card-title">ঘটনার ধরন</div>
+                                <div class="card-title">অভিযান পরিচালনাকারী সংস্থা</div>
                                 <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
                             </div>
                         </div>
