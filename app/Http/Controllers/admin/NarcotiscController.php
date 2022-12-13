@@ -290,7 +290,7 @@ class NarcotiscController extends Controller
 
         $request->session()->flash('agomonthday', $agomonthday);
 
-        
+
         if (auth()->user()->hasRole('Super Admin')) {
             $data['districts'] = District::where('division_id', 1)->get();
             $data['request'] = $request;

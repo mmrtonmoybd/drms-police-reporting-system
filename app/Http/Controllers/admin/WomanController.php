@@ -277,7 +277,7 @@ class WomanController extends Controller
             // Number of complain graph
             $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")->whereBetween('wdate', [$agomonthday, $currentday])->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
-            // 
+            //
 
             //dd($totalcomplain);
             $request->session()->flash('totalcomplains', $totalcomplains);
@@ -516,7 +516,7 @@ class WomanController extends Controller
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
 
-             // total disposal nispotti start
+            // total disposal nispotti start
 
             $data['totalnispotti'] = Woman::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
@@ -763,7 +763,6 @@ class WomanController extends Controller
             //show data
 
             if (!empty($request->input('satisfy_rate'))) {
-
                 $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
@@ -777,8 +776,6 @@ class WomanController extends Controller
         ->where('nreport', $nkey, $nvalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
             }
-
-            
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -788,7 +785,6 @@ class WomanController extends Controller
             //show data
 
             if (!empty($request->input('satisfy_rate'))) {
-
                 $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
@@ -796,7 +792,6 @@ class WomanController extends Controller
         ->where('satisfy_rate', $request->input('satisfy_rate'))
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
             } else {
-
                 $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
@@ -804,8 +799,6 @@ class WomanController extends Controller
         ->where('satisfy_rate', $request->input('satisfy_rate'))
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
             }
-
-            
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -820,9 +813,7 @@ class WomanController extends Controller
         ->where('nreport', $nkey, $nvalue)
         ->where('satisfy_rate', $request->input('satisfy_rate'))
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
-
             } else {
-
                 $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
@@ -830,8 +821,6 @@ class WomanController extends Controller
         ->where('satisfy_rate', $request->input('satisfy_rate'))
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
             }
-
-            
         }
 
         return view('admin/woman/woman-chartlink', $data);

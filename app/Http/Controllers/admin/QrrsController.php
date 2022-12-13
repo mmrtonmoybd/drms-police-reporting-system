@@ -602,7 +602,7 @@ class QrrsController extends Controller
         $request->session()->flash('begningofevent', $begningofevent);
         // begning of event end
 
-        // Action taken start 
+        // Action taken start
 
         $actiontaken = Qrr::selectRaw('COUNT(id) AS actioncount, action_taken')
                               ->whereNotNull('action_taken')
@@ -763,15 +763,12 @@ class QrrsController extends Controller
         // $query->with(['district', 'thana']);
 
         if (!empty($request->input('begening_of_event'))) {
-
             $data['qrrs'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->where('begening_of_event', $request->input('begening_of_event'))
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-
-
         } elseif (!empty($request->input('action_taken'))) {
             $data['qrrs'] = Qrr::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
@@ -786,7 +783,7 @@ class QrrsController extends Controller
         ->where('event_type', $ekey, $evalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
-        
+
 
         Session::put('dkey', $dkey);
         Session::put('dvalue', $dvalue);
@@ -816,30 +813,27 @@ class QrrsController extends Controller
 
             $data['spthanas'] = $spthana;
 
-        if (!empty($request->input('begening_of_event'))) {
-
-            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+            if (!empty($request->input('begening_of_event'))) {
+                $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->where('begening_of_event', $request->input('begening_of_event'))
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-
-
-        } elseif (!empty($request->input('action_taken'))) {
-            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+            } elseif (!empty($request->input('action_taken'))) {
+                $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->where('action_taken', $request->input('action_taken'))
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-        } else {
-            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+            } else {
+                $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
         ->where('thanaID', $tkey, $tvalue)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-        }
+            }
 
             Session::put('dkey', $disexp);
             Session::put('dvalue', $disid);
@@ -856,30 +850,27 @@ class QrrsController extends Controller
             $octhana = Thana::find(auth()->user()->thanaID);
             $data['octhana'] = $octhana;
 
-        if (!empty($request->input('begening_of_event'))) {
-
-            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+            if (!empty($request->input('begening_of_event'))) {
+                $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
         ->where('thanaID', $thaexp, $thaid)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->where('begening_of_event', $request->input('begening_of_event'))
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-
-
-        } elseif (!empty($request->input('action_taken'))) {
-            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+            } elseif (!empty($request->input('action_taken'))) {
+                $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
         ->where('thanaID', $thaexp, $thaid)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->where('action_taken', $request->input('action_taken'))
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-        } else {
-            $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
+            } else {
+                $data['qrrs'] = Qrr::where('districtID', $disexp, $disid)
         ->where('thanaID', $thaexp, $thaid)
         ->where('source_of_info', $skey, $svalue)
         ->where('event_type', $ekey, $evalue)
         ->whereBetween('date_time_of_police_news', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
-        }
+            }
 
             Session::put('dkey', $disexp);
             Session::put('dvalue', $disid);
@@ -1062,7 +1053,7 @@ class QrrsController extends Controller
 
         $begningofevent = Qrr::selectRaw('COUNT(id) AS begevcount, begening_of_event')
                               ->whereNotNull('begening_of_event')
-                              
+
                               ->where('districtID', $disexp, $disid)
                               ->where('thanaID', $thaexp, $thaid)
                               ->whereBetween('date_time_of_police_news', [$agomonthday, $currentday])
@@ -1072,7 +1063,7 @@ class QrrsController extends Controller
         $request->session()->flash('begningofevent', $begningofevent);
         // begning of event end
 
-        // Action taken start 
+        // Action taken start
 
         $actiontaken = Qrr::selectRaw('COUNT(id) AS actioncount, action_taken')
                               ->whereNotNull('action_taken')

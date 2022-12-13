@@ -320,7 +320,7 @@ class WarrantController extends Controller
         $agomonthday = Carbon::now()->subMonth()->format('Y-m-d') . ' 00:00:00';
 
         $request->session()->flash('agomonthday', $agomonthday);
-        
+
         if (auth()->user()->hasRole('Super Admin')) {
             $data['districts'] = District::where('division_id', 1)->get();
 
