@@ -267,6 +267,71 @@ function thana($id) {
 
                                             </tbody>
                                         </table>
+
+                                        <br>
+                                        <br>
+                                        <br>
+
+                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    @if (auth()->user()->hasRole('Super Admin'))
+                                                    <th > জেলা </th>
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    <th > থানা </th>
+                                                    @endif
+                                                    <th > মোট নিয়মিত মামলায় গ্রেফতার  </th>
+                                                    <th > মোট রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
+                                                    <th > মোট মামলা নিষ্পত্তি (মাদক ব্যাতিত) </th>
+                                                    <th > মোট মাদক মামলা রুজু </th>
+                                                    <th > মোট মাদক মালা নিষ্পত্তি </th>
+                                                    <th > মোট অপমৃত্যু মামলা </th>
+                                                    <th > মোট অপমৃত্যু জিডি </th>
+                                                    <th>বিট পুলিশিং</th>
+                                                    <th>কমিউনিটি পুলিশিং</th>
+                                                    <th>Student কমিউনিটি পুলিশিং</th>
+                                                    <th>সিআইএমএস এন্ট্রি</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @if($wars)
+                                            @foreach ($wars1 as $war)
+                                                <tr>
+
+                                                    <td >@if (auth()->user()->hasRole('Super Admin') && empty(request()->input('districtID')))    
+                                            {{$war->district->bn_name}}
+                                            @elseif (auth()->user()->hasRole('Super Admin') && !empty(request()->input('districtID')))
+                                            {{$war->thana->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$war->thana->bn_name}}
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$war->thana->bn_name}}
+                                            @endif</td>
+                                                    
+                                                    <td > {{$war->sumucase_arrast}}</td>
+                                                    <td > {{$war->sumruju_case}}</td>
+                                                    <td > {{$war->sumcase_nispotti}}</td>
+                                                    <td > {{$war->sumnarcotic_case_ruju}}</td>
+                                                    <td > {{$war->sumnarcotic_case_nispotti}}</td>
+                                                    <td > {{$war->sumunnatural_death_case}}</td>
+                                                    <td > {{$war->sumunnatural_death_gd}}</td>
+                                                    <td > {{$war->sumbit_police}}</td>
+                                                    <td > {{$war->sumcomunity_police}}</td>
+                                                    <td > {{$war->sumstudent_comunity_police}}</td>
+                                                    <td > {{$war->sumcims}}</td>
+                                                </tr>
+
+                                            @endforeach
+                                            @endif
+
+
+                                            
+
+                                            </tbody>
+                                        </table>
+
+                                        
                                     </div>
                                 </div>
 

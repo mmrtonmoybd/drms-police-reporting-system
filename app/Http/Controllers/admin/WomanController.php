@@ -309,6 +309,12 @@ class WomanController extends Controller
             $data['totalnispotti'] = Woman::where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // total disposal nispotti end
 
+            // total pending start 
+
+            $data['totalpending'] = Woman::where('nreport','!=' ,'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+
+            // total pending end
+
             // Fidback taken
 
             $data['totalfidback'] = Woman::whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
@@ -353,6 +359,12 @@ class WomanController extends Controller
             $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)->where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // total disposal nispotti end
 
+            // total pending start 
+
+            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)->where('nreport','!=' ,'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+
+            // total pending end
+
             // Fidback taken
 
             $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)->whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
@@ -395,6 +407,12 @@ class WomanController extends Controller
 
             $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // total disposal nispotti end
+
+            // total pending start 
+
+            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport','!=' ,'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+
+            // total pending end
 
             // Fidback taken
 
@@ -524,6 +542,16 @@ class WomanController extends Controller
         ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
             // total disposal nispotti end
 
+            // total pending start 
+
+            $data['totalpending'] = Woman::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport','!=' ,'নিষ্পত্তি')
+            ->count();
+
+            // total pending end
+
             // Fidback taken
 
             $data['totalfidback'] = Woman::where('districtID', $dkey, $dvalue)
@@ -599,6 +627,16 @@ class WomanController extends Controller
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
             // total disposal nispotti end
+
+            // total pending start 
+
+            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport','!=' ,'নিষ্পত্তি')
+            ->count();
+
+            // total pending end
 
             // Fidback taken
 
@@ -676,6 +714,18 @@ class WomanController extends Controller
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
             // total disposal nispotti end
+
+
+            // total pending start 
+
+            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)
+        ->where('thanaID', auth()->user()->thanaID)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport','!=' ,'নিষ্পত্তি')
+            ->count();
+
+            // total pending end
+
 
             // Fidback taken
 

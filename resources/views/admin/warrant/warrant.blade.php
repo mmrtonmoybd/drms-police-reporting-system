@@ -35,17 +35,7 @@
                                                     <th > রিকল ও অন্যান্য </th>
                                                     <th > মোট তামিল </th>
                                                     <th > মোট নিষ্পত্তি </th>
-                                                    <th>নিয়মিত মামলায় গ্রেফতার</th>
-                                                    <th>রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
-                                                    <th>মামলা নিষ্পত্তি (মাদক ব্যাতিত)</th>
-                                                    <th>মাদক মামলা রুজু</th>
-                                                    <th>মাদক মালা নিষ্পত্তি</th>
-                                                    <th>অপমৃত্যু মামলা</th>
-                                                    <th>অপমৃত্যু জিডি</th>
-                                                    <th>বিট পুলিশিং</th>
-                                                    <th>কমিউনিটি পুলিশিং</th>
-                                                    <th>Student কমিউনিটি পুলিশিং</th>
-                                                    <th>সিআইএমএস এন্ট্রি</th>
+                                                    
                                                     <th > দিনশেষে পেন্ডিং </th>
                                                     <th style="width: 86px">Action</th>
                                                 </tr>
@@ -95,6 +85,59 @@ function thana($id) {
                                                     <td > {{$war->recall_other}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
+                                                    <td > @if (dayend($war->id, $war->districtID) >= 0) {{dayend($war->id, $war->districtID)}} @else {{0}} @endif</td>
+                                                       
+                                                    <td class="table-action">
+                                                        
+                                                        <a href="{{url('admin/warrant/view/'.$war->id)}}"  class="action-icon text-primary">
+                                                            <i class="mdi mdi-eye"></i>
+                                                        </a>
+
+                                                        <a href="{{url('admin/warrant/edit/'.$war->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        <a href="{{url('admin/warrant/delete/'.$war->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                            @endforeach
+                                            @endif
+
+
+                                            
+
+                                            </tbody>
+
+                                            <br><br>
+
+                                            <thead>
+                                                <tr>
+                                                    <th > রেফারেন্স নং </th>
+                                                    <th > জেলা </th>
+                                                    <th > থানা </th>
+                                                    <th > তারিখ </th>
+                                                    <th>নিয়মিত মামলায় গ্রেফতার</th>
+                                                    <th>রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
+                                                    <th>মামলা নিষ্পত্তি (মাদক ব্যাতিত)</th>
+                                                    <th>মাদক মামলা রুজু</th>
+                                                    <th>মাদক মালা নিষ্পত্তি</th>
+                                                    <th>অপমৃত্যু মামলা</th>
+                                                    <th>অপমৃত্যু জিডি</th>
+                                                    <th>বিট পুলিশিং</th>
+                                                    <th>কমিউনিটি পুলিশিং</th>
+                                                    <th>Student কমিউনিটি পুলিশিং</th>
+                                                    <th>সিআইএমএস এন্ট্রি</th>
+                                                    <th > দিনশেষে পেন্ডিং </th>
+                                                    <th style="width: 86px">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @if($wars)
+                                            @foreach ($wars as $war)
+                                                <tr>
+                                                    <td > {{$war->id}}</td>
+                                                    <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif </td>
+                                                    <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif </td>
+                                                    <td > {{date('d-M-Y', strtotime($war->date))}}</td>
                                                     <td>{{$war->ucase_arrast}}</td>
                                                     <td>{{$war->ruju_case}}</td>
                                                     <td>{{$war->case_nispotti}}</td>
@@ -126,6 +169,7 @@ function thana($id) {
                                             
 
                                             </tbody>
+
                                         </table>
                                         
                                         <nav class="mt-3">

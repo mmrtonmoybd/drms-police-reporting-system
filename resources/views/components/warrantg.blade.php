@@ -4,7 +4,7 @@
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
-      @if (auth()->user()->hasRole('Super Admin'))
+      @if (auth()->user()->hasRole('Super Admin') && empty(request()->input('districtID')))
 
 @php 
 $allin = request()->all();
@@ -132,9 +132,136 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
                 }
         });
         chart.draw(data, options);
+      
+      }
+      
+      @elseif (auth()->user()->hasRole('Super Admin') && !empty(request()->input('districtID')))
+
+      @php 
+      $allin = request()->all();
+      $removarr = \Illuminate\Support\Arr::except($allin, 'thanaID');
+      $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
+      @endphp
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Thana', 'Recive', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         @foreach(session("spthana") as $key => $value)
+
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".$value[2] . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+
+         @endforeach
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
       }
 
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['নিষ্পত্তি by Thana wise', 'count', {role: 'annotation', type: 'string'}, { role: 'link' }],
+          @foreach(session("spthanan") as $key => $value)
+
+         ['{{$value[1]}}', {{$value[0]}}, {{$value[0]}}, '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".$value[2] . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+
+         @endforeach
+        ]);
+
+        var options = {
+          title: '',
+          width: "98%",
+          height: 172,
+          is3D: true,
+          pieSliceText: 'value',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+       // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart3);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart3() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Thana', 'পেন্ডিং', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         @foreach(session("spthanap") as $key => $value)
+
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/warrant/dashboard")) {!!$string1 . "&thanaID=".$value[2] . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+
+         @endforeach
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 300,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+      
       @endif
+
 
 
       @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))

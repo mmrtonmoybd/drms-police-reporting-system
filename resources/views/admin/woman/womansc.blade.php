@@ -129,6 +129,11 @@
                                 </div>
 
                                 <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Total pending </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalpending}}</p>
+                                </div>
+
+                                <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">Total fidback </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$totalfidback}}</p>
                                 </div>

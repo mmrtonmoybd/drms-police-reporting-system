@@ -401,6 +401,22 @@ class WarrantController extends Controller
         districtID
         ")->whereBetween('date', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
+        districtID,
+        thanaID
+        ")->whereBetween('date', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+
             $borgonap = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
             ->whereBetween('date', [$agomonthday, $currentday])
                    ->where('districtID', 34)->get();
@@ -488,6 +504,23 @@ class WarrantController extends Controller
         thanaID
         ")->where('districtID', auth()->user()->districtID)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
+
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
+        districtID,
+        thanaID
+        ")->where('districtID', auth()->user()->districtID)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
             //dd($data['spthana']);
         }
 
@@ -544,6 +577,22 @@ class WarrantController extends Controller
         districtID,
         thanaID
         ")->where('thanaID', $octhana->id)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
+        districtID,
+        thanaID
+        ")->where('thanaID', $octhana->id)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
         }
 
 
@@ -596,6 +645,9 @@ class WarrantController extends Controller
 
         if (auth()->user()->hasRole('Super Admin')) {
             $data['districts'] = District::where('division_id', 1)->get();
+
+            if (empty($request->input('districtID'))) {
+
 
             $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
                     ->where('districtID', 34)->whereBetween('date', [$fvalue, $tovalue])->get();
@@ -674,6 +726,22 @@ class WarrantController extends Controller
         thanaID
         ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->groupBy('districtID')->get();
 
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
+        districtID,
+        thanaID
+        ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->groupBy('districtID')->get();
+
             //dd($mm);
             $data['dis'] = District::find($dvalue);
 
@@ -705,6 +773,91 @@ class WarrantController extends Controller
             $request->session()->flash('pirojpurp', $pirojpurp);
 
             $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+
+            } else {
+
+            $data['districts'] = District::where('division_id', 1)->get();
+
+            $spthana = Thana::where('district_id', $dkey, $dvalue)->get();
+
+            $data['spthanas'] = $spthana;
+
+            foreach ($spthana as $key => $value) {
+                $dd = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                ->where('thanaID', $value->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+                $dd = $dd[0]['total_sum'];
+
+                $dd2 = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                ->where('thanaID', $value->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+                $dd2 = (!empty($dd2[0]['total_sum'])) ? $dd2[0]['total_sum'] : 0;
+
+                $dd3 = Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS total_sum')
+               ->where('thanaID', $value->id)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+                $dd3 = ($dd3[0]['total_sum'] >= 0) ? $dd3[0]['total_sum'] : 0;
+
+                $data['spthana'][$key] =  [$dd, $value->bn_name, $value->id];
+                $data['spthanan'][$key] = [$dd2, $value->bn_name, $value->id];
+                $data['spthanap'][$key] = [$dd3, $value->bn_name, $value->id];
+            }
+
+            //dd($data['spthana']);
+
+            $request->session()->flash('spthana', $data['spthana']);
+            $request->session()->flash('spthanan', $data['spthanan']);
+            $request->session()->flash('spthanap', $data['spthanap']);
+
+
+            $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+               ->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->get();
+            $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->get();
+
+
+            //$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other
+
+            //$tha = Thana::find($tvalue);
+            //$data['tha'] = $tha;
+
+
+            $bari = Warrant::query();
+            $data['wars'] = Warrant::with(['district', 'thana'])->selectRaw("
+        (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_nispotti,
+        (SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_recive,
+        SUM(gr_tamil) AS total_gr_tamil,
+        SUM(cr_tamil) AS total_cr_tamil,
+        SUM(saja_gr_tamil) AS total_saja_gr_tamil,
+        SUM(saja_cr_tamil) AS total_saja_cr_tamil,
+        SUM(recall_other) AS total_recall,
+        districtID,
+        thanaID
+        ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
+        districtID,
+        thanaID
+        ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+            $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
+
+
+            }
+
+            
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -765,6 +918,22 @@ class WarrantController extends Controller
         thanaID
         ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
+        districtID,
+        thanaID
+        ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
             $data['wars2'] = Warrant::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
@@ -817,6 +986,22 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+        districtID,
+        thanaID
+        ")->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+
+        $data['wars1'] = Warrant::with(['district', 'thana'])->selectRaw("
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ruju_case) AS sumruju_case,
+        SUM(case_nispotti) AS sumcase_nispotti,
+        SUM(narcotic_case_ruju) AS sumnarcotic_case_ruju,
+        SUM(narcotic_case_nispotti) AS sumnarcotic_case_nispotti,
+        SUM(unnatural_death_case) AS sumunnatural_death_case,
+        SUM(unnatural_death_gd) AS sumunnatural_death_gd,
+        SUM(bit_police) AS sumbit_police,
+        SUM(comunity_police) AS sumcomunity_police,
+        SUM(student_comunity_police) AS sumstudent_comunity_police,
+        SUM(cims) AS sumcims,
         districtID,
         thanaID
         ")->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
