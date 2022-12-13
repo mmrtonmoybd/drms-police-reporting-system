@@ -130,8 +130,18 @@
                             <div class="card-body "><i class="i-Add-User"></i>
                           
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট  অভিযোগ</ </p>
+                                    <p class="text-muted mt-2 mb-0">মোট  অভিযোগ </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$totalcomplain}}</p>
+                                </div>
+
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Total nispotti </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalnispotti}}</p>
+                                </div>
+
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Total fidback </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalfidback}}</p>
                                 </div>
 							
                             </div>
@@ -163,8 +173,17 @@
 					<div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" > তথ্য প্রাপ্তির উৎস </div>
+                                <div class="card-title" > গৃহীত ব্যবস্থা </div>
                                 <div id="piechart" style="margin-top: -39px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title" > Satisfy rate </div>
+                                <div id="piechart2" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
                     </div>

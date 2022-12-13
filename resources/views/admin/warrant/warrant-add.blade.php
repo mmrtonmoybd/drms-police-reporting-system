@@ -146,6 +146,84 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label"> নিয়মিত মামলায় গ্রেফতার  </label>
+                                                    <input type="number" name="ucase_arrast"  value="" id="ucase_arrast" class="form-control  " placeholder="   নিয়মিত মামলায় গ্রেফতার " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label">  রুজুকৃত মামলা (মাদক ব্যাতিত) </label>
+                                                    <input type="number" name="ruju_case"  value="" id="ruju_case" class="form-control  " placeholder="   রুজুকৃত মামলা (মাদক ব্যাতিত) " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label"> মামলা নিষ্পত্তি (মাদক ব্যাতিত)  </label>
+                                                    <input type="number" name="case_nispotti"  value="" id="case_nispotti" class="form-control  " placeholder="  মামলা নিষ্পত্তি (মাদক ব্যাতিত)  " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label"> মাদক মামলা রুজু </label>
+                                                    <input type="number" name="narcotic_case_ruju"  value="" id="narcotic_case_ruju" class="form-control  " placeholder="  মাদক মামলা রুজু  " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label">  মাদক মালা নিষ্পত্তি </label>
+                                                    <input type="number" name="narcotic_case_nispotti"  value="" id="narcotic_case_nispotti" class="form-control  " placeholder="  মাদক মামলা নিষ্পত্তি  " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label"> অপমৃত্যু মামলা  </label>
+                                                    <input type="number" name="unnatural_death_case"  value="" id="unnatural_death_case" class="form-control  " placeholder="   অপমৃত্যু মামলা " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label">  অপমৃত্যু জিডি </label>
+                                                    <input type="number" name="unnatural_death_gd"  value="" id="unnatural_death_gd" class="form-control  " placeholder=" অপমৃত্যু জিডি   " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label"> বিট পুলিশিং  </label>
+                                                    <input type="number" name="bit_police"  value="" id="bit_police" class="form-control  " placeholder="  বিট পুলিশিং  " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label">  কমিউনিটি পুলিশিং </label>
+                                                    <input type="number" name="comunity_police"  value="" id="comunity_police" class="form-control  " placeholder="  কমিউনিটি পুলিশিং  " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label">  Student কমিউনিটি পুলিশিং </label>
+                                                    <input type="number" name="student_comunity_police"  value="" id="student_comunity_police" class="form-control  " placeholder="  Student কমিউনিটি পুলিশিং  " >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="gr_recive" class="form-label">  সিআইএমএস এন্ট্রি </label>
+                                                    <input type="number" name="cims"  value="" id="cims" class="form-control  " placeholder="  সিআইএমএস এন্ট্রি  " >
+                                                </div>
+                                            </div>
+
+
                                             <div class="col-sm-12">
                                                 <div>
                                                     <button type="submit" name="submit" class="btn btn-primary"> Submit </button>

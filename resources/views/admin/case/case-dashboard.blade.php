@@ -85,6 +85,32 @@
                                             </div>
                                             @endif
 
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
+                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                        <option value="">Select</option>
+                                                        @if($caseparenttypes)
+
+                                                        @foreach($caseparenttypes as $ctype)
+                                                        <option value="{{$ctype->id}}">{{$ctype->type}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="casesubID" class="form-label">মামলার উপধরন</label>
+                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
+                                                        <option value="">Select</option>
+                                                        <option v-for="(casesubtype,key,index) in casesubtypes" v-bind:value="casesubtype.id"> @php echo '{{ casesubtype.type }}'; @endphp </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-4 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
@@ -177,6 +203,20 @@ function hms ($value) {
     $cal = floor($value / 3600 );
     return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
 }
+
+function convert($seconds){
+$string = "";
+
+$days = intval(intval($seconds) / (3600*24));
+
+if($days> 0){
+    $string .= "$days days ";
+}
+
+return $string;
+}
+
+
 @endphp
 
 			
@@ -191,7 +231,7 @@ function hms ($value) {
                           
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">গড় নিস্পত্তির সময়কাল </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{hms($avgendingcasetime)}}</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{convert($avgendingcasetime)}}</p>
                                 </div>
 						
                             </div>
@@ -295,6 +335,24 @@ function hms ($value) {
                             <div class="card-body">
                                 <div class="card-title" >নিস্পত্তির ধরন </div>
                                 <div id="piechart" style="margin-top: -39px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title" >Case type </div>
+                                <div id="chart4_div" style="margin-top: -39px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title" >Case sub type </div>
+                                <div id="chart5_div" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -424,6 +482,10 @@ function hms ($value) {
                     
                     this.getUpozillasAndThana();
 
+                }
+
+                if(this.casetype_id!=""){
+                    this.getCasesubtypes();
                 }
                 
                 

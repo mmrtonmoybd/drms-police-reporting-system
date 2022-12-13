@@ -35,6 +35,17 @@
                                                     <th > রিকল ও অন্যান্য </th>
                                                     <th > মোট তামিল </th>
                                                     <th > মোট নিষ্পত্তি </th>
+                                                    <th>নিয়মিত মামলায় গ্রেফতার</th>
+                                                    <th>রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
+                                                    <th>মামলা নিষ্পত্তি (মাদক ব্যাতিত)</th>
+                                                    <th>মাদক মামলা রুজু</th>
+                                                    <th>মাদক মালা নিষ্পত্তি</th>
+                                                    <th>অপমৃত্যু মামলা</th>
+                                                    <th>অপমৃত্যু জিডি</th>
+                                                    <th>বিট পুলিশিং</th>
+                                                    <th>কমিউনিটি পুলিশিং</th>
+                                                    <th>Student কমিউনিটি পুলিশিং</th>
+                                                    <th>সিআইএমএস এন্ট্রি</th>
                                                     <th > দিনশেষে পেন্ডিং </th>
                                                     <th style="width: 86px">Action</th>
                                                 </tr>
@@ -84,6 +95,17 @@ function thana($id) {
                                                     <td > {{$war->recall_other}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
+                                                    <td>{{$war->ucase_arrast}}</td>
+                                                    <td>{{$war->ruju_case}}</td>
+                                                    <td>{{$war->case_nispotti}}</td>
+                                                    <td>{{$war->narcotic_case_ruju}}</td>
+                                                    <td>{{$war->narcotic_case_nispotti}}</td>
+                                                    <td>{{$war->unnatural_death_case}}</td>
+                                                    <td>{{$war->unnatural_death_gd}}</td>
+                                                    <td>{{$war->bit_police}}</td>
+                                                    <td>{{$war->comunity_police}}</td>
+                                                    <td>{{$war->student_comunity_police}}</td>
+                                                    <td>{{$war->cims}}</td>
                                                     <td > @if (dayend($war->id, $war->districtID) >= 0) {{dayend($war->id, $war->districtID)}} @else {{0}} @endif</td>
                                                        
                                                     <td class="table-action">

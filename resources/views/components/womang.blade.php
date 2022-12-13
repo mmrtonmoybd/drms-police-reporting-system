@@ -32,7 +32,7 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
          @if (request()->filled('districtID'))
          ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id!!} @else {!!$string1 . "&thanaID=".$value->thana->id . "&districtID=".$value->district->id!!} @endif'],
          @else
-         ['{{$value->district->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&districtID=".$value->district->id!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
+         ['{{$value->district->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&districtID=".$value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
          @endif
          @endforeach
         
@@ -71,7 +71,7 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
         var data = google.visualization.arrayToDataTable([
           ['Action taken', 'count', 'number', { role: 'link' }],
           @foreach(session("actiontakens") as $key => $value)
-          ['{{$value->action_taken}}', {{$value->totalactiontaken}}, '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&action_taken=".$value->action_taken!!} @else {!!$string2 . "&action_taken=".$value->action_taken!!} @endif'],
+          ['{{$value->action_taken}}', {{$value->totalactiontaken}}, '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&action_taken=".$value->action_taken . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string2 . "&action_taken=".$value->action_taken!!} @endif'],
           @endforeach
         ]);
 
@@ -96,13 +96,48 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
         chart.draw(data, options);
       }
 
+
+      google.charts.setOnLoadCallback(drawChart6);
+
+      function drawChart6() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Satisfy rate', 'count', 'number', { role: 'link' }],
+          @foreach(session("satisfyrate") as $key => $value)
+          ['{{$value->satisfy_rate}}', {{$value->satisfyrate}}, '{{$value->satisfyrate}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&satisfy_rate=".$value->satisfy_rate . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string2 . "&satisfy_rate=".$value->satisfy_rate!!} @endif'],
+          @endforeach
+        ]);
+
+        var options = {
+          title: '',
+          is3D: true,
+        width: "98%",
+        height: "172",
+        pieSliceText: 'value',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
+
+
+
       google.charts.setOnLoadCallback(drawChart2);
 
     function drawChart2() {
       var data = google.visualization.arrayToDataTable([
         ["Report", "count", { role: "style" } , { role: 'link' }],
          @foreach(session("disposalrepors") as $key => $value)
-          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold", '@if (request()->is("admin/woman/dashboard")) {!!$string3 . "&nreport=".$value->nreport!!} @else {!!$string3 . "&nreport=".$value->nreport!!} @endif'],
+          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold", '@if (request()->is("admin/woman/dashboard")) {!!$string3 . "&nreport=".$value->nreport . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string3 . "&nreport=".$value->nreport!!} @endif'],
           @endforeach
       ]);
 
@@ -159,7 +194,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("totalcomplains") as $key => $value)
 
-         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' , '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' , '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
 
          @endforeach
         
@@ -198,7 +233,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
         var data = google.visualization.arrayToDataTable([
           ['Action taken', 'count', 'number', { role: 'link' }],
           @foreach(session("actiontakens") as $key => $value)
-          ['{{$value->action_taken}}', {{$value->totalactiontaken}}, '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&action_taken=".$value->action_taken!!} @else {!!$string2 . "&action_taken=".$value->action_taken!!} @endif'],
+          ['{{$value->action_taken}}', {{$value->totalactiontaken}}, '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&action_taken=".$value->action_taken . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string2 . "&action_taken=".$value->action_taken!!} @endif'],
           @endforeach
         ]);
 
@@ -229,7 +264,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
       var data = google.visualization.arrayToDataTable([
         ["Report", "count", { role: "style" } , { role: 'link' }],
          @foreach(session("disposalrepors") as $key => $value)
-          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold", '@if (request()->is("admin/woman/dashboard")) {!!$string3 . "&nreport=".$value->nreport!!} @else {!!$string3 . "&nreport=".$value->nreport!!} @endif'],
+          ['{{$value->nreport}}', {{$value->disposalrepor}}, "gold", '@if (request()->is("admin/woman/dashboard")) {!!$string3 . "&nreport=".$value->nreport . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string3 . "&nreport=".$value->nreport!!} @endif'],
           @endforeach
       ]);
 

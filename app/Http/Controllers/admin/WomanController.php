@@ -264,29 +264,55 @@ class WomanController extends Controller
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 
+        $currentday = Carbon::now()->format('Y-m-d') . ' 23:59:59';
+
+        $request->session()->flash('currentday', $currentday);
+
+        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d') . ' 00:00:00';
+
+        $request->session()->flash('agomonthday', $agomonthday);
+
 
         if (auth()->user()->hasRole('Super Admin')) {
             // Number of complain graph
-            $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
+            $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")->whereBetween('wdate', [$agomonthday, $currentday])->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
+
+            // 
 
             //dd($totalcomplain);
             $request->session()->flash('totalcomplains', $totalcomplains);
             // end number of complain
 
             // Number of action taken graph
-            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
+            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->whereBetween('wdate', [$agomonthday, $currentday])->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
             //end Number of action taken
 
             // Number of disposal report graph
-            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
+            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->whereBetween('wdate', [$agomonthday, $currentday])->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
+
+            // Number of satisfy rate start
+
+            $satisfyrate = Woman::selectRaw("COUNT(id) AS satisfyrate, satisfy_rate")->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $request->session()->flash('satisfyrate', $satisfyrate);
+            // Number of satisfy rate end
 
             // total complain
             $data['totalcomplain'] = Woman::count();
             //end total complain
+
+            // total disposal nispotti start
+
+            $data['totalnispotti'] = Woman::where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            // total disposal nispotti end
+
+            // Fidback taken
+
+            $data['totalfidback'] = Woman::whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            // Fidback taken
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -295,26 +321,42 @@ class WomanController extends Controller
             $data['spthanas'] = $spthana;
 
             // Number of complain graph
-            $totalcomplains = Woman::with('thana')->selectRaw("COUNT(id) AS totalcomplain, thanaID")->where('districtID', auth()->user()->districtID)->groupBy('thanaID')->orderBy('thanaID', 'ASC')->get();
+            $totalcomplains = Woman::with('thana')->selectRaw("COUNT(id) AS totalcomplain, thanaID")->where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->groupBy('thanaID')->orderBy('thanaID', 'ASC')->get();
 
             //dd($totalcomplain);
             $request->session()->flash('totalcomplains', $totalcomplains);
             // end number of complain
 
             // Number of action taken graph
-            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
+            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
             //end Number of action taken
 
             // Number of disposal report graph
-            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
+            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
+            // Number of satisfy rate start
+
+            $satisfyrate = Woman::selectRaw("COUNT(id) AS satisfyrate, satisfy_rate")->where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $request->session()->flash('satisfyrate', $satisfyrate);
+            // Number of satisfy rate end
+
             // total complain
-            $data['totalcomplain'] = Woman::count();
+            $data['totalcomplain'] = Woman::where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->count();
             //end total complain
+
+            // total disposal nispotti start
+
+            $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)->where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            // total disposal nispotti end
+
+            // Fidback taken
+
+            $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)->whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            // Fidback taken
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -329,19 +371,35 @@ class WomanController extends Controller
             // end number of complain
 
             // Number of action taken graph
-            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
+            $actiontakens = Woman::selectRaw("COUNT(id) AS totalactiontaken, action_taken")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])->where('action_taken', '!=', '0')->groupBy('action_taken')->orderBy('action_taken', 'ASC')->get();
 
             $request->session()->flash('actiontakens', $actiontakens);
             //end Number of action taken
 
             // Number of disposal report graph
-            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
+            $disposalrepors = Woman::selectRaw("COUNT(id) AS disposalrepor, nreport")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])->where('nreport', '!=', '0')->groupBy('nreport')->orderBy('nreport', 'ASC')->get();
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
+            // Number of satisfy rate start
+
+            $satisfyrate = Woman::selectRaw("COUNT(id) AS satisfyrate, satisfy_rate")->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $request->session()->flash('satisfyrate', $satisfyrate);
+            // Number of satisfy rate end
+
             // total complain
-            $data['totalcomplain'] = Woman::count();
+            $data['totalcomplain'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])->count();
             //end total complain
+
+            // total disposal nispotti start
+
+            $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            // total disposal nispotti end
+
+            // Fidback taken
+
+            $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            // Fidback taken
         }
 
         return view('admin/woman/womansc', $data);
@@ -441,12 +499,38 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
+            // Number of satisfy rate start
+
+            $satisfyrate = Woman::selectRaw("COUNT(id) AS satisfyrate, satisfy_rate")
+            ->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+            ->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $request->session()->flash('satisfyrate', $satisfyrate);
+            // Number of satisfy rate end
+
             // total complain
             $data['totalcomplain'] = Woman::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
+
+             // total disposal nispotti start
+
+            $data['totalnispotti'] = Woman::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
+            // total disposal nispotti end
+
+            // Fidback taken
+
+            $data['totalfidback'] = Woman::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->whereNotNull('satisfy_rate')->count();
+            // Fidback taken
 
             //show data
 
@@ -491,12 +575,38 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
+            // Number of satisfy rate start
+
+            $satisfyrate = Woman::selectRaw("COUNT(id) AS satisfyrate, satisfy_rate")
+            ->where('districtID', auth()->user()->districtID)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+            ->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $request->session()->flash('satisfyrate', $satisfyrate);
+            // Number of satisfy rate end
+
             // total complain
             $data['totalcomplain'] = Woman::where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
+
+            // total disposal nispotti start
+
+            $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
+            // total disposal nispotti end
+
+            // Fidback taken
+
+            $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->whereNotNull('satisfy_rate')->count();
+            // Fidback taken
 
             //show data
 
@@ -541,12 +651,39 @@ class WomanController extends Controller
             $request->session()->flash('disposalrepors', $disposalrepors);
             //end number of disposal report
 
+
+            // Number of satisfy rate start
+
+            $satisfyrate = Woman::selectRaw("COUNT(id) AS satisfyrate, satisfy_rate")
+            ->where('districtID', auth()->user()->districtID)
+        ->where('thanaID', auth()->user()->thanaID)
+        ->where('action_taken', $akey, $avalue)
+            ->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $request->session()->flash('satisfyrate', $satisfyrate);
+            // Number of satisfy rate end
+
             // total complain
             $data['totalcomplain'] = Woman::where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->count();
             //end total complain
+
+            // total disposal nispotti start
+
+            $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)
+        ->where('thanaID', auth()->user()->thanaID)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
+            // total disposal nispotti end
+
+            // Fidback taken
+
+            $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)
+        ->where('thanaID', auth()->user()->thanaID)
+        ->where('action_taken', $akey, $avalue)
+        ->whereBetween('wdate', [$fvalue, $tovalue])->whereNotNull('satisfy_rate')->count();
+            // Fidback taken
 
             //show data
 
@@ -625,11 +762,23 @@ class WomanController extends Controller
         if (auth()->user()->hasRole('Super Admin')) {
             //show data
 
-            $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+            if (!empty($request->input('satisfy_rate'))) {
+
+                $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->where('nreport', $nkey, $nvalue)
+        ->where('satisfy_rate', $request->input('satisfy_rate'))
+        ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+            } else {
+                $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->where('nreport', $nkey, $nvalue)
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+            }
+
+            
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -638,11 +787,25 @@ class WomanController extends Controller
             $data['spthanas'] = $spthana;
             //show data
 
-            $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
+            if (!empty($request->input('satisfy_rate'))) {
+
+                $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->where('nreport', $nkey, $nvalue)
+        ->where('satisfy_rate', $request->input('satisfy_rate'))
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+            } else {
+
+                $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('action_taken', $akey, $avalue)
+        ->where('nreport', $nkey, $nvalue)
+        ->where('satisfy_rate', $request->input('satisfy_rate'))
+        ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+            }
+
+            
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -650,11 +813,25 @@ class WomanController extends Controller
             $data['octhana'] = $octhana;
             //show data
 
-            $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
+            if (!empty($request->input('satisfy_rate'))) {
+                $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
         ->where('nreport', $nkey, $nvalue)
+        ->where('satisfy_rate', $request->input('satisfy_rate'))
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+
+            } else {
+
+                $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)
+        ->where('thanaID', auth()->user()->thanaID)
+        ->where('action_taken', $akey, $avalue)
+        ->where('nreport', $nkey, $nvalue)
+        ->where('satisfy_rate', $request->input('satisfy_rate'))
+        ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
+            }
+
+            
         }
 
         return view('admin/woman/woman-chartlink', $data);

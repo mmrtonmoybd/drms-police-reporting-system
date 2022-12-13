@@ -85,6 +85,32 @@
                                             </div>
                                             @endif
 
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
+                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                        <option value="">Select</option>
+                                                        @if($caseparenttypes)
+
+                                                        @foreach($caseparenttypes as $ctype)
+                                                        <option value="{{$ctype->id}}">{{$ctype->type}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="casesubID" class="form-label">মামলার উপধরন</label>
+                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
+                                                        <option value="">Select</option>
+                                                        <option v-for="(casesubtype,key,index) in casesubtypes" v-bind:value="casesubtype.id"> @php echo '{{ casesubtype.type }}'; @endphp </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-4 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
@@ -367,6 +393,10 @@
                     
                     this.getUpozillasAndThana();
 
+                }
+
+                if(this.casetype_id!=""){
+                    this.getCasesubtypes();
                 }
                 
                 

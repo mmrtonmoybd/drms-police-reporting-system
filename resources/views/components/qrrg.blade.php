@@ -24,12 +24,12 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          @if (empty(request()->input('districtID')))
-         ['বরগুনা', {{session('borgona')}}, '#756bb1', '{{session("borgona")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=34"!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
-         ['বরিশাল', {{session('barisal')}}, '#bbbbdb', '{{session("barisal")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=35"!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
-         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #756bb1', '{{session("pirojpur")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=39"!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
-         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #bbbbdb', '{{session("patuakhali")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=38"!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
-         ['ভোলা', {{session('bhola')}}, '#756bb1', '{{session("bhola")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=36"!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
-         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #bbbbdb',  '{{session("jalokhati")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=37"!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
+         ['বরগুনা', {{session('borgona')}}, '#756bb1', '{{session("borgona")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=34&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=34"!!} @endif'],            // RGB value
+         ['বরিশাল', {{session('barisal')}}, '#bbbbdb', '{{session("barisal")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=35&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=35"!!} @endif'],         // English color name
+         ['পিরোজপুর', {{session('pirojpur')}}, 'color: #756bb1', '{{session("pirojpur")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=39&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=39"!!} @endif'],
+         ['পটুয়াখালী', {{session('patuakhali')}}, 'color: #bbbbdb', '{{session("patuakhali")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=38&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=38"!!} @endif'],
+         ['ভোলা', {{session('bhola')}}, '#756bb1', '{{session("bhola")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=36&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=36"!!} @endif'],
+         ['ঝালকাঠি', {{session('jalokhati')}}, 'color: #bbbbdb',  '{{session("jalokhati")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&districtID=37&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=37"!!} @endif'], // CSS-style declaration
         @endif
 
          @php 
@@ -97,7 +97,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
          
          @foreach(session("spthana") as $key => $value)
 
-         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2]!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2] . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
 
          @endforeach
         
@@ -149,7 +149,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
         var data = google.visualization.arrayToDataTable([
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
 
-         ['{{session("octhananame")}}', {{session('octhanavalue')}}, '#26a49a', '{{session("octhanavalue")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".session("octhanaid")!!} @else {!!$string1 . "&thanaID=".session("octhanaid")!!} @endif'],
+         ['{{session("octhananame")}}', {{session('octhanavalue')}}, '#26a49a', '{{session("octhanavalue")}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".session("octhanaid") . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".session("octhanaid")!!} @endif'],
 
       ]);
 
@@ -190,10 +190,10 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
 
         var data = google.visualization.arrayToDataTable([
           ['Information source', 'count', { role: 'link' }, {role: 'annotation', type: 'string'}],
-          ['এলাকা', {{session('insala')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=এলাকা"!!} @else {!!$string1 . "&source_of_info=এলাকা"!!} @endif', '{{session("insala")}}'],
-          ['কোর্ট',  {{session('inscou')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=কোর্ট"!!} @else {!!$string1 . "&source_of_info=কোর্ট"!!} @endif', '{{session("inscou")}}'],
-          ['থানা',  {{session('instha')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=থানা"!!} @else {!!$string1 . "&source_of_info=থানা"!!} @endif', '{{session("instha")}}'],
-          ['৯৯৯', {{session('ins99')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=৯৯৯"!!} @else {!!$string1 . "&source_of_info=৯৯৯"!!} @endif', '{{session("ins99")}}']
+          ['এলাকা', {{session('insala')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=এলাকা" . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&source_of_info=এলাকা"!!} @endif', '{{session("insala")}}'],
+          ['কোর্ট',  {{session('inscou')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=কোর্ট" . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&source_of_info=কোর্ট"!!} @endif', '{{session("inscou")}}'],
+          ['থানা',  {{session('instha')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=থানা" . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&source_of_info=থানা"!!} @endif', '{{session("instha")}}'],
+          ['৯৯৯', {{session('ins99')}}, '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&source_of_info=৯৯৯" . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&source_of_info=৯৯৯"!!} @endif', '{{session("ins99")}}']
         ]);
 
         var options = {
@@ -300,6 +300,84 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
                     var row = selection[0].row;
                     let link =data.getValue(row, 4);
                     window.open(link, '_blank');
+                }
+        });
+        chart.draw(data, options);
+      }
+
+
+
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart4);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+
+      @php
+      $string = url('/admin/qrrs/srcs/data') .'?'. http_build_query(request()->all());
+      @endphp
+      // draws it.
+      function drawChart4() {
+
+        // Create the data table.
+        var data = google.visualization.arrayToDataTable([
+         ['Crime Type', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
+         @foreach(session('begningofevent') as $key => $value)
+         ['{{$value->begening_of_event}}', {{$value->begevcount}}, '#26a59a', '{{$value->begevcount}}', ' @if (request()->is("admin/qrrs/srcs")) {!!$string . "&begening_of_event=" . $value->begening_of_event . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string . "&begening_of_event=" . $value->begening_of_event!!} @endif'],
+         @endforeach
+      ]);
+
+        // Set chart options
+        var options = {
+        title: "",
+        width: "98%",
+        height: 350,
+        bar: {groupWidth: "55%"},
+        legend: { position: "none" },
+      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 4);
+                    window.open(link, '_blank');
+                }
+        });
+        chart.draw(data, options);
+      }
+
+
+      google.charts.setOnLoadCallback(drawChart6);
+
+      function drawChart6() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Action taken', 'count', 'number', { role: 'link' }],
+          @foreach(session("actiontaken") as $key => $value)
+          ['{{$value->action_taken}}', {{$value->actioncount}}, '{{$value->actioncount}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string . "&action_taken=" . $value->action_taken . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string . "&action_taken=" . $value->action_taken!!} @endif'],
+          @endforeach
+        ]);
+
+        var options = {
+          title: '',
+          is3D: true,
+        width: "98%",
+        height: "172",
+        pieSliceText: 'value',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
                 }
         });
         chart.draw(data, options);

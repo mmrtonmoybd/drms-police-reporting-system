@@ -263,6 +263,27 @@ function hms ($value) {
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="card mb-4" style="height: 354px;">
+                            <div class="card-body">
+                                <div class="card-title">ঘটনার সুত্রপাত</div>
+                                <div id="chart_div4" style="margin-top: -71px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title" > গৃহীত ব্যবস্থা </div>
+                                <div id="piechart3" style="margin-top: -39px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
                 </div>
            
 

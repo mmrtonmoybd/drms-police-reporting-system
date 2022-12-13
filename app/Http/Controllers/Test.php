@@ -30,10 +30,11 @@ class Test extends Controller
 
     public function index()
     {
-        $arr = ['districtID' => 34, 'thanaID' => 1, 'circleID' => 12];
-        $hh = \Illuminate\Support\Arr::except($arr, ['districtID', 'thanaID']);
+        $currentday = Carbon::now()->format('Y-m-d') . ' 23:59:59';
 
-        dd($hh);
+        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d') . ' 00:00:00';
+
+        echo $agomonthday;
 
 
         // echo $this->lasttmon(0, 'enddate');
