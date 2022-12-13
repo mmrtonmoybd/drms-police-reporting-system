@@ -309,9 +309,9 @@ class WomanController extends Controller
             $data['totalnispotti'] = Woman::where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // total disposal nispotti end
 
-            // total pending start 
+            // total pending start
 
-            $data['totalpending'] = Woman::where('nreport','!=' ,'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            $data['totalpending'] = Woman::where('nreport', '!=', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
 
             // total pending end
 
@@ -359,9 +359,9 @@ class WomanController extends Controller
             $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)->where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // total disposal nispotti end
 
-            // total pending start 
+            // total pending start
 
-            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)->where('nreport','!=' ,'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)->where('nreport', '!=', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
 
             // total pending end
 
@@ -408,9 +408,9 @@ class WomanController extends Controller
             $data['totalnispotti'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // total disposal nispotti end
 
-            // total pending start 
+            // total pending start
 
-            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport','!=' ,'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
+            $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', '!=', 'নিষ্পত্তি')->whereBetween('wdate', [$agomonthday, $currentday])->count();
 
             // total pending end
 
@@ -542,12 +542,12 @@ class WomanController extends Controller
         ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
             // total disposal nispotti end
 
-            // total pending start 
+            // total pending start
 
             $data['totalpending'] = Woman::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
-        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport','!=' ,'নিষ্পত্তি')
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', '!=', 'নিষ্পত্তি')
             ->count();
 
             // total pending end
@@ -628,12 +628,12 @@ class WomanController extends Controller
         ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
             // total disposal nispotti end
 
-            // total pending start 
+            // total pending start
 
             $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
-        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport','!=' ,'নিষ্পত্তি')
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', '!=', 'নিষ্পত্তি')
             ->count();
 
             // total pending end
@@ -716,12 +716,12 @@ class WomanController extends Controller
             // total disposal nispotti end
 
 
-            // total pending start 
+            // total pending start
 
             $data['totalpending'] = Woman::where('districtID', auth()->user()->districtID)
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
-        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport','!=' ,'নিষ্পত্তি')
+        ->whereBetween('wdate', [$fvalue, $tovalue])->where('nreport', '!=', 'নিষ্পত্তি')
             ->count();
 
             // total pending end
