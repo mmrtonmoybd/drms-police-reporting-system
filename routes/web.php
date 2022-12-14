@@ -101,6 +101,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/qrrs/srcs/excel', [QrrsController::class, 'qrrscexcel'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs/pdf', [QrrsController::class, 'qrrspdf'])->middleware('permission:qrr.dashboard');
         Route::get('/qrrs/srcs/data', [QrrsController::class, 'chartdata'])->middleware('permission:qrr.dashboard');
+        Route::get('/qrrs/review', [QrrsController::class, 'reviewlist'])->middleware('permission:qrr.review');
+        Route::get('/qrrs/review/update/{qrr}', [QrrsController::class, 'reviewShow'])->middleware('permission:qrr.review');
+        Route::post('/qrrs/review/update/{qrr}', [QrrsController::class, 'reviewUpdate'])->middleware('permission:qrr.review');
         Route::get('/qrrs/excel', function () {
             $name = uniqid('qrrlist_');
 

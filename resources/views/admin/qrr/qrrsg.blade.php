@@ -9,7 +9,7 @@
             <div class="main-content pt-4">
                 <div class="selectbox">
                     
-                <form target="_blank" action="{{url('admin/qrrs/charts')}}" method="get">
+                <form  action="{{url('admin/qrrs/charts')}}" method="get">
                
                <div class="" id="app">
                                         <div class="row">
@@ -180,6 +180,23 @@ function hms ($value) {
                             </div>
                         </div>
                     </div>
+
+                    @can('qrr.review.info')
+
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                               
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Qrr pending for review </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
+                                </div>
+								
+                            </div>
+                        </div>
+                    </div>
+
+                    @endcan
 					
 					  @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
                     <div class="col-lg-4 col-md-6 col-sm-6">
@@ -264,7 +281,8 @@ function hms ($value) {
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-sm-12">
+                
+                    <div class="col-lg-6 col-sm-12">
                         <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
                                 <div class="card-title">ঘটনার সুত্রপাত</div>
@@ -272,20 +290,21 @@ function hms ($value) {
                             </div>
                         </div>
                     </div>
-                </div>
+             
 
-                <div class="col-lg-4 col-md-12">
-                        <div class="card mb-4">
+                <div class="col-lg-6 col-sm-12">
+                        <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
-                                <div class="card-title" > গৃহীত ব্যবস্থা </div>
-                                <div id="piechart3" style="margin-top: -39px;height: 300px;"></div>
+                                <div class="card-title">ঘটনার ধরন</div>
+                                <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
                             </div>
                         </div>
                     </div>
+           
+   </div>
 
                     
-                </div>
-           
+         
 
 
 

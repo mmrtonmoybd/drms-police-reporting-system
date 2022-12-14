@@ -35,7 +35,7 @@ class QrrListExport implements FromCollection, WithMapping, WithHeadings
         }
 
 
-        return Qrr::with(['district', 'thana'])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->get();
+        return Qrr::with(['district', 'thana'])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->where('status', 'active')->get();
     }
 
     public function headings(): array

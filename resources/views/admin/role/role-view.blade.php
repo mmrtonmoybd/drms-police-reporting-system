@@ -1,14 +1,4 @@
 <x-admin-header />
-@php
-use App\Models\Warrant;
-
-function dayend($id, $dis) {
-    $get = Warrant::selectRaw("((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS day_endp")
-    ->where('districtID', $dis)
-    ->where('id', '<=', $id)->first();
-    return intval($get->day_endp);
-}
-@endphp
                         
                         <!-- start page title -->
                         <div class="row">

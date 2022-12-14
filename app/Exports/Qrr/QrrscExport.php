@@ -39,6 +39,7 @@ class QrrscExport implements FromCollection, WithMapping, WithHeadings
         $qry =  Qrr::with(['district', 'thana'])->where('districtID', $this->dkey, $this->dvalue)
         ->where('thanaID', $this->tkey, $this->tvalue)
         ->where('source_of_info', $this->skey, $this->svalue)
+        ->where('status', 'active')
         ->whereBetween('date_time_of_police_news', [$this->fvalue, $this->tovalue])->get();
 
         // dd($this, $qry);

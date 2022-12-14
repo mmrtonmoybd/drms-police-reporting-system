@@ -133,6 +133,24 @@ function hms ($value) {
                             </div>
                         </div>
                     </div>
+
+                    @can('qrr.review.info')
+
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                               
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Qrr pending for review </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
+                                </div>
+								
+                            </div>
+                        </div>
+                    </div>
+
+                    @endcan
+
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Clock"></i>
@@ -179,7 +197,7 @@ function hms ($value) {
 				}
 				</style>
 
-                <h1>Data render date {{session("agomonthday")}} To {{session("currentday")}}</h1>
+              <!---------- <h1>Data render date {{session("agomonthday")}} To {{session("currentday")}}</h1> ---> 
                 <div class="row">
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
@@ -200,26 +218,7 @@ function hms ($value) {
                     </div>
 					
 					
-                    <div class="col-lg-4 col-sm-12">
-                        <div class="card mb-4" style="height: 354px;">
-                            <div class="card-body">
-                                <div class="card-title">ঘটনার ধরন</div>
-                                <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-12">
-                        <div class="card mb-4" style="height: 354px;">
-                            <div class="card-body">
-                                <div class="card-title">ঘটনার সুত্রপাত</div>
-                                <div id="chart_div4" style="margin-top: -71px;height: 300px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-12">
+					      <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title" > গৃহীত ব্যবস্থা </div>
@@ -227,8 +226,28 @@ function hms ($value) {
                             </div>
                         </div>
                     </div>
-           
+              
 
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card mb-4" style="height: 354px;">
+                            <div class="card-body">
+                                <div class="card-title">ঘটনার সুত্রপাত</div>
+                                <div id="chart_div4" style="margin-top: -71px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+             
+
+                <div class="col-lg-6 col-sm-12">
+                        <div class="card mb-4" style="height: 354px;">
+                            <div class="card-body">
+                                <div class="card-title">ঘটনার ধরন</div>
+                                <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+           
+   </div>
 
             </div>
 			
