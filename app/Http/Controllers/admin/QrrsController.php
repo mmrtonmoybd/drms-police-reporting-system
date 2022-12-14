@@ -185,7 +185,7 @@ class QrrsController extends Controller
             $thaexp = '=';
         }
 
-        
+
         $data['request'] =  $request;
 
         $query = Qrr::query();
@@ -211,7 +211,6 @@ class QrrsController extends Controller
         ];
 
         if ($qrr->update($data)) {
-
             $request->session()->flash('success_msg', 'Data status updated successfully');
             return redirect('admin/qrrs/review');
         } else {
