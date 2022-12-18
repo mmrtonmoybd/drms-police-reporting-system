@@ -14,7 +14,7 @@
                <div class="" id="app">
                                         <div class="row">
                                                                          @if (auth()->user()->hasRole('Super Admin'))
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
                                                     <select name="districtID" id="districtID" class="droparrow form-select form-control stylish @error('districtID') is-invalid @enderror"  v-model="district_id" @change="getCircles()" >
@@ -39,7 +39,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control  stylish @error('thanaID') is-invalid @enderror">
@@ -64,7 +64,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish  @error('thanaID') is-invalid @enderror" >
@@ -74,7 +74,7 @@
                                                 </div>
                                             </div>
                                             @else
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror">
@@ -85,11 +85,11 @@
                                             </div>
                                             @endif
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
-                                                    <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
-                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
-                                                        <option value="">Select</option>
+                                                    <label for="caseTypeID" class="form-label ">  </label>
+                                                    <select name="caseTypeID" id="caseTypeID" class="droparrow form-select form-control stylish @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                        <option value="">ধরন</option>
                                                         @if($caseparenttypes)
 
                                                         @foreach($caseparenttypes as $ctype)
@@ -101,17 +101,17 @@
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="casesubID" class="form-label">মামলার উপধরন</label>
-                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
-                                                        <option value="">Select</option>
+                                                    <label for="casesubID" class="form-label"> </label>
+                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="droparrow form-select stylish form-control @error('casesubID') is-invalid @enderror" @change="">
+                                                        <option value="">উপধরন</option>
                                                         <option v-for="(casesubtype,key,index) in casesubtypes" v-bind:value="casesubtype.id"> @php echo '{{ casesubtype.type }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4 " > 
+                                            <div class="col-sm-3 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">

@@ -1,82 +1,36 @@
+<x-admin-header />
 
-			<x-admin-header/>
-			
-			<!-- ============ Body content start ============= -->
-			
-			    
-<style>
-body {
-    background:#144f5d;
-     color:#000!important;
-}
+<x-admin-validation-errors :errors="$errors->all()"/>
 
-.tcap {
-  background-color: brown;
-  padding: 11px;
-  text-align: center;
-  margin-bottom: 5px;
-  border: 2px dotted;
-  font-size: 18px;
-}
- 
-   
-   
-  
-.tablestylenar {
- 
-  border-collapse: collapse;
-  width: 100%;
-}
-.tablestylenar td, .tablestylenar th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-.tablestylenar tr:nth-child(even){background-color: #176373;}
-.tablestylenar tr:hover {background-color: #176272;}
-.tablestylenar th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #22a598;
-  color: #000;
-}
-</style>
-			
-			
-            <div class="main-content pt-4">
-                <div class="selectbox">
-                    
-              
-               
-               <div class="" id="app">
-                   
-                   
-                   
-                   <form target="_blank" action="{{url('admin/narcotic/recover/src')}}" method="get">
-                          
-                                        <div class="row">
-										
-                               
-			
-												
-<div class="col-sm-3 " > 
+<form target="_blank" action="{{url('admin/narcotic/recover/src')}}" method="get">
+
+<div class="col-sm-4 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"> Date range 1</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control datepicker  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
-                     <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control datepicker  @error('to1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
+                   <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control searchdatepick  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                     <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control searchdatepick  @error('to1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
                   </div>
                </div>
             </div>
 <br><br>
 
+<div class="col-sm-4 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"> Date range 2</label>
+                  <div class="input-group" id="timepicker-input-group2">
+                    
+                   <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                     <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
+                  </div>
+               </div>
+            </div>
 
-
-            <div class="col-sm-2">
+<div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="org1" class="form-label">   অভিযান পরিচালনাকারী সংস্থা 1    </label>
-                                                    <select name="org1" id="org1" class="form-select form-control" required>
+                                                    <select name="org1" id="org1" class="form-select" required>
                                                         <option value="">Select</option>
                                                         <option value="থানা পুলিশ"  {{ request('org1') =='থানা পুলিশ' ? 'selected' : ''  }}> থানা পুলিশ </option>
                                                         <option value="ডিবি"  {{ request('org1') =='ডিবি' ? 'selected' : '' }} >ডিবি</option>
@@ -91,37 +45,15 @@ body {
                                             </div>
 
 
-                                          <div class="col-sm-1 " >
-               <div class="mb-3">
-                  <label for="source_of_info" class="form-label"></label>
-                 <h2 ><font color='red'> V.S</font></h2>
-               </div>
-            </div>
-            
+                                            <br>
+                                            <h2 ><font color='red'> V.S</font></h2>
+                                            <br>
 
 
-
-
-
-<div class="col-sm-3 " > 
-               <div class="mb-3">
-                  <label for="source_of_info" class="form-label"> Date range 2</label>
-                  <div class="input-group" id="timepicker-input-group2">
-                    
-                   <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control datepicker  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
-                     <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control datepicker  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
-                  </div>
-               </div>
-            </div>
-
-
-
-
-
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="org2" class="form-label">   অভিযান পরিচালনাকারী সংস্থা   2  </label>
-                                                    <select name="org2" id="org2" class="form-select form-control" required>
+                                                    <select name="org2" id="org2" class="form-select" required>
                                                         <option value="">Select</option>
                                                         <option value="থানা পুলিশ"  {{ request('org2') =='থানা পুলিশ' ? 'selected' : ''  }}> থানা পুলিশ </option>
                                                         <option value="ডিবি"  {{ request('org2') =='ডিবি' ? 'selected' : '' }} >ডিবি</option>
@@ -137,73 +69,28 @@ body {
 
 
 
-            <div class="col-sm-1 " >
+            <div class="col-sm-2 " >
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label">&nbsp;</label>
-                  <button type="submit" name="submit" class="btn" style="width:100%;"> সার্চ করুন </button>
+                  <label for="source_of_info" class="form-label"></label>
+                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
                </div>
             </div>
-            
-            
-            
-            
-            
-         </div>
-         
-         
-         
-         
-         </form>
-    
-   
-         
-      
-      </div>
-	  
-
-					
-                </div>
-                <div class="separator-breadcrumb border-top"></div>
-             
-		
-             
+</form>
 
 
-
-
-
-
-
-      
 <div class="row">
-
                             <div class="col-sm-12 ">
+                                <div class="card">
+                                    <div class="card-body table-responsive">
+
+@if ($request->has('submit'))
 
 
-                   <div class="card">
-                       
-                       
-                       
-                                   
-                                        
-                                        
-                                        <?php if(isset($_GET['form1'])) {   ?>
-                                           
-                                           <div class="card-body table-responsive">
-                                            
-                                        <?php }   else { ?>
-                                        
-                                         <div class="card-body table-responsive" style="height:50px;">
-                                           অনুগ্রহপূর্বক তারিখ নির্বাচন করুন
-                                        
-                                         <?php } ?>
 
-             @if ($request->has('submit'))
 
-  
-    <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org1')}}</h2></font> Narcotic recover details</caption>
+                                    <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org1')}}</h2></font> Narcotic recover details</caption>
 
-            <table class="tablestylenar">
+            <table class="table table-bordered table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -272,7 +159,7 @@ body {
 
                                         <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org2')}}</h2></font> Narcotic recover details</caption>
 
-            <table class="tablestylenar">
+            <table class="table table-bordered table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -338,8 +225,14 @@ body {
 
                                         <br><br><br>
 
+@php 
 
-                                        <table class="tablestylenar">
+                                            function incon($str) {
+
+                                                return (int) $str;
+                                            }
+                                            @endphp
+                                        <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -408,7 +301,7 @@ body {
                                                     <td > {{$nar->name_of_investigator}}</td>
                                                     <td > {{$nar->bp_no}}</td>
                                                     <td > {{$nar->mobile_no}}</td>
-                                                    <td > {{$nar->gaza / 1000}}</td>
+                                                    <td > {{incon($nar->gaza) / 1000 }}</td>
                                                     <td > {{$nar->gaza_tree}}</td>
                                                     <td > {{$nar->yaba}}</td>
                                                     <td > {{$nar->heroine}}</td>
@@ -437,49 +330,19 @@ body {
 
                                             </tbody>
                                         </table>
-                                     
-                                          <!---------->
+                                        
                                         <nav class="mt-3">
 
                                         @if($narcoticdatas){{$narcoticdatas->appends(request()->input())->links()}} @endif
                                       
                                         </nav>
 
-                                   
-
-                                        @endif
-
-                                         </div>
-                                </div>
 
 
-
-
-
-
-</div><!--- ----END OF COLUMN------>
-
+                                    
+@endif
 </div>
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-			
-			
-			
-            <div class="sidebar-overlay open"></div>
-			<!-- Footer Start -->
-			
-			
-			
-			
-			
-                                        <x-admin-footer/>
+                                </div>
+                            </div>
+</div>
+<x-admin-footer/>

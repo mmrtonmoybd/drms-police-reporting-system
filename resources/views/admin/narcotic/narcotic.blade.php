@@ -38,7 +38,7 @@ use Illuminate\Support\Str;
                                                     <th > জেলা </th>
                                                     <th > থানা </th>
                                                     <th > গ্রাম/ওয়ার্ড </th>
-                                                    <th > ঘটনার তারিখ </th>
+                                                    <th > মামলার তারিখ </th>
                                                     <th > মামলা নং </th>
                                                     <th > ধারা </th>
                                                     <th > অভিযান পরিচালনাকারী সংস্থা </th>
@@ -93,7 +93,7 @@ use Illuminate\Support\Str;
                                                     <td > {{$nar->case_no}}</td>
                                                     <td > {{Str::limit($nar->nopc, 10)}}</td>
                                                     <td > {{$nar->name_of_investigator_org}}</td>
-                                                    <td > {{Str::limit($nar->name_of_investigator, 10)}}</td>
+                                                    <td style="  min-width: 150px !important;"> {{Str::limit($nar->name_of_investigator, 50)}}</td>
                                                     <td > {{$nar->bp_no}}</td>
                                                     <td > {{$nar->mobile_no}}</td>
                                                     <td > {{$nar->gaza}}</td>
@@ -107,7 +107,7 @@ use Illuminate\Support\Str;
                                                     <td > {{$nar->ice}}</td>
                                                     <td > {{$nar->otherd}}</td>
                                                     <td > {{$nar->number_of_accused}}</td>
-                                                    <td > {{Str::limit($nar->accused, 10)}}</td>
+                                                    <td style="  min-width: 150px !important;"> {{Str::limit($nar->accused, 50)}}</td>
                                                     <td > {{$nar->image_video}}</td>
                                                     <td > {{$nar->jobdo_list}}</td>
                                                     <td > {{Str::limit($nar->narocotic_test_report, 10)}}</td>

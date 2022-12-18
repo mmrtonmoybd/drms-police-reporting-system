@@ -49,7 +49,7 @@
 						-->
 						
 
-            @canany(['case.dashboard', 'case.add', 'case.view'])
+            @canany(['case.dashboard', 'case.add', 'case.view', 'case.review'])
 							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Case</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/case/*') || request()->is('admin/case')) mm-show @endif">
                                   @can('case.dashboard')
@@ -62,6 +62,10 @@
 								   
 								    @can('case.view')
 								  <li class="item-name"><a href="{{url('admin/case')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
+									@endcan
+
+                  @can('case.review')
+								  <li class="item-name"><a href="{{url('admin/case/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database inactive</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -93,7 +97,7 @@
 							
 							
 						
-						@canany(['narcotic.add', 'narcotic.dashboard', 'narcotic.view'])
+						@canany(['narcotic.add', 'narcotic.dashboard', 'narcotic.view', 'narcotic.review'])
 						
 						
 						
@@ -116,6 +120,10 @@
 								   
 								@can('narcotic.view')
 								 <li class="item-name"><a href="{{url('admin/narcotic')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
+							    @endcan
+
+                  @can('narcotic.review')
+								 <li class="item-name"><a href="{{url('admin/narcotic/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database inactive</span></a></li>
 							    @endcan
 									 
 									 

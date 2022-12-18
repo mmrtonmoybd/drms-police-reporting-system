@@ -1,187 +1,52 @@
+<x-admin-header />
 
-			<x-admin-header/>
-			
-			<!-- ============ Body content start ============= -->
-			
-			    
-<style>
-body {
-    background:#144f5d;
-     color:#000!important;
-}
+<x-admin-validation-errors :errors="$errors->all()"/>
 
-.tcap {
-  background-color: brown;
-  padding: 11px;
-  text-align: center;
-  margin-bottom: 5px;
-  border: 2px dotted;
-  font-size: 18px;
-}
- 
-   
-   
-  
-.tablestylenar {
- 
-  border-collapse: collapse;
-  width: 100%;
-}
-.tablestylenar td, .tablestylenar th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-.tablestylenar tr:nth-child(even){background-color: #176373;}
-.tablestylenar tr:hover {background-color: #176272;}
-.tablestylenar th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #22a598;
-  color: #000;
-}
-</style>
-			
-			
-            <div class="main-content pt-4">
-                <div class="selectbox">
-                    
-              
-               
-               <div class="" id="app">
-                   
-                   
-                   
-                   	<form target="_blank" action="{{url('admin/narcotic/totalcase/src')}}" method="get">
-                          
-                                        <div class="row">
-										
-                               
-			
-												  <div class="col-sm-1 " >
-              
-            </div>
-		
-            
-												
-												
-											
+<form target="_blank" action="{{url('admin/narcotic/totalcase/src')}}" method="get">
 
-
-      
-
-
-
-												
-												
-												<div class="col-sm-3 " > 
+<div class="col-sm-4 " > 
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label">প্রথম তারিখ</label>
+                  <label for="source_of_info" class="form-label"> Date range 1</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                 <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control datepicker  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
-                     <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control datepicker  @error('to1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
-                 
-                     </div>
+                   <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control searchdatepick  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                     <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control searchdatepick  @error('to1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
+                  </div>
                </div>
             </div>
-            
-         
-					
-							
-            														<div class="col-sm-2 " > 
+<br><br>
+
+<div class="col-sm-4 " > 
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label">&nbsp;</label>
-                  <div class="text-center">
-                    
-         <center>  <font color="red"><h3> V.S </h3></font> </center>
-                      </div>
-               </div>
-            </div>
-            					
-            					
-            												
-												<div class="col-sm-3 " > 
-               <div class="mb-3">
-                  <label for="source_of_info" class="form-label">দ্বিতীয় তারিখ</label>
+                  <label for="source_of_info" class="form-label"> Date range 2</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-               <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control datepicker  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
-                     <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control datepicker  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
-               
-                      </div>
+                   <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                     <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
+                  </div>
                </div>
             </div>
-            
-            
+
             <div class="col-sm-2 " >
                <div class="mb-3">
-                  <label for="source_of_info" class="form-label">&nbsp;</label>
-                  <button type="submit" name="submit" class="btn" style="width:100%;" > সার্চ করুন </button>
+                  <label for="source_of_info" class="form-label"></label>
+                  <button type="submit" name="submit" class="btn stylish"> সার্চ করুন </button>
                </div>
             </div>
-            
-                <div class="col-sm-1 " >
-              
-            </div>
-            
-         </div>
-         
-         
-         
-         
-         </form>
-    
-   
-         
-      
-      </div>
-	  
+</form>
 
-					
-                </div>
-                <div class="separator-breadcrumb border-top"></div>
-             
-		
-             
-
-
-
-
-
-
-
-      
 <div class="row">
-
                             <div class="col-sm-12 ">
-
-
-                   <div class="card">
-                       
-                       
-                       
-                                   
-                                        
-                                        
-                                        <?php if(isset($_GET['form1'])) {   ?>
-                                           
-                                           <div class="card-body table-responsive">
-                                            
-                                        <?php }   else { ?>
-                                        
-                                         <div class="card-body table-responsive" style="height:50px;">
-                                           অনুগ্রহপূর্বক তারিখ নির্বাচন করুন
-                                        
-                                         <?php } ?>
+                                <div class="card">
+                                    <div class="card-body table-responsive">
 
              @if ($request->has('submit'))
 
              @if (!empty($request->input('form1')) || !empty($request->input('to1')))
 
-             <div class="tcap">{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'></font> <h2>{{request('org1')}}  পর্যন্ত মাদক উদ্ধারের বিবরণ</div> 
+             <caption>{{$monnf1}} -- {{$monnt1}} Narcotic case number</caption>
 
-            <table class="tablestylenar">
+            <table class="table table-bordered table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -249,12 +114,9 @@ body {
 
             @if (!empty($request->input('form2')) || !empty($request->input('to2')))
 
+             <caption>{{$monnf2}} -- {{$monnt2}} Narcotic case number</caption>
 
-<h2 style="text-align:center;"><font color="red"> V.S</font></h2>
-
-
-     <div class="tcap" style="margin-top: 7px;">{{$monnf2}} থেকে {{$monnt2}}  পর্যন্ত মাদক উদ্ধার</div> 
- <table class="tablestylenar">
+            <table class="table table-bordered table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -319,8 +181,8 @@ body {
                                         </table>
 
                                         @endif
-<br><br>
-                                         <table class="tablestylenar">
+
+                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -359,11 +221,15 @@ body {
                                                     
                                                 </tr>
                                             </thead>
-                                    
-                                    
-                                    
-                                        
                                             <tbody>
+
+                                            @php 
+
+                                            function incon($str) {
+
+                                                return (int) $str;
+                                            }
+                                            @endphp
 
                                             @if($narcoticdatas)
                                             @foreach ($narcoticdatas as $nar)
@@ -386,14 +252,14 @@ body {
                                                     <td > @if(isset($nar->district->name)) {{$nar->district->bn_name}} @endif</td>
                                                     <td > @if(isset($nar->thana->name)) {{$nar->thana->name}} @endif</td>
                                                     <td > {{$nar->village_word}}</td>
-                                                    <td > @if(!empty($nar->sdate)) {{date('d/m/Y', strtotime($nar->sdate))}} @endif</td>
+                                                    <td > {{date('d/m/Y', strtotime($nar->sdate))}}</td>
                                                     <td > {{$nar->case_no}}</td>
                                                     <td > {{$nar->nopc}}</td>
                                                     <td > {{$nar->name_of_investigator_org}}</td>
                                                     <td > {{$nar->name_of_investigator}}</td>
                                                     <td > {{$nar->bp_no}}</td>
                                                     <td > {{$nar->mobile_no}}</td>
-                                                    <td > {{$nar->gaza / 1000}}</td>
+                                                    <td > {{incon($nar->gaza) / 1000 }}</td>
                                                     <td > {{$nar->gaza_tree}}</td>
                                                     <td > {{$nar->yaba}}</td>
                                                     <td > {{$nar->heroine}}</td>
@@ -409,7 +275,7 @@ body {
                                                     <td > {{$nar->jobdo_list}}</td>
                                                     <td > {{$nar->narocotic_test_report}}</td>
                                                     <td > {{$nar->investigate_result}}</td>
-                                                    <td > @if(!empty($nar->tdate)) {{ date('d/m/Y', strtotime($nar->tdate)) }} @endif</td>
+                                                    <td > {{date('d/m/Y', strtotime($nar->tdate))}}</td>
                                                     <td > {{Str::limit($nar->comment, 5)}}</td>
                                                     
                                                 </tr>
@@ -421,10 +287,8 @@ body {
                                             
 
                                             </tbody>
-                                            
-                                   
                                         </table>
-                                          <!---------->
+                                        
                                         <nav class="mt-3">
 
                                         @if($narcoticdatas){{$narcoticdatas->appends(request()->input())->links()}} @endif
@@ -437,35 +301,7 @@ body {
 
                                          </div>
                                 </div>
+                            </div>
+                                        </div>
 
-
-
-
-
-
-</div><!--- ----END OF COLUMN------>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-			
-			
-			
-            <div class="sidebar-overlay open"></div>
-			<!-- Footer Start -->
-			
-			
-			
-			
-			
-                                        <x-admin-footer/>
+<x-admin-footer/>

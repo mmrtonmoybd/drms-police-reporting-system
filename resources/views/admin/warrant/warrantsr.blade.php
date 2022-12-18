@@ -9,7 +9,7 @@
             <div class="main-content pt-4">
                 <div class="selectbox">
                     
-                <form target="_blank" action="{{url('/admin/warrant/search')}}" method="get">
+                <form  action="{{url('/admin/warrant/search')}}" method="get">
        <div class="" id="app">
                                           <div class="row">
 										
@@ -155,7 +155,7 @@
 					position:relative;
 				}
 				</style>
-                <div class="row">
+                <div class="row" style="display:none;">
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -213,7 +213,17 @@
                                 <div class="card">
                                     <div class="card-body table-responsive">
                                         
-
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+margin-bottom: -10px;"> 
+     
+     
+     ওয়ারেন্ট  এবং গ্রেফতার  </span>
+     <br>
                                             <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
@@ -224,13 +234,17 @@
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                    <th > মোট রিসিভ  </th>
-                                                    <th > মোট নিষ্পত্তি</th>
-                                                    <th > মোট জিআর তামিল </th>
-                                                    <th > মোট সিআর তামিল </th>
-                                                    <th > মোট সাজা জিআর তামিল </th>
-                                                    <th > মোট সাজা সিআর তামিল </th>
-                                                    <th > মোট রিকল ও অন্যান্য </th>
+                                                    <th >  রিসিভ  </th>
+                                                  
+                                                    <th >  জিআর তামিল </th>
+                                                    <th >  সিআর তামিল </th>
+                                                    <th >  সাজা জিআর তামিল </th>
+                                                    <th >  সাজা সিআর তামিল </th>
+                                                    <th >  রিকল ও অন্যান্য </th>
+                                                      <th >  নিষ্পত্তি</th>
+                                                       <th >  বডি তামিল </th>
+                                                         <th >  নিস্পত্তি অনুপাতে বডি তামিল </th>
+                                                               <th >  নিয়মিত মামলায় গ্রেফতার  </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -249,13 +263,17 @@
                                             {{$war->thana->bn_name}}
                                             @endif</td>
                                                     
-                                                    <td > {{$war->total_recive}}</td>
-                                                    <td > {{$war->total_nispotti}}</td>
+                                                     <td > {{$war->total_recive}}</td>
+                                                  
                                                     <td > {{$war->total_gr_tamil}}</td>
                                                     <td > {{$war->total_cr_tamil}}</td>
                                                     <td > {{$war->total_saja_gr_tamil}}</td>
                                                     <td > {{$war->total_saja_cr_tamil}}</td>
                                                     <td > {{$war->total_recall}}</td>
+                                                    <td > {{$war->total_nispotti}}</td>
+                                                    <td > {{$war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil }}</td>
+                                                    <td > {{round($war->total_nispotti/($war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil), 2) }}</td>
+                                                    <td > {{$war->sumucase_arrast}}</td>
                                                 </tr>
 
                                             @endforeach
@@ -267,7 +285,22 @@
                                             </tbody>
                                         </table>
 
-                                        <br><br><br>
+                                      
+                                        <br>
+                                        <br>
+                                        
+                                        
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span>
+                                        
+                                        <br>
+
+
 
                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
@@ -279,7 +312,7 @@
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                    <th > মোট নিয়মিত মামলায় গ্রেফতার  </th>
+                                                
                                                     <th > মোট রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
                                                     <th > মোট মামলা নিষ্পত্তি (মাদক ব্যাতিত) </th>
                                                     <th > মোট মাদক মামলা রুজু </th>
@@ -308,7 +341,7 @@
                                             {{$war->thana->bn_name}}
                                             @endif</td>
                                                     
-                                                    <td > {{$war->sumucase_arrast}}</td>
+                                                 
                                                     <td > {{$war->sumruju_case}}</td>
                                                     <td > {{$war->sumcase_nispotti}}</td>
                                                     <td > {{$war->sumnarcotic_case_ruju}}</td>

@@ -14,7 +14,7 @@
                <div class="" id="app">
                                         <div class="row">
                                                                          @if (auth()->user()->hasRole('Super Admin'))
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
                                                     <select name="districtID" id="districtID" class="droparrow form-select form-control stylish @error('districtID') is-invalid @enderror"  v-model="district_id" @change="getCircles()" >
@@ -39,7 +39,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control  stylish @error('thanaID') is-invalid @enderror">
@@ -64,7 +64,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish  @error('thanaID') is-invalid @enderror" >
@@ -74,22 +74,22 @@
                                                 </div>
                                             </div>
                                             @else
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror">
-                                                        
+                                                         <option value="">থানা</option>
                                                         <option value="{{$thanades->id}}" selected>{{$thanades->bn_name}}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             @endif
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
-                                                    <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
-                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
-                                                        <option value="">Select</option>
+                                                    <label for="caseTypeID" class="form-label "></label>
+                                                    <select name="caseTypeID" id="caseTypeID" class="droparrow form-select form-control stylish @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                        <option value="">ধরন</option>
                                                         @if($caseparenttypes)
 
                                                         @foreach($caseparenttypes as $ctype)
@@ -101,17 +101,17 @@
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="casesubID" class="form-label">মামলার উপধরন</label>
-                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
-                                                        <option value="">Select</option>
+                                                    <label for="casesubID" class="form-label"></label>
+                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="droparrow form-select form-control stylish @error('casesubID') is-invalid @enderror" @change="">
+                                                        <option value="">উপধরন</option>
                                                         <option v-for="(casesubtype,key,index) in casesubtypes" v-bind:value="casesubtype.id"> @php echo '{{ casesubtype.type }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4 " > 
+                                            <div class="col-sm-3 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
@@ -158,6 +158,25 @@
                             </div>
                         </div>
                     </div>
+
+                    @can('case.review.info')
+
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                               
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Case pending for review </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
+                                </div>
+								
+                            </div>
+                        </div>
+                    </div>
+
+                    @endcan
+
+                    
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Financial"></i>
@@ -300,7 +319,7 @@ return $string;
 				}
 				</style>
                 <div class="row">
-                    <div class="col-lg-4 col-md-12">
+                    <div class="col-lg-6 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title">মোট কেস </div>
@@ -312,7 +331,7 @@ return $string;
                     
                     
                     			
-					<div class="col-lg-4 col-md-12">
+					<div class="col-lg-6 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title" >নিস্পত্তির ধরন </div>
@@ -321,19 +340,19 @@ return $string;
                         </div>
                     </div>
 
-                     <div class="col-lg-4 col-md-12">
+                     <div class="col-lg-6 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" >Case type </div>
+                                <div class="card-title" >মামলার ধরন </div>
                                 <div id="chart4_div" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-12">
+                    <div class="col-lg-6 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" >Case sub type </div>
+                                <div class="card-title" > মামলার উপধরন </div>
                                 <div id="chart5_div" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>

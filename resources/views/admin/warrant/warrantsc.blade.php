@@ -9,7 +9,7 @@
             <div class="main-content pt-4">
                 <div class="selectbox">
                     
-                <form target="_blank" action="{{url('/admin/warrant/search')}}" method="get">
+                <form  action="{{url('/admin/warrant/search')}}" method="get">
        <div class="" id="app">
                                         <div class="row">
 										
@@ -102,7 +102,7 @@
                             <div class="card-body text-center"><i class="i-Add-User"></i>
                         
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট রিসিভ </p>
+                                    <p class="text-muted mt-2 mb-0"> রিসিভ </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{ $trecive[0]['total_sum'] }}</p>
                                 </div>
 						
@@ -113,7 +113,7 @@
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Financial"></i>
                                 <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট নিষ্পত্তি</p>
+                                    <p class="text-muted mt-2 mb-0"> নিষ্পত্তি</p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{ $tnis[0]['total_sum'] }}</p>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Money-2"></i>
                                 <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট পেন্ডিং</p>
+                                    <p class="text-muted mt-2 mb-0"> পেন্ডিং</p>
                                     <p class="text-primary text-24 line-height-1 mb-2">@if (($trecive[0]['total_sum'] - $tnis[0]['total_sum']) >= 0) {{$trecive[0]['total_sum'] - $tnis[0]['total_sum']}} @else {{0}} @endif</p>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
 					position:relative;
 				}
 				</style>
-                <div class="row">
+                <div class="row" style="display:none;">
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -205,26 +205,40 @@
 
 
 
-
-
-<div class="row">
+<div class="row" style="margin:0px;">
+     
    <div class="card table-responsive">
-
+        <div class="card-body">
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+margin-bottom: -10px;"> 
+     
+     
+     ওয়ারেন্ট  এবং গ্রেফতার  </span>
+     
+     <br>
                                             <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     @if (auth()->user()->hasRole('Super Admin'))
                                                     <th > জেলা </th>
-                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                  @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                    <th > মোট রিসিভ  </th>
-                                                    <th > মোট নিষ্পত্তি</th>
-                                                    <th > মোট জিআর তামিল </th>
-                                                    <th > মোট সিআর তামিল </th>
-                                                    <th > মোট সাজা জিআর তামিল </th>
-                                                    <th > মোট সাজা সিআর তামিল </th>
-                                                    <th > মোট রিকল ও অন্যান্য </th>
+                                                    <th >  রিসিভ  </th>
+                                                    <th >  জিআর তামিল </th>
+                                                    <th >  সিআর তামিল </th>
+                                                    <th >  সাজা জিআর তামিল </th>
+                                                    <th >  সাজা সিআর তামিল </th>
+                                                    <th >  রিকল ও অন্যান্য </th>
+                                                     <th >  নিষ্পত্তি</th>
+                                                       <th >  বডি তামিল </th>
+                                                         <th >  নিস্পত্তি অনুপাতে বডি তামিল </th>
+                                                               <th >  নিয়মিত মামলায় গ্রেফতার  </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -251,14 +265,16 @@ function thana($id) {
                                                     <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
                                                     @endif
                                                     <td > {{$war->total_recive}}</td>
-                                                    <td > {{$war->total_nispotti}}</td>
+                                                  
                                                     <td > {{$war->total_gr_tamil}}</td>
                                                     <td > {{$war->total_cr_tamil}}</td>
                                                     <td > {{$war->total_saja_gr_tamil}}</td>
                                                     <td > {{$war->total_saja_cr_tamil}}</td>
                                                     <td > {{$war->total_recall}}</td>
-                                                </tr>
-
+                                                    <td > {{$war->total_nispotti}}</td>
+                                                    <td > {{$war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil }}</td>
+                                                    <td > {{round($war->total_nispotti/($war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil), 2) }}</td>
+                                                    <td > {{$war->sumucase_arrast}}</td>
                                             @endforeach
                                             @endif
 
@@ -270,6 +286,16 @@ function thana($id) {
 
                                         <br>
                                         <br>
+                                        
+                                        
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span>
+                                        
                                         <br>
 
                                         <table class="table table-bordered table-striped table-centered mb-0">
@@ -280,13 +306,13 @@ function thana($id) {
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                    <th > মোট নিয়মিত মামলায় গ্রেফতার  </th>
-                                                    <th > মোট রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
-                                                    <th > মোট মামলা নিষ্পত্তি (মাদক ব্যাতিত) </th>
-                                                    <th > মোট মাদক মামলা রুজু </th>
-                                                    <th > মোট মাদক মালা নিষ্পত্তি </th>
-                                                    <th > মোট অপমৃত্যু মামলা </th>
-                                                    <th > মোট অপমৃত্যু জিডি </th>
+                                              
+                                                    <th >  রুজুকৃত মামলা (মাদক ব্যাতিত)</th>
+                                                    <th >  মামলা নিষ্পত্তি (মাদক ব্যাতিত) </th>
+                                                    <th >  মাদক মামলা রুজু </th>
+                                                    <th >  মাদক মালা নিষ্পত্তি </th>
+                                                    <th >  অপমৃত্যু মামলা </th>
+                                                    <th >  অপমৃত্যু জিডি </th>
                                                     <th>বিট পুলিশিং</th>
                                                     <th>কমিউনিটি পুলিশিং</th>
                                                     <th>Student কমিউনিটি পুলিশিং</th>
@@ -309,7 +335,7 @@ function thana($id) {
                                             {{$war->thana->bn_name}}
                                             @endif</td>
                                                     
-                                                    <td > {{$war->sumucase_arrast}}</td>
+                                                   
                                                     <td > {{$war->sumruju_case}}</td>
                                                     <td > {{$war->sumcase_nispotti}}</td>
                                                     <td > {{$war->sumnarcotic_case_ruju}}</td>

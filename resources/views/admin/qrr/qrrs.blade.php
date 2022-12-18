@@ -64,7 +64,7 @@ use Illuminate\Support\Str;
                                                     <th > তারিখ </th>
                                                     <th > মামলা নং </th>
                                                     <th > তারিখ </th>
-                                                    <th > ধারা </th>
+                                                    <th style="width:100px;"> ধারা </th>
                                                     <th > বাদীর/ সংবাদদাতার নাম </th>
                                                     <th > বাদীর মোবাইল নং </th>
                                                     <th > ভিকটিমের সংখ্যা </th>

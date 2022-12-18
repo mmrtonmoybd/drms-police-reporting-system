@@ -99,23 +99,74 @@ class NarcotiscController extends Controller
         if (auth()->user()->hasRole('Super Admin')) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
-            $data['narcotics'] = $query->orderBy('id', 'desc')->paginate(20);
+            $data['narcotics'] = $query->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
-            $data['narcotics'] = $query->where('districtID', auth()->user()->districtID)->orderBy('id', 'desc')->paginate(20);
+            $data['narcotics'] = $query->where('status', 'active')->where('districtID', auth()->user()->districtID)->orderBy('id', 'desc')->paginate(20);
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
-            $data['narcotics'] = $query->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20);
+            $data['narcotics'] = $query->where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20);
         }
 
 
         return view('admin/narcotic/narcotic', $data);
+    }
+
+    public function reviewList(Request $request)
+    {
+        if (auth()->user()->hasRole('Super Admin')) {
+            $query = Narcotic::query();
+            $query->with(['district', 'thana']);
+            $data['narcotics'] = $query->where('status', 'inactive')->orderBy('id', 'desc')->paginate(20);
+        }
+
+        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $query = Narcotic::query();
+            $query->with(['district', 'thana']);
+            $data['narcotics'] = $query->where('status', 'inactive')->where('districtID', auth()->user()->districtID)->orderBy('id', 'desc')->paginate(20);
+        }
+
+        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
+            $query = Narcotic::query();
+            $query->with(['district', 'thana']);
+            $data['narcotics'] = $query->where('status', 'inactive')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20);
+        }
+
+
+        return view('admin/narcotic/narcotic-review', $data);
+    }
+
+    public function reviewShow(Request $request, Narcotic $nar)
+    {
+        $data['nar'] = $nar;
+
+        return view('admin/narcotic/narcotic-status', $data);
+    }
+
+    public function reviewUpdate(Request $request, Narcotic $nar)
+    {
+        //$data['qrr'] = $qrr;
+
+        $data = [
+            'status' => $request->input('statusg')
+        ];
+
+        //dd($nar, $data);
+
+        if ($nar->update($data)) {
+            $request->session()->flash('success_msg', 'Data status updated successfully');
+            //dd($nar, $data);
+            return redirect('admin/narcotic/review');
+        } else {
+            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            return redirect()->back();
+        }
     }
 
     public function editShow(Request $request, $id)
@@ -307,18 +358,19 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             districtID
             ")
+            ->where('status', 'active')
             ->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-            $data['gtgaza'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza');
-            $data['gtgazatree'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza_tree');
-            $data['gtyaba'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('yaba');
-            $data['gtheroine'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('heroine');
-            $data['gtfansdel'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('fansdel');
-            $data['gtcholai_alcohol'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('bidesh_alcohol');
-            $data['gtlsd'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('lsd');
-            $data['gtice'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('ice');
-            $data['gtotherd'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('otherd');
+            $data['gtgaza'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('gaza');
+            $data['gtgazatree'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('yaba');
+            $data['gtheroine'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('heroine');
+            $data['gtfansdel'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('lsd');
+            $data['gtice'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('ice');
+            $data['gtotherd'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('otherd');
 
             $data['narcoticsthas'] = Narcotic::with('thana')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
@@ -332,29 +384,29 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             districtID,
             thanaID
-            ")->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            ")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             // Number of case graph
 
-            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID")->whereNotNull('case_no')->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+            $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID")->where('status', 'active')->whereNotNull('case_no')->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
             $request->session()->flash('numofcase', $numofcase);
 
             // operation conducting authority
 
-            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
 
             // arrest by unit
 
-            $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+            $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
             $request->session()->flash('arrastbyu', $arrastbyu);
 
-            $data['totalcase'] = Narcotic::whereNotNull('case_no')->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
+            $data['totalcase'] = Narcotic::whereNotNull('case_no')->whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->count('case_no');
 
-            $data['totalarrast'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
+            $data['totalarrast'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('number_of_accused');
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -375,40 +427,40 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             thanaID,
             districtID
-            ")->whereBetween('sdate', [$agomonthday, $currentday])->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            ")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza');
-            $data['gtgazatree'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza_tree');
-            $data['gtyaba'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('yaba');
-            $data['gtheroine'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('heroine');
-            $data['gtfansdel'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('fansdel');
-            $data['gtcholai_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('bidesh_alcohol');
-            $data['gtlsd'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('lsd');
-            $data['gtice'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('ice');
-            $data['gtotherd'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('otherd');
+            $data['gtgaza'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza');
+            $data['gtgazatree'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('lsd');
+            $data['gtice'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('ice');
+            $data['gtotherd'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('otherd');
 
             // Number of case graph
 
-            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereBetween('sdate', [$agomonthday, $currentday])->whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('numofcase', $numofcase);
 
             // operation conducting authority
 
-            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->whereBetween('sdate', [$agomonthday, $currentday])->where('districtID', auth()->user()->districtID)->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->where('districtID', auth()->user()->districtID)->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
 
             // arrest by unit
 
-            $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->whereBetween('sdate', [$agomonthday, $currentday])->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->where('districtID', auth()->user()->districtID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('arrastbyu', $arrastbyu);
 
-            $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
+            $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
 
-            $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
+            $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
         }
 
 
@@ -429,40 +481,40 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             thanaID,
             districtID
-            ")->whereBetween('sdate', [$agomonthday, $currentday])->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            ")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza');
-            $data['gtgazatree'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza_tree');
-            $data['gtyaba'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('yaba');
-            $data['gtheroine'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('heroine');
-            $data['gtfansdel'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('fansdel');
-            $data['gtcholai_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('bidesh_alcohol');
-            $data['gtlsd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('lsd');
-            $data['gtice'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('ice');
-            $data['gtotherd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('otherd');
+            $data['gtgaza'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza');
+            $data['gtgazatree'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('gaza_tree');
+            $data['gtyaba'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('yaba');
+            $data['gtheroine'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('heroine');
+            $data['gtfansdel'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('fansdel');
+            $data['gtcholai_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('bidesh_alcohol');
+            $data['gtlsd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('lsd');
+            $data['gtice'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('ice');
+            $data['gtotherd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('otherd');
 
             // Number of case graph
 
-            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereBetween('sdate', [$agomonthday, $currentday])->whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('numofcase', $numofcase);
 
             // operation conducting authority
 
-            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+            $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
 
             // arrest by unit
 
-            $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+            $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('arrastbyu', $arrastbyu);
 
-            $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
+            $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
 
-            $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
+            $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
         }
 
 
@@ -538,50 +590,68 @@ class NarcotiscController extends Controller
             SUM(ice) AS icec,
             SUM(otherd) AS otherdc,
             districtID
-            ")->where('districtID', $dkey, $dvalue)
+            ")->where('status', 'active')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
             $data['gtgaza'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza');
 
             $data['gtgazatree'] = Narcotic::where('districtID', $dkey, $dvalue)
+            ->where('status', 'active')
         ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza_tree');
+
             $data['gtyaba'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('yaba');
+
             $data['gtheroine'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('heroine');
+
             $data['gtfansdel'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('fansdel');
+
             $data['gtcholai_alcohol'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('cholai_alcohol');
+
             $data['gtbidesh_alcohol'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('bidesh_alcohol');
+
             $data['gtlsd'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('lsd');
+
             $data['gtice'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('ice');
+
             $data['gtotherd'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('otherd');
 
@@ -599,6 +669,7 @@ class NarcotiscController extends Controller
             thanaID
             ")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
@@ -609,6 +680,7 @@ class NarcotiscController extends Controller
                              ->where('name_of_investigator_org', $skey, $svalue)
                              ->where('districtID', $request->input('districtID'))
                              ->where('thanaID', $tkey, $tvalue)
+                             ->where('status', 'active')
                              ->whereBetween('sdate', [$fvalue, $tovalue])->whereNotNull('case_no')->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
                 // arrest by unit
@@ -617,11 +689,13 @@ class NarcotiscController extends Controller
                              ->where('name_of_investigator_org', $skey, $svalue)
                              ->where('districtID', $request->input('districtID'))
                              ->where('thanaID', $tkey, $tvalue)
+                             ->where('status', 'active')
                              ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
             } else {
                 // Number of case graph
 
                 $numofcase = Narcotic::with('district')->selectRaw("COUNT(case_no) AS totalcase, districtID") ->where('name_of_investigator_org', $skey, $svalue)
+                             ->where('status', 'active')
                              ->whereBetween('sdate', [$fvalue, $tovalue])->whereNotNull('case_no')->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
 
@@ -629,6 +703,7 @@ class NarcotiscController extends Controller
 
                 $arrastbyu = Narcotic::with('district')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID")
                                ->where('name_of_investigator_org', $skey, $svalue)
+                               ->where('status', 'active')
                                ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
             }
 
@@ -640,6 +715,7 @@ class NarcotiscController extends Controller
             $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
@@ -650,17 +726,20 @@ class NarcotiscController extends Controller
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->count('case_no');
 
             $data['totalarrast'] = Narcotic::where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
             ->where('thanaID', $tkey, $tvalue)
             ->where('name_of_investigator_org', $skey, $svalue)
-            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            ->where('status', 'active')
+            ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -684,43 +763,65 @@ class NarcotiscController extends Controller
             districtID
             ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $data['gtgaza'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza');
+
             $data['gtgazatree'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza_tree');
+
             $data['gtyaba'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('yaba');
+
             $data['gtheroine'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('heroine');
+
             $data['gtfansdel'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('fansdel');
+
             $data['gtcholai_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('cholai_alcohol');
+
             $data['gtbidesh_alcohol'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('bidesh_alcohol');
+
             $data['gtlsd'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('lsd');
+
             $data['gtice'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('ice');
+
             $data['gtotherd'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('otherd');
+
 
             // Number of case graph
 
             $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('districtID', auth()->user()->districtID)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('numofcase', $numofcase);
@@ -729,6 +830,7 @@ class NarcotiscController extends Controller
 
             $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
@@ -737,21 +839,25 @@ class NarcotiscController extends Controller
 
             $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('districtID', auth()->user()->districtID)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('arrastbyu', $arrastbyu);
 
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->where('districtID', auth()->user()->districtID)->count('case_no');
 
             $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
         ->where('name_of_investigator_org', $skey, $svalue)
+        ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
             ->where('name_of_investigator_org', $skey, $svalue)
-            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            ->where('status', 'active')
+            ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -772,33 +878,43 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             thanaID,
             districtID
-            ")->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+            ")->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+            $data['gtgaza'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza');
-            $data['gtgazatree'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtgazatree'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('gaza_tree');
-            $data['gtyaba'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtyaba'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('yaba');
-            $data['gtheroine'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtheroine'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('heroine');
-            $data['gtfansdel'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtfansdel'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('fansdel');
-            $data['gtcholai_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtcholai_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtbidesh_alcohol'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('bidesh_alcohol');
-            $data['gtlsd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtlsd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('lsd');
-            $data['gtice'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtice'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('ice');
-            $data['gtotherd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+
+            $data['gtotherd'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('otherd');
+
 
             // Number of case graph
 
-            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+            $numofcase = Narcotic::with('thana')->selectRaw("COUNT(case_no) AS totalcase, thanaID")->whereNotNull('case_no')->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('numofcase', $numofcase);
@@ -806,25 +922,25 @@ class NarcotiscController extends Controller
             // operation conducting authority
 
             $conduautho = Narcotic::selectRaw("COUNT(name_of_investigator_org) AS totalinvisauth, name_of_investigator_org")->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
+        ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->orderBy('name_of_investigator_org', 'ASC')->groupBy('name_of_investigator_org')->get();
             $request->session()->flash('conduautho', $conduautho);
             // dd($numofcase);
 
             // arrest by unit
 
             $arrastbyu = Narcotic::with('thana')->selectRaw("SUM(number_of_accused) AS totalarrast, districtID, thanaID")->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
+        ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             $request->session()->flash('arrastbyu', $arrastbyu);
 
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->where('thanaID', auth()->user()->thanaID)->count('case_no');
+        ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->count('case_no');
 
             $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
-        ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
+        ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->sum('number_of_accused');
 
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
-            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -891,8 +1007,9 @@ class NarcotiscController extends Controller
             $data['request'] = $request;
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
             ->where('thanaID', $tkey, $tvalue)
+            ->where('status', 'active')
             ->where('name_of_investigator_org', $skey, $svalue)
-            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -904,7 +1021,8 @@ class NarcotiscController extends Controller
 
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
             ->where('name_of_investigator_org', $skey, $svalue)
-            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            ->where('status', 'active')
+            ->whereBetween('sdate', [$fvalue, $tovalue])->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -912,7 +1030,7 @@ class NarcotiscController extends Controller
             $data['request'] = $request;
 
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
-            ->whereBetween('sdate', [$fvalue, $tovalue])->paginate(20);
+            ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -1026,18 +1144,18 @@ class NarcotiscController extends Controller
             SUM(ice) AS icec,
             SUM(otherd) AS otherdc,
             districtID
-            ")->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+            ")->where('status', 'active')->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('gaza');
-            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('gaza_tree');
-            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('yaba');
-            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('heroine');
-            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('fansdel');
-            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('bidesh_alcohol');
-            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('lsd');
-            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('ice');
-            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->sum('otherd');
+            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('yaba');
+            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('lsd');
+            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('ice');
+            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->sum('otherd');
 
 
             $data['narcotic2'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
@@ -1051,21 +1169,21 @@ class NarcotiscController extends Controller
             SUM(ice) AS icec,
             SUM(otherd) AS otherdc,
             districtID
-            ")->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
+            ")->where('status', 'active')->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('yaba');
+            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('lsd');
+            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('ice');
+            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->sum('otherd');
 
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
-            ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->orderBy('id', 'desc')->paginate(20);
+            ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
 
             // dd($data['narcoticdatas']);
         }
@@ -1084,22 +1202,22 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             thanaID,
             districtID
-            ")->where('districtID', auth()->user()->districtID)
+            ")->where('status', 'active')->where('districtID', auth()->user()->districtID)
              ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             //dd($data['narcotic1']);
 
 
-            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('gaza');
-            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
-            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('yaba');
-            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('heroine');
-            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('fansdel');
-            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
-            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('lsd');
-            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('ice');
-            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('districtID', auth()->user()->districtID)->sum('otherd');
+            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('otherd');
 
 
 
@@ -1115,24 +1233,24 @@ class NarcotiscController extends Controller
             SUM(otherd) AS otherdc,
             thanaID,
             districtID
-            ")->where('districtID', auth()->user()->districtID)
+            ")->where('status', 'active')->where('districtID', auth()->user()->districtID)
               ->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
             //dd($data['narcotic2']);
 
-            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('gaza');
-            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
-            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('yaba');
-            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('heroine');
-            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('fansdel');
-            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
-            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('lsd');
-            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('ice');
-            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->sum('otherd');
+            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->sum('otherd');
 
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
-            ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->where('districtID', auth()->user()->districtID)->orderBy('id', 'desc')->paginate(20);
+            ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->where('status', 'active')->where('districtID', auth()->user()->districtID)->orderBy('id', 'desc')->paginate(20);
         }
 
 
@@ -1151,19 +1269,20 @@ class NarcotiscController extends Controller
             districtID
             ")->where('districtID', auth()->user()->districtID)
             ->where('thanaID', auth()->user()->thanaID)
+            ->where('status', 'active')
              ->whereBetween('sdate', [$fvalue1, $tovalue1])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
 
-            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
-            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
-            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('yaba');
-            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('heroine');
-            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('fansdel');
-            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
-            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
-            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
-            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
+            $data['gtgaza1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd1'] = Narcotic::whereBetween('sdate', [$fvalue1, $tovalue1])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
 
 
 
@@ -1181,21 +1300,22 @@ class NarcotiscController extends Controller
             districtID
             ")->where('districtID', auth()->user()->districtID)
             ->where('thanaID', auth()->user()->thanaID)
+            ->where('status', 'active')
               ->whereBetween('sdate', [$fvalue2, $tovalue2])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
-            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
-            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('yaba');
-            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('heroine');
-            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('fansdel');
-            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
-            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
-            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
-            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
+            $data['gtgaza2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('yaba');
+            $data['gtheroine2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('lsd');
+            $data['gtice2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('ice');
+            $data['gtotherd2'] = Narcotic::whereBetween('sdate', [$fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->sum('otherd');
 
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
-            ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20);
+            ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20);
         }
 
         // dd($data['narcotic1'], $data['narcotic2']);
@@ -1306,19 +1426,20 @@ class NarcotiscController extends Controller
             districtID
             ")
             ->where('name_of_investigator_org', $request->input('org1'))
+            ->where('status', 'active')
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-            $data['gtgaza1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
 
 
 
@@ -1335,24 +1456,26 @@ class NarcotiscController extends Controller
             districtID
             ")
             ->where('name_of_investigator_org', $request->input('org2'))
+            ->where('status', 'active')
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
-            $data['gtgaza2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
 
 
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
             ->whereIn('name_of_investigator_org', [$request->input('org1'), $request->input('org2')])
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
+            ->where('status', 'active')
             ->orderBy('id', 'desc')->paginate(20);
 
             //dd($data['narcotic1'], $data['narcoticdatas']);
@@ -1372,21 +1495,22 @@ class NarcotiscController extends Controller
             districtID,
             thanaID
             ")
+            ->where('status', 'active')
             ->where('name_of_investigator_org', $request->input('org1'))
             ->where('districtID', auth()->user()->districtID)
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
 
 
 
@@ -1405,23 +1529,25 @@ class NarcotiscController extends Controller
             ")
             ->where('name_of_investigator_org', $request->input('org2'))
             ->where('districtID', auth()->user()->districtID)
+            ->where('status', 'active')
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
 
 
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
             ->where('districtID', auth()->user()->districtID)
+            ->where('status', 'active')
             ->whereIn('name_of_investigator_org', [$request->input('org1'), $request->input('org2')])
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('id', 'desc')->paginate(20);
@@ -1443,20 +1569,21 @@ class NarcotiscController extends Controller
             ")
             ->where('name_of_investigator_org', $request->input('org1'))
             ->where('districtID', auth()->user()->districtID)
+            ->where('status', 'active')
             ->where('thanaID', auth()->user()->thanaID)
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd1'] = Narcotic::where('name_of_investigator_org', $request->input('org1'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
 
 
 
@@ -1473,28 +1600,30 @@ class NarcotiscController extends Controller
             districtID,
             thanaID
             ")
+            ->where('status', 'active')
             ->where('name_of_investigator_org', $request->input('org2'))
             ->where('districtID', auth()->user()->districtID)
              ->where('thanaID', auth()->user()->thanaID)
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
-            $data['gtgaza2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
-            $data['gtgazatree2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
-            $data['gtyaba2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
-            $data['gtheroine2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
-            $data['gtfansdel2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
-            $data['gtcholai_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
-            $data['gtbidesh_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
-            $data['gtlsd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
-            $data['gtice2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
-            $data['gtotherd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
+            $data['gtgaza2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza');
+            $data['gtgazatree2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('gaza_tree');
+            $data['gtyaba2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('yaba');
+            $data['gtheroine2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('heroine');
+            $data['gtfansdel2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('fansdel');
+            $data['gtcholai_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('cholai_alcohol');
+            $data['gtbidesh_alcohol2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('bidesh_alcohol');
+            $data['gtlsd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('lsd');
+            $data['gtice2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('ice');
+            $data['gtotherd2'] = Narcotic::where('name_of_investigator_org', $request->input('org2'))->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->where('districtID', auth()->user()->districtID)->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])->sum('otherd');
 
 
             $data['narcoticdatas'] = Narcotic::with(['district', 'thana'])
             ->where('districtID', auth()->user()->districtID)
             ->whereIn('name_of_investigator_org', [$request->input('org1'), $request->input('org2')])
             ->where('thanaID', auth()->user()->thanaID)
+            ->where('status', 'active')
             ->whereRaw('((`sdate` BETWEEN ? AND ?) OR (`sdate` BETWEEN ? AND ?))', [$fvalue1, $tovalue1, $fvalue2, $tovalue2])
             ->orderBy('id', 'desc')->paginate(20);
         }

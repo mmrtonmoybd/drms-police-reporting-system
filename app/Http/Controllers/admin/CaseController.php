@@ -36,9 +36,63 @@ class CaseController extends Controller
             $tkey = '=';
         }
 
-        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->orderBy('id', 'desc')->paginate(20);
+        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
 
         return view('admin/case/cases', $data);
+    }
+
+
+    public function reviewList()
+    {
+        if (auth()->user()->hasRole('Super Admin')) {
+            $dvalue = 'kglf';
+            $dkey = '!=';
+            $tvalue = 'kkdk';
+            $tkey = '!=';
+            $cvalue = 'dkikEK';
+            $ckey = '!=';
+        } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+            $dvalue = auth()->user()->districtID;
+            $dkey = '=';
+            $tvalue = 'kkdk';
+            $tkey = '!=';
+            $cvalue = 'dkikEK';
+            $ckey = '!=';
+        } else {
+            $dvalue = auth()->user()->districtID;
+            $dkey = '=';
+            $tvalue = auth()->user()->thanaID;
+            $tkey = '=';
+        }
+
+        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'inactive')->orderBy('id', 'desc')->paginate(20);
+
+        return view('admin/case/case-review', $data);
+    }
+
+
+    public function reviewShow(Request $request, Casedb $casedb)
+    {
+        $data['casedb'] = $casedb;
+
+        return view('admin/case/case-status', $data);
+    }
+
+    public function reviewUpdate(Request $request, Casedb $casedb)
+    {
+        //$data['qrr'] = $qrr;
+
+        $data = [
+            'status' => $request->input('statusg')
+        ];
+
+        if ($casedb->update($data)) {
+            $request->session()->flash('success_msg', 'Data status updated successfully');
+            return redirect('admin/case/review');
+        } else {
+            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            return redirect()->back();
+        }
     }
 
 
@@ -317,7 +371,7 @@ class CaseController extends Controller
 
             // District wise case start
 
-            $diswisecase = Casedb::with('district')->selectRaw('COUNT(case_no) AS countcase, districtID')->whereBetween('case_date', [$agomonthday, $currentday])->whereNotNull('case_no')->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
+            $diswisecase = Casedb::with('district')->selectRaw('COUNT(case_no) AS countcase, districtID')->whereBetween('case_date', [$agomonthday, $currentday])->where('status', 'active')->whereNotNull('case_no')->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
             // District wise case end
 
@@ -336,7 +390,7 @@ class CaseController extends Controller
 
             // Circle wise case start
 
-            $circlewise = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')->where('districtID', auth()->user()->districtID)->whereNotNull('case_no')->whereBetween('case_date', [$agomonthday, $currentday])->groupBy('circleID')->orderBy('circleID', 'ASC')->get();
+            $circlewise = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereNotNull('case_no')->whereBetween('case_date', [$agomonthday, $currentday])->groupBy('circleID')->orderBy('circleID', 'ASC')->get();
             // Circle wise case end
 
             $request->session()->flash('circlewise', $circlewise);
@@ -350,7 +404,7 @@ class CaseController extends Controller
 
             // Thana wise case start
 
-            $thanawise = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')->where('thanaID', auth()->user()->thanaID)->whereBetween('case_date', [$agomonthday, $currentday])->whereNotNull('case_no')->groupBy('thanaID')->orderBy('thanaID', 'ASC')->get();
+            $thanawise = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->whereBetween('case_date', [$agomonthday, $currentday])->whereNotNull('case_no')->groupBy('thanaID')->orderBy('thanaID', 'ASC')->get();
             // Thana wise case end
 
             $request->session()->flash('thanawise', $thanawise);
@@ -361,6 +415,7 @@ class CaseController extends Controller
         $casetypec = Casedb::with('casetype')->selectRaw('COUNT(case_type) AS countcase_type, case_type')
         ->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
         ->whereBetween('case_date', [$agomonthday, $currentday])
         ->groupBy('case_type')
         ->orderBy('case_type', 'ASC')
@@ -375,6 +430,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
         ->where('thanaID', $tkey, $tvalue)
         ->where('casesub_type', '!=', 0)
+        ->where('status', 'active')
         ->whereBetween('case_date', [$agomonthday, $currentday])
         ->groupBy('casesub_type')
         ->orderBy('casesub_type', 'ASC')
@@ -385,28 +441,28 @@ class CaseController extends Controller
 
         // Case ending typyes start
 
-        $caseendingtypes = Casedb::selectRaw('COUNT(nispotti_type) AS countnispotti_type, nispotti_type')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->where('nispotti_type', '!=', '0')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
+        $caseendingtypes = Casedb::selectRaw('COUNT(nispotti_type) AS countnispotti_type, nispotti_type')->where('status', 'active')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->where('nispotti_type', '!=', '0')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
 
         $request->session()->flash('caseendingtypes', $caseendingtypes);
         // Case ending typyes start
 
         // Total case start
-        $data['totalcase'] = Casedb::whereNotNull('case_no')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->count('case_no');
+        $data['totalcase'] = Casedb::whereNotNull('case_no')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->count('case_no');
 
         // Total case end
 
         // Total ending case start
 
-        $data['totalendingcase'] = Casedb::whereNotNull('case_no')->where('nispotti_or_multobi', 'নিস্পত্তি')->whereBetween('case_date', [$agomonthday, $currentday])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->count('nispotti_or_multobi');
+        $data['totalendingcase'] = Casedb::whereNotNull('case_no')->where('nispotti_or_multobi', 'নিস্পত্তি')->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->count('nispotti_or_multobi');
 
         // Total ending case end
 
         // Total multobi case start
-        $data['totalmultobicase'] = Casedb::whereNotNull('case_no')->where('nispotti_or_multobi', 'মুলতবি')->whereBetween('case_date', [$agomonthday, $currentday])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->count('nispotti_or_multobi');
+        $data['totalmultobicase'] = Casedb::whereNotNull('case_no')->where('nispotti_or_multobi', 'মুলতবি')->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->count('nispotti_or_multobi');
         // Total multobi case end
 
         // Avg case ending time
-        $data['avgendingcasetime'] = Casedb::whereNotNull('nispottisecond')->where('districtID', $dkey, $dvalue)->whereBetween('case_date', [$agomonthday, $currentday])->where('thanaID', $tkey, $tvalue)->avg('nispottisecond');
+        $data['avgendingcasetime'] = Casedb::whereNotNull('nispottisecond')->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday])->where('thanaID', $tkey, $tvalue)->avg('nispottisecond');
         // Avg case ending time end
 
         //Last  3 month case start
@@ -414,7 +470,7 @@ class CaseController extends Controller
         $last_three_month = Carbon::now()->startOfMonth()->subMonth(3);
         $this_month = Carbon::now()->endOfMonth();
 
-        $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, DATE_FORMAT(case_date, "%Y-%b") AS monthyear, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month,$this_month])->groupBy('monthyear')->orderBy(\DB::raw('MONTH(case_date)'), 'ASC')->get();
+        $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, DATE_FORMAT(case_date, "%Y-%b") AS monthyear, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month,$this_month])->groupBy('monthyear')->orderBy(\DB::raw('MONTH(case_date)'), 'ASC')->get();
         //echo $this_month;
 
         //dd($lastthreemonthcase);
@@ -424,16 +480,21 @@ class CaseController extends Controller
 
         // Ak nojora case details start
 
-        $data['azaharnamioasami'] = Casedb::whereNotNull('azahar_namio_victims')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_namio_victims');
+        $data['azaharnamioasami'] = Casedb::whereNotNull('azahar_namio_victims')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_namio_victims');
 
-        $data['accusedasami'] = Casedb::whereNotNull('number_of_accused')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('number_of_accused');
+        $data['accusedasami'] = Casedb::whereNotNull('number_of_accused')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('number_of_accused');
 
-        $data['jaminprapto'] = Casedb::whereNotNull('jamin_prapto')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('jamin_prapto');
+        $data['jaminprapto'] = Casedb::whereNotNull('jamin_prapto')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('jamin_prapto');
 
-        $data['ovohotiprapto'] = Casedb::whereNotNull('ovohoti')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('ovohoti');
+        $data['ovohotiprapto'] = Casedb::whereNotNull('ovohoti')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('ovohoti');
 
-        $data['azaharnewinvistigateprapto'] = Casedb::whereNotNull('azahar_vukto_invistigate')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_vukto_invistigate');
+        $data['azaharnewinvistigateprapto'] = Casedb::whereNotNull('azahar_vukto_invistigate')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_vukto_invistigate');
         // Ak nojora case details end
+
+        $data['reviewpending'] = Casedb::where('districtID', $dkey, $dvalue)
+                                 ->where('thanaID', $tkey, $tvalue)
+                                 ->whereBetween('case_date', [$agomonthday, $currentday])
+                                 ->where('status', 'inactive')->count();
         //dd($lastthreemonthcase);
 
         return view('admin/case/case-dashboard', $data);
@@ -561,6 +622,7 @@ class CaseController extends Controller
                 // District wise case start
                 $diswisecase = Casedb::with('district')->selectRaw('COUNT(case_no) AS countcase, districtID')
                 ->where('case_type', $caseTypeID_key, $caseTypeID)
+                ->where('status', 'active')
                           ->where('casesub_type', $casesubID_key, $casesubID)->whereNotNull('case_no')->whereBetween('case_date', [$fvalue, $tovalue])->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
                 //dd($diswisecase);
@@ -572,6 +634,7 @@ class CaseController extends Controller
                 $circlewisecase = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')
                                    ->whereNotNull('case_no')
                                    ->where('districtID', $dkey, $dvalue)
+                                   ->where('status', 'active')
                                    ->where('case_type', $caseTypeID_key, $caseTypeID)
                                    ->where('casesub_type', $casesubID_key, $casesubID)
                                    ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -588,6 +651,7 @@ class CaseController extends Controller
                                    ->whereNotNull('case_no')
                                    ->where('districtID', $dkey, $dvalue)
                                    ->where('circleID', $ckey, $cvalue)
+                                   ->where('status', 'active')
                                    ->where('case_type', $caseTypeID_key, $caseTypeID)
                                    ->where('casesub_type', $casesubID_key, $casesubID)
                                    ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -605,6 +669,7 @@ class CaseController extends Controller
                                ->whereNotNull('case_no')
                                ->where('districtID', $dkey, $dvalue)
                                ->where('circleID', $ckey, $cvalue)
+                               ->where('status', 'active')
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                                ->where('casesub_type', $casesubID_key, $casesubID)
@@ -626,6 +691,7 @@ class CaseController extends Controller
                                   ->where('districtID', $dkey, $dvalue)
                                   ->where('circleID', $ckey, $cvalue)
                                   ->where('thanaID', $tkey, $tvalue)
+                                  ->where('status', 'active')
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                                   ->where('casesub_type', $casesubID_key, $casesubID)
                                   ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -641,6 +707,7 @@ class CaseController extends Controller
                                   ->whereNotNull('case_no')
                                   ->where('districtID', $dkey, $dvalue)
                                   ->where('circleID', $ckey, $cvalue)
+                                  ->where('status', 'active')
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                                   ->where('casesub_type', $casesubID_key, $casesubID)
                                   ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -656,6 +723,7 @@ class CaseController extends Controller
                                ->whereNotNull('case_no')
                                ->where('districtID', $dkey, $dvalue)
                                ->where('circleID', $ckey, $cvalue)
+                               ->where('status', 'active')
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                                ->where('casesub_type', $casesubID_key, $casesubID)
@@ -676,6 +744,7 @@ class CaseController extends Controller
             $octhanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                            ->whereNotNull('case_no')
                            ->where('districtID', $dkey, $dvalue)
+                           ->where('status', 'active')
                            ->where('circleID', $ckey, $cvalue)
                            ->where('thanaID', $tkey, $tvalue)
                            ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -700,6 +769,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                               ->where('circleID', $ckey, $cvalue)
                               ->where('thanaID', $tkey, $tvalue)
+                              ->where('status', 'active')
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
                               ->where('casesub_type', $casesubID_key, $casesubID)
                               ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -715,6 +785,7 @@ class CaseController extends Controller
         $casesubtypec = Casedb::with('casesubtype')->selectRaw('COUNT(casesub_type) AS countcasesub_type, casesub_type, case_type')
         ->where('districtID', $dkey, $dvalue)
                               ->where('circleID', $ckey, $cvalue)
+                              ->where('status', 'active')
                               ->where('thanaID', $tkey, $tvalue)
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
                               ->where('casesub_type', $casesubID_key, $casesubID)
@@ -733,6 +804,7 @@ class CaseController extends Controller
         $caseendingtypes = Casedb::selectRaw('COUNT(nispotti_type) AS countnispotti_type, nispotti_type')
                               ->where('districtID', $dkey, $dvalue)
                               ->where('circleID', $ckey, $cvalue)
+                              ->where('status', 'active')
                               ->where('thanaID', $tkey, $tvalue)
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
                               ->where('casesub_type', $casesubID_key, $casesubID)
@@ -746,6 +818,7 @@ class CaseController extends Controller
         $data['totalcase'] = Casedb::whereNotNull('case_no')
                                ->where('districtID', $dkey, $dvalue)
                                ->where('circleID', $ckey, $cvalue)
+                               ->where('status', 'active')
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
@@ -761,6 +834,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                ->where('circleID', $ckey, $cvalue)
                                ->where('thanaID', $tkey, $tvalue)
+                               ->where('status', 'active')
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -773,6 +847,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                ->where('circleID', $ckey, $cvalue)
                                ->where('thanaID', $tkey, $tvalue)
+                               ->where('status', 'active')
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -784,6 +859,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                   ->where('circleID', $ckey, $cvalue)
                                   ->where('thanaID', $tkey, $tvalue)
+                                  ->where('status', 'active')
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                   ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -796,6 +872,7 @@ class CaseController extends Controller
         $data['azaharnamioasami'] = Casedb::whereNotNull('azahar_namio_victims')
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
+                                ->where('status', 'active')
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
@@ -806,6 +883,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -815,6 +893,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -824,6 +903,7 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -833,17 +913,29 @@ class CaseController extends Controller
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
         ->sum('azahar_vukto_invistigate');
         // Ak nojora case details end
+
+        $data['reviewpending'] = Casedb::where('districtID', $dkey, $dvalue)
+                                ->where('circleID', $ckey, $cvalue)
+                                ->where('thanaID', $tkey, $tvalue)
+                                ->where('case_type', $caseTypeID_key, $caseTypeID)
+                                ->where('casesub_type', $casesubID_key, $casesubID)
+                                ->whereBetween('case_date', [$fvalue, $tovalue])
+                                 ->where('status', 'inactive')->count();
+
+
         //dd($lastthreemonthcase);
 
         $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                           ->where('districtID', $dkey, $dvalue)
                           ->where('circleID', $ckey, $cvalue)
                           ->where('thanaID', $tkey, $tvalue)
+                          ->where('status', 'active')
                           ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                           ->whereBetween('case_date', [$fvalue, $tovalue])
@@ -983,6 +1075,7 @@ class CaseController extends Controller
                           ->where('districtID', $dkey, $dvalue)
                           ->where('circleID', $ckey, $cvalue)
                           ->where('thanaID', $tkey, $tvalue)
+                          ->where('status', 'active')
                           ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
                           ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)

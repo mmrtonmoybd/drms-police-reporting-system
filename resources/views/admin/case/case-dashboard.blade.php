@@ -6,6 +6,83 @@
 			
 			
 			
+			
+<style>
+body {
+  overflow-x:hidden;
+  }
+#mySidenav a {
+  position: fixed;
+  right: -180px;
+  transition: 0.3s;
+  padding: 10px 0px 10px 10px;
+  width: 250px;
+
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 5px 0px 0px 5px;
+  z-index: 1000;
+}
+
+#about:hover {
+      height:130px;
+  right: 0px;
+  
+}
+
+#about {
+      height:45px;
+  top: 162px;
+  background-color: #04AA6D;
+  font-size: 14px !important;
+}
+
+#content  {
+    position: relative;
+  right:-80px;
+  width:100%;
+  margin-top: -40px;
+  z-index: 1050;
+}
+
+#content:hover {
+    position: relative;
+  right:0px;
+}
+
+
+</style>
+
+
+
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="#" id="about"><span id="htitile">একনজরে       </span>
+  <div id="content" style="width:100%;">
+<br>
+<br>
+
+  <b> আটক সংখ্যা </b> :   {{$jaminprapto}}</br>
+  <b> জামিন সংখ্যা  </b> :    {{$jaminprapto}}      </br>
+  <b> অব্যহতিপ্রাপ্ত সংখ্যা</b> :{{$ovohotiprapto}}     </br>
+  <b> এজহার তদন্ত  </b> :       {{$azaharnewinvistigateprapto}}  </br>
+  
+  <br>
+  
+  </div>
+   
+  </a>
+  
+</div>
+
+
+			
+			
+			
+			
+			
             <div class="main-content pt-4">
                 <div class="selectbox">
                     
@@ -14,7 +91,7 @@
                <div class="" id="app">
                                         <div class="row">
                                        @if (auth()->user()->hasRole('Super Admin'))
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
                                                     <select name="districtID" id="districtID" class="droparrow form-select form-control stylish @error('districtID') is-invalid @enderror"  v-model="district_id" @change="getCircles()" >
@@ -39,7 +116,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror">
@@ -64,7 +141,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror" >
@@ -74,7 +151,7 @@
                                                 </div>
                                             </div>
                                             @else
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
                                                     <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror">
@@ -85,11 +162,11 @@
                                             </div>
                                             @endif
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-1">
                                                 <div class="mb-3">
-                                                    <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
-                                                    <select name="caseTypeID" id="caseTypeID" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
-                                                        <option value="">Select</option>
+                                                    <label for="caseTypeID" class="form-label "></label>
+                                                    <select name="caseTypeID" id="caseTypeID" class="droparrow form-select form-control stylish @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                        <option value="">ধরন</option>
                                                         @if($caseparenttypes)
 
                                                         @foreach($caseparenttypes as $ctype)
@@ -101,17 +178,17 @@
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="casesubID" class="form-label">মামলার উপধরন</label>
-                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="form-select form-control @error('casesubID') is-invalid @enderror" @change="">
-                                                        <option value="">Select</option>
+                                                    <label for="casesubID" class="form-label"></label>
+                                                    <select name="casesubID" id="casesubID"  v-model="casesub_id" class="droparrow form-select stylish form-control @error('casesubID') is-invalid @enderror" @change="">
+                                                        <option value="">উপধরন</option>
                                                         <option v-for="(casesubtype,key,index) in casesubtypes" v-bind:value="casesubtype.id"> @php echo '{{ casesubtype.type }}'; @endphp </option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4 " > 
+                                            <div class="col-sm-3 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
@@ -183,6 +260,23 @@
                             </div>
                         </div>
                     </div>
+
+                    @can('case.review.info')
+
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                               
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Case pending for review </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
+                                </div>
+								
+                            </div>
+                        </div>
+                    </div>
+
+                    @endcan
 					
 
                     <div class="col-lg-2 col-md-6 col-sm-6">
@@ -240,50 +334,6 @@ return $string;
                     
                     
 
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Lock-User"></i>
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">আটক সংখ্যা</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$accusedasami}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-			
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Love-User"></i>
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">জামিন সংখ্যা</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$jaminprapto}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-			
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Remove-User"></i>
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">অব্যহতিপ্রাপ্ত সংখ্যা</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$ovohotiprapto}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-			
-			
-			      <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Find-User"></i>
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">এজহার তদন্ত</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$azaharnewinvistigateprapto}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 			
 			
 					<!--------
@@ -319,7 +369,7 @@ return $string;
                     </div>
 		
 					
-                    <div class="col-lg-4 col-sm-12">
+                    <div class="col-lg-8 col-sm-12">
                         <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
                                 <div class="card-title">শেষ ৩ মাসের রিপোর্ট</div>
@@ -342,7 +392,7 @@ return $string;
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" >Case type </div>
+                                <div class="card-title" >মামলার ধরন </div>
                                 <div id="chart4_div" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
@@ -351,7 +401,7 @@ return $string;
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" >Case sub type </div>
+                                <div class="card-title" > মামলার উপধরন </div>
                                 <div id="chart5_div" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>

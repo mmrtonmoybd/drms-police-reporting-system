@@ -47,7 +47,7 @@ use Illuminate\Support\Str;
                                                     <th> এজাহার নামীয় আসামির সংখ্যা</th>
                                                     <th> নিস্পত্তি / মুলতবি</th>
                                                     <th> নিস্পত্তির ধরন</th>
-                                                    <th> সিএক্স/এফ আর নং</th>
+                                                    <th> CS/এফ আর নং</th>
                                                     <th> তারিখ</th>
                                                     <th> পুলিশ রিপোর্ট আসামির সংখ্যা</th>
                                                     <th> গ্রেফতারকৃত আসামির সংখ্যা</th>
@@ -65,7 +65,7 @@ use Illuminate\Support\Str;
 
                                             @if($cases)
                                             @foreach ($cases as $case)
-                                                <tr >
+                                                <tr   @if($case->nispotti_or_multobi=='নিস্পত্তি') style="background: #b3c6c270;" @endif >
                                                     <td class="table-action">
                                                         @can('case.view')
                                                         <a href="{{url('admin/case/view/'.$case->id)}}"  class="action-icon text-primary">

@@ -125,6 +125,9 @@ Route::prefix('admin')->group(function () {
 
         // Narcotic router
         Route::get('/narcotic', [NarcotiscController::class, 'index'])->middleware('permission:narcotic.view');
+        Route::get('/narcotic/review', [NarcotiscController::class, 'reviewList'])->middleware('permission:narcotic.review');
+        Route::get('/narcotic/review/update/{nar}', [NarcotiscController::class, 'reviewShow'])->middleware('permission:narcotic.review');
+        Route::post('/narcotic/review/update/{nar}', [NarcotiscController::class, 'reviewUpdate'])->middleware('permission:narcotic.review');
         Route::get('/narcotic/add', [NarcotiscController::class, 'addShow'])->middleware('permission:narcotic.add');
         Route::post('/narcotic/add', [NarcotiscController::class, 'addData'])->middleware('permission:narcotic.add');
         Route::get('/narcotic/edit/{id}', [NarcotiscController::class, 'editShow'])->middleware('permission:narcotic.edit');
@@ -167,6 +170,9 @@ Route::prefix('admin')->group(function () {
 
         // Case router
         Route::get('/case', [CaseController::class, 'index'])->middleware('permission:case.view');
+        Route::get('/case/review', [CaseController::class, 'reviewList'])->middleware('permission:case.review');
+        Route::get('/case/review/update/{casedb}', [CaseController::class, 'reviewShow'])->middleware('permission:case.review');
+        Route::post('/case/review/update/{casedb}', [CaseController::class, 'reviewUpdate'])->middleware('permission:case.review');
         Route::get('/case/add', [CaseController::class, 'addShow'])->middleware('permission:case.add');
         Route::post('/case/add', [CaseController::class, 'create'])->middleware('permission:case.add');
         Route::get('/case/edit/{casedb}', [CaseController::class, 'editShow'])->middleware('permission:case.edit');

@@ -19,19 +19,19 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
         if (auth()->user()->hasRole('Super Admin')) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
-            $data = $query->get();
+            $data = $query->where('status', 'active')->get();
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
-            $data = $query->where('districtID', auth()->user()->districtID)->get();
+            $data = $query->where('status', 'active')->where('districtID', auth()->user()->districtID)->get();
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
-            $data = $query->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->get();
+            $data = $query->where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->get();
         }
 
         return $data;

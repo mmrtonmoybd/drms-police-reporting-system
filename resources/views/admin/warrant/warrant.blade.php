@@ -16,7 +16,7 @@
                                            
                                             
                                         </div>
-                                        <table class="tablestyle">
+                                        <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th > রেফারেন্স নং </th>
@@ -106,8 +106,12 @@ function thana($id) {
 
                                             </tbody>
 
+</table>
                                             <br><br>
-
+                                            <?php if(isset($_GET['other'])) { ?>    
+                                            
+                                            
+ <table class="table table-bordered table-striped table-centered mb-0" style="display:<?php if(isset($_GET['other'])) { echo ''; } else { echo 'none'; }; ?>">
                                             <thead>
                                                 <tr>
                                                     <th > রেফারেন্স নং </th>
@@ -171,7 +175,7 @@ function thana($id) {
                                             </tbody>
 
                                         </table>
-                                        
+                                         <?php } else { ?>    <?php } ?>  
                                         <nav class="mt-3">
 
                                         <!-- pagination here -->

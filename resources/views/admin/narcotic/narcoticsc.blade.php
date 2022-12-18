@@ -16,7 +16,7 @@
                    
                    
                      @if ($request->is('admin/narcotic/dashboard'))
-                      <form target="_blank" action="{{url('admin/narcotic/src')}}" method="get">
+                      <form  action="{{url('admin/narcotic/src')}}" method="get">
                                         <div class="row">
                                 
                                 
@@ -132,7 +132,7 @@
          </div>
          </form>
            @elseif($request->is('admin/narcotic/src'))
-            <form target="_blank" action="{{url('admin/narcotic/src')}}" method="get">
+            <form  action="{{url('admin/narcotic/src')}}" method="get">
                          <div class="row">
                                 
                                 
@@ -376,7 +376,7 @@
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                    <th > গাঁজা (গ্রাম) </th>
+                                                    <th > গাঁজা (কেজি) </th>
                                                     <th > গাঁজা গাছ (সংখ্যা) </th>
                                                     <th > ইয়াবা (পিচ) </th>
                                                     <th > ইরোইন (গ্রাম) </th>
@@ -397,7 +397,7 @@
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <td >{{$narcotic->thana->bn_name}}</td>
                                                     @endif
-                                                    <td >{{$narcotic->gazac}}</td>
+                                                    <td >{{($narcotic->gazac)/1000}}</td>
                                                     <td >{{$narcotic->gaza_treec}}</td>
                                                     <td >{{$narcotic->yabac}}</td>
                                                     <td >{{$narcotic->heroinec}}</td>
@@ -411,7 +411,7 @@
                                                 @endforeach
                                                  <tr>
                                                     <td >Grand Total</td>
-                                                    <td >{{$gtgaza}}</td>
+                                                    <td >{{($gtgaza)/1000}}</td>
                                                     <td >{{$gtgazatree}}</td>
                                                     <td >{{$gtyaba}}</td>
                                                     <td >{{$gtheroine}}</td>
@@ -436,7 +436,7 @@
                                                 <tr>
                                                     
                                                     <th > থানা </th>
-                                                    <th > গাঁজা (গ্রাম) </th>
+                                                    <th > গাঁজা (কেজি) </th>
                                                     <th > গাঁজা গাছ (সংখ্যা) </th>
                                                     <th > ইয়াবা (পিচ) </th>
                                                     <th > ইরোইন (গ্রাম) </th>
@@ -453,7 +453,7 @@
                                             @foreach($narcoticsthas as $narcotic)
                                                 <tr>
                                                     <td >{{$narcotic->thana->bn_name}}</td>
-                                                    <td >{{$narcotic->gazac}}</td>
+                                                    <td >{{($narcotic->gazac)/1000}}</td>
                                                     <td >{{$narcotic->gaza_treec}}</td>
                                                     <td >{{$narcotic->yabac}}</td>
                                                     <td >{{$narcotic->heroinec}}</td>
@@ -467,7 +467,7 @@
                                                 @endforeach
                                                  <tr>
                                                     <td >Grand Total</td>
-                                                    <td >{{$gtgaza}}</td>
+                                                    <td >{{($gtgaza)/1000}}</td>
                                                     <td >{{$gtgazatree}}</td>
                                                     <td >{{$gtyaba}}</td>
                                                     <td >{{$gtheroine}}</td>
