@@ -398,6 +398,8 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
+         
         districtID
         ")->whereBetween('date', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
 
@@ -500,6 +502,7 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
         districtID,
         thanaID
         ")->where('districtID', auth()->user()->districtID)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
@@ -574,7 +577,9 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
         districtID,
+        
         thanaID
         ")->where('thanaID', $octhana->id)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
 
@@ -720,6 +725,7 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
         districtID,
         thanaID
         ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->groupBy('districtID')->get();
@@ -827,6 +833,7 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
         districtID,
         thanaID
         ")->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
@@ -905,6 +912,7 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
         districtID,
         thanaID
         ")->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
@@ -977,6 +985,7 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
+         SUM(ucase_arrast) AS sumucase_arrast,
         districtID,
         thanaID
         ")->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
