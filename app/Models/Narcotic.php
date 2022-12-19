@@ -20,4 +20,19 @@ class Narcotic extends Model
     {
         return $this->hasOne('App\Models\Thana', 'id', 'thanaID');
     }
+
+    protected static function booted()
+    {
+        static::created(function ($row) {
+            
+            if (auth()->user()->can('narcotic.review')) {
+
+                $status = 'active';
+            } else {
+                $status = 'inactive';
+            }
+
+            $row->forceFill(['status' => $status])->save();
+        });
+    }
 }

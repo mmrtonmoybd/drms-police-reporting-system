@@ -9,9 +9,11 @@
                                     <div class="card-body table-responsive">
                                         
                                         <div class="row">
+                                            @if (request()->is('admin/warrant'))
                                             <div class="col-sm-2">
                                             <a href="{{url('admin/warrant/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Warrant</a>
                                             </div>
+                                            @endif
 
                                            
                                             
@@ -93,8 +95,15 @@ function thana($id) {
                                                             <i class="mdi mdi-eye"></i>
                                                         </a>
 
+                                                        @can('warrant.edit')
                                                         <a href="{{url('admin/warrant/edit/'.$war->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @endcan
+                                                        @can('warrant.review')
+                                                        <a href="{{url('admin/warrant/review/update/'.$war->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
+                                                        @endcan
+                                                        @can('warrant.delete')
                                                         <a href="{{url('admin/warrant/delete/'.$war->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                        @endcan
                                                     </td>
                                                 </tr>
 
@@ -161,8 +170,15 @@ function thana($id) {
                                                             <i class="mdi mdi-eye"></i>
                                                         </a>
 
+                                                         @can('warrant.edit')
                                                         <a href="{{url('admin/warrant/edit/'.$war->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @endcan
+                                                        @can('warrant.review')
+                                                        <a href="{{url('admin/warrant/review/update/'.$war->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
+                                                        @endcan
+                                                        @can('warrant.delete')
                                                         <a href="{{url('admin/warrant/delete/'.$war->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                        @endcan
                                                     </td>
                                                 </tr>
 

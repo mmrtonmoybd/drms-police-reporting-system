@@ -114,6 +114,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/warrant/add', [WarrantController::class, 'addShow'])->middleware('permission:warrant.add');
         Route::post('/warrant/add', [WarrantController::class, 'addData'])->middleware('permission:warrant.add');
         Route::get('/warrant', [WarrantController::class, 'index'])->middleware('permission:warrant.view');
+        Route::get('/warrant/review', [WarrantController::class, 'reviewList'])->middleware('permission:warrant.review');
+        Route::get('/warrant/review/update/{war}', [WarrantController::class, 'reviewShow'])->middleware('permission:warrant.review');
+        Route::post('/warrant/review/update/{war}', [WarrantController::class, 'reviewUpdate'])->middleware('permission:warrant.review');
         Route::get('/warrant/dashboard', [WarrantController::class, 'dashs'])->middleware('permission:warrant.dashboard');
         Route::get('/warrant/search', [WarrantController::class, 'dashsp'])->middleware('permission:warrant.dashboard');
         Route::get('/warrant/search/chart', [WarrantController::class, 'chartlink'])->middleware('permission:warrant.dashboard');

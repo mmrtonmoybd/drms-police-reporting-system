@@ -78,6 +78,9 @@ use Illuminate\Support\Str;
                                                         @can('narcotic.edit')
                                                         <a href="{{url('admin/narcotic/edit/'.$nar->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
                                                         @endcan
+                                                        @can('narcotic.review')
+                                                        <a href="{{url('admin/narcotic/review/update/'.$nar->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
+                                                        @endcan
                                                         @can('narcotic.delete')
                                                         <a href="{{url('admin/narcotic/delete/'.$nar->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
                                                        @endcan

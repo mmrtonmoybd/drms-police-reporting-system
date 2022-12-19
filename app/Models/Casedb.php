@@ -38,4 +38,19 @@ class Casedb extends Model
     {
         return $this->hasOne('App\Models\CaseType', 'id', 'casesub_type');
     }
+
+    protected static function booted()
+    {
+        static::created(function ($row) {
+            
+            if (auth()->user()->can('case.review')) {
+
+                $status = 'active';
+            } else {
+                $status = 'inactive';
+            }
+
+            $row->forceFill(['status' => $status])->save();
+        });
+    }
 }

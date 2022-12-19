@@ -159,7 +159,7 @@
 						  
 						  
 						  
-  @canany(['warrant.dashboard', 'warrant.add', 'warrant.view'])
+  @canany(['warrant.dashboard', 'warrant.add', 'warrant.view', 'warrant.review'])
   
 							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-handcuffs text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Warrant</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/warrant/*') || request()->is('admin/warrant')) mm-show @endif">
@@ -173,6 +173,10 @@
 								   
 								    @can('warrant.view')
 								  <li class="item-name"><a href="{{url('admin/warrant')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Warrant List</span></a></li>
+									@endcan
+
+                  @can('warrant.review')
+								  <li class="item-name"><a href="{{url('admin/warrant/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Warrant List inactive</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
