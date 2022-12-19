@@ -44,6 +44,12 @@
 <style>
 
 
+th {
+  position: sticky!important;
+  top: -20px!important;
+  z-index: 1!important;
+  background: #fff!important;
+}
 
 body {
 	    font-family: 'SolaimanLipi', Arial, sans-serif !important;
@@ -175,21 +181,25 @@ border-radius: 0px;
 							    @php
                                     $id = auth()->user()->id;
                                     @endphp
-							 <a href="{{url('admin/users/edit/'.$id)}}" style="text-decoration:none; color:black;">
+						
                 <div class="header-part-right">
 
 					
 					
 					     
-
+	 <a href="{{url('admin/users/edit/'.$id)}}" style="text-decoration:none; color:black;">
                      	<div style="display:inline-block;margin-right: 13px;"><img src="{{ asset(auth()->user()->picture) }}" width="50px" height="50px"></div>
                       
                      	<div style="display:inline-block;margin-right: 16px;">
 					  <span style="font-weight:bold; font-size:13px;"> {{auth()->user()->name}} </span> <br>{{auth()->user()->type}}
-						 
+					  
+						    </a>
+						   
                   </div>
+                     <!-- Full screen toggle--><i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen=""></i>
+               
                 
-				                    <!-- Full screen toggle--><i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen=""></i>
+				                  
 					
 					
 					
