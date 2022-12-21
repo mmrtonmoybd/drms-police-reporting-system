@@ -13,7 +13,7 @@
                
                <div class="" id="app">
                                         <div class="row">
-                                          @if (auth()->user()->hasRole('Super Admin'))
+                                          @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
@@ -162,7 +162,7 @@ function hms ($value) {
                         </div>
                     </div>
 					
-					  @if (auth()->user()->hasAnyRole(['Super Admin', 'SP']))
+					  @if (auth()->user()->hasAnyRole(['Super Admin', 'SP', 'Admin']))
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Clock-Forward"></i>

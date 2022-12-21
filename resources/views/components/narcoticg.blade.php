@@ -4,7 +4,7 @@
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
-      @if (auth()->user()->hasRole('Super Admin'))
+      @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
 
 @php 
 $allin = request()->all();

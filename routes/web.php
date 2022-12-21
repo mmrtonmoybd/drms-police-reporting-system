@@ -218,6 +218,9 @@ Route::prefix('admin')->group(function () {
                 Route::get('/add/superadmin', [UsersController::class, 'addsaShow']);
                 Route::post('/add/superadmin', [UsersController::class, 'addsacreate']);
 
+                Route::get('/add/admin', [UsersController::class, 'addaShow']);
+                Route::post('/add/admin', [UsersController::class, 'addacreate']);
+
                 Route::get('/add/sp', [UsersController::class, 'addspShow']);
                 Route::post('/add/sp', [UsersController::class, 'addspcreate']);
 

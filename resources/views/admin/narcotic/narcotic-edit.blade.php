@@ -237,7 +237,7 @@ input:checked + .button-label h1{
                                                     <input type="text" name="folder_no"  value="{{$nar->folder_no}}" id="folder_no" class="form-control  @error('folder_no') is-invalid @enderror" placeholder=" ফোল্ডার নং  " required>
                                                 </div>
                                             </div> 
-                                            @if (auth()->user()->hasRole('Super Admin'))
+                                            @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>

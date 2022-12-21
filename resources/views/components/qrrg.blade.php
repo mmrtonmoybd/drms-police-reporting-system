@@ -10,7 +10,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
-      @if (auth()->user()->hasRole('Super Admin'))
+      @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);

@@ -13,7 +13,7 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
-      @if (auth()->user()->hasRole('Super Admin'))
+      @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);

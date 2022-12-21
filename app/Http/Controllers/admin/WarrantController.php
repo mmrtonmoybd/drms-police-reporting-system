@@ -383,7 +383,7 @@ class WarrantController extends Controller
 
         $request->session()->flash('agomonthday', $agomonthday);
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
 
             $borgona = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
@@ -723,7 +723,7 @@ class WarrantController extends Controller
             $tovalue = Carbon::now()->toDateTimeString();
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
 
             if (empty($request->input('districtID'))) {
@@ -1150,7 +1150,7 @@ class WarrantController extends Controller
             $tovalue = Carbon::now()->toDateTimeString();
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
             $data['request'] = $request;
 

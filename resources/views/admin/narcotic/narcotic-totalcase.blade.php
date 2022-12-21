@@ -52,7 +52,7 @@
                                             <thead>
                                                 <tr>
                                                     
-                                                     @if (auth()->user()->hasRole('Super Admin'))
+                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <th > জেলা </th>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
@@ -74,7 +74,7 @@
                                             @if($narcotic1)
                                             @foreach($narcotic1 as $narcotic)
                                                 <tr>
-                                                    @if (auth()->user()->hasRole('Super Admin'))
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <td >{{$narcotic->district->bn_name}}</td>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <td >{{$narcotic->thana->bn_name}}</td>
@@ -122,7 +122,7 @@
                                             <thead>
                                                 <tr>
                                                     
-                                                     @if (auth()->user()->hasRole('Super Admin'))
+                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <th > জেলা </th>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
@@ -145,7 +145,7 @@
 
                                             @foreach($narcotic2 as $narcotic)
                                                 <tr>
-                                                    @if (auth()->user()->hasRole('Super Admin'))
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <td >{{$narcotic->district->bn_name}}</td>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <td >{{$narcotic->thana->bn_name}}</td>

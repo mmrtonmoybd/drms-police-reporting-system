@@ -13,7 +13,7 @@
                
                <div class="" id="app">
                                         <div class="row">
-                                          @if (auth()->user()->hasRole('Super Admin'))
+                                          @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>

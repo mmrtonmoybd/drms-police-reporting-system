@@ -87,7 +87,7 @@ font-size: 21px;"> মামলা সংক্রান্ত তথ্যা�
 
                                         <div class="row">
 
-                                       @if (auth()->user()->hasRole('Super Admin'))
+                                       @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>
@@ -667,7 +667,7 @@ var myInterval = setInterval(datecheckmax, 500);
                         </div>
                         <!-- end row -->
                          @php
-                        if (auth()->user()->hasRole('Super Admin')) {
+                        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
                 if($case->divisionID) {
                     $division_id = $case->divisionID; 
                 }
@@ -722,7 +722,7 @@ var myInterval = setInterval(datecheckmax, 500);
 
 
 
-@if (auth()->user()->hasRole('Super Admin'))
+@if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
   <script>
     var app = new Vue({
           el: '#app',

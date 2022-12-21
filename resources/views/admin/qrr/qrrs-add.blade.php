@@ -239,7 +239,7 @@ font-size: 21px;"> QRR সংক্রান্ত তথ্যাদি ইন�
                                         
                                         <div class="row">
 
-                                        @if (auth()->user()->hasRole('Super Admin'))
+                                        @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>

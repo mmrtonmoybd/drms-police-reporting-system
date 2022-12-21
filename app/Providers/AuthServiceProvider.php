@@ -49,7 +49,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('editdeleteqrr', function (User $user, Qrr $qrr) {
-            if ($user->hasRole('Super Admin')) {
+            if ($user->hasAnyRole(['Super Admin', 'Admin'])) {
                 return true;
             }
 
@@ -67,7 +67,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('editdeletewarrant', function (User $user, Warrant $warrant) {
-            if ($user->hasRole('Super Admin')) {
+            if ($user->hasAnyRole(['Super Admin', 'Admin'])) {
                 return true;
             }
 
@@ -86,7 +86,7 @@ class AuthServiceProvider extends ServiceProvider
 
 
         Gate::define('editdeletenarcotic', function (User $user, Narcotic $narcotic) {
-            if ($user->hasRole('Super Admin')) {
+            if ($user->hasAnyRole(['Super Admin', 'Admin'])) {
                 return true;
             }
 
@@ -104,7 +104,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('editdeletwoman', function (User $user, Woman $woman) {
-            if ($user->hasRole('Super Admin')) {
+            if ($user->hasAnyRole(['Super Admin', 'Admin'])) {
                 return true;
             }
 

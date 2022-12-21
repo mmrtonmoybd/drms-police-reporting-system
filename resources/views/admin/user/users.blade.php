@@ -51,7 +51,8 @@
 
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 34px, 0px);">
-                                                          <a href="{{url('admin/users/add/superadmin')}}" class="dropdown-item"><i class="uil uil-plus"></i> Add Super Admin</a>
+                                            <a href="{{url('admin/users/add/superadmin')}}" class="dropdown-item"><i class="uil uil-plus"></i> Add Super Admin</a>
+                                            <a href="{{url('admin/users/add/admin')}}" class="dropdown-item"><i class="uil uil-plus"></i> Add Admin</a>
                                             <a href="{{url('admin/users/add/sp')}}" class="dropdown-item"><i class="uil uil-plus"></i> Add SP</a>
                                             <a href="{{url('admin/users/add/sp/op1')}}" class="dropdown-item"><i class="uil uil-plus"></i> Add SP-Operator 1</a>
                                             <a href="{{url('admin/users/add/sp/op2')}}" class="dropdown-item"><i class="uil uil-plus"></i> Add SP-Operator 2</a>

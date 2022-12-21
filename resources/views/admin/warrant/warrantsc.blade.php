@@ -13,7 +13,7 @@
        <div class="" id="app">
                                         <div class="row">
 										
-                                                        @if  (auth()->user()->hasRole('Super Admin'))
+                                                        @if  (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
 												<div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
@@ -173,7 +173,7 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title"> @if (auth()->user()->hasRole('Super Admin'))
+                                <div class="card-title"> @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     জেলা
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                      থানা 
@@ -186,7 +186,7 @@
 					<div class="col-lg-4 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" > @if (auth()->user()->hasRole('Super Admin'))
+                                <div class="card-title" > @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     জেলা
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                      থানা 
@@ -200,7 +200,7 @@
                     <div class="col-lg-4 col-sm-12">
                         <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
-                                <div class="card-title">@if (auth()->user()->hasRole('Super Admin'))
+                                <div class="card-title">@if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     জেলা
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                      থানা 
@@ -238,7 +238,7 @@ margin-bottom: -10px;">
                                             <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
-                                                    @if (auth()->user()->hasRole('Super Admin'))
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <th > জেলা </th>
                                                   @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
@@ -273,7 +273,7 @@ function thana($id) {
                                             @if($wars)
                                             @foreach ($wars as $war)
                                                 <tr>
-                                                    @if (auth()->user()->hasRole('Super Admin'))
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif</td>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
                                                     <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
@@ -315,7 +315,7 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                         <table class="table table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
-                                                    @if (auth()->user()->hasRole('Super Admin'))
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                                     <th > জেলা </th>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
@@ -339,9 +339,9 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                             @foreach ($wars1 as $war)
                                                 <tr>
 
-                                                    <td >@if (auth()->user()->hasRole('Super Admin') && empty(request()->input('districtID')))    
+                                                    <td >@if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))    
                                             {{$war->district->bn_name}}
-                                            @elseif (auth()->user()->hasRole('Super Admin') && !empty(request()->input('districtID')))
+                                            @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
                                             {{$war->thana->bn_name}}
                                             @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
                                             {{$war->thana->bn_name}}

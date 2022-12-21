@@ -16,7 +16,7 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
     */
     public function collection()
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
             $data = $query->where('status', 'active')->get();

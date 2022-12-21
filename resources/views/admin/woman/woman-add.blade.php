@@ -238,7 +238,7 @@ input:checked + .button-label h1{
                                                 </div>
                                             </div>
 
-                                        @if (auth()->user()->hasRole('Super Admin'))
+                                        @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>

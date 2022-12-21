@@ -12,7 +12,7 @@
                                     @csrf
                                     <div class="card card-body" id="app">
                                         <div class="row">
-                                            @if (auth()->user()->hasRole('Super Admin'))
+                                            @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "> জেলা </label>

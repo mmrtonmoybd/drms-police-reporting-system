@@ -4,7 +4,7 @@
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
-      @if (auth()->user()->hasRole('Super Admin') && empty(request()->input('districtID')))
+      @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
 
 @php 
 $allin = request()->all();
@@ -135,7 +135,7 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
       
       }
       
-      @elseif (auth()->user()->hasRole('Super Admin') && !empty(request()->input('districtID')))
+      @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
 
       @php 
       $allin = request()->all();

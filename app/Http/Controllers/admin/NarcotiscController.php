@@ -96,7 +96,7 @@ class NarcotiscController extends Controller
 
     public function index(Request $request)
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
             $data['narcotics'] = $query->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
@@ -120,7 +120,7 @@ class NarcotiscController extends Controller
 
     public function reviewList(Request $request)
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
             $data['narcotics'] = $query->where('status', 'inactive')->orderBy('id', 'desc')->paginate(20);
@@ -342,7 +342,7 @@ class NarcotiscController extends Controller
         $request->session()->flash('agomonthday', $agomonthday);
 
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
             $data['request'] = $request;
 
@@ -587,7 +587,7 @@ class NarcotiscController extends Controller
             $tovalue = Carbon::now()->toDateTimeString();
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
             $data['request'] = $request;
             $data['narcotics'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
@@ -1028,7 +1028,7 @@ class NarcotiscController extends Controller
             $tovalue = Carbon::now()->toDateTimeString();
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
             $data['request'] = $request;
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
@@ -1158,7 +1158,7 @@ class NarcotiscController extends Controller
 
 
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['narcotic1'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,
@@ -1438,7 +1438,7 @@ class NarcotiscController extends Controller
         $data['monnt2'] = $monnat2->format('d F Y');
 
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['narcotic1'] = Narcotic::with('district')->selectRaw("SUM(gaza) AS gazac,
             SUM(gaza_tree) AS gaza_treec,
             SUM(yaba) AS yabac,

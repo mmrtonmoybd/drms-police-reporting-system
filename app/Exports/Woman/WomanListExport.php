@@ -16,7 +16,7 @@ class WomanListExport implements FromCollection, WithMapping, WithHeadings
     */
     public function collection()
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';

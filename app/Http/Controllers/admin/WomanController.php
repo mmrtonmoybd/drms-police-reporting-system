@@ -15,7 +15,7 @@ class WomanController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';
@@ -40,7 +40,7 @@ class WomanController extends Controller
 
     public function reviewList(Request $request)
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';
@@ -325,7 +325,7 @@ class WomanController extends Controller
         $request->session()->flash('agomonthday', $agomonthday);
 
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             // Number of complain graph
             $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID")->whereBetween('wdate', [$agomonthday, $currentday])->where('status', 'active')->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
@@ -540,7 +540,7 @@ class WomanController extends Controller
             $avalue = 'ss';
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             if ($request->filled('districtID')) {
                 // Number of complain graph
                 $totalcomplains = Woman::with('district')->selectRaw("COUNT(id) AS totalcomplain, districtID, thanaID")
@@ -921,7 +921,7 @@ class WomanController extends Controller
             $nvalue = 'ss';
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             //show data
 
             if (!empty($request->input('satisfy_rate'))) {

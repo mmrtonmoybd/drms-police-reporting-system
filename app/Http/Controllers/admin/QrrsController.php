@@ -437,7 +437,7 @@ class QrrsController extends Controller
         //dd($data['qrrs']);
         //  return view('admin/qrr/qrrs-s', $data);
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             if (empty($request->input('districtID'))) {
                 $borgona = Qrr::where('districtID', 34)->where('source_of_info', $skey, $svalue)
                 ->where('status', 'active')
@@ -1083,7 +1083,7 @@ class QrrsController extends Controller
             $request->session()->flash('octhanavalue', $val);
         }
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $borgona = Qrr::where('districtID', 34)->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday])->count();
             $barisal = Qrr::where('districtID', 35)->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday])->count();
             $bhola = Qrr::where('districtID', 36)->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday])->count();

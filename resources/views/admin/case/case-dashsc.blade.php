@@ -13,7 +13,7 @@
                
                <div class="" id="app">
                                         <div class="row">
-                                                                         @if (auth()->user()->hasRole('Super Admin'))
+                                                                         @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-1">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
@@ -464,7 +464,7 @@ return $string;
 			
                         <!-- end row -->
                         @php
-                        if (auth()->user()->hasRole('Super Admin')) {
+                        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
                 if($request->input('divisionID')) {
                     $division_id = $request->input('divisionID'); 
                 }
@@ -520,7 +520,7 @@ return $string;
 
 
 
-@if (auth()->user()->hasRole('Super Admin'))
+@if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
   <script>
     var app = new Vue({
           el: '#app',

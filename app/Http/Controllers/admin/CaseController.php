@@ -15,7 +15,7 @@ class CaseController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';
@@ -44,7 +44,7 @@ class CaseController extends Controller
 
     public function reviewList()
     {
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';
@@ -99,7 +99,7 @@ class CaseController extends Controller
     public function addShow(Request $request)
     {
         $data['request'] = $request;
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
@@ -188,7 +188,7 @@ class CaseController extends Controller
 
 
         $data['request'] = $request;
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
@@ -358,7 +358,7 @@ class CaseController extends Controller
         $request->session()->flash('agomonthday', $agomonthday);
 
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';
@@ -507,7 +507,7 @@ class CaseController extends Controller
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             if (!empty($request->input('districtID'))) {
                 $dkey = '=';
                 $dvalue = $request->input('districtID');
@@ -613,7 +613,7 @@ class CaseController extends Controller
         }
 
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
 
 
@@ -953,7 +953,7 @@ class CaseController extends Controller
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
-        if (auth()->user()->hasRole('Super Admin')) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
 
 

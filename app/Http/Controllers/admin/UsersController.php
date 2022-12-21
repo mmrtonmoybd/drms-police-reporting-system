@@ -120,6 +120,53 @@ class UsersController extends Controller
         return view('admin/user/users-addsa', ['roles' => $role]);
     }
 
+
+    public function addaShow()
+    {
+        $role = Role::all();
+        return view('admin/user/users-addadm', ['roles' => $role]);
+    }
+
+    public function addacreate(Request $request)
+    {
+        $request->validate([
+           'email' => 'required|unique:users',
+           'name' => 'required',
+           'password' => 'min:6|required_with:confirm-password|same:confirm-password',
+           'confirm-password' => 'min:6',
+           'designation' => 'required|string',
+           'bp_no' => 'required',
+        ]);
+
+        $insertAttr = [
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'type'=> 'Admin',
+            'password'=> Hash::make($request->input('password')),
+            'designation' => $request->input('designation'),
+            'bp_no' => $this->reptpenum($request->input('bp_no'))
+        ];
+
+        //dd($insertAttr);
+
+        $user = User::create($insertAttr);
+
+
+        if ($user) {
+            $user->assignRole('Admin');
+            $request->session()->flash('success_msg', 'Admin created successful');
+            return redirect('admin/users');
+        } else {
+            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+        }
+
+        $role = Role::all();
+
+        return view('admin/user/users-addadm', ['roles' => $role]);
+    }
+
+
+
     public function addspShow()
     {
         $data['districts'] = District::where('division_id', 1)->get();
