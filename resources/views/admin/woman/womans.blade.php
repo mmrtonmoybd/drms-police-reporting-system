@@ -40,6 +40,7 @@ use Illuminate\Support\Str;
                                                     <th>ঘটনার সূত্রপাত</th>
                                                     <th>ঘটনার সংক্ষিপ্ত বিবরন</th>
                                                     <th > বাদীর নাম </th>
+                                                    <th>   ভিকটিমের ধরন</th>
                                                     <th > বাদীর বয়স </th>
                                                     <th > বাদীর ঠিকানা </th>
                                                     <th > বাদীর মোবাইল নং  </th>
@@ -77,6 +78,9 @@ use Illuminate\Support\Str;
                                                         @can('woman.edit')
                                                         <a href="{{url('admin/woman/edit/'.$woman->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
                                                         @endcan
+                                                        @can('woman.review')
+                                                        <a href="{{url('admin/woman/review/update/'.$woman->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
+                                                        @endcan
                                                         @can('woman.delete')
                                                         <a href="{{url('admin/woman/delete/'.$woman->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
                                                         @endcan
@@ -91,6 +95,7 @@ use Illuminate\Support\Str;
                                                     <td>  {{$woman->begening_of_event}}</td>
                                                     <td>  {{Str::limit($woman->short_dettails, 10)}}</td>
                                                     <td > {{Str::limit($woman->badi_name, 10)}}</td>
+                                                    <td>  {{ $woman->victim_type }}</td>
                                                     <td > {{$woman->badi_age}}</td>
                                                     <td > {{Str::limit($woman->badi_address, 10)}}</td>
                                                     <td > {{ $woman->badi_phone}}</td>

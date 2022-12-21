@@ -386,6 +386,20 @@ input:checked + .button-label h1{
                                                 </div>
                                             </div>
 
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="victim_type" class="form-label">   ভিকটিমের ধরন   </label>
+                                                    <select name="victim_type" id="victim_type" class="form-select form-control" >
+                                                        
+                                                        <option value="নারী" {{$woman->victim_type=='নারী' ? 'selected' : ''}}> নারী </option>
+                                                        <option value="শিশু" {{$woman->victim_type=='শিশু' ? 'selected' : ''}}>শিশু</option>
+                                                        <option value="বয়স্ক" {{$woman->victim_type=='বয়স্ক' ? 'selected' : ''}}>বয়স্ক</option>
+                                                        <option value="প্রতিবন্ধী" {{$woman->victim_type=='প্রতিবন্ধী' ? 'selected' : ''}}>প্রতিবন্ধী</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-4" >
                                                 <div class="mb-3">
                                                     <label for="badi_age" class="form-label">  বাদীর বয়স   </label>

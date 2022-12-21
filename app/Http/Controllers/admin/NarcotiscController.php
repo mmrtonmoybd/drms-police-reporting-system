@@ -407,6 +407,9 @@ class NarcotiscController extends Controller
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->count('case_no');
 
             $data['totalarrast'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])->where('status', 'active')->sum('number_of_accused');
+
+            $data['reviewpending'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])
+                                 ->where('status', 'inactive')->count();
         }
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -461,6 +464,10 @@ class NarcotiscController extends Controller
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
 
             $data['totalarrast'] = Narcotic::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
+
+            $data['reviewpending'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])
+                                  ->where('districtID', auth()->user()->districtID)
+                                 ->where('status', 'inactive')->count();
         }
 
 
@@ -515,6 +522,10 @@ class NarcotiscController extends Controller
             $data['totalcase'] = Narcotic::whereNotNull('case_no')->where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->count('case_no');
 
             $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday])->sum('number_of_accused');
+
+            $data['reviewpending'] = Narcotic::whereBetween('sdate', [$agomonthday, $currentday])
+                                  ->where('thanaID', auth()->user()->thanaID)
+                                 ->where('status', 'inactive')->count();
         }
 
 
@@ -735,6 +746,12 @@ class NarcotiscController extends Controller
         ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
+        $data['reviewpending'] = Narcotic::where('districtID', $dkey, $dvalue)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])
+                                 ->where('status', 'inactive')->count();
+
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)
             ->where('thanaID', $tkey, $tvalue)
             ->where('name_of_investigator_org', $skey, $svalue)
@@ -854,6 +871,11 @@ class NarcotiscController extends Controller
         ->where('status', 'active')
         ->whereBetween('sdate', [$fvalue, $tovalue])->sum('number_of_accused');
 
+        $data['reviewpending'] = Narcotic::where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
+        ->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])
+                                 ->where('status', 'inactive')->count();
+
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)
             ->where('name_of_investigator_org', $skey, $svalue)
             ->where('status', 'active')
@@ -938,6 +960,10 @@ class NarcotiscController extends Controller
 
             $data['totalarrast'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
         ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->sum('number_of_accused');
+
+        $data['reviewpending'] = Narcotic::where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
+            ->whereBetween('sdate', [$fvalue, $tovalue])
+                                 ->where('status', 'inactive')->count();
 
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->where('name_of_investigator_org', $skey, $svalue)
             ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->orderBy('id', 'desc')->paginate(20);

@@ -154,6 +154,9 @@ Route::prefix('admin')->group(function () {
 
         // Woman router
         Route::get('/woman', [WomanController::class, 'index'])->middleware('permission:woman.view');
+        Route::get('/woman/review', [WomanController::class, 'reviewList'])->middleware('permission:woman.review');
+        Route::get('/woman/review/update/{woman}', [WomanController::class, 'reviewShow'])->middleware('permission:woman.review');
+        Route::post('/woman/review/update/{woman}', [WomanController::class, 'reviewUpdate'])->middleware('permission:woman.review');
         Route::get('/woman/add', [WomanController::class, 'addWoman'])->middleware('permission:woman.add');
         Route::post('/woman/add', [WomanController::class, 'create'])->middleware('permission:woman.add');
         Route::get('/woman/edit/{woman}', [WomanController::class, 'editShow'])->middleware('permission:woman.edit');

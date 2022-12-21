@@ -386,6 +386,20 @@ input:checked + .button-label h1{
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
+                                                    <label for="victim_type" class="form-label">   ভিকটিমের ধরন   </label>
+                                                    <select name="victim_type" id="victim_type" class="form-select form-control" >
+                                                        
+                                                        <option value="নারী"> নারী </option>
+                                                        <option value="শিশু">শিশু</option>
+                                                        <option value="বয়স্ক">বয়স্ক</option>
+                                                        <option value="প্রতিবন্ধী">প্রতিবন্ধী</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
                                                     <label for="badi_age" class="form-label">  বাদীর বয়স   </label>
                                                     <input type="text" name="badi_age"  value="{{old('badi_age')}}" id="badi_age" class="form-control  @error('badi_age') is-invalid @enderror" placeholder="  বাদীর বয়স  ">
                                                 </div>

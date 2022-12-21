@@ -33,7 +33,7 @@ class WomanListExport implements FromCollection, WithMapping, WithHeadings
             $tkey = '=';
         }
 
-        return Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->get();
+        return Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active')->get();
     }
 
     public function headings(): array
