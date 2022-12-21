@@ -458,16 +458,12 @@ input:checked + .button-label h1{
                                             
                                             
                                             
-                                                    <div class="col-sm-12" >
-                                             <hr>
-												
-                                            </div>
-                                            
+                                        
                                             
                                             
                                          
                                             
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" style="display:none;">
                                                 <div class="mb-3">
                                                গৃহীত ব্যবস্থাঃ
                                                &nbsp; &nbsp;
@@ -684,14 +680,11 @@ var checkBoxovi = document.getElementById("myCheckovi");
 
       
       
-          <div class="col-sm-12" >
-                                             <hr>
-												
-                                            </div>
+    
                                             
 
 
-                                            <div class="col-sm-4" style="display:none;">>
+                                            <div class="col-sm-4" style="display:none;">
                                                 <div class="mb-3">
                                                     <label for="problem_fix" class="form-label">   সমস্যা সমাধান হয়েছে কিনা    </label>
                                                     <select name="problem_fix" id="problem_fix" class="form-select form-control" >
@@ -705,20 +698,19 @@ var checkBoxovi = document.getElementById("myCheckovi");
 
                                    
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" style="display:none;">
                                                 <div class="mb-3">
                                                     <label for="nreport" class="form-label">   নিষ্পত্তি রিপোর্ট    </label>
                                                     <select name="nreport" id="nreport" class="form-select form-control" >
-                                                        <option value="">Select</option>
-                                                        <option value="নিষ্পত্তি">নিষ্পত্তি</option>
-                                                        <option value="মামলা">মামলা</option>
-                                                        <option value="মূলতবি">মূলতবি</option>
+                                                      
+                                                        <option selected value="নিষ্পত্তি">নিষ্পত্তি</option>
+                                               
                                                     </select>
                                                     
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4" >
+                                            <div class="col-sm-4"  style="display:none;">
                                                 <div class="mb-3">
                                                     <label for="satisfy_rate" class="form-label">   সন্তুষ্টির মান   </label>
                                                     <select name="satisfy_rate" id="satisfy_rate" class="form-select form-control" >

@@ -140,7 +140,7 @@ $string2 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 
@@ -280,7 +280,7 @@ $string2 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 

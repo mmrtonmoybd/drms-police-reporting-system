@@ -79,7 +79,7 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 
@@ -112,7 +112,7 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 
@@ -241,7 +241,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 
@@ -352,7 +352,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 

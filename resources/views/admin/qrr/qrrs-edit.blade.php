@@ -216,6 +216,28 @@ input:checked + .button-label h1{
                                 <form action="{{url('admin/qrrs/edit/'.$qrr->id)}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card card-body" id="app">
+                                        
+                                        
+                                        
+                                                                            <div class="card card-body" id="app">
+                                        
+<div style="background: rgb(240, 117, 117);
+width: 100%;
+border-radius: 10px;
+height: 25px;
+box-sizing: unset;
+color: #fff;
+font-weight: bold;
+text-align: center;
+margin-bottom: 18px;
+padding: 4px 4px 13px 4px;
+box-shadow: 1px 2px 3px 1px #b7aea3;
+font-size: 21px;"> QRR সংক্রান্ত তথ্যাদি ইডিট ফরম </div>
+
+
+                                        
+                                        
+                                        
                                         <div class="row">
 
                                         @if (auth()->user()->hasRole('Super Admin'))

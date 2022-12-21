@@ -225,7 +225,9 @@ body {
                     
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                            <div class="card-body text-center">
+                                
+                                <!------- <i class="i-Add-User"></i>   --------->
                             <a href="{{url('/admin/qrrs/srcs/data')}}">   
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট   মামলা </p>
@@ -239,7 +241,7 @@ body {
                           
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Checked-User"></i>
+                            <div class="card-body text-center"><!------- <i class="i-Checked-User"></i>   --------->
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">এজহার ভুক্ত আসামি</p>
                                     <p class="text-primary text-24 line-height-1 mb-2"> {{$azaharnamioasami}}</p>
@@ -250,9 +252,9 @@ body {
 					
 					
 					
-                    <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Financial"></i>
+                            <div class="card-body text-center"><!------- <i class="i-Financial"></i>   --------->
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট মামলা নিস্পত্তি</p>
                                     <p class="text-primary text-24 line-height-1 mb-2"> {{$totalendingcase}}</p>
@@ -263,12 +265,12 @@ body {
 
                     @can('case.review.info')
 
-                    <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Add-User"></i>
+                            <div class="card-body text-center"><!------- <i class="i-Add-User"></i>   --------->
                                
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">Case pending for review </p>
+                                    <p class="text-muted mt-2 mb-0"> ওসি পেন্ডিং </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
                                 </div>
 								
@@ -281,7 +283,7 @@ body {
 
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Start"></i>
+                            <div class="card-body text-center"><!------- <i class="i-Start"></i>   --------->
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট মুলতবি</p>
                                     <p class="text-primary text-24 line-height-1 mb-2"> {{$totalmultobicase}}</p>
@@ -319,12 +321,12 @@ return $string;
                     
               
 					
-					      <div class="col-lg-3 col-md-6 col-sm-6">
+					      <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Sand-watch-2"></i>
+                            <div class="card-body text-center"><!------- <i class="i-Sand-watch-2"></i>   --------->
                           
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">গড় নিস্পত্তির সময়কাল </p>
+                                    <p class="text-muted mt-2 mb-0">গড় নিঃ সময়কাল </p>
                                     <p class="text-primary text-24 line-height-1 mb-2"> {{convert($avgendingcasetime)}}</p>
                                 </div>
 						
@@ -334,22 +336,6 @@ return $string;
                     
                     
 
-			
-			
-					<!--------
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><i class="i-Money-2"></i>
-                                <div class="content">
-                                    <p class="text-muted mt-2 mb-0">Expense</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">$1200</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					--->
-                </div>
-				
 				
 				
 				<style>
@@ -369,14 +355,7 @@ return $string;
                     </div>
 		
 					
-                    <div class="col-lg-8 col-sm-12">
-                        <div class="card mb-4" style="height: 354px;">
-                            <div class="card-body">
-                                <div class="card-title">শেষ ৩ মাসের রিপোর্ট</div>
-                                <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
-                            </div>
-                        </div>
-                    </div>
+                   
                     
                     
                     			
@@ -406,7 +385,15 @@ return $string;
                             </div>
                         </div>
                     </div>
-					
+                    
+					 <div class="col-lg-8 col-sm-12">
+                        <div class="card mb-4" style="height: 354px;">
+                            <div class="card-body">
+                                <div class="card-title">শেষ ৩ মাসের রিপোর্ট</div>
+                                <div id="chart_div2" style="margin-top: -71px;height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
 					
                 </div>
            

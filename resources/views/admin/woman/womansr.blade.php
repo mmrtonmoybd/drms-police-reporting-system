@@ -125,7 +125,12 @@
                 <div class="separator-breadcrumb border-top"></div>
                 <div class="row">
                     <!-- ICON BG-->
-                    <div class="col-sm-12">
+
+
+
+
+
+    <div class="col-sm-3">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body "><i class="i-Add-User"></i>
                           
@@ -134,24 +139,65 @@
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$totalcomplain}}</p>
                                 </div>
 
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">Total nispotti </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalnispotti}}</p>
-                                </div>
 
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">Total pending </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalpending}}</p>
-                                </div>
-
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">Total fidback </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalfidback}}</p>
-                                </div>
-							
                             </div>
                         </div>
                     </div>
+                    
+                
+                    
+                
+                    
+                    
+                    <div class="col-sm-3">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body "><i class="i-Add-User"></i>
+                          
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">মোট   নিস্পত্তি </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalnispotti}}</p>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-sm-3">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body "><i class="i-Add-User"></i>
+                          
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">মোট  পেন্ডিং </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalpending}}</p>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-sm-3">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body "><i class="i-Add-User"></i>
+                          
+								<div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0"> ফিডব্যাক গ্রহণ </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalfidback}}</p>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                            
+
+         
          
 		
 		
@@ -165,8 +211,8 @@
 					position:relative;
 				}
 				</style>
-                <div class="row">
-                    <div class="col-lg-4 col-md-12">
+           <div class="row">
+                    <div class="col-lg-5 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title">অভিযোগ সংখ্যা</div>
@@ -175,7 +221,7 @@
                         </div>
                     </div>
 					
-					<div class="col-lg-4 col-md-12">
+					<div class="col-lg-7 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title" > গৃহীত ব্যবস্থা </div>
@@ -184,24 +230,32 @@
                         </div>
                     </div>
 
-                     <div class="col-lg-4 col-md-12">
+
+                  
+					
+					
+              
+                    
+                      <div class="col-lg-7 col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <div class="card-title" > Satisfy rate </div>
+                                <div class="card-title" > সন্তুষ্টি রিপোর্ট </div>
                                 <div id="piechart2" style="margin-top: -39px;height: 300px;"></div>
                             </div>
                         </div>
                     </div>
-					
-					
-                    <div class="col-lg-4 col-sm-12">
+                    
+                          <div class="col-lg-5 col-sm-12">
                         <div class="card mb-4" style="height: 354px;">
                             <div class="card-body">
-                                <div class="card-title">ঘটনার ধরন</div>
+                                <div class="card-title">নিস্পত্তি রিপোর্ট</div>
                                 <div id="columnchart_values" style="margin-top: -71px;height: 300px;"></div>
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    
                 </div>
            
 

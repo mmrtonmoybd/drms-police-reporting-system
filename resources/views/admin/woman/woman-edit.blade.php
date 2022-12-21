@@ -452,19 +452,50 @@ input:checked + .button-label h1{
                                             
                                             
                                             
+                                                      <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="nreport" class="form-label">   নিষ্পত্তি রিপোর্ট    </label>
+                                                    <select name="nreport" id="nreport"  onchange="myFunctionxxc()" class="form-select form-control" >
+                                                        <option value="">Select</option>
+                                                        <option value="নিষ্পত্তি" {{$woman->nreport == 'নিষ্পত্তি' ? 'selected' : ''}}>নিষ্পত্তি</option>
+                                    
+                                                        <option value="মূলতবি" {{$woman->nreport == 'মূলতবি' ? 'selected' : ''}}>মূলতবি</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
                                             
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
+                      
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
+                                                       
                                                                                 
                                             
-                                                    <div class="col-sm-12" >
+                                                    <div class="col-sm-12" id="hide1" >
                                              <hr>
 												
                                             </div>
                                             
                                             
                                             
+                                            
+                                            
+                                            
                                          
                                             
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" id="hide2" >
                                                 <div class="mb-3">
                                                গৃহীত ব্যবস্থাঃ
                                                &nbsp; &nbsp;
@@ -601,6 +632,94 @@ var checkBoxovi = document.getElementById("myCheckovi");
 
 </script>
 
+                                    
+                                    
+                                    
+                                    
+                                                                 
+                                                       
+                                                       
+                                                       
+                 
+
+<script>
+
+
+
+
+  var nispotti_or_multobi = document.getElementById("nreport").value;
+  
+      var hide1 = document.getElementById("hide1");
+      var hide2 = document.getElementById("hide2");
+
+	 
+	 
+     
+   if (nispotti_or_multobi == 'নিষ্পত্তি'){
+      hide1.style.display = "block";
+      hide2.style.display = "block";
+
+
+  
+  } else {
+      hide1.style.display = "none";
+      hide2.style.display = "none";
+
+   
+         
+     
+  }
+  
+
+
+
+function myFunctionxxc() {
+    
+    
+  var nispotti_or_multobi = document.getElementById("nreport").value;
+  
+      var hide1 = document.getElementById("hide1");
+      var hide2 = document.getElementById("hide2");
+
+
+	 
+     
+   if (nispotti_or_multobi == 'নিষ্পত্তি'){
+      hide1.style.display = "block";
+      hide2.style.display = "block";
+
+
+  
+  } else {
+      hide1.style.display = "none";
+      hide2.style.display = "none";
+
+   
+         
+     
+  }
+  
+
+  
+}
+
+
+
+</script>
+
+                                      
+                                                       
+                                                       
+                                                       
+                                                       
+                                                           
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                                               
 
                                              <div class="col-sm-4" id="ovi1"  {{$woman->action_taken=='অভিযোগ গ্রহণ' ? '' : 'style=display:none'}} >
@@ -707,18 +826,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
 
                                         
 
-                                            <div class="col-sm-4">
-                                                <div class="mb-3">
-                                                    <label for="nreport" class="form-label">   নিষ্পত্তি রিপোর্ট    </label>
-                                                    <select name="nreport" id="nreport" class="form-select form-control" >
-                                                        <option value="">Select</option>
-                                                        <option value="নিষ্পত্তি" {{$woman->nreport == 'নিষ্পত্তি' ? 'selected' : ''}}>নিষ্পত্তি</option>
-                                                        <option value="মামলা" {{$woman->nreport == 'মামলা' ? 'selected' : ''}}>মামলা</option>
-                                                        <option value="মূলতবি" {{$woman->nreport == 'মূলতবি' ? 'selected' : ''}}>মূলতবি</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                            </div>
+                                  
 
                                              <div class="col-sm-4" >
                                                 <div class="mb-3">

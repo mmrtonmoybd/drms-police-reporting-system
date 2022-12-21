@@ -71,7 +71,7 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
         var options = {
           title: '',
           width: "98%",
-          height: 172,
+          height: 300,
           is3D: true,
           pieSliceText: 'value',
         };
@@ -199,7 +199,7 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
         var options = {
           title: '',
           width: "98%",
-          height: 172,
+          height: 300,
           is3D: true,
           pieSliceText: 'value',
         };
@@ -328,7 +328,7 @@ $string1 = url('/admin/warrant/search/chart') .'?'. http_build_query($removarr);
         var options = {
           title: '',
           width: "98%",
-          height: 172,
+          height: 300,
           is3D: true,
           pieSliceText: 'value',
         };

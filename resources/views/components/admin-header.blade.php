@@ -129,6 +129,13 @@ border-radius: 0px;
   z-index: 5000 !important;
   position: absolute!important;
 }
+
+
+input:not(:focus-visible):invalid {
+
+}
+
+
 </style>
 
 
@@ -196,7 +203,7 @@ border-radius: 0px;
 						    </a>
 						   
                   </div>
-                     <!-- Full screen toggle--><i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen=""></i>
+                     <!-- Full screen toggle--><i class="i-Full-Screen header-icon d-none d-sm-inline-block"  onclick="openFullscreen();" data-fullscreen=""></i>
                
                 
 				                  
@@ -225,5 +232,32 @@ border-radius: 0px;
 				  </a>
             </header>
 			
+			
+
+<script>
+var elem = document.documentElement;
+
+
+
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+</script>
 
 @endif

@@ -45,7 +45,21 @@ right: 10px;
                                 <form action="{{url('admin/case/add')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card card-body" id="app">
+                                        
+<div style="background: rgb(240, 117, 117);
+width: 100%;
+border-radius: 10px;
+height: 25px;
+box-sizing: unset;
+color: #fff;
+font-weight: bold;
+text-align: center;
+margin-bottom: 18px;
+padding: 4px 4px 13px 4px;
+box-shadow: 1px 2px 3px 1px #b7aea3;
+font-size: 21px;"> মামলা সংক্রান্ত তথ্যাদি ইনপুট ফরম </div>
                                         <div class="row">
+
 
                                       @if (auth()->user()->hasRole('Super Admin'))
                                             <div class="col-sm-4">
@@ -163,14 +177,14 @@ right: 10px;
                                                 <div class="mb-3">
                                                     <label for="case_date" class="form-label"> মামলার  তারিখ  </label>
                                            
-                                                    <input type="text" name="case_date" value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
+                                                    <input type="text" name="case_date" value="{{old('case_date')}}" id="case_date" class="form-control datepicker  @error('case_date') is-invalid @enderror" required  data-date-format="dd/mm/yyyy"  placeholder="তারিখ" >
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="caseTypeID" class="form-label "> মামলার ধরন </label>
-                                                    <select name="caseTypeID" id="caseTypeID"  onchange="myFunction2()" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  v-model="casetype_id" @change="getCasesubtypes()" >
+                                                    <select name="caseTypeID" id="caseTypeID"  onchange="myFunction2()" class="form-select form-control @error('caseTypeID') is-invalid @enderror"  required v-model="casetype_id" @change="getCasesubtypes()" >
                                                         <option value="">Select</option>
                                                         @if($caseparenttypes)
 

@@ -237,7 +237,7 @@
           title: '',
           is3D: true,
         width: "98%",
-        height: "172",
+        height: "300",
         pieSliceText: 'value',
         };
 
