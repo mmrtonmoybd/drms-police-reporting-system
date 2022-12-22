@@ -353,7 +353,7 @@ class WomanController extends Controller
             // Number of satisfy rate end
 
             // total complain
-            $data['totalcomplain'] = Woman::where('status', 'active')->count();
+            $data['totalcomplain'] = Woman::where('status', 'active')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             //end total complain
 
             // total disposal nispotti start
