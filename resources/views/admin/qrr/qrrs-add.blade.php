@@ -197,6 +197,40 @@ input:checked + .button-label h1{
 .hidden {
   display: none;
 }
+
+
+
+
+#errdateneg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+
+#errdateneg2{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+top:30px;
+  
+  
+}
+
+.redbdr {
+    border:1px solid red;
+}
 </style>
 
     <!-- start page title -->
@@ -211,7 +245,8 @@ input:checked + .button-label h1{
 
                     
                         <x-admin-validation-errors :errors="$errors->all()"/>
-
+<span id="errdateneg">ঘটনার তারিখ সংবাদ প্রাপ্তির তারিখের থেকে পরে হতে পারবে না </span>
+<span id="errdateneg2">সংবাদ প্রাপ্তির তারিখ রেসপন্স তারিখের থেকে পরে হতে পারবে না </span>
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <form action="{{url('admin/qrrs/add')}}" method="POST" enctype="multipart/form-data">
@@ -426,7 +461,7 @@ font-size: 21px;"> QRR সংক্রান্ত তথ্যাদি ইন�
                                              <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label for="short_dettails" class="form-label">  ঘটনার সংক্ষিপ্ত বিবরন   </label>
-                                                    <textarea type="text" name="short_dettails"  value="{{old('short_dettails')}}" id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  "> </textarea>
+                                                    <textarea type="text" name="short_dettails"   id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="  ঘটনার সংক্ষিপ্ত বিবরন  ">{{old('short_dettails')}} </textarea>
                                                 </div>
                                             </div>
                                             
@@ -746,6 +781,90 @@ function myFunction() {
                 @endphp
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
     <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
+
+
+
+
+<script>
+function datecheckmax(){ 
+ 
+     var sbbtn = document.getElementById("sbbtn");
+     
+     
+      var dix = document.getElementById("date_time_of_incident").value;
+      var diy = document.getElementById("date_time_of_police_news").value;
+      var diz = document.getElementById("date_time_response").value;
+      
+      
+      var dixx = document.getElementById("date_time_of_incident");
+      var diyx = document.getElementById("date_time_of_police_news");
+      var dizx = document.getElementById("date_time_response");
+
+        
+// const dix = '24/09/2022';
+// const diy = '21/09/2022';
+
+
+var [day, month, year] = dix.split('/');
+var resultd1 = [year, month, day].join('/');
+
+var [dayy, monthy, yeary] = diy.split('/');
+var resultd2 = [yeary, monthy, dayy].join('/');
+
+var [dayz, monthz, yearz] = diz.split('/');
+var resultd3 = [yearz, monthz, dayz].join('/');
+
+var d1 = new Date(resultd1);   
+var d2 = new Date(resultd2);   
+var d3 = new Date(resultd3);   
+
+var diff = d2.getTime() - d1.getTime();   
+var diff2 = d3.getTime() - d2.getTime();   
+    
+var daydiff = diff / (1000 * 60 * 60 * 24);   
+var daydiff2 = diff2 / (1000 * 60 * 60 * 24);   
+
+  
+//alert(d3)
+if (daydiff<0) {
+    sbbtn.disabled = true;
+    $('#errdateneg').show();
+//alert('Value is negetive')
+ dixx.classList.add("redbdr");
+ diyx.classList.add("redbdr");
+
+
+} else {
+        sbbtn.disabled = false;
+    $('#errdateneg').hide();
+     dixx.classList.remove("redbdr");
+ diyx.classList.remove("redbdr");
+
+}
+
+if (daydiff2<0) {
+    sbbtn.disabled = true;
+    $('#errdateneg2').show();
+//alert('Value is negetive')
+ dizx.classList.add("redbdr");
+ diyx.classList.add("redbdr");
+
+
+} else {
+        sbbtn.disabled = false;
+    $('#errdateneg2').hide();
+     dizx.classList.remove("redbdr");
+ diyz.classList.remove("redbdr");
+
+}
+
+
+
+
+  
+};
+var myInterval = setInterval(datecheckmax, 500);
+</script>  
 
 
 

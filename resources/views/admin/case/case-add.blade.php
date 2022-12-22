@@ -229,7 +229,7 @@ font-size: 21px;"> মামলা সংক্রান্ত তথ্যা�
 
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label for="short_dettails" class="form-label"> মামলার সারসংক্ষেপ </label>
                                                     <textarea type="text" name="short_dettails"  id="short_dettails" class="form-control  @error('short_dettails') is-invalid @enderror" placeholder="মামলার সারসংক্ষেপ">{{old('short_dettails')}} </textarea>
