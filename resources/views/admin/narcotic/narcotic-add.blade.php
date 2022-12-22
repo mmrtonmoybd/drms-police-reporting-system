@@ -386,13 +386,21 @@ input:checked + .button-label h1{
                                                     <input type="text" name="accused"  value="{{old('accused')}}" id="accused" class="form-control  @error('accused') is-invalid @enderror" placeholder=" অভিযুক্ত " required>
                                                 </div>
                                             </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="number_of_include" class="form-label">  অভিযুক্তের সংখ্যা   </label>
+                                                    <input type="number" name="number_of_include" id="number_of_include" class="form-select form-control" required>
+                                                </div>
+                                            </div>
                                             
                                             
                                             
                                         <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">  গ্রেফতারকৃত আসামীর সংখ্যা   </label>
-                                                    <input type="text" name="number_of_accused" id="number_of_accused" class="form-select form-control" required>
+                                                    <input type="number" name="number_of_accused" id="number_of_accused" class="form-select form-control" required>
                                                 </div>
                                             </div>
                                             

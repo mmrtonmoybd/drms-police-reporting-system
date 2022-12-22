@@ -61,7 +61,8 @@ class NarcotiscController extends Controller
            'bidesh_alcohol' => $this->reptpenum($request->input('bidesh_alcohol')),
            'lsd' => $this->reptpenum($request->input('lsd')),
            'ice' => $this->reptpenum($request->input('ice')),
-           'otherd' => $this->reptpenum($request->input('otherd'))
+           'otherd' => $this->reptpenum($request->input('otherd')),
+           'number_of_include' => $this->reptpenum($request->input('number_of_include'))
         ]);
 
         $serial = $request->input('serial');
@@ -243,7 +244,8 @@ class NarcotiscController extends Controller
             'ice' => $this->reptpenum($request->input('ice')),
             'otherd' => $this->reptpenum($request->input('otherd')),
             'districtID' => ((auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) ? auth()->user()->districtID : $request->input('districtID'),
-            'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID')
+            'thanaID' => (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) ? auth()->user()->thanaID : $request->input('thanaID'),
+            'number_of_include' => $this->reptpenum($request->input('number_of_include'))
         ]);
 
         $serial = $request->input('serial');
