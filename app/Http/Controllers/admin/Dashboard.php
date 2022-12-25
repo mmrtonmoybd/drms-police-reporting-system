@@ -18,10 +18,29 @@ use Session;
 
 class Dashboard extends Controller
 {
-    public function home()
+    
+    
+    ////////////Modified By Rashad ////////////
+  public function home()
     {
-        return redirect('admin/dashboard');
+        return view('home');
     }
+    
+    
+    public function seba()
+    {
+        return view('seba');
+    }
+    
+    
+        public function cfrom()
+    {
+        return view('cfrom');
+    }
+   
+     ////////////Modified By Rashad ////////////
+    
+    
     //this method for index function
     public function Index(Request $request)
     {
