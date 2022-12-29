@@ -29,7 +29,7 @@ body{
                                     <div class="card card-body">
                                         <div class="row">
                                             <div class="col-12"> 
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive">
                                                    <tr>
                                                         <td> <b>রেফারেন্স নং : </b> {{$nar->id}}</td>
                                                         <td> <b>ট্র্যাকিং নং : </b> {{$nar->trakingID}}</td>
@@ -100,7 +100,7 @@ body{
 
                         <div class="row no-print">
                             <div class="col-sm-12 py-3">
-                                <a target="_blank" href="{{url('admin/narcotic/print-details/'.$nar->id)}}" class="btn btn-success"><i class="uil uil-print"></i> Print</a>
+                                <a target="_blank" href="{{url('admin/narcotic/print-details/'.$nar->id)}}" class="btn btn-primary"><i class="uil uil-print"></i> Print</a>
                             </div>
                         </div>
                         <!-- end row -->

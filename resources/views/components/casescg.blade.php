@@ -34,7 +34,7 @@ function removeArr(...$arg)
          @foreach(session("diswisecase") as $key => $value)
 
          
-         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("districtID") !!}&districtID={{$value->district->id}}'],
+         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("districtID") !!}&districtID={{$value->district->id}}'],
          @endforeach
          @endif
 
@@ -43,7 +43,7 @@ function removeArr(...$arg)
          @foreach(session("circlewisecase") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID", "circleID") !!}&circleID={{$value->circle->id}}'],
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID", "circleID") !!}&circleID={{$value->circle->id}}'],
          @endforeach
          @endif
 
@@ -52,7 +52,7 @@ function removeArr(...$arg)
         @foreach(session("circlewisethanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
@@ -61,7 +61,7 @@ function removeArr(...$arg)
          @foreach(session("searchthanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
@@ -111,7 +111,7 @@ function removeArr(...$arg)
          @foreach(session("circlewisecase") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("circleID") !!}&circleID={{$value->circle->id}}'],
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("circleID") !!}&circleID={{$value->circle->id}}'],
          @endforeach
          @endif
 
@@ -120,7 +120,7 @@ function removeArr(...$arg)
          @foreach(session("circlethanawisecase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
@@ -129,7 +129,7 @@ function removeArr(...$arg)
          @foreach(session("searchthanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
          @endif
@@ -177,7 +177,7 @@ function removeArr(...$arg)
          @foreach(session("octhanacase") as $key => $value)
 
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
         
@@ -273,7 +273,7 @@ function removeArr(...$arg)
          @foreach(session("casetypec") as $key => $value)
 
          
-         ['{{$value->casetype->type}}', {{$value->countcase_type}}, 'color: #9b0001', '{{$value->countcase_type}}', '{!! removeArr("caseTypeID", "casesubID") . "&caseTypeID=". $value->casetype->id !!}'],
+         ['{{$value->casetype->type}}', {{$value->countcase_type}}, 'color: #756bb1', '{{$value->countcase_type}}', '{!! removeArr("caseTypeID", "casesubID") . "&caseTypeID=". $value->casetype->id !!}'],
          @endforeach
 
          @endif
@@ -324,7 +324,7 @@ function removeArr(...$arg)
          @foreach(session("casesubtypec") as $key => $value)
 
          
-         ['{{$value->casesubtype->type}}', {{$value->countcasesub_type}}, 'color: #9b0001', '{{$value->countcasesub_type}}', '{!! removeArr("caseTypeID", "casesubID") . "&casesubID=". $value->casesubtype->id . "&caseTypeID=". $value->case_type !!}'],
+         ['{{$value->casesubtype->type}}', {{$value->countcasesub_type}}, 'color: #756bb1', '{{$value->countcasesub_type}}', '{!! removeArr("caseTypeID", "casesubID") . "&casesubID=". $value->casesubtype->id . "&caseTypeID=". $value->case_type !!}'],
          @endforeach
 
          @endif

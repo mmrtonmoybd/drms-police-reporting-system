@@ -23,7 +23,7 @@
          @foreach(session("diswisecase") as $key => $value)
 
          
-         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?districtID=". $value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+         ['{{$value->district->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?districtID=". $value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
          @endforeach
 
          @endif
@@ -73,7 +73,7 @@
          @foreach(session("circlewise") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #9b0001', '{{$value->countcase}}', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?circleID=". $value->circle->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?circleID=". $value->circle->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
          @endforeach
          @endif
         
@@ -121,7 +121,7 @@
          @foreach(session("thanawise") as $key => $value)
    
          
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #9b0001', '{{ $value->countcase}}', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?thanaID=". $value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{ $value->countcase}}', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?thanaID=". $value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
          @endforeach
         @endif
        
@@ -181,7 +181,7 @@
           ['Month', 'Cases', { role: "style" }, { role: 'link' }],
           @if (!is_null(session("lastthreemonthcase")))
           @foreach(session("lastthreemonthcase") as $key => $value)
-          ['{{$value->month}}',  {{intconber($value->totalcase)}}, 'gold', '{!! url("/admin/case/dashboard/chart/data") . "?form=". lastthreemon($value->monthyear, "start") . "&to=". lastthreemon($value->monthyear, "end") !!}'],
+          ['{{$value->month}}',  {{intconber($value->totalcase)}}, '#663399', '{!! url("/admin/case/dashboard/chart/data") . "?form=". lastthreemon($value->monthyear, "start") . "&to=". lastthreemon($value->monthyear, "end") !!}'],
           @endforeach
           @endif
           
@@ -272,7 +272,7 @@
          @foreach(session("casetypec") as $key => $value)
 
          
-         ['{{$value->casetype->type}}', {{$value->countcase_type}}, 'color: #9b0001', '{{$value->countcase_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?caseTypeID=". $value->casetype->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+         ['{{$value->casetype->type}}', {{$value->countcase_type}}, 'color: #756bb1', '{{$value->countcase_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?caseTypeID=". $value->casetype->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
          @endforeach
 
          @endif
@@ -323,7 +323,7 @@
          @foreach(session("casesubtypec") as $key => $value)
 
          
-         ['{{$value->casesubtype->type}}', {{$value->countcasesub_type}}, 'color: #9b0001', '{{$value->countcasesub_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?casesubID=". $value->casesubtype->id . "&caseTypeID=". $value->case_type . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+         ['{{$value->casesubtype->type}}', {{$value->countcasesub_type}}, 'color: #756bb1', '{{$value->countcasesub_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?casesubID=". $value->casesubtype->id . "&caseTypeID=". $value->case_type . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
          @endforeach
 
          @endif

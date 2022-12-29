@@ -53,6 +53,9 @@ Route::get('/storagelink', function () {
 });
 
 Route::get('/', [Dashboard::class, 'home']);
+Route::get('/seba', [Dashboard::class, 'seba']);
+Route::get('/cfrom', [Dashboard::class, 'cfrom']);
+
 
 //apply middle ware for admin
 Route::fallback([Dashboard::class, 'NotFound']);

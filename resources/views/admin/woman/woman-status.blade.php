@@ -42,8 +42,9 @@ body {
                                                     <label for="status" class="form-label">   Review status     </label>
                                                     <select name="statusg" id="statusg" class="form-select form-control" required>
                                                         
-                                                        <option value="active"  {{$woman->status=='active' ? 'selected' : ''}}> Active </option>
-                                                        <option value="inactive" {{$woman->status=='inactive' ? 'selected' : ''}}>Inactive</option>
+                                                           <option value="active"  {{$woman->status=='active' ? 'selected' : ''}}> Approve </option>
+                                                        <option value="inactive" {{$woman->status=='inactive' ? 'selected' : ''}}>Pending</option>
+                                                        
                                                     </select>
                                                     
                                                 </div>

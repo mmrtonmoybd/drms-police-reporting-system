@@ -35,7 +35,7 @@ function dayend($id, $dis) {
                                     <div class="card card-body">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered table-responsive">
                                                     <tr>
                                                         <td> <b>রেফারেন্স নং : </b> {{$war->id}}</td>
                                                         <td> <b>জেলা : </b> @if(isset($war->district->name)){{$war->district->bn_name}}@endif</td>
@@ -70,7 +70,7 @@ function dayend($id, $dis) {
                                                         <td> <b>দিনশেষে পেন্ডিং: @if (dayend($war->id, $war->districtID) >= 0) {{dayend($war->id, $war->districtID)}} @else {{0}} @endif</b> </td>
                                                     </tr>
                                                 </table>
-                                                <a target="_blank" href="{{url('admin/warrant/print-details/'.$war->id)}}" class="btn btn-success"><i class="uil uil-print"></i> Print</a>
+                                                <a target="_blank" href="{{url('admin/warrant/print-details/'.$war->id)}}" class="btn btn-primary"><i class="uil uil-print"></i> Print</a>
                                             </div>
                                            
                                         </div>

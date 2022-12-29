@@ -889,7 +889,7 @@ background: -moz-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%
                                                    <div align="center">
                                                       <table id="main_tab">
                                                          <tr>
-                                                            <td><a href="http://cdmstraining.police.gov.bd:8080/apex/f?p=100:LOGIN:6032811612505:::::"><img src="{{ asset('police-logo.png') }}" style="height: 80px;" /></a></td>
+                                                            <td><a href="#"><img src="{{ asset('police-logo.png') }}" style="height: 80px;" /></a></td>
                                                             <td align="center">
                                                            <b>    <span style="font-size:30px;color:#252072;">Welcome To</span> </b> <br>
                                                                <span style="font-size:16px;color:#252072;">Digital Reporting and Monitoring System</span><br>

@@ -79,7 +79,7 @@
       <!-- end card-body -->
    </div>
    <!-- end card -->
-
+<br>
 	</div>
 	
 
@@ -116,6 +116,7 @@ background: #092756;
           <img class="avatar rounded-circle" src="{{ asset(auth()->user()->picture) }}" alt="Bologna">
           <h4 class="card-title">{{auth()->user()->name}}</h4>
           <h6 class="card-subtitle mb-2 text-muted">পদবি: {{auth()->user()->designation}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Mobile: {{auth()->user()->mobile}}</h6>
         
 		
 		          ইমেইল: {{auth()->user()->email}}<br>

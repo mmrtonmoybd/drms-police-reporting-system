@@ -42,8 +42,8 @@ body {
                                                     <label for="status" class="form-label">   Review status     </label>
                                                     <select name="statusg" id="statusg" class="form-select form-control" required>
                                                         
-                                                        <option value="active"  {{$casedb->status=='active' ? 'selected' : ''}}> Active </option>
-                                                        <option value="inactive" {{$casedb->status=='inactive' ? 'selected' : ''}}>Inactive</option>
+                                                        <option value="active"  {{$casedb->status=='active' ? 'selected' : ''}}> Approve </option>
+                                                        <option value="inactive" {{$casedb->status=='inactive' ? 'selected' : ''}}>Pending</option>
                                                     </select>
                                                     
                                                 </div>

@@ -190,14 +190,16 @@
 
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                               <a href="{{url('/admin/case/review')}}">   
                             <div class="card-body text-center"><!------- <i class="i-Add-User"></i>   --------->
-                               
+                              
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0"> ওসি পেন্ডিং </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
                                 </div>
 								
                             </div>
+                            	</a>
                         </div>
                     </div>
 
@@ -336,7 +338,7 @@ return $string;
 											</div>
     
    
-   <table class="table table-bordered table-striped table-centered mb-0">
+   <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

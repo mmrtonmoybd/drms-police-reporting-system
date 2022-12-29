@@ -257,7 +257,7 @@ top:30px;
                                         
                                                                          <div class="card card-body" id="app">
                                         
-<div style="background: rgb(240, 117, 117);
+<div style="background: #663399;
 width: 100%;
 border-radius: 10px;
 height: 25px;

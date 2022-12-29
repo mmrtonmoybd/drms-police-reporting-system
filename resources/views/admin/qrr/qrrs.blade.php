@@ -22,11 +22,11 @@ use Illuminate\Support\Str;
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         <div class="row">
                                             <div class="col-sm-2">
-                                            <a href="{{url('admin/qrrs/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Qrrs</a>
+                                            <a href="{{url('admin/qrrs/add')}}" class="btn btn-primary btn-sm mb-2"><i class="uil uil-plus"></i> Add Qrrs</a>
                                             </div>
 
                                            
@@ -35,11 +35,11 @@ use Illuminate\Support\Str;
                                         <div style="text-align: right;margin: 16px;">
                     
                                           
-  <a target="_blank" href="{{url('admin/qrrs/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
       
 											
 											</div>
-                                        <table class="tablestyle table-bordered table-striped table-centered yajra-datatable">
+                                        <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0 yajra-datatable" style="width: 100% !important;">
 
                                             <thead>
                                                 <tr>

@@ -38,7 +38,7 @@
 <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
 
              @if ($request->has('submit'))
 
@@ -46,7 +46,7 @@
 
              <caption>{{$monnf1}} -- {{$monnt1}} Narcotic case number</caption>
 
-            <table class="table table-bordered table-striped table-centered mb-0">
+            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -116,7 +116,7 @@
 
              <caption>{{$monnf2}} -- {{$monnt2}} Narcotic case number</caption>
 
-            <table class="table table-bordered table-striped table-centered mb-0">
+            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -182,7 +182,7 @@
 
                                         @endif
 
-                                         <table class="table table-bordered table-striped table-centered mb-0">
+                                         <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

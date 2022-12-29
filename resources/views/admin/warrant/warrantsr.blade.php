@@ -97,7 +97,7 @@
                 <div class="separator-breadcrumb border-top"></div>
                 <div class="row">
                     <!-- ICON BG-->
-                    <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Add-User"></i>
                         
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Financial"></i>
                                 <div class="content" style="max-width: 100%;">
@@ -122,20 +122,22 @@
 
                     @can('warrant.review.info')
 
-                    <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                              <a href="{{url('/admin/warrant/review')}}">   
                             <div class="card-body text-center"><i class="i-Financial"></i>
                                 <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0"> Pending for review</p>
+                                    <p class="text-muted mt-2 mb-0"> ওসি পেন্ডিং</p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{ $pending }}</p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     </div>
                     @endcan
 			
 			
-			    <div class="col-lg-4 col-md-6 col-sm-6">
+			    <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Money-2"></i>
                                 <div class="content" style="max-width: 100%;">
@@ -225,7 +227,7 @@
 
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         <span style="background-color: #756bb1;
 padding: 3px;
@@ -238,7 +240,7 @@ margin-bottom: -10px;">
      
      ওয়ারেন্ট  এবং গ্রেফতার  </span>
      <br>
-                                            <table class="table table-bordered table-striped table-centered mb-0">
+                                            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
@@ -286,8 +288,20 @@ margin-bottom: -10px;">
                                                     <td > {{$war->total_recall}}</td>
                                                     <td > {{$war->total_nispotti}}</td>
                                                     <td > {{$war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil }}</td>
-                                                    <td > {{round($war->total_nispotti/($war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil), 2) }}</td>
-                                                    <td > {{$war->sumucase_arrast}}</td>
+                                                
+                                                      <?php $totalgrt= $war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil; 
+                                                    
+                                                    if($totalgrt==0) {
+                                                        $totalcacl= '0';
+                                                    } else {
+                                                        $totalcacl= $war->total_nispotti/$totalgrt;
+                                                    }
+                                                    
+                                                    ?>
+                                                
+                                                
+                                                 <td > {{round($totalcacl, 2) }}</td>
+                                                 <td > {{$war->sumucase_arrast}}</td>
                                                 </tr>
 
                                             @endforeach
@@ -316,7 +330,7 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
 
 
 
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
@@ -381,7 +395,7 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                         <br>
                                         <br>
 
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th > রেফারেন্স নং </th>

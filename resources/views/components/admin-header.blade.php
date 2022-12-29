@@ -51,9 +51,28 @@ th {
   background: #fff!important;
 }
 
+
+.table-responsive {
+    height:90vh;
+}
 body {
 	    font-family: 'SolaimanLipi', Arial, sans-serif !important;
 }
+
+.mm-collapse .item-name a {
+
+}
+
+.item-name.menuitem-active {
+  background: #9934ff2e;
+ 
+}
+.header-toggle h3 {
+    
+    font-weight:  bold!important;
+    color: #639;
+}
+
 
 
 .breadcrumb.m-0 {
@@ -169,7 +188,91 @@ input:not(:focus-visible):invalid {
 
       @endif
 		
+                      <style>
+                      
+                      .namefield {
+                          display:inline-block;margin-right: 16px;
+                      }
+                      
 
+@media screen and (max-width: 750px) {
+    .namefield {
+  display: none;
+}
+.header-toggle h3 {
+font-size: 16px;
+}
+  }
+  
+  
+  
+  
+  
+  
+  @media only screen and (max-width: 1150px) {
+  .sidebar-panel.show.sidebar-switch-open .switch-overlay {
+      height: calc(100vh - 70px);
+display: block;
+position: fixed;
+width: calc(100% - 240px);
+height: calc(100vh - 5px);
+bottom: 0;
+right: 0!important;
+background: rgba(0, 0, 0, 0);
+z-index: 20000;
+}
+
+  .sidebar-panel.sidebar-switch-open .switch-overlay {
+      height: calc(100vh - 70px);
+display: block;
+position: fixed;
+width: calc(100% - 240px);
+height: calc(100vh - 5px);
+bottom: 0;
+right: 0!important;
+background: rgba(0, 0, 0, 0);
+z-index: 20000;
+}
+
+
+
+.switch-overlay {
+  height: calc(100vh - 70px);
+  display: block;
+  position: fixed;
+  width: calc(100% - 240px);
+  height: calc(100vh - 5px);
+  bottom: 0;
+  right: 10000px;
+  background: rgba(0, 0, 0, 0);
+  z-index: 20000;
+  cursor: w-resize;
+}
+
+
+}
+  /*
+  @media only screen and (max-width: 1150px) {
+.switch-overlay {
+  position: absolute;
+  width: 25px;
+  background: rgba(0, 0, 0, 0);
+  z-index: 20000;
+  top: 36px;
+  height: 25px;
+  right: 10px;
+  
+ 
+  padding: 1px 6px;
+  cursor: pointer;
+}
+}
+*/
+
+
+                      </style>
+                      
+                      
             <header class="main-header bg-white d-flex justify-content-between p-2">
                 <div class="header-toggle">
                     <div class="menu-toggle mobile-menu-icon">
@@ -179,7 +282,7 @@ input:not(:focus-visible):invalid {
                     </div>
 					
 					
-				<h3>	{{ headertitle() }} </h3>
+				<h3 style="margin-bottom: 0px;">	{{ headertitle() }} </h3>
  				
 					
 				             </div>
@@ -195,9 +298,10 @@ input:not(:focus-visible):invalid {
 					
 					     
 	 <a href="{{url('admin/users/edit/'.$id)}}" style="text-decoration:none; color:black;">
-                     	<div style="display:inline-block;margin-right: 13px;"><img src="{{ asset(auth()->user()->picture) }}" width="50px" height="50px"></div>
+                     	<div style="display:inline-block;margin-right: 0px;"><img src="{{ asset(auth()->user()->picture) }}" width="50px" height="50px"></div>
                       
-                     	<div style="display:inline-block;margin-right: 16px;">
+
+                     	<div class="namefield" style="">
 					  <span style="font-weight:bold; font-size:13px;"> {{auth()->user()->name}} </span> <br>{{auth()->user()->type}}
 					  
 						    </a>

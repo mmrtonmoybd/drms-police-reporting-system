@@ -76,6 +76,7 @@
                                                     <th>Name</th>
                                                     <th>Email</th>
                                                     <th>Designation</th>
+                                                    <th> Mobile no</th>
                                                     <th>BP No</th>
                                                     <th>District</th>
                                                     <th>Thana</th>
@@ -113,6 +114,7 @@
             {defaultContent: '', data: 'name', searchable: true, orderable: true},
             {defaultContent: '', data: 'email', searchable: true, orderable: true},
             {defaultContent: '', data: 'designation', searchable: true, orderable: true},
+            {defaultContent: '', data: 'mobile', searchable: true, orderable: true},
             {defaultContent: '', data: 'bp_no', searchable: true, orderable: true},
             {defaultContent: '', data: 'district.bn_name', searchable: true, orderable: true},
             {defaultContent: '', data: 'thana.name', searchable: true, orderable: true},

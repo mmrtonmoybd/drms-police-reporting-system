@@ -121,16 +121,20 @@ function hms ($value) {
                 <div class="separator-breadcrumb border-top"></div>
                 <div class="row">
                     <!-- ICON BG-->
-                    <div class="col-lg-3 col-md-6 col-sm-6">
+           
+                          <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                          
+                            <a href="{{url('/admin/qrrs/srcs/data')}}" target="_blank">  
                             <div class="card-body text-center"><i class="i-Add-User"></i>
-                            <a href="{{url('/admin/qrrs/srcs/data')}}" target="_blank">   
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট রিপোর্ট </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$tin}}</p>
+                                   <p class="text-muted mt-2 mb-0">মোট রিপোর্ট </p>
+                                   <p class="text-primary text-24 line-height-1 mb-2">{{$tin}}</p>
                                 </div>
-								</a>
                             </div>
+                            
+                            </a>
+                            
                         </div>
                     </div>
 
@@ -138,14 +142,17 @@ function hms ($value) {
 
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                          
+                            <a href="{{url('/admin/qrrs/review')}}" target="_blank">  
                             <div class="card-body text-center"><i class="i-Add-User"></i>
-                               
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0"> QRR পেন্ডিং রিভিউ </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
                                 </div>
-								
                             </div>
+                            
+                            </a>
+                            
                         </div>
                     </div>
 

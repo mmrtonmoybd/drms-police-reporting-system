@@ -29,7 +29,7 @@ body{
                                     <div class="card card-body">
                                         <div class="row">
                                             <div class="col-12"> 
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive">
                                                     <tr>
                                                         <td> <b>রেফারেন্স নং : </b> {{$qrr->id}}</td>
                                                         <td> <b>জেলা : </b> @if(isset($qrr->district->name)){{$qrr->district->bn_name}}@endif</td>
@@ -103,7 +103,7 @@ function hms ($value) {
 
                         <div class="row no-print">
                             <div class="col-sm-12 py-3">
-                                <a target="_blank" onclick="window.print();" class="btn btn-success"> <i class="mdi mdi-square-edit-outline"></i>  Print</a>
+                                <a target="_blank" onclick="window.print();" class="btn btn-primary"> <i class="mdi mdi-square-edit-outline"></i>  Print</a>
                             </div>
                         </div>
                         <!-- end row -->

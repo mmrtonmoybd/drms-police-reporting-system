@@ -6,21 +6,22 @@
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         <div class="row">
                                             @if (request()->is('admin/warrant'))
                                             <div class="col-sm-2">
-                                            <a href="{{url('admin/warrant/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Warrant</a>
+                                            <a href="{{url('admin/warrant/add')}}" class="btn btn-primary btn-sm mb-2"><i class="uil uil-plus"></i> Add Warrant</a>
                                             </div>
                                             @endif
 
                                            
                                             
                                         </div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
+                                                        <th style="width: 86px">Action</th>
                                                     <th > রেফারেন্স নং </th>
                                                     <th > জেলা </th>
                                                     <th > থানা </th>
@@ -39,7 +40,7 @@
                                                     <th > মোট নিষ্পত্তি </th>
                                                     
                                                     <th > দিনশেষে পেন্ডিং </th>
-                                                    <th style="width: 86px">Action</th>
+                                                
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -71,6 +72,23 @@ function thana($id) {
                                             @if($wars)
                                             @foreach ($wars as $war)
                                                 <tr>
+                                                              
+                                                    <td class="table-action">
+                                                        
+                                                        <a href="{{url('admin/warrant/view/'.$war->id)}}"  class="action-icon text-primary">
+                                                            <i class="mdi mdi-eye"></i>
+                                                        </a>
+
+                                                        @can('warrant.edit')
+                                                        <a href="{{url('admin/warrant/edit/'.$war->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
+                                                        @endcan
+                                                        @can('warrant.review')
+                                                        <a href="{{url('admin/warrant/review/update/'.$war->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
+                                                        @endcan
+                                                        @can('warrant.delete')
+                                                        <a href="{{url('admin/warrant/delete/'.$war->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
                                                     <td > {{$war->id}}</td>
                                                     <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif </td>
                                                     <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif </td>
@@ -88,23 +106,7 @@ function thana($id) {
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil}}</td>
                                                     <td > {{$war->gr_tamil + $war->cr_tamil + $war->saja_gr_tamil + $war->saja_cr_tamil + $war->recall_other}}</td>
                                                     <td > @if (dayend($war->id, $war->districtID) >= 0) {{dayend($war->id, $war->districtID)}} @else {{0}} @endif</td>
-                                                       
-                                                    <td class="table-action">
-                                                        
-                                                        <a href="{{url('admin/warrant/view/'.$war->id)}}"  class="action-icon text-primary">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </a>
-
-                                                        @can('warrant.edit')
-                                                        <a href="{{url('admin/warrant/edit/'.$war->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
-                                                        @endcan
-                                                        @can('warrant.review')
-                                                        <a href="{{url('admin/warrant/review/update/'.$war->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
-                                                        @endcan
-                                                        @can('warrant.delete')
-                                                        <a href="{{url('admin/warrant/delete/'.$war->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
-                                                        @endcan
-                                                    </td>
+                                             
                                                 </tr>
 
                                             @endforeach
@@ -120,7 +122,7 @@ function thana($id) {
                                             <?php if(isset($_GET['other'])) { ?>    
                                             
                                             
- <table class="table table-bordered table-striped table-centered mb-0" style="display:<?php if(isset($_GET['other'])) { echo ''; } else { echo 'none'; }; ?>">
+ <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0" style="display:<?php if(isset($_GET['other'])) { echo ''; } else { echo 'none'; }; ?>">
                                             <thead>
                                                 <tr>
                                                     <th > রেফারেন্স নং </th>

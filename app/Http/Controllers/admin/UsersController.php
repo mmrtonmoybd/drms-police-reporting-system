@@ -99,7 +99,8 @@ class UsersController extends Controller
             'type'=> 'Super Admin',
             'password'=> Hash::make($request->input('password')),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -144,7 +145,8 @@ class UsersController extends Controller
             'type'=> 'Admin',
             'password'=> Hash::make($request->input('password')),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -192,7 +194,8 @@ class UsersController extends Controller
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -241,7 +244,8 @@ class UsersController extends Controller
             'password'=> Hash::make($request->input('password')),
             'thanaID' => $request->input('thanaID'),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -287,7 +291,8 @@ class UsersController extends Controller
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -333,7 +338,8 @@ class UsersController extends Controller
             'districtID' => $request->input('districtID'),
             'password'=> Hash::make($request->input('password')),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -383,7 +389,8 @@ class UsersController extends Controller
             'password'=> Hash::make($request->input('password')),
             'thanaID' => $request->input('thanaID'),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -432,7 +439,8 @@ class UsersController extends Controller
             'password'=> Hash::make($request->input('password')),
             'thanaID' => $request->input('thanaID'),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -481,7 +489,8 @@ class UsersController extends Controller
             'password'=> Hash::make($request->input('password')),
             'thanaID' => $request->input('thanaID'),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         //dd($insertAttr);
@@ -533,6 +542,7 @@ class UsersController extends Controller
 
         $insertAttr = [
             'name'=>$request->input('name'),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         if ($request->input('password')) {
@@ -644,7 +654,8 @@ class UsersController extends Controller
             'districtID' => $request->input('districtID'),
             'thanaID' => $request->input('thanaID'),
             'designation' => $request->input('designation'),
-            'bp_no' => $this->reptpenum($request->input('bp_no'))
+            'bp_no' => $this->reptpenum($request->input('bp_no')),
+            'mobile' => $this->reptpenum($request->input('mobile'))
         ];
 
         if ($request->input('password')) {

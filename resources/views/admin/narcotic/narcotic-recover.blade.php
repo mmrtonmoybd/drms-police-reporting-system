@@ -81,7 +81,7 @@
 <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
 
 @if ($request->has('submit'))
 
@@ -90,7 +90,7 @@
 
                                     <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org1')}}</h2></font> Narcotic recover details</caption>
 
-            <table class="table table-bordered table-striped table-centered mb-0">
+            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -159,7 +159,7 @@
 
                                         <caption>{{$monnf1}} -- {{$monnt1}} And {{$monnf2}} -- {{$monnt2}} <font color='red'> <h2>{{request('org2')}}</h2></font> Narcotic recover details</caption>
 
-            <table class="table table-bordered table-striped table-centered mb-0">
+            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
 
                                                
                                             <thead>
@@ -232,7 +232,7 @@
                                                 return (int) $str;
                                             }
                                             @endphp
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

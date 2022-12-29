@@ -40,7 +40,7 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
     - name: PHP CS Fixer
-      run: php artisan fixer:fix
+      run: vendor/bin/pint
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
           commit_message: Apply action changes

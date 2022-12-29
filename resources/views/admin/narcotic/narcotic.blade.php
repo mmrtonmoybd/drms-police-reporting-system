@@ -9,25 +9,37 @@ use Illuminate\Support\Str;
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body ">
                                         
                                         <div class="row">
                                             @can('narcotic.add')
                                             <div class="col-sm-2">
-                                            <a href="{{url('admin/narcotic/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Narcotic</a>
+                                            <a href="{{url('admin/narcotic/add')}}" class="btn btn-primary btn-sm mb-2"><i class="uil uil-plus"></i> Add Narcotic</a>
                                             </div>
                                             @endcan
                                            
-                                            
+                                        
                                         </div>
                                         <div style="text-align: right;margin: 16px;">
-                    
-                                          
-  <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
-      
+                    <!---------
+                   <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Download
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 34px, 0px);">
+                                                    <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+                                                  
+                                                  <!-- <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> PDF</a>
+                                                    <a  href="#" onclick="window.print()" class="btn btn-primary"><i class="fa fa-file-excel"></i> Print</a>
+                                         
+                                                </div>
+                                            </div>                       
+---->
+                                                       <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+                                                  
 											
 											</div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

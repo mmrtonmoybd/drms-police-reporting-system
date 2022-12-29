@@ -116,6 +116,7 @@
                     <!-- ICON BG-->
                     <div class="col-sm-3">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                               <a href="{{url('/admin/woman')}}">   
                             <div class="card-body "><i class="i-Add-User"></i>
                           
 								<div class="content" style="max-width: 100%;">
@@ -125,6 +126,7 @@
 
 
                             </div>
+                            </a>
                         </div>
                     </div>
                     
@@ -134,6 +136,7 @@
 
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                              <a href="{{url('/admin/woman/review')}}">   
                             <div class="card-body text-center"><!------- <i class="i-Add-User"></i>   --------->
                                
 								<div class="content" style="max-width: 100%;">
@@ -142,6 +145,7 @@
                                 </div>
 								
                             </div>
+                            </a>
                         </div>
                     </div>
 
@@ -153,7 +157,7 @@
                             <div class="card-body "><i class="i-Add-User"></i>
                           
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট   নিস্পত্তি </p>
+                                    <p class="text-muted mt-2 mb-0">মোট নিস্পত্তি </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$totalnispotti}}</p>
                                 </div>
 
@@ -163,12 +167,12 @@
                     </div>
                     
                     
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body "><i class="i-Add-User"></i>
                           
 								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">মোট  পেন্ডিং </p>
+                                    <p class="text-muted mt-2 mb-0"> পেন্ডিং </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$totalpending}}</p>
                                 </div>
 
@@ -178,9 +182,9 @@
                     </div>
                     
                     
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body "><i class="i-Add-User"></i>
+                            <div class="card-body ">
                           
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0"> ফিডব্যাক গ্রহণ </p>

@@ -30,9 +30,9 @@ $string3 = url('/admin/woman/chart/data') .'?'. http_build_query($allin);
          @foreach(session("totalcomplains") as $key => $value)
 
          @if (request()->filled('districtID'))
-         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id!!} @else {!!$string1 . "&thanaID=".$value->thana->id . "&districtID=".$value->district->id!!} @endif'],
+         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #663399', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id!!} @else {!!$string1 . "&thanaID=".$value->thana->id . "&districtID=".$value->district->id!!} @endif'],
          @else
-         ['{{$value->district->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&districtID=".$value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
+         ['{{$value->district->bn_name}}', {{$value->totalcomplain}}, 'color: #663399', '{{$value->totalcomplain}}', '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&districtID=".$value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
          @endif
          @endforeach
         
@@ -194,7 +194,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("totalcomplains") as $key => $value)
 
-         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' , '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #663399', '{{$value->totalcomplain}}' , '@if (request()->is("admin/woman/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
 
          @endforeach
         
@@ -313,7 +313,7 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("totalcomplains") as $key => $value)
 
-         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #9b0001', '{{$value->totalcomplain}}' ],
+         ['{{$value->thana->bn_name}}', {{$value->totalcomplain}}, 'color: #663399', '{{$value->totalcomplain}}' ],
 
          @endforeach
         

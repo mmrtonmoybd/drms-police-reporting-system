@@ -19,11 +19,11 @@ use Illuminate\Support\Str;
 <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         <div class="row">
                                             <div class="col-sm-2">
-                                            <a href="https://onlinebdshop.com/admin/qrrs/add" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add Qrrs</a>
+                                            <a href="https://onlinebdshop.com/admin/qrrs/add" class="btn btn-primary btn-sm mb-2"><i class="uil uil-plus"></i> Add Qrrs</a>
                                             </div>
 
                                            
@@ -61,10 +61,10 @@ use Illuminate\Support\Str;
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

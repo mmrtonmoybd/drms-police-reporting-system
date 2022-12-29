@@ -15,6 +15,9 @@
 .item-name.active {
   background: #d3eaff;
 }
+
+
+
 </style>
 
    <div class="sidebar-panel">
@@ -23,17 +26,28 @@
      
 	 <!--  <span class=" item-name text-20 text-primary font-weight-700">GULL</span> -->
    
+   
+  
+      
 	    @if (session("sidebar") == 1)
   <a href="{{ url('admin/adminsidebarcollapase?sidebar=0') }}"> 
-   
+  
       @else 
          <a href="{{ url('admin/adminsidebarcollapase?sidebar=1') }}">   
 
       @endif
 		
-            
+
+
             <div class="sidebar-compact-switch ml-auto"><span></span></div> </a>
             </div>
+            
+            
+                        		
+<div class="switch-overlay" style="cursor: auto;"></div>
+            
+            
+            
             <!--  user -->
             <div class="scroll-nav ps ps--active-y" data-perfect-scrollbar="data-perfect-scrollbar" data-suppress-scroll-x="true">
                 <div class="side-nav">
@@ -65,7 +79,7 @@
 									@endcan
 
                   @can('case.review')
-								  <li class="item-name"><a href="{{url('admin/case/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database inactive</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/case/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">OC Pending</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -73,7 +87,7 @@
 						
 						
 					   @canany(['qrr.dashboard', 'qrr.add', 'qrr.view', 'qrr.review'])
-							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Qrr</span></a>
+							<li class="Ul_li--hover">@if (session("sidebar") == 1) <a class="has-arrow without-after-element" href="#"> @else <a class="has-arrow" href="#"> @endif<i class="fa-solid fa-tachograph-digital text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">QRR</span></a>
                                 <ul class="mm-collapse @if(request()->is('admin/qrrs/*') || request()->is('admin/qrrs')) mm-show @endif">
                                   @can('qrr.dashboard')
 									<li class="item-name "><a href="{{url('admin/qrrs/srcs')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
@@ -88,7 +102,7 @@
 									@endcan
 
                   @can('qrr.review')
-								  <li class="item-name"><a href="{{url('admin/qrrs/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database inactive</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/qrrs/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">OC Pending</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -109,9 +123,11 @@
                                   @can('narcotic.dashboard')
 								  
 								  <li class="item-name"><a href="{{url('admin/narcotic/dashboard')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Dashboard</span></a></li>
-
+<!------
 								  <li class="item-name"><a href="{{url('admin/narcotic/totalcase')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Case number </span></a></li>
 								  <li class="item-name"><a href="{{url('admin/narcotic/recover')}}"><i class="fa-solid fa-chart-line mr-2 text-muted"></i><span class="text-muted">Recover</span></a></li>
+	----->						
+							
 									 @endcan
 									 
 								@can('narcotic.add')
@@ -123,7 +139,7 @@
 							    @endcan
 
                   @can('narcotic.review')
-								 <li class="item-name"><a href="{{url('admin/narcotic/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database inactive</span></a></li>
+								 <li class="item-name"><a href="{{url('admin/narcotic/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">OC Pending</span></a></li>
 							    @endcan
 									 
 									 
@@ -152,7 +168,7 @@
 									@endcan
 
                   @can('woman.review')
-								  <li class="item-name"><a href="{{url('admin/woman/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database inactive</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/woman/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">OC Pending</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -172,15 +188,15 @@
                                   @endcan
 								  
 								    @can('warrant.add')
-								   <li class="item-name"><a href="{{url('admin/warrant/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add warrant </span></a></li>
+								   <li class="item-name"><a href="{{url('admin/warrant/add')}}"><i class="fa-solid fa-plus mr-2 text-muted"></i><span class="text-muted">Add</span></a></li>
                                    @endcan
 								   
 								    @can('warrant.view')
-								  <li class="item-name"><a href="{{url('admin/warrant')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Warrant List</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/warrant')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Database</span></a></li>
 									@endcan
 
                   @can('warrant.review')
-								  <li class="item-name"><a href="{{url('admin/warrant/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">Warrant List inactive</span></a></li>
+								  <li class="item-name"><a href="{{url('admin/warrant/review')}}"><i class="fa-solid fa-list-ul mr-2 text-muted"></i><span class="text-muted">OC pending</span></a></li>
 									@endcan
                                 </ul>
                             </li> 
@@ -232,4 +248,27 @@
             <!--  side-nav-close -->
         </div>
 		
-		
+
+
+
+      
+	    @if (session("sidebar") == 1)
+
+  <script>
+  window.addEventListener("resize", function() {
+	if (window.matchMedia("(min-width: 700px)").matches) {
+	//	alert("Screen width is at least 500px");
+	} else {
+	    
+	    window.location.href = "{{ url('admin/adminsidebarcollapase?sidebar=0') }}";
+	//	alert("Screen less than 500px");
+	}
+});
+
+
+</script>
+   
+      @else 
+       
+
+      @endif

@@ -154,14 +154,14 @@
     <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         
 
                                    
 
                                           
-                                   <table class="table table-bordered table-striped table-centered mb-0">
+                                   <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

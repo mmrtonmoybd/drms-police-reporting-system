@@ -30,7 +30,8 @@ class User extends Authenticatable
         'thanaID',
         'picture',
         'designation',
-        'bp_no'
+        'bp_no',
+        'mobile'
     ];
 
     /**

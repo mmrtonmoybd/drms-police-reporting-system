@@ -26,7 +26,7 @@ body {
 }
 
 #about:hover {
-      height:130px;
+      height:230px;
   right: 0px;
   
 }
@@ -60,14 +60,22 @@ body {
 
 <div id="mySidenav" class="sidenav">
   <a href="#" id="about"><span id="htitile">একনজরে       </span>
-  <div id="content" style="width:100%;">
+  <div id="content" style="width:100%; height: 300px">
 <br>
 <br>
 
-  <b> আটক সংখ্যা </b> :   {{$jaminprapto}}</br>
-  <b> জামিন সংখ্যা  </b> :    {{$jaminprapto}}      </br>
-  <b> অব্যহতিপ্রাপ্ত সংখ্যা</b> :{{$ovohotiprapto}}     </br>
-  <b> এজহার তদন্ত  </b> :       {{$azaharnewinvistigateprapto}}  </br>
+ <b>নিস্পত্তি এজহার নামীয় আসামীঃ </b> {{$nispottimamlaiazahar}} <br>
+  <b>পুলিশ রিপোর্ট প্রাপ্তিঃ </b> {{$policereportprapti}}<br>
+   <b> গ্রেফতার সংখ্যাঃ </b>    {{$accusedasami}}</br>
+    <b> জামিন সংখ্যাঃ  </b>   {{$jaminprapto}}      </br>
+  <b> এজহার বহিঃতদন্তঃ </b>       {{$azaharnewinvistigateprapto}}  </br>
+
+  <b> অব্যহতিপ্রাপ্ত সংখ্যাঃ</b> {{$ovohotiprapto}}     </br>
+ 
+ 
+  <b>১৬১ গ্রহনঃ</b>  {{$onesixtyrecive}} </br>
+  <b>১৬৪ গ্রহনঃ </b> {{$onesixtyfourrecive}}<br>
+ 
   
   <br>
   
@@ -268,12 +276,12 @@ body {
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><!------- <i class="i-Add-User"></i>   --------->
-                               
+                                <a href="{{url('/admin/case/review')}}">   
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0"> ওসি পেন্ডিং </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
                                 </div>
-								
+								</a>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@
                                     <div class="card card-body">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <table class="table table-bordered">
+                                                <table class="table table-bordered table-responsive">
                                                     <tr>
                                                         <td> <b>রেফারেন্স নং : </b> {{$woman->reference_no}}</td>
                                                         <td> <b>জেলা : </b> @if(isset($woman->district->name)){{$woman->district->bn_name}}@endif</td>
@@ -67,7 +67,7 @@
                                                         
                                                     </tr>
                                                 </table>
-                                                <a target="_blank" href="{{url('admin/woman/pview/'.$woman->id)}}" class="btn btn-success"><i class="uil uil-print"></i> Print</a>
+                                                <a target="_blank" href="{{url('admin/woman/pview/'.$woman->id)}}" class="btn btn-primary"><i class="uil uil-print"></i> Print</a>
                                             </div>
                                            
                                         </div>

@@ -34,10 +34,10 @@ $string1 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
 
          @if (request()->filled('districtID'))
 
-         ['{{$value->thana->bn_name}}', {{$value->totalcase}}, 'color: #9b0001', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&districtID=".$value->district->id."&thanaID=".$value->thana->id!!} @else {!!$string1 . "&districtID=".$value->district->id."&thanaID=".$value->thana->id!!} @endif'],
+         ['{{$value->thana->bn_name}}', {{$value->totalcase}}, 'color: #663399', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&districtID=".$value->district->id."&thanaID=".$value->thana->id!!} @else {!!$string1 . "&districtID=".$value->district->id."&thanaID=".$value->thana->id!!} @endif'],
 
          @else 
-         ['{{$value->district->bn_name}}', {{$value->totalcase}}, 'color: #9b0001', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&districtID=".$value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
+         ['{{$value->district->bn_name}}', {{$value->totalcase}}, 'color: #663399', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&districtID=".$value->district->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&districtID=".$value->district->id!!} @endif'],
          @endif
          @endforeach
         
@@ -90,7 +90,7 @@ $string2 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("conduautho") as $key => $value)
 
-         ['{{$value->name_of_investigator_org}}', {{$value->totalinvisauth}}, 'color: #9b0001', '{{$value->totalinvisauth}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org!!} @endif'],
+         ['{{$value->name_of_investigator_org}}', {{$value->totalinvisauth}}, 'color: #663399', '{{$value->totalinvisauth}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org!!} @endif'],
 
          @endforeach
         
@@ -183,7 +183,7 @@ $string1 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("numofcase") as $key => $value)
 
-         ['{{$value->thana->bn_name}}', {{$value->totalcase}}, 'color: #9b0001', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+         ['{{$value->thana->bn_name}}', {{$value->totalcase}}, 'color: #663399', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
 
          @endforeach
         
@@ -234,7 +234,7 @@ $string2 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("conduautho") as $key => $value)
 
-         ['{{$value->name_of_investigator_org}}', {{$value->totalinvisauth}}, 'color: #9b0001', '{{$value->totalinvisauth}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org!!} @endif'],
+         ['{{$value->name_of_investigator_org}}', {{$value->totalinvisauth}}, 'color: #663399', '{{$value->totalinvisauth}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&name_of_investigator_org=".$value->name_of_investigator_org!!} @endif'],
 
          @endforeach
         

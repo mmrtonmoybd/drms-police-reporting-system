@@ -9,11 +9,11 @@ use Illuminate\Support\Str;
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body ">
                                         @can('case.add')
                                         <div class="row">
                                             <div class="col-sm-2">
-                                            <a href="{{url('admin/case/add')}}" class="btn btn-success btn-sm mb-2"><i class="uil uil-plus"></i> Add case</a>
+                                            <a href="{{url('admin/case/add')}}" class="btn btn-primary btn-sm mb-2"><i class="uil uil-plus"></i> Add case</a>
                                             </div>
                                             @endcan
                                            
@@ -22,11 +22,11 @@ use Illuminate\Support\Str;
                                               <div style="text-align: right;margin: 16px;">
                     
                                           
-  <!-- <a target="_blank" href="" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a> -->
+  <!-- <a target="_blank" href="" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a> -->
       
 											
 											</div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-responsive table-bordered table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -38,12 +38,12 @@ use Illuminate\Support\Str;
                                                     <th> উৎস</th>
                                                     <th> জি আর নং</th>
                                                     <th> মামলা নং</th>
-                                                    <th> ধারা</th>
+                                                    <th style="width:150px;"> ধারা</th>
                                                     <th> তারিখ</th>
                                                     <th> মামলার ধরন</th>
                                                     <th> উপধরন</th>
                                                     <th> ঘটনার তারিখ</th>
-                                                    <th> মামলার সারসংক্ষেপ</th>
+                                                    <th style="width:150px;"> মামলার সারসংক্ষেপ</th>
                                                     <th> এজাহার নামীয় আসামির সংখ্যা</th>
                                                     <th> নিস্পত্তি / মুলতবি</th>
                                                     <th> নিস্পত্তির ধরন</th>
@@ -75,6 +75,9 @@ use Illuminate\Support\Str;
                                                         @can('case.edit')
                                                         <a href="{{url('admin/case/edit/'.$case->id)}}" class="action-icon text-success">  <i class="mdi mdi-square-edit-outline"></i></a>
                                                         @endcan
+                                                        @can('case.review')
+                                                        <a href="{{url('admin/case/review/update/'.$case->id)}}" class="action-icon text-success">  <i class="fas fa-unlock-alt"></i></a>
+                                                        @endcan
                                                         @can('case.delete')
                                                         <a href="{{url('admin/case/delete/'.$case->id)}}"  onclick="return confirm('Do you want to delete this slider?')" class="action-icon text-danger"> <i class="mdi mdi-delete"></i></a>
                                                         @endcan
@@ -87,12 +90,12 @@ use Illuminate\Support\Str;
                                                     <td>{{$case->source_of_info}}</td>
                                                     <td>{{Str::limit($case->gr_no, 15)}}</td>
                                                     <td>{{Str::limit($case->case_no, 10)}}</td>
-                                                    <td>{{Str::limit($case->dhara, 10)}}</td>
+                                                    <td>{{Str::limit($case->dhara, 50)}}</td>
                                                     <td>@if (!empty($case->case_date)) {{date('d/m/Y', strtotime($case->case_date))}} @endif</td>
                                                     <td>{{$case->casetype->type}}</td>
-                                                    <td>@if (!empty($case->casesubtype)) {{$case->casesubtype->type}} @endif</td>
+                                                    <td>@if($case->casesubtype != '') {{$case->casesubtype->type}} @endif</td>
                                                      <td>@if (!empty($case->incident_date_time)) {{date('d/m/Y', strtotime($case->incident_date_time))}} @endif</td>
-                                                    <td>{{Str::limit($case->short_dettails, 10)}}</td>
+                                                    <td>{{Str::limit($case->short_dettails, 50)}}</td>
                                                     <td>{{Str::limit($case->azahar_namio_victims, 10)}}</td>
                                                     <td>{{Str::limit($case->nispotti_or_multobi, 10)}}</td>
                                                      <td>@if ($case->nispotti_type != 0) {{$case->nispotti_type}} @endif</td>

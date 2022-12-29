@@ -12,6 +12,30 @@ body {
 	overflow:auto!important;
 }
 
+#errmsg{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
+#errdate{
+background: #ff5757;
+color: #fff;
+padding: 4px;
+display: none;
+width: 250px;
+position: fixed;
+z-index: 100;
+right: 10px;
+  
+}
+
 
 .redbdr {
     border:1px solid red;
@@ -31,7 +55,8 @@ right: 10px;
 
     <!-- start page title -->
 <br>
-
+  <div id="errmsg"></div>
+<div id="errdate"></div>
  <!-- start page title -->
  
 
@@ -46,7 +71,7 @@ right: 10px;
                                     @csrf
                                     <div class="card card-body" id="app">
                                         
-<div style="background: rgb(240, 117, 117);
+<div style="background: #663399;
 width: 100%;
 border-radius: 10px;
 height: 25px;
@@ -221,7 +246,7 @@ font-size: 21px;"> মামলা সংক্রান্ত তথ্যা�
                                                    <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="azahar_namio_victims" class="form-label"> এজাহার নামীয় আসামির সংখ্যা </label>
-                                                    <input type="number" name="azahar_namio_victims"  value="{{old('azahar_namio_victims')}}" id="azahar_namio_victims" class="form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
+                                                    <input type="text" name="azahar_namio_victims"  value="{{old('azahar_namio_victims')}}" id="azahar_namio_victims" class="number form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
@@ -688,5 +713,61 @@ var myInterval = setInterval(datecheckmax, 500);
     </script>
 
 @endif
+
+
+
+
+
+
+<script>
+
+
+var inputBox = document.getElementById("inputnumber");
+var invalidChars = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  "০",
+  "১",
+  "২",
+  "৩",
+  "৪",
+  "৫",
+  "৬",
+  "৭",
+  "৮",
+  "৯",
+   "",
+ 
+];
+
+ var sbbtn = document.getElementById("sbbtn");
+
+   $(".number").keydown(function (e) {
+           if(invalidChars.includes(e.key) || e.which == 8 || event.key === 'Delete' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
+            sbbtn.disabled = false;
+  
+   }
+   
+  else {
+          e.preventDefault();
+           $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
+          sbbtn.disabled = false;
+      return true;
+      
+      
+  }
+});
+
+</script>
+
+
 <x-admin-footer/>
 

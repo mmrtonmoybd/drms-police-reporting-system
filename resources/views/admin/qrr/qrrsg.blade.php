@@ -185,6 +185,7 @@ function hms ($value) {
 
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                             <a href="{{url('/admin/qrrs/review')}}" target="_blank">  
                             <div class="card-body text-center"><i class="i-Add-User"></i>
                                
 								<div class="content" style="max-width: 100%;">
@@ -193,6 +194,7 @@ function hms ($value) {
                                 </div>
 								
                             </div>
+                            </a>
                         </div>
                     </div>
 
@@ -341,8 +343,8 @@ function hms ($value) {
       <div style="text-align: right;margin: 16px;">
                     
                                           
-  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a>
-  <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-success"><i class="fa fa-file-pdf"></i> PDF</a>
+  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-primary"><i class="fa fa-file-pdf"></i> PDF</a>
       
 											
 											</div>

@@ -63,6 +63,13 @@
                                                     <input type="text" name="designation"  value="{{$user->designation}}" id="designation" class="form-control  @error('designation') is-invalid @enderror" placeholder="Designation" required>
                                                 </div>
                                             </div>
+                                            
+                                             <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label for="mobile" class="form-label">  Mobile no  </label>
+                                                    <input type="text" minlength="11" maxlength="11" name="mobile"  value="{{$user->mobile}}" id="mobile" class="number form-control  @error('mobile') is-invalid @enderror" placeholder=" Mobile no  " >
+                                                </div>
+                                            </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">

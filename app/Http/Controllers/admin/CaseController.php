@@ -467,7 +467,7 @@ class CaseController extends Controller
 
         //Last  3 month case start
 
-        $last_three_month = Carbon::now()->startOfMonth()->subMonth(3);
+        $last_three_month = Carbon::now()->startOfMonth()->subMonth(2);
         $this_month = Carbon::now()->endOfMonth();
 
         $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, DATE_FORMAT(case_date, "%Y-%b") AS monthyear, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month,$this_month])->groupBy('monthyear')->orderBy(\DB::raw('MONTH(case_date)'), 'ASC')->get();
@@ -487,8 +487,16 @@ class CaseController extends Controller
         $data['jaminprapto'] = Casedb::whereNotNull('jamin_prapto')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('jamin_prapto');
 
         $data['ovohotiprapto'] = Casedb::whereNotNull('ovohoti')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('ovohoti');
+        
+        $data['nispottimamlaiazahar'] = Casedb::whereNotNull('azahar_namio_victims')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->where('nispotti_or_multobi', 'নিস্পত্তি')->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_namio_victims');
+        
+        $data['onesixtyrecive'] = Casedb::whereNotNull('sixtyone_recive')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('sixtyone_recive');
+        
+        $data['onesixtyfourrecive'] = Casedb::whereNotNull('sixtyfour_recive')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('sixtyfour_recive');
 
         $data['azaharnewinvistigateprapto'] = Casedb::whereNotNull('azahar_vukto_invistigate')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_vukto_invistigate');
+        
+        $data['policereportprapti'] = Casedb::whereNotNull('police_report_victim')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('police_report_victim');
         // Ak nojora case details end
 
         $data['reviewpending'] = Casedb::where('districtID', $dkey, $dvalue)
@@ -918,6 +926,45 @@ class CaseController extends Controller
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
         ->sum('azahar_vukto_invistigate');
+        
+        $data['nispottimamlaiazahar'] = Casedb::whereNotNull('azahar_namio_victims')
+        
+        ->where('districtID', $dkey, $dvalue)
+                                ->where('circleID', $ckey, $cvalue)
+                                ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
+                                ->where('case_type', $caseTypeID_key, $caseTypeID)
+                          ->where('casesub_type', $casesubID_key, $casesubID)
+                                ->whereBetween('case_date', [$fvalue, $tovalue])
+        ->where('nispotti_or_multobi', 'নিস্পত্তি')->sum('azahar_namio_victims');
+        
+        $data['onesixtyrecive'] = Casedb::whereNotNull('sixtyone_recive')
+        ->where('districtID', $dkey, $dvalue)
+                                ->where('circleID', $ckey, $cvalue)
+                                ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
+                                ->where('case_type', $caseTypeID_key, $caseTypeID)
+                          ->where('casesub_type', $casesubID_key, $casesubID)
+                                ->whereBetween('case_date', [$fvalue, $tovalue])->sum('sixtyone_recive');
+        
+        $data['onesixtyfourrecive'] = Casedb::whereNotNull('sixtyfour_recive')
+       ->where('districtID', $dkey, $dvalue)
+                                ->where('circleID', $ckey, $cvalue)
+                                ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
+                                ->where('case_type', $caseTypeID_key, $caseTypeID)
+                          ->where('casesub_type', $casesubID_key, $casesubID)
+                                ->whereBetween('case_date', [$fvalue, $tovalue])->sum('sixtyfour_recive');
+                                
+        $data['policereportprapti'] = Casedb::whereNotNull('police_report_victim')
+        ->where('districtID', $dkey, $dvalue)
+                                ->where('circleID', $ckey, $cvalue)
+                                ->where('thanaID', $tkey, $tvalue)
+                                ->where('status', 'active')
+                                ->where('case_type', $caseTypeID_key, $caseTypeID)
+                          ->where('casesub_type', $casesubID_key, $casesubID)
+                                ->whereBetween('case_date', [$fvalue, $tovalue])
+        ->sum('police_report_victim');
         // Ak nojora case details end
 
         $data['reviewpending'] = Casedb::where('districtID', $dkey, $dvalue)

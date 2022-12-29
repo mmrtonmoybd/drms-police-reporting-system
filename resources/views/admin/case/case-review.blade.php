@@ -9,16 +9,16 @@ use Illuminate\Support\Str;
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                               <div style="text-align: right;margin: 16px;">
                     
                                           
-  <!-- <a target="_blank" href="" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel</a> -->
+  <!-- <a target="_blank" href="" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a> -->
       
 											
 											</div>
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>

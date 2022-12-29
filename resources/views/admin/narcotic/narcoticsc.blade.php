@@ -263,39 +263,44 @@
                 <div class="separator-breadcrumb border-top"></div>
                 <div class="row">
                     <!-- ICON BG-->
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                              <a href="{{url('/admin/narcotic')}}">   
                             <div class="card-body text-center"><i class="i-Add-User"></i>
-                        
+                         
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট কেস </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$totalcase}}</p>
                                 </div>
-						
+					
                             </div>
+                            	</a>
                         </div>
                     </div>
 
 
                     @can('narcotic.review.info')
 
-                    <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><!------- <i class="i-Add-User"></i>   --------->
-                               
+                                <a href="{{url('/admin/narcotic/review')}}">   
+                            <div class="card-body text-center"> <i class="i-Clock"></i>  
+                    
+                           
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0"> ওসি পেন্ডিং </p>
                                     <p class="text-primary text-24 line-height-1 mb-2">{{$reviewpending}}</p>
                                 </div>
-								
+					
                             </div>
+                            	</a>
                         </div>
                     </div>
 
                     @endcan
 
 
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body text-center"><i class="i-Financial"></i>
                                 <div class="content" style="max-width: 100%;">
@@ -371,7 +376,7 @@
     <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="card">
-                                    <div class="card-body table-responsive">
+                                    <div class="card-body">
                                         
                                         
 
@@ -386,7 +391,7 @@
                                              -->
 
                                              <caption>Amount of Narcotics recoverd by Unit</caption>
-                                            <table class="table table-bordered table-striped table-centered mb-0">
+                                            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                                
                                             <thead>
                                                 <tr>
@@ -450,7 +455,7 @@
 
                                          <caption>Amount of Narcotics recoverd by PS</caption>
 
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                                
                                             <thead>
                                                 <tr>
@@ -508,7 +513,7 @@
 
                                         @if ($request->has('submit'))
 
-                                        <table class="table table-bordered table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 86px">Action</th>
@@ -704,7 +709,7 @@
                     this.getDistricts();
                 }
                 if(this.district_id!=""){
-                    this.getUpozillas();
+                    this.getUpozillasAndThana();
                 }
                 
             },

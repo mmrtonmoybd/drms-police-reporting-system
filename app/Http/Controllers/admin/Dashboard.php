@@ -18,10 +18,7 @@ use Session;
 
 class Dashboard extends Controller
 {
-    
-    
-    ////////////Modified By Rashad ////////////
-  public function home()
+ public function home()
     {
         return view('home');
     }
@@ -37,8 +34,7 @@ class Dashboard extends Controller
     {
         return view('cfrom');
     }
-   
-     ////////////Modified By Rashad ////////////
+    
     
     
     //this method for index function
