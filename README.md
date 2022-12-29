@@ -137,7 +137,7 @@ composer install
 
 4.  Rename `.env.example` to  `.env` and update.
 
-5. Import SQL file in phpmyadmin
+5. Import SQL file in phpmyadmin.
 
 ## Authors
 
