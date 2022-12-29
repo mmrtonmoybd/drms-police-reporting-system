@@ -1,77 +1,145 @@
-### DRMS for Bangladesh Police
+<br/>
+<p align="center">
+  <a href="https://github.com/mmrtonmoybd/police-db">
+    <img src="public/logo-drms.jpg" alt="Logo" width="80" height="80">
+  </a>
 
-# Features
+  <h3 align="center">DRMS</h3>
 
- Case: <br>
-      1. Case Dashboard <br>
-      2. Case add <br>
-      3. Case index <br>
-      4. Case edit <br>
-      5. Case delete <br>
-      6. Case view <br>
-      7. OC review <br>
-      8. Chart link <br>
-      
- Qrr: <br>
-     1. Qrr Dashboard <br>
-     2. Qrr add <br>
-     3. Qrr index (Datatable) <br>
-     4. Qrr edit <br>
-     5. Qrr delete <br>
-     6. Qrr view <br>
-     7. OC review <br>
-     8. Chart link <br>
+  <p align="center">
+    Digital Reporting and Monitoring System of Bangladesh police. With the helps of DRMS they could easily organize and manage there daily official needs.
+    <br/>
+    <br/>
+    <a href="https://drmsbslrange.com">View Demo</a>
+    .
+    <a href="https://github.com/mmrtonmoybd/police-db/issues">Report Bug</a>
+    .
+    <a href="https://github.com/mmrtonmoybd/police-db/issues">Request Feature</a>
+  </p>
+</p> 
+
+## About The Project
+
+Case:
+
+      1. Case Dashboard
+      2. Case add 
+      3. Case index 
+      4. Case edit 
+      5. Case delete 
+      6. Case view 
+      7. OC review 
+      8. Chart link 
+
+Qrr:
+
+     1. Qrr Dashboard 
+     2. Qrr add 
+     3. Qrr index (Datatable) 
+     4. Qrr edit 
+     5. Qrr delete 
+     6. Qrr view 
+     7. OC review 
+     8. Chart link 
      
- Narcotic: <br>
-     1. Narcotic Dashboard <br>
-     2. Narcotic add <br>
-     3. Narcotic edit <br>
-     4. Narcotic delete <br>
-     5. Narcotic Index <br>
-     6. Narcotic Case number <br>
-     7. Narcotic recover <br>
-     8. OC review <br>
-     9. Chart link <br>
+Narcotic: 
 
-  Warrant: <br>
-     1. Warrant Dashboard <br>
-     2. Warrant Index <br>
-     3. Warrant add <br>
-     4. Warrant edit <br>
-     5. Warrant delete <br>
-     6. Warrant view <br>
-     7. OC review <br>
-     8. Chart link <br>
+     1. Narcotic Dashboard 
+     2. Narcotic add
+     3. Narcotic edit 
+     4. Narcotic delete
+     5. Narcotic Index
+     6. Narcotic Case number 
+     7. Narcotic recover 
+     8. OC review 
+     9. Chart link 
 
-  Women and children: <br>
-     1. W & C Dashboard <br>
-     2. W & C add <br>
-     3. W & C Index <br>
-     4. W & C edit <br>
-     5. W & C delete <br>
-     6. W & C view <br>
-     7. OC review <br>
-     8. Chart link <br>
+Warrant:
 
-  User management: <br>
-    1. Role index <br>
-    2. Role edit <br>
-    3. Role assign permission dynamicly <br>
-    4. Role remove permission dynamicly <br>
-    5. Role view <br>
-    6. User index (Datatable) <br>
-    7. User add <br>
-    8. User edit <br>
-    9. User delete <br>
-    10. User view  <br>
+     1. Warrant Dashboard 
+     2. Warrant Index 
+     3. Warrant add
+     4. Warrant edit 
+     5. Warrant delete 
+     6. Warrant view 
+     7. OC review 
+     8. Chart link 
 
-  User authentication: <br>
-    1. Login <br>
-    2. Forget password <br>
-    3. Email verification <br>
-    4. Password confirmation <br>
-    5. Dashboard redirect after login <br>
-    6. Beautiful dashboard & authenticaticate user information <br>
-    7. Authenticaticate user profile edit <br>
-  
-    
+Women and children: 
+
+     1. W & C Dashboard 
+     2. W & C add 
+     3. W & C Index 
+     4. W & C edit 
+     5. W & C delete 
+     6. W & C view 
+     7. OC review 
+     8. Chart link 
+
+User management: 
+
+    1. Role index 
+    2. Role edit 
+    3. Role assign permission dynamicly 
+    4. Role remove permission dynamicly 
+    5. Role view 
+    6. User index (Datatable) 
+    7. User add 
+    8. User edit 
+    9. User delete 
+    10. User view  
+
+User authentication:
+
+    1. Login 
+    2. Forget password 
+    3. Email verification 
+    4. Password confirmation
+    5. Dashboard redirect after login
+    6. Beautiful dashboard & authenticaticate user information
+    7. Authenticaticate user profile edit 
+
+## Built With
+
+Software framework: Laravel 8
+Software language: php 8.1
+Architecture structure: MVC
+
+## Getting Started
+
+Step by step fellow this instruction to install this project.
+
+### Prerequisites
+
+Requirement: 
+
+* php => 7.4
+* Composer
+
+### Installation
+
+1. Clone the repo
+
+```sh
+git clone https://github.com/mmrtonmoybd/police-db.git police
+```
+2. Open police folder in cmd
+
+```sh
+cd police
+```
+
+3. Install Composer packages
+
+```sh
+composer install
+```
+
+4.  Rename `.env.example` to  `.env` and update.
+
+5. Import SQL file in phpmyadmin
+
+## Authors
+
+* **Moshiur Rahman Tonmoy** - *php and Laravel Developer* - [Moshiur Rahman Tonmoy](https://www.facebook.com/mmrtonmoy) - *Backend*
+* **Shoaib Bin Habib Rashad** - *Frontend Developer * - [Shoaib Bin Habib Rashad](https://www.facebook.com/sbhrashad) - *Frontend*
