@@ -3,9 +3,6 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use Illuminate\Http\Request;
-use App\Models\Contact;
-use App\Models\Booking;
 use Session;
 
 class AdminLeftMenu extends Component

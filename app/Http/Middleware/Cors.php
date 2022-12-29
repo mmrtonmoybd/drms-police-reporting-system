@@ -17,11 +17,11 @@ class Cors
     public function handle($request, Closure $next)
     {
         $headers = [
-            'Access-Control-Allow-Origin'      => '*',
-            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Allow-Credentials' => 'true',
-            'Access-Control-Max-Age'           => '86400',
-            'Access-Control-Allow-Headers'     => 'Content-Type, Authorization, authorization, X-Requested-With, access_token'
+            'Access-Control-Max-Age' => '86400',
+            'Access-Control-Allow-Headers' => 'Content-Type, Authorization, authorization, X-Requested-With, access_token',
         ];
 
         if ($request->isMethod('OPTIONS')) {

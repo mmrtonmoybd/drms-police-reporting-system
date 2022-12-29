@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Exports\QrrsviewExport;
 use Illuminate\Support\Carbon;
 
@@ -24,18 +22,17 @@ class Test extends Controller
     {
         $arr = request()->all();
         $hh = \Illuminate\Support\Arr::except($arr, ['districtID', 'thanaID']);
+
         return $hh;
     }
 
-
     public function index()
     {
-        $currentday = Carbon::now()->format('Y-m-d') . ' 23:59:59';
+        $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
-        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d') . ' 00:00:00';
+        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
 
         echo $agomonthday;
-
 
         // echo $this->lasttmon(0, 'enddate');
 

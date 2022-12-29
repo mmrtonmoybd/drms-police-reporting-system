@@ -10,7 +10,7 @@ class Woman extends Model
     use HasFactory;
 
     protected $fillable = [
-         'reference_no', 'divisionID', 'districtID', 'thanaID', 'village_word', 'wdate', 'badi_name', 'badi_phone', 'badi_age', 'badi_address', 'vbadi_name', 'vbadi_address', 'complaint_reson', 'investigator_name', 'investigator_title', 'mobile_no', 'gd_no', 'gd_date', 'mamla_no', 'dhara', 'mamla_date', 'complaint_no', 'problem_fix', 'action_taken', 'nreport', 'comment', 'user_id', 'event_type', 'begening_of_event', 'short_dettails', 'satisfy_rate', 'complaint_date', 'victim_type', 'status'
+        'reference_no', 'divisionID', 'districtID', 'thanaID', 'village_word', 'wdate', 'badi_name', 'badi_phone', 'badi_age', 'badi_address', 'vbadi_name', 'vbadi_address', 'complaint_reson', 'investigator_name', 'investigator_title', 'mobile_no', 'gd_no', 'gd_date', 'mamla_no', 'dhara', 'mamla_date', 'complaint_no', 'problem_fix', 'action_taken', 'nreport', 'comment', 'user_id', 'event_type', 'begening_of_event', 'short_dettails', 'satisfy_rate', 'complaint_date', 'victim_type', 'status',
     ];
 
     protected $table = 'womens';
@@ -28,9 +28,7 @@ class Woman extends Model
     protected static function booted()
     {
         static::created(function ($row) {
-            
             if (auth()->user()->can('woman.review')) {
-
                 $status = 'active';
             } else {
                 $status = 'inactive';

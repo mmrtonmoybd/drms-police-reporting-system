@@ -3,18 +3,18 @@
 namespace App\Exports\Qrr;
 
 use App\Models\Qrr;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\Exportable;
 
 class QrrListExport implements FromCollection, WithMapping, WithHeadings
 {
     use Exportable;
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         $disid = 9552;
@@ -33,7 +33,6 @@ class QrrListExport implements FromCollection, WithMapping, WithHeadings
             $thaid = auth()->user()->thanaID;
             $thaexp = '=';
         }
-
 
         return Qrr::with(['district', 'thana'])->where('districtID', $disexp, $disid)->where('thanaID', $thaexp, $thaid)->where('status', 'active')->get();
     }
@@ -68,52 +67,48 @@ class QrrListExport implements FromCollection, WithMapping, WithHeadings
             'মোবাইল নং',
             'ছবি/ভিডিও প্রাপ্তি',
             'সন্তুষ্টির মান',
-            'মন্তব্য'
+            'মন্তব্য',
         ];
     }
 
     public function map($qrrsc): array
     {
-        if (!empty($qrrsc->date_time_of_incident)) {
+        if (! empty($qrrsc->date_time_of_incident)) {
             $date1 = date('d/m/Y H:i:s', strtotime($qrrsc->date_time_of_incident));
         } else {
             $date1 = '';
         }
 
-        if (!empty($qrrsc->date_time_of_police_news)) {
+        if (! empty($qrrsc->date_time_of_police_news)) {
             $date2 = date('d/m/Y H:i:s', strtotime($qrrsc->date_time_of_police_news));
         } else {
             $date2 = '';
         }
 
-
-
-        if (!empty($qrrsc->date_time_response)) {
+        if (! empty($qrrsc->date_time_response)) {
             $date3 = date('d/m/Y H:i:s', strtotime($qrrsc->date_time_response));
         } else {
             $date3 = '';
         }
 
-
-        if (!empty($qrrsc->gd_date)) {
+        if (! empty($qrrsc->gd_date)) {
             $date4 = date('d/m/Y', strtotime($qrrsc->gd_date));
         } else {
             $date4 = '';
         }
 
-        if (!empty($qrrsc->case_date)) {
+        if (! empty($qrrsc->case_date)) {
             $date5 = date('d/m/Y', strtotime($qrrsc->case_date));
         } else {
             $date5 = '';
         }
 
-        if (!empty($qrrsc->delay_in_response)) {
+        if (! empty($qrrsc->delay_in_response)) {
             $cal = floor($qrrsc->delay_in_response / 3600);
-            $date6 = str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $qrrsc->delay_in_response % 3600);
+            $date6 = str_pad($cal, 2, '0', STR_PAD_LEFT).gmdate(':i:s', $qrrsc->delay_in_response % 3600);
         } else {
             $date6 = '';
         }
-
 
         return [
             $qrrsc->id,
@@ -143,7 +138,7 @@ class QrrListExport implements FromCollection, WithMapping, WithHeadings
             $qrrsc->mobile_no,
             $qrrsc->image_video,
             $qrrsc->media_quality,
-            $qrrsc->comments
+            $qrrsc->comments,
         ];
     }
 }

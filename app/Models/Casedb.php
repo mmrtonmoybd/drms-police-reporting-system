@@ -9,7 +9,6 @@ class Casedb extends Model
 {
     use HasFactory;
 
-
     public $timestamps = true;
 
     protected $guarded = ['id'];
@@ -42,9 +41,7 @@ class Casedb extends Model
     protected static function booted()
     {
         static::created(function ($row) {
-            
             if (auth()->user()->can('case.review')) {
-
                 $status = 'active';
             } else {
                 $status = 'inactive';

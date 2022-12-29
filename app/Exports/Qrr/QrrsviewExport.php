@@ -3,15 +3,15 @@
 namespace App\Exports\Qrr;
 
 use App\Models\Qrr;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\Exportable;
 
 class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
 {
     use Exportable;
+
     private $qrrid;
 
     public function forId(int $qrrid)
@@ -20,7 +20,6 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
 
         return $this;
     }
-
 
     public function query()
     {
@@ -57,52 +56,48 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
              'মোবাইল নং',
              'ছবি/ভিডিও প্রাপ্তি',
              'সন্তুষ্টির মান',
-             'মন্তব্য'
+             'মন্তব্য',
          ];
      }
 
     public function map($qrrview): array
     {
-        if (!empty($qrrview->date_time_of_incident)) {
+        if (! empty($qrrview->date_time_of_incident)) {
             $date1 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_of_incident));
         } else {
             $date1 = '';
         }
 
-        if (!empty($qrrview->date_time_of_police_news)) {
+        if (! empty($qrrview->date_time_of_police_news)) {
             $date2 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_of_police_news));
         } else {
             $date2 = '';
         }
 
-
-
-        if (!empty($qrrview->date_time_response)) {
+        if (! empty($qrrview->date_time_response)) {
             $date3 = date('d/m/Y H:i:s', strtotime($qrrview->date_time_response));
         } else {
             $date3 = '';
         }
 
-
-        if (!empty($qrrview->gd_date)) {
+        if (! empty($qrrview->gd_date)) {
             $date4 = date('d/m/Y', strtotime($qrrview->gd_date));
         } else {
             $date4 = '';
         }
 
-        if (!empty($qrrview->case_date)) {
+        if (! empty($qrrview->case_date)) {
             $date5 = date('d/m/Y', strtotime($qrrview->case_date));
         } else {
             $date5 = '';
         }
 
-        if (!empty($qrrview->delay_in_response)) {
+        if (! empty($qrrview->delay_in_response)) {
             $cal = floor($qrrview->delay_in_response / 3600);
-            $date6 = str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $qrrview->delay_in_response % 3600);
+            $date6 = str_pad($cal, 2, '0', STR_PAD_LEFT).gmdate(':i:s', $qrrview->delay_in_response % 3600);
         } else {
             $date6 = '';
         }
-
 
         return [
             $qrrview->id,
@@ -132,7 +127,7 @@ class QrrsviewExport implements FromQuery, WithMapping, WithHeadings
             $qrrview->mobile_no,
             $qrrview->image_video,
             $qrrview->media_quality,
-            $qrrview->comments
+            $qrrview->comments,
         ];
     }
 }

@@ -26,9 +26,7 @@ class Qrr extends Model
     protected static function booted()
     {
         static::created(function ($row) {
-            
             if (auth()->user()->can('qrr.review')) {
-
                 $status = 'active';
             } else {
                 $status = 'inactive';

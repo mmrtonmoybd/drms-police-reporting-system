@@ -1,23 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\Dashboard;
+use App\Exports\Narcotic\NarcoticListExport;
+use App\Exports\Qrr\QrrListExport;
+use App\Exports\Woman\WomanListExport;
 use App\Http\Controllers\admin\AreaController;
-
+use App\Http\Controllers\admin\CaseController;
+use App\Http\Controllers\admin\Dashboard;
+use App\Http\Controllers\admin\NarcotiscController;
+use App\Http\Controllers\admin\QrrsController;
+use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\UsersController;
-use App\Http\Controllers\admin\QrrsController;
 use App\Http\Controllers\admin\WarrantController;
-use App\Http\Controllers\admin\NarcotiscController;
-use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\WomanController;
 use App\Http\Controllers\Test;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use App\Exports\Qrr\QrrListExport;
-use App\Exports\Woman\WomanListExport;
-use App\Exports\Narcotic\NarcoticListExport;
-use App\Http\Controllers\admin\CaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +55,6 @@ Route::get('/', [Dashboard::class, 'home']);
 Route::get('/seba', [Dashboard::class, 'seba']);
 Route::get('/cfrom', [Dashboard::class, 'cfrom']);
 
-
 //apply middle ware for admin
 Route::fallback([Dashboard::class, 'NotFound']);
 Route::get('/admin', [Dashboard::class, 'admin']);
@@ -66,9 +64,7 @@ Route::prefix('admin')->group(function () {
 
     //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-    Route::group(['middleware'=> 'auth'], function () {
+    Route::group(['middleware' => 'auth'], function () {
         Route::get('/adminsidebarcollapase', function (Request $request) {
             if ($request->filled('sidebar')) {
                 Session::put('sidebar', $request->input('sidebar'));
@@ -84,7 +80,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/circles/{district_id}', [AreaController::class, 'getCircles']);
         Route::get('/circles/thanas/{circle_id}', [AreaController::class, 'getCircleThanas']);
         Route::get('/casesub/type/{parent_id}', [AreaController::class, 'getCasesubType']);
-
 
         //admin qrrs route
         Route::get('/qrrs', [QrrsController::class, 'Index'])->middleware('permission:qrr.view');
@@ -154,7 +149,6 @@ Route::prefix('admin')->group(function () {
             return (new NarcoticListExport())->download($name.'.xlsx');
         });
 
-
         // Woman router
         Route::get('/woman', [WomanController::class, 'index'])->middleware('permission:woman.view');
         Route::get('/woman/review', [WomanController::class, 'reviewList'])->middleware('permission:woman.review');
@@ -176,7 +170,6 @@ Route::prefix('admin')->group(function () {
             return (new WomanListExport())->download($name.'.xlsx');
         });
 
-
         // Case router
         Route::get('/case', [CaseController::class, 'index'])->middleware('permission:case.view');
         Route::get('/case/review', [CaseController::class, 'reviewList'])->middleware('permission:case.review');
@@ -192,8 +185,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/case/dashboard', [CaseController::class, 'dashboard'])->middleware('permission:case.dashboard');
         Route::get('/case/dashboard/search', [CaseController::class, 'dashboardsc'])->middleware('permission:case.dashboard');
         Route::get('/case/dashboard/chart/data', [CaseController::class, 'chartdata'])->middleware('permission:case.dashboard');
-
-
 
         // User and Role router
         Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {

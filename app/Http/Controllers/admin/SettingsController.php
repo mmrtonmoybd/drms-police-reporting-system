@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Setting;
-use Session;
+use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
@@ -21,9 +20,9 @@ class SettingsController extends Controller
         }
 
         $data['settings'] = $settings;
+
         return view('admin/settings/settings', $data);
     }
-
 
     //this method for settings data should save
     public function SaveData(Request $request)
@@ -39,8 +38,6 @@ class SettingsController extends Controller
             }
         }
 
-
-
         //update header phone
         if (isset($settings['header_phone'])) {
             $settings['header_phone'] = $request->input('header_phone');
@@ -49,7 +46,6 @@ class SettingsController extends Controller
             $settings['header_phone'] = $request->input('header_phone');
         }
 
-
         //update header email
         if (isset($settings['header_email'])) {
             $settings['header_email'] = $request->input('header_email');
@@ -57,7 +53,6 @@ class SettingsController extends Controller
             $addOptions['header_email'] = $request->input('header_email');
             $settings['header_email'] = $request->input('header_email');
         }
-
 
         //update header logo
         if (isset($settings['header_logo'])) {
@@ -71,7 +66,6 @@ class SettingsController extends Controller
             $settings['header_logo'] = $header_logo ? $header_logo : null;
         }
 
-
         //update footer phone
         if (isset($settings['footer_phone'])) {
             $settings['footer_phone'] = $request->input('footer_phone');
@@ -79,7 +73,6 @@ class SettingsController extends Controller
             $addOptions['footer_phone'] = $request->input('footer_phone');
             $settings['footer_phone'] = $request->input('footer_phone');
         }
-
 
         //update footer email
         if (isset($settings['footer_email'])) {
@@ -89,8 +82,6 @@ class SettingsController extends Controller
             $settings['footer_email'] = $request->input('footer_email');
         }
 
-
-
         //update footer email
         if (isset($settings['footer_address'])) {
             $settings['footer_address'] = $request->input('footer_address');
@@ -99,8 +90,6 @@ class SettingsController extends Controller
             $settings['footer_address'] = $request->input('footer_address');
         }
 
-
-
         //update footer copy
         if (isset($settings['footer_copyright'])) {
             $settings['footer_copyright'] = $request->input('footer_copyright');
@@ -108,7 +97,6 @@ class SettingsController extends Controller
             $addOptions['footer_copyright'] = $request->input('footer_copyright');
             $settings['footer_copyright'] = $request->input('footer_copyright');
         }
-
 
         //update footer logo
         if (isset($settings['footer_logo'])) {
@@ -122,10 +110,6 @@ class SettingsController extends Controller
             $settings['footer_logo'] = $footer_logo ? $footer_logo : null;
         }
 
-
-
-
-
         //update footer phone
         if (isset($settings['contact_phone'])) {
             $settings['contact_phone'] = $request->input('contact_phone');
@@ -134,7 +118,6 @@ class SettingsController extends Controller
             $settings['contact_phone'] = $request->input('contact_phone');
         }
 
-
         //update footer email
         if (isset($settings['contact_email'])) {
             $settings['contact_email'] = $request->input('contact_email');
@@ -142,8 +125,6 @@ class SettingsController extends Controller
             $addOptions['contact_email'] = $request->input('contact_email');
             $settings['contact_email'] = $request->input('contact_email');
         }
-
-
 
         //update footer email
         if (isset($settings['contact_short_text'])) {
@@ -161,7 +142,6 @@ class SettingsController extends Controller
             $settings['contact_map'] = $request->input('contact_map');
         }
 
-
         //update about title
         if (isset($settings['about_title'])) {
             $settings['about_title'] = $request->input('about_title');
@@ -178,8 +158,6 @@ class SettingsController extends Controller
             $settings['about_description'] = $request->input('about_description');
         }
 
-
-
         //update footer logo
         if (isset($settings['about_image'])) {
             $about_image = $this->UploadFile('about_image', $request);
@@ -192,9 +170,6 @@ class SettingsController extends Controller
             $settings['about_image'] = $about_image ? $about_image : null;
         }
 
-
-
-
         //update opening hourse
         if (isset($settings['saturday_open'])) {
             $settings['saturday_open'] = $request->input('saturday_open');
@@ -202,7 +177,6 @@ class SettingsController extends Controller
             $addOptions['saturday_open'] = $request->input('saturday_open');
             $settings['saturday_open'] = $request->input('saturday_open');
         }
-
 
         //update opening hourse
         if (isset($settings['sunday_open'])) {
@@ -252,14 +226,12 @@ class SettingsController extends Controller
             $settings['friday_open'] = $request->input('friday_open');
         }
 
-
         $this->UpdateSettings($addOptions, $settings);
 
         $request->session()->flash('success_msg', 'Data updated successfully');
+
         return redirect('admin/settings');
     }
-
-
 
     //update settings
     public function UpdateSettings($addOptions, $settings)
@@ -269,8 +241,8 @@ class SettingsController extends Controller
 
         //add options
         if ($addOptions) {
-            foreach ($addOptions as $key=>$addItem) {
-                $addOptionsAttr[] = ['data_id'=>$key, 'data'=>$addItem];
+            foreach ($addOptions as $key => $addItem) {
+                $addOptionsAttr[] = ['data_id' => $key, 'data' => $addItem];
             }
 
             Setting::insert($addOptionsAttr);
@@ -278,14 +250,11 @@ class SettingsController extends Controller
 
         //update options
         if ($settings) {
-            foreach ($settings as $key=>$addItem) {
-                Setting::where('data_id', $key)->update(['data_id'=>$key, 'data'=>$addItem]);
+            foreach ($settings as $key => $addItem) {
+                Setting::where('data_id', $key)->update(['data_id' => $key, 'data' => $addItem]);
             }
         }
     }
-
-
-
 
     //this method for file upload
     public function UploadFile($field_name, $request)
@@ -293,7 +262,7 @@ class SettingsController extends Controller
         $filepath = null;
         if ($request->file($field_name)) {
             $path = $request->file($field_name)->store('public/settings');
-            $path =str_replace("public/settings", "", $path);
+            $path = str_replace('public/settings', '', $path);
             $filepath = $path;
         }
 
