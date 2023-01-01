@@ -1,6 +1,5 @@
 <?php
 
-
 if (! function_exists('headertitle')) {
     function headertitle()
     {
@@ -25,8 +24,6 @@ if (! function_exists('headertitle')) {
             $title = 'QRR View';
         } elseif (\request()->is('admin/qrrs/edit/*')) {
             $title = 'QRR Edit';
-            
-            
         } elseif (\request()->is('admin/case/dashboard')) {
             $title = 'Case Dashboard';
         } elseif (\request()->is('admin/case')) {
@@ -45,10 +42,6 @@ if (! function_exists('headertitle')) {
             $title = 'Case add';
         } elseif (\request()->is('admin/case/dashboard/search')) {
             $title = 'Case Search';
-            
-            
-
-            
         } elseif (\request()->is('admin/narcotic/dashboard')) {
             $title = 'Narcotics Dashboard';
         } elseif (\request()->is('admin/narcotic')) {
@@ -69,10 +62,6 @@ if (! function_exists('headertitle')) {
             $title = 'Narcotics Data';
         } elseif (\request()->is('admin/narcotic/src')) {
             $title = 'Narcotics Search';
-            
-            
-
-            
         } elseif (\request()->is('admin/woman/dashboard')) {
             $title = 'W & C  Dashboard';
         } elseif (\request()->is('admin/woman')) {
@@ -91,13 +80,8 @@ if (! function_exists('headertitle')) {
             $title = 'Woman add';
         } elseif (\request()->is('admin/woman/src')) {
             $title = 'Woman Search';
-        }   elseif (\request()->is('admin/woman/chart/*')) {
+        } elseif (\request()->is('admin/woman/chart/*')) {
             $title = 'W & C Data';
-        
-        
-            
-            
-            
         } elseif (\request()->is('admin/warrant/dashboard')) {
             $title = 'Warrant Dashboard';
         } elseif (\request()->is('admin/warrant')) {
@@ -114,12 +98,6 @@ if (! function_exists('headertitle')) {
             $title = 'Warrant View';
         } elseif (\request()->is('admin/warrant/add')) {
             $title = 'Warrant add';
-            
-            
-            
-            
-
-            
         } elseif (\request()->is('admin/users')) {
             $title = 'User List';
         } elseif (\request()->is('admin/users/add')) {
@@ -132,11 +110,9 @@ if (! function_exists('headertitle')) {
             $title = 'View Role';
         } elseif (\request()->is('admin/users/role/edit/*')) {
             $title = 'Edit Role';
-            
         } elseif (\request()->is('admin/woman/chart/*')) {
             $title = 'W & C Data';
         }
-
 
         return $title;
     }

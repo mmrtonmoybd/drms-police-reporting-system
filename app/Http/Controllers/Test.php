@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Exports\QrrsviewExport;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class Test extends Controller
 {
@@ -24,9 +22,9 @@ class Test extends Controller
     {
         $arr = request()->all();
         $hh = \Illuminate\Support\Arr::except($arr, ['districtID', 'thanaID']);
+
         return $hh;
     }
-
 
     public function index()
     {

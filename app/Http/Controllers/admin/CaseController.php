@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\District;
-use App\Models\CaseType;
 use App\Models\Casedb;
+use App\Models\CaseType;
 use App\Models\Circle;
+use App\Models\District;
 use App\Models\Thana;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class CaseController extends Controller
@@ -41,7 +41,6 @@ class CaseController extends Controller
         return view('admin/case/cases', $data);
     }
 
-
     public function reviewList()
     {
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
@@ -70,7 +69,6 @@ class CaseController extends Controller
         return view('admin/case/case-review', $data);
     }
 
-
     public function reviewShow(Request $request, Casedb $casedb)
     {
         $data['casedb'] = $casedb;
@@ -83,18 +81,19 @@ class CaseController extends Controller
         //$data['qrr'] = $qrr;
 
         $data = [
-            'status' => $request->input('statusg')
+            'status' => $request->input('statusg'),
         ];
 
         if ($casedb->update($data)) {
             $request->session()->flash('success_msg', 'Data status updated successfully');
+
             return redirect('admin/case/review');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
+
             return redirect()->back();
         }
     }
-
 
     public function addShow(Request $request)
     {
@@ -123,7 +122,7 @@ class CaseController extends Controller
 
         if ($request->filled('cdms_pg_id')) {
             $cdms_pg_id = $request->input('cdms_pg_id');
-            $cdms_pg_id_result = preg_replace("/[^a-zA-Z0-9]+/", "", $cdms_pg_id);
+            $cdms_pg_id_result = preg_replace('/[^a-zA-Z0-9]+/', '', $cdms_pg_id);
             $cdms_pg_id_result_final = strtoupper($cdms_pg_id_result);
         }
 
@@ -186,7 +185,6 @@ class CaseController extends Controller
     {
         $data['case'] = $casedb;
 
-
         $data['request'] = $request;
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
@@ -207,11 +205,9 @@ class CaseController extends Controller
 
         if ($request->filled('cdms_pg_id')) {
             $cdms_pg_id = $request->input('cdms_pg_id');
-            $cdms_pg_id_result = preg_replace("/[^a-zA-Z0-9]+/", "", $cdms_pg_id);
+            $cdms_pg_id_result = preg_replace('/[^a-zA-Z0-9]+/', '', $cdms_pg_id);
             $cdms_pg_id_result_final = strtoupper($cdms_pg_id_result);
         }
-
-
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $thana = Thana::find($request->input('thanaID'));
@@ -255,42 +251,32 @@ class CaseController extends Controller
             'azahar_vukto_invistigate' => $this->reptpenum($request->input('azahar_vukto_invistigate')),
             'ovohoti' => $this->reptpenum($request->input('ovohoti')),
             'sixtyone_recive' => $this->reptpenum($request->input('sixtyone_recive')),
-            'sixtyfour_recive' => $this->reptpenum($request->input('sixtyfour_recive'))
+            'sixtyfour_recive' => $this->reptpenum($request->input('sixtyfour_recive')),
         ]);
-
-
 
         if ($request->filled('case_date')) {
             $case_date = Carbon::createFromFormat('d/m/Y', $request->input('case_date'))->format('Y-m-d');
 
             $request->merge([
-                'case_date' => $case_date
+                'case_date' => $case_date,
             ]);
         }
-
-
-
-
 
         if ($request->filled('incident_date_time')) {
             $incident_date_time = Carbon::createFromFormat('d/m/Y', $request->input('incident_date_time'))->format('Y-m-d');
 
             $request->merge([
-                'incident_date_time' => $incident_date_time
+                'incident_date_time' => $incident_date_time,
             ]);
         }
-
-
 
         if ($request->filled('nispotti_date')) {
             $nispotti_date = Carbon::createFromFormat('d/m/Y', $request->input('nispotti_date'))->format('Y-m-d');
 
             $request->merge([
-                'nispotti_date' => $nispotti_date
+                'nispotti_date' => $nispotti_date,
             ]);
         }
-
-
 
         if ($request->filled('nispotti_date') && $request->filled('case_date')) {
             $to = Carbon::createFromFormat('Y-m-d', $nispotti_date);
@@ -298,13 +284,10 @@ class CaseController extends Controller
 
             $nispottisecond = $to->diffInSeconds($from);
 
-
             $request->merge([
-            'nispottisecond' => $nispottisecond
+                'nispottisecond' => $nispottisecond,
             ]);
         }
-
-
 
         $request->request->remove('_token');
         $request->request->remove('submit');
@@ -314,7 +297,6 @@ class CaseController extends Controller
         } else {
             return redirect()->back()->with('error_msg', 'Something wrong. Please try again');
         }
-
 
         //dd($request->all());
     }
@@ -349,14 +331,13 @@ class CaseController extends Controller
         $data['request'] = $request;
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
 
-        $currentday = Carbon::now()->format('Y-m-d') . ' 23:59:59';
+        $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
         $request->session()->flash('currentday', $currentday);
 
-        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d') . ' 00:00:00';
+        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
 
         $request->session()->flash('agomonthday', $agomonthday);
-
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
@@ -366,7 +347,6 @@ class CaseController extends Controller
             $cvalue = 'dkikEK';
             $ckey = '!=';
 
-
             $data['districts'] = District::where('division_id', 1)->get();
 
             // District wise case start
@@ -374,7 +354,6 @@ class CaseController extends Controller
             $diswisecase = Casedb::with('district')->selectRaw('COUNT(case_no) AS countcase, districtID')->whereBetween('case_date', [$agomonthday, $currentday])->where('status', 'active')->whereNotNull('case_no')->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
             // District wise case end
-
 
             $request->session()->flash('diswisecase', $diswisecase);
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
@@ -384,7 +363,6 @@ class CaseController extends Controller
             $tkey = '!=';
             $cvalue = 'dkikEK';
             $ckey = '!=';
-
 
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
 
@@ -470,7 +448,7 @@ class CaseController extends Controller
         $last_three_month = Carbon::now()->startOfMonth()->subMonth(2);
         $this_month = Carbon::now()->endOfMonth();
 
-        $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, DATE_FORMAT(case_date, "%Y-%b") AS monthyear, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month,$this_month])->groupBy('monthyear')->orderBy(\DB::raw('MONTH(case_date)'), 'ASC')->get();
+        $lastthreemonthcase = Casedb::selectRaw('DATE_FORMAT(case_date, "%b") AS month, DATE_FORMAT(case_date, "%Y-%b") AS monthyear, COUNT(case_no) AS totalcase')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereNotNull('case_no')->whereBetween('case_date', [$last_three_month, $this_month])->groupBy('monthyear')->orderBy(\DB::raw('MONTH(case_date)'), 'ASC')->get();
         //echo $this_month;
 
         //dd($lastthreemonthcase);
@@ -487,15 +465,15 @@ class CaseController extends Controller
         $data['jaminprapto'] = Casedb::whereNotNull('jamin_prapto')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('jamin_prapto');
 
         $data['ovohotiprapto'] = Casedb::whereNotNull('ovohoti')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('ovohoti');
-        
+
         $data['nispottimamlaiazahar'] = Casedb::whereNotNull('azahar_namio_victims')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->where('nispotti_or_multobi', 'নিস্পত্তি')->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_namio_victims');
-        
+
         $data['onesixtyrecive'] = Casedb::whereNotNull('sixtyone_recive')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('sixtyone_recive');
-        
+
         $data['onesixtyfourrecive'] = Casedb::whereNotNull('sixtyfour_recive')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('sixtyfour_recive');
 
         $data['azaharnewinvistigateprapto'] = Casedb::whereNotNull('azahar_vukto_invistigate')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('azahar_vukto_invistigate');
-        
+
         $data['policereportprapti'] = Casedb::whereNotNull('police_report_victim')->where('districtID', $dkey, $dvalue)->where('status', 'active')->where('thanaID', $tkey, $tvalue)->whereBetween('case_date', [$agomonthday, $currentday])->sum('police_report_victim');
         // Ak nojora case details end
 
@@ -516,7 +494,7 @@ class CaseController extends Controller
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
-            if (!empty($request->input('districtID'))) {
+            if (! empty($request->input('districtID'))) {
                 $dkey = '=';
                 $dvalue = $request->input('districtID');
             } else {
@@ -524,7 +502,7 @@ class CaseController extends Controller
                 $dvalue = 'ss';
             }
 
-            if (!empty($request->input('circleID'))) {
+            if (! empty($request->input('circleID'))) {
                 $ckey = '=';
                 $cvalue = $request->input('circleID');
             } else {
@@ -532,7 +510,7 @@ class CaseController extends Controller
                 $cvalue = 'cc';
             }
 
-            if (!empty($request->input('thanaID'))) {
+            if (! empty($request->input('thanaID'))) {
                 $tkey = '=';
                 $tvalue = $request->input('thanaID');
             } else {
@@ -545,7 +523,7 @@ class CaseController extends Controller
             $dkey = '=';
             $dvalue = auth()->user()->districtID;
 
-            if (!empty($request->input('circleID'))) {
+            if (! empty($request->input('circleID'))) {
                 $ckey = '=';
                 $cvalue = $request->input('circleID');
             } else {
@@ -553,7 +531,7 @@ class CaseController extends Controller
                 $cvalue = 'cc';
             }
 
-            if (!empty($request->input('thanaID'))) {
+            if (! empty($request->input('thanaID'))) {
                 $tkey = '=';
                 $tvalue = $request->input('thanaID');
             } else {
@@ -574,37 +552,33 @@ class CaseController extends Controller
             $cvalue = $thana->circle_id;
             $ckey = '=';
 
-
-
             // oc
         }
 
-
-
-        if (!empty($request->input('form'))) {
+        if (! empty($request->input('form'))) {
             $fkey = '=';
             $fvalue = $from;
 
             $date = Carbon::parse($fvalue);
-            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+            $fvalue = $date->format('Y-m-d').' 00:00:00';
         //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';
         }
 
-        if (!empty($request->input('to'))) {
+        if (! empty($request->input('to'))) {
             $tokey = '=';
             $tovalue = $to;
 
             $date = Carbon::parse($tovalue);
-            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+            $tovalue = $date->format('Y-m-d').' 23:59:59';
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
         }
 
-        if (!empty($request->input('caseTypeID'))) {
+        if (! empty($request->input('caseTypeID'))) {
             $caseTypeID = $request->input('caseTypeID');
             $caseTypeID_key = '=';
         } else {
@@ -612,7 +586,7 @@ class CaseController extends Controller
             $caseTypeID_key = '!=';
         }
 
-        if (!empty($request->input('casesubID'))) {
+        if (! empty($request->input('casesubID'))) {
             $casesubID = $request->input('casesubID');
             $casesubID_key = '=';
         } else {
@@ -620,11 +594,8 @@ class CaseController extends Controller
             $casesubID_key = '!=';
         }
 
-
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
-
-
 
             if (empty($request->input('districtID')) && empty($request->input('thanaID')) && empty($request->input('circleID'))) {
                 // District wise case start
@@ -636,7 +607,7 @@ class CaseController extends Controller
                 //dd($diswisecase);
                 $request->session()->flash('diswisecase', $diswisecase);
             // District wise case end
-            } elseif (!empty($request->input('districtID')) && (empty($request->input('thanaID')) && empty($request->input('circleID')))) {
+            } elseif (! empty($request->input('districtID')) && (empty($request->input('thanaID')) && empty($request->input('circleID')))) {
                 // Circle wise case start
 
                 $circlewisecase = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')
@@ -653,7 +624,7 @@ class CaseController extends Controller
                 //dd($circlewisecase);
                 $request->session()->flash('circlewisecase', $circlewisecase);
             // Circle wise case end
-            } elseif ((!empty($request->input('districtID')) && !empty($request->input('circleID'))) && empty($request->input('thanaID'))) {
+            } elseif ((! empty($request->input('districtID')) && ! empty($request->input('circleID'))) && empty($request->input('thanaID'))) {
                 // Circle wise thana start
                 $circlewisethanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                    ->whereNotNull('case_no')
@@ -671,7 +642,7 @@ class CaseController extends Controller
 
                 $request->session()->flash('circlewisethanacase', $circlewisethanacase);
             // Circle wise thana end
-            } elseif (!empty($request->input('districtID')) && !empty($request->input('circleID')) && !empty($request->input('thanaID'))) {
+            } elseif (! empty($request->input('districtID')) && ! empty($request->input('circleID')) && ! empty($request->input('thanaID'))) {
                 // Search thana case
                 $searchthanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                ->whereNotNull('case_no')
@@ -708,7 +679,7 @@ class CaseController extends Controller
                                   ->get();
 
                 $request->session()->flash('circlewisecase', $circlewisecase);
-            } elseif (!empty($request->input('circleID')) && empty($request->input('thanaID'))) {
+            } elseif (! empty($request->input('circleID')) && empty($request->input('thanaID'))) {
                 // Circle thana wise case
 
                 $circlethanawisecase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
@@ -725,7 +696,7 @@ class CaseController extends Controller
 
                 $request->session()->flash('circlethanawisecase', $circlethanawisecase);
             // Circle thana wise case
-            } elseif (!empty($request->input('circleID')) && !empty($request->input('thanaID'))) {
+            } elseif (! empty($request->input('circleID')) && ! empty($request->input('thanaID'))) {
                 // Search thana case
                 $searchthanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                ->whereNotNull('case_no')
@@ -770,7 +741,6 @@ class CaseController extends Controller
             // OC thana case
         }
 
-
         // Case type chart start
 
         $casetypec = Casedb::with('casetype')->selectRaw('COUNT(case_type) AS countcase_type, case_type')
@@ -805,7 +775,6 @@ class CaseController extends Controller
 
         $request->session()->flash('casesubtypec', $casesubtypec);
         // Case sub type end
-
 
         // Case ending typyes start
 
@@ -874,7 +843,6 @@ class CaseController extends Controller
         ->avg('nispottisecond');
         // Avg case ending time end
 
-
         // Ak nojora case details start
 
         $data['azaharnamioasami'] = Casedb::whereNotNull('azahar_namio_victims')
@@ -926,9 +894,9 @@ class CaseController extends Controller
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
         ->sum('azahar_vukto_invistigate');
-        
+
         $data['nispottimamlaiazahar'] = Casedb::whereNotNull('azahar_namio_victims')
-        
+
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
@@ -937,7 +905,7 @@ class CaseController extends Controller
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
         ->where('nispotti_or_multobi', 'নিস্পত্তি')->sum('azahar_namio_victims');
-        
+
         $data['onesixtyrecive'] = Casedb::whereNotNull('sixtyone_recive')
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
@@ -946,7 +914,7 @@ class CaseController extends Controller
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])->sum('sixtyone_recive');
-        
+
         $data['onesixtyfourrecive'] = Casedb::whereNotNull('sixtyfour_recive')
        ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
@@ -955,7 +923,7 @@ class CaseController extends Controller
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])->sum('sixtyfour_recive');
-                                
+
         $data['policereportprapti'] = Casedb::whereNotNull('police_report_victim')
         ->where('districtID', $dkey, $dvalue)
                                 ->where('circleID', $ckey, $cvalue)
@@ -975,7 +943,6 @@ class CaseController extends Controller
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
                                  ->where('status', 'inactive')->count();
 
-
         //dd($lastthreemonthcase);
 
         $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
@@ -992,7 +959,6 @@ class CaseController extends Controller
         return view('admin/case/case-dashsc', $data);
     }
 
-
     public function chartdata(Request $request)
     {
         $data['request'] = $request;
@@ -1003,8 +969,7 @@ class CaseController extends Controller
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
 
-
-            if (!empty($request->input('districtID'))) {
+            if (! empty($request->input('districtID'))) {
                 $dkey = '=';
                 $dvalue = $request->input('districtID');
             } else {
@@ -1012,7 +977,7 @@ class CaseController extends Controller
                 $dvalue = 'ss';
             }
 
-            if (!empty($request->input('circleID'))) {
+            if (! empty($request->input('circleID'))) {
                 $ckey = '=';
                 $cvalue = $request->input('circleID');
             } else {
@@ -1020,7 +985,7 @@ class CaseController extends Controller
                 $cvalue = 'cc';
             }
 
-            if (!empty($request->input('thanaID'))) {
+            if (! empty($request->input('thanaID'))) {
                 $tkey = '=';
                 $tvalue = $request->input('thanaID');
             } else {
@@ -1033,7 +998,7 @@ class CaseController extends Controller
             $dkey = '=';
             $dvalue = auth()->user()->districtID;
 
-            if (!empty($request->input('circleID'))) {
+            if (! empty($request->input('circleID'))) {
                 $ckey = '=';
                 $cvalue = $request->input('circleID');
             } else {
@@ -1041,7 +1006,7 @@ class CaseController extends Controller
                 $cvalue = 'cc';
             }
 
-            if (!empty($request->input('thanaID'))) {
+            if (! empty($request->input('thanaID'))) {
                 $tkey = '=';
                 $tvalue = $request->input('thanaID');
             } else {
@@ -1062,38 +1027,33 @@ class CaseController extends Controller
             $cvalue = $thana->circle_id;
             $ckey = '=';
 
-
-
             // oc
         }
 
-
-
-        if (!empty($request->input('form'))) {
+        if (! empty($request->input('form'))) {
             $fkey = '=';
             $fvalue = $from;
 
             $date = Carbon::parse($fvalue);
-            $fvalue = $date->format('Y-m-d') . ' 00:00:00';
+            $fvalue = $date->format('Y-m-d').' 00:00:00';
         //dd($ggg);
         } else {
             $fkey = '=';
             $fvalue = '1971-01-01 11:45:00';
         }
 
-        if (!empty($request->input('to'))) {
+        if (! empty($request->input('to'))) {
             $tokey = '=';
             $tovalue = $to;
 
             $date = Carbon::parse($tovalue);
-            $tovalue = $date->format('Y-m-d') . ' 23:59:59';
+            $tovalue = $date->format('Y-m-d').' 23:59:59';
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
         }
 
-
-        if (!empty($request->input('nispotti_type'))) {
+        if (! empty($request->input('nispotti_type'))) {
             $nispotti_type = $request->input('nispotti_type');
             $nispotti_type_key = '=';
         } else {
@@ -1101,7 +1061,7 @@ class CaseController extends Controller
             $nispotti_type_key = '!=';
         }
 
-        if (!empty($request->input('caseTypeID'))) {
+        if (! empty($request->input('caseTypeID'))) {
             $caseTypeID = $request->input('caseTypeID');
             $caseTypeID_key = '=';
         } else {
@@ -1109,14 +1069,13 @@ class CaseController extends Controller
             $caseTypeID_key = '!=';
         }
 
-        if (!empty($request->input('casesubID'))) {
+        if (! empty($request->input('casesubID'))) {
             $casesubID = $request->input('casesubID');
             $casesubID_key = '=';
         } else {
             $casesubID = '500';
             $casesubID_key = '!=';
         }
-
 
         $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                           ->where('districtID', $dkey, $dvalue)
