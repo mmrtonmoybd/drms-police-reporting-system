@@ -374,7 +374,7 @@ font-size: 21px;"> ওয়ারেন্ট সংক্রান্ত তথ�
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর রিসিভ  </label>
-                                                    <inputtype="number"  min="0" name="saja_gr_recive"  value="" id="saja_gr_recive" class="number form-control  " placeholder="   সাজা জিআর রিসিভ " required>
+                                                    <input type="number"  min="0" name="saja_gr_recive"  value="" id="saja_gr_recive" class="number form-control  " placeholder="   সাজা জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 

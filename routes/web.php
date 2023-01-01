@@ -51,6 +51,11 @@ Route::get('/storagelink', function () {
     // return what you want
 });
 
+Route::get('/generate-key', function () {
+    $exitCode = Artisan::call('key:generate --ansi');
+    // return what you want
+});
+
 Route::get('/', [Dashboard::class, 'home']);
 Route::get('/seba', [Dashboard::class, 'seba']);
 Route::get('/cfrom', [Dashboard::class, 'cfrom']);
