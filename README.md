@@ -142,4 +142,4 @@ composer install
 ## Authors
 
 * **Moshiur Rahman Tonmoy** - *php and Laravel Developer* - [Moshiur Rahman Tonmoy](https://www.facebook.com/mmrtonmoy) - *Backend*
-* **Shoaib Bin Habib Rashad** - *Frontend Developer * - [Shoaib Bin Habib Rashad](https://www.facebook.com/sbhrashad) - *Frontend*
+* **Shoaib Bin Habib Rashad** - *Frontend Developer* - [Shoaib Bin Habib Rashad](https://www.facebook.com/sbhrashad) - *Frontend*
