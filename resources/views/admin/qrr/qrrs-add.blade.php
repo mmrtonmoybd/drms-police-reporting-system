@@ -586,7 +586,7 @@ function myFunction() {
 								                               <div class="col-sm-4" id="gd1" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
+                                                    <input type="number"  min="0"  name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -595,7 +595,7 @@ function myFunction() {
                                                 <div class="mb-3">
                                                     <label for="gd_date" class="form-label">  জিডির তারিখ   </label>
                                                     
-                                                    <input type="text" name="gd_date"   value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
+                                                    <input  name="gd_date"   value="{{old('gd_date')}}" id="gd_date" class="form-control datepicker  @error('gd_date') is-invalid @enderror"  data-date-format="dd/mm/yyyy"  placeholder="তারিখ">
 
                                                 </div>
                                             </div>
@@ -611,7 +611,7 @@ function myFunction() {
                                             <div class="col-sm-4" id="mam" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="number form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
+                                                    <inputtype="number"  min="0" name="case_no"  value="{{old('case_no')}}" id="case_no" class="number form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       
@@ -656,7 +656,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="plaintiff_mobile" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="number form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
+                                                    <input type="number"  min="0" minlength="11" maxlength="11" name="plaintiff_mobile"  value="{{old('plaintiff_mobile')}}" id="plaintiff_mobile" class="number form-control  @error('plaintiff_mobile') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
                                                 </div>
                                             </div>
       
@@ -664,7 +664,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_victims" class="form-label">   ভিকটিমের সংখ্যা   </label>
-                                                    <input type="text" name="number_of_victims"  value="{{old('number_of_victims')}}" id="number_of_victims" class="number form-control  @error('number_of_victims') is-invalid @enderror" placeholder="ভিকটিমের সংখ্যা ">
+                                                    <input type="number"  min="0" name="number_of_victims"  value="{{old('number_of_victims')}}" id="number_of_victims" class="number form-control  @error('number_of_victims') is-invalid @enderror" placeholder="ভিকটিমের সংখ্যা ">
                                                
                                                 </div>
                                             </div>
@@ -672,7 +672,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">  অভিযুক্তের  সংখ্যা   </label>
-                                                    <input type="text" name="number_of_accused"  value="{{old('number_of_accused')}}" id="number_of_accused" class="number form-control  @error('number_of_accused') is-invalid @enderror" placeholder="অভিযুক্তের  সংখ্যা ">
+                                                    <input type="number"  min="0" name="number_of_accused"  value="{{old('number_of_accused')}}" id="number_of_accused" class="number form-control  @error('number_of_accused') is-invalid @enderror" placeholder="অভিযুক্তের  সংখ্যা ">
                                                 </div>
                                             </div>
       
@@ -680,7 +680,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="name_of_investigator" class="form-label">রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম   </label>
-                                                    <input type="text" name="name_of_investigator"   value="{{old('name_of_investigator')}}" id="name_of_investigator" class="form-control  @error('name_of_investigator') is-invalid @enderror" placeholder=" রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম " required>
+                                                    <input name="name_of_investigator"   value="{{old('name_of_investigator')}}" id="name_of_investigator" class="form-control  @error('name_of_investigator') is-invalid @enderror" placeholder=" রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম " required>
                                                 </div>
                                             </div>
       
@@ -688,7 +688,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="number form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং ">
+                                                    <input type="number"  min="0" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="number form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং ">
                                                 </div>
                                             </div>
       
@@ -696,7 +696,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label">  মোবাইল নং    </label>
-                                                    <input type="text"   minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
+                                                    <input type="number"  min="0"   minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং" required>
                                                 </div>
                                             </div>
       
@@ -1137,21 +1137,21 @@ var invalidChars = [
  
 ];
 
+var getKeyCode = function (str) {
+    return str.charCodeAt(str);
+}
 
-
-   $(".number").keypress(function (e) {
-           if(invalidChars.includes(e.key) || e.which == 8 || event.key === 'Delete' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
-   }
-   
-
+     $(".number").keypress(function (e) {
   
+ if(invalidChars.includes(e.key) || e.which == 8 || event.key === 'Delete' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End')
+ {
+  
+ }
+   
   else {
    e.preventDefault();
-   
          $("#errmsg").html("Number Only").stop().show().fadeOut("slow");
       return false;
-      
-      
   }
 });
 

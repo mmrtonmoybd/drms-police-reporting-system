@@ -274,7 +274,7 @@ font-size: 21px;"> মামলা সংক্রান্ত তথ্যা�
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="azahar_namio_victims" class="form-label"> এজাহার নামীয় আসামির সংখ্যা </label>
-                                                    <input type="text" name="azahar_namio_victims"  value="{{$case->azahar_namio_victims}}" id="azahar_namio_victims" class="number form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
+                                                    <input type="number"  min="0" name="azahar_namio_victims"  value="{{$case->azahar_namio_victims}}" id="azahar_namio_victims" class="number form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
@@ -344,56 +344,56 @@ font-size: 21px;"> মামলা সংক্রান্ত তথ্যা�
                                             <div class="col-sm-4" id="hide4"> 
                                                 <div class="mb-3">
                                                     <label for="police_report_victim" class="form-label"> পুলিশ রিপোর্ট আসামির সংখ্যা </label>
-                                                    <input type="text" name="police_report_victim"  value="{{$case->police_report_victim}}" id="police_report_victim" class="number form-control  @error('police_report_victim') is-invalid @enderror" placeholder="পুলিশ রিপোর্ট আসামির সংখ্যা">
+                                                    <input type="number"  min="0"  name="police_report_victim"  value="{{$case->police_report_victim}}" id="police_report_victim" class="number form-control  @error('police_report_victim') is-invalid @enderror" placeholder="পুলিশ রিপোর্ট আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide5">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label"> গ্রেফতারকৃত আসামির সংখ্যা </label>
-                                                    <input type="text" name="number_of_accused"  value="{{$case->number_of_accused}}" id="number_of_accused" class="number form-control  @error('number_of_accused') is-invalid @enderror" placeholder="গ্রেফতারকৃত আসামির সংখ্যা">
+                                                    <input type="number"  min="0"  name="number_of_accused"  value="{{$case->number_of_accused}}" id="number_of_accused" class="number form-control  @error('number_of_accused') is-invalid @enderror" placeholder="গ্রেফতারকৃত আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide6">
                                                 <div class="mb-3">
                                                     <label for="jamin_prapto" class="form-label"> জামিন প্রাপ্ত </label>
-                                                    <input type="text" name="jamin_prapto"  value="{{$case->jamin_prapto}}" id="jamin_prapto" class="number form-control  @error('jamin_prapto') is-invalid @enderror" placeholder="জামিন প্রাপ্ত">
+                                                    <input type="number"  min="0"  name="jamin_prapto"  value="{{$case->jamin_prapto}}" id="jamin_prapto" class="number form-control  @error('jamin_prapto') is-invalid @enderror" placeholder="জামিন প্রাপ্ত">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide7">
                                                 <div class="mb-3">
                                                     <label for="polatok" class="form-label"> পলাতক </label>
-                                                    <input type="text" name="polatok"  value="{{$case->polatok}}" id="polatok" class="number form-control  @error('polatok') is-invalid @enderror" placeholder="পলাতক">
+                                                    <input type="number"  min="0"  name="polatok"  value="{{$case->polatok}}" id="polatok" class="number form-control  @error('polatok') is-invalid @enderror" placeholder="পলাতক">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide8">
                                                 <div class="mb-3">
                                                     <label for="azahar_vukto_invistigate" class="form-label"> এজাহার বহির্ভুত তদন্তে প্রাপ্ত </label>
-                                                    <input type="text" name="azahar_vukto_invistigate"  value="{{$case->azahar_vukto_invistigate}}" id="azahar_vukto_invistigate" class="number form-control  @error('azahar_vukto_invistigate') is-invalid @enderror" placeholder="এজাহার বহির্ভুত তদন্তে প্রাপ্ত">
+                                                    <input type="number"  min="0"  name="azahar_vukto_invistigate"  value="{{$case->azahar_vukto_invistigate}}" id="azahar_vukto_invistigate" class="number form-control  @error('azahar_vukto_invistigate') is-invalid @enderror" placeholder="এজাহার বহির্ভুত তদন্তে প্রাপ্ত">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide9">
                                                 <div class="mb-3">
                                                     <label for="ovohoti" class="form-label"> অব্যহিত প্রাপ্ত </label>
-                                                    <input type="text" name="ovohoti"  value="{{$case->ovohoti}}" id="ovohoti" class="number form-control  @error('ovohoti') is-invalid @enderror" placeholder="অব্যহিত প্রাপ্ত">
+                                                    <input type="number"  min="0"  name="ovohoti"  value="{{$case->ovohoti}}" id="ovohoti" class="number form-control  @error('ovohoti') is-invalid @enderror" placeholder="অব্যহিত প্রাপ্ত">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide10">
                                                 <div class="mb-3">
                                                     <label for="sixtyone_recive" class="form-label"> ১৬১ গ্রহন (পাবলিক) </label>
-                                                    <input type="text" name="sixtyone_recive"  value="{{$case->sixtyone_recive}}" id="sixtyone_recive" class="number form-control  @error('sixtyone_recive') is-invalid @enderror" placeholder="১৬১ গ্রহন (পাবলিক)">
+                                                    <input type="number"  min="0"  name="sixtyone_recive"  value="{{$case->sixtyone_recive}}" id="sixtyone_recive" class="number form-control  @error('sixtyone_recive') is-invalid @enderror" placeholder="১৬১ গ্রহন (পাবলিক)">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="hide11">
                                                 <div class="mb-3">
                                                     <label for="sixtyfour_recive" class="form-label"> ১৬৪ গ্রহন </label>
-                                                    <input type="text" name="sixtyfour_recive"  value="{{$case->sixtyfour_recive}}" id="sixtyfour_recive" class="number form-control  @error('sixtyfour_recive') is-invalid @enderror" placeholder="১৬৪ গ্রহন">
+                                                    <input type="number"  min="0"  name="sixtyfour_recive"  value="{{$case->sixtyfour_recive}}" id="sixtyfour_recive" class="number form-control  @error('sixtyfour_recive') is-invalid @enderror" placeholder="১৬৪ গ্রহন">
                                                 </div>
                                             </div>
 

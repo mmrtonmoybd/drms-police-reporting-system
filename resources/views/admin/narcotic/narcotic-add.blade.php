@@ -285,14 +285,14 @@ font-size: 21px;"> মাদক সংক্রান্ত তথ্যাদ�
                                         <div class="col-sm-4" style="display:none;">
                                                 <div class="mb-3">
                                                     <label for="serial" class="form-label">  ক্রমিক নং   </label>
-                                                    <input type="text" name="serial"  value="{{old('serial')}}" id="serial" class="number form-control  @error('serial') is-invalid @enderror" placeholder="  ক্রমিক নং  ">
+                                                    <input type="number"  min="0"  name="serial"  value="{{old('serial')}}" id="serial" class="number form-control  @error('serial') is-invalid @enderror" placeholder="  ক্রমিক নং  ">
                                                 </div>
                                             </div> 
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="folder_no" class="form-label">  ফোল্ডার নং   </label>
-                                                    <input type="text" name="folder_no"  value="{{old('folder_no')}}" id="folder_no" class="number form-control  @error('folder_no') is-invalid @enderror" placeholder=" ফোল্ডার নং  " required>
+                                                    <input   name="folder_no"  value="{{old('folder_no')}}" id="folder_no" class="form-control  @error('folder_no') is-invalid @enderror" placeholder=" ফোল্ডার নং  " required>
                                                 </div>
                                             </div> 
 
@@ -369,7 +369,7 @@ font-size: 21px;"> মাদক সংক্রান্ত তথ্যাদ�
                                                  <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="case_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="case_no"  value="{{old('case_no')}}" id="case_no" class="number form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
+                                                    <input type="number"  min="0"  name="case_no"  value="{{old('case_no')}}" id="case_no" class="number form-control  @error('case_no') is-invalid @enderror" placeholder="   মামলা নং " required>
                                                 </div>
                                             </div>
       
@@ -424,7 +424,7 @@ font-size: 21px;"> মাদক সংক্রান্ত তথ্যাদ�
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="bp_no" class="form-label"> বিপি নং   </label>
-                                                    <input type="text" name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="number form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
+                                                    <input type="number"  min="0"  name="bp_no"  value="{{old('bp_no')}}" id="bp_no" class="number form-control  @error('bp_no') is-invalid @enderror" placeholder="  বিপি নং " required>
                                                 </div>
                                             </div>
 
@@ -432,7 +432,7 @@ font-size: 21px;"> মাদক সংক্রান্ত তথ্যাদ�
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label">  মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " required>
+                                                    <input type="number"  min="0"  minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " required>
                                                 </div>
                                             </div>
       
@@ -448,7 +448,7 @@ font-size: 21px;"> মাদক সংক্রান্ত তথ্যাদ�
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_include" class="form-label">  অভিযুক্তের সংখ্যা   </label>
-                                                    <input type="number" name="number_of_include" id="number_of_include" class="number form-select form-control" required>
+                                                    <input type="number"  min="0"  name="number_of_include" id="number_of_include" class="number form-select form-control" required>
                                                 </div>
                                             </div>
                                             
@@ -457,7 +457,7 @@ font-size: 21px;"> মাদক সংক্রান্ত তথ্যাদ�
                                         <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="number_of_accused" class="form-label">  গ্রেফতারকৃত আসামীর সংখ্যা   </label>
-                                                    <input type="number" name="number_of_accused" id="number_of_accused" class="number form-select form-control" required>
+                                                    <input type="number"  min="0"  name="number_of_accused" id="number_of_accused" class="number form-select form-control" required>
                                                 </div>
                                             </div>
                                             
@@ -655,14 +655,14 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                      <div class="col-sm-4" id="ovi1" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gaza"  class="form-label">  গাঁজা (গ্রাম)  </label>
-                                                    <input type="text" name="gaza"  value="{{old('gaza')}}" id="gaza" class="number form-control  @error('gaza') is-invalid @enderror" placeholder=" গাঁজা (গ্রাম) ">
+                                                    <input type="number"  min="0"  name="gaza"  value="{{old('gaza')}}" id="gaza" class="number form-control  @error('gaza') is-invalid @enderror" placeholder=" গাঁজা (গ্রাম) ">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4" id="ovi2" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gaza_tree" class="form-label">  গাঁজা গাছ (সংখ্যা)  </label>
-                                                    <input type="text" name="gaza_tree"  value="{{old('gaza_tree')}}" id="gaza_tree" class="number form-control  @error('gaza_tree') is-invalid @enderror" placeholder=" গাঁজা গাছ (সংখ্যা) ">
+                                                    <input type="number"  min="0"  name="gaza_tree"  value="{{old('gaza_tree')}}" id="gaza_tree" class="number form-control  @error('gaza_tree') is-invalid @enderror" placeholder=" গাঁজা গাছ (সংখ্যা) ">
                                                 </div>
                                             </div>
 
@@ -672,7 +672,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                        <div class="col-sm-4" id="gd1"  style="display:none">
                                              <div class="mb-3">
                                                     <label for="yaba" class="form-label">  ইয়াবা (পিচ)  </label>
-                                                    <input type="text" name="yaba"  value="{{old('yaba')}}" id="yaba" class="number form-control  @error('gaza_tree') is-invalid @enderror" placeholder=" ইয়াবা (পিচ) ">
+                                                    <input type="number"  min="0"  name="yaba"  value="{{old('yaba')}}" id="yaba" class="number form-control  @error('gaza_tree') is-invalid @enderror" placeholder=" ইয়াবা (পিচ) ">
                                                 </div>
                                             </div>
       
@@ -684,7 +684,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             <div class="col-sm-4" id="mam"  style="display:none">
                                                <div class="mb-3">
                                                     <label for="heroine" class="form-label">  হিরোইন (গ্রাম)  </label>
-                                                    <input type="text" name="heroine"  value="{{old('heroine')}}" id="heroine" class="number form-control  @error('heroine') is-invalid @enderror" placeholder=" ইরোইন (গ্রাম) ">
+                                                    <input type="number"  min="0"  name="heroine"  value="{{old('heroine')}}" id="heroine" class="number form-control  @error('heroine') is-invalid @enderror" placeholder=" ইরোইন (গ্রাম) ">
                                                 </div>
                                             </div>
       
@@ -692,7 +692,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             <div class="col-sm-4" id="mam2"  style="display:none">
                                                  <div class="mb-3">
                                                     <label for="fansdel" class="form-label">  ফেনসিডিল (বোতল)  </label>
-                                                    <input type="text" name="fansdel"  value="{{old('fansdel')}}" id="fansdel" class="number form-control  @error('fansdel') is-invalid @enderror" placeholder=" ফেনসিডিল (বোতল) ">
+                                                    <input type="number"  min="0" name="fansdel"  value="{{old('fansdel')}}" id="fansdel" class="number form-control  @error('fansdel') is-invalid @enderror" placeholder=" ফেনসিডিল (বোতল) ">
                                                 </div>
                                             </div>
       
@@ -709,28 +709,28 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                              <div class="col-sm-4" id="mim" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="cholai_alcohol" class="form-label"> চোলাই মদ (লিটার)   </label>
-                                                    <input type="text" name="cholai_alcohol"  value="{{old('cholai_alcohol')}}" id="cholai_alcohol" class="number form-control  @error('cholai_alcohol') is-invalid @enderror" placeholder=" চোলাই মদ (লিটার) ">
+                                                    <input type="number"  min="0"  name="cholai_alcohol"  value="{{old('cholai_alcohol')}}" id="cholai_alcohol" class="number form-control  @error('cholai_alcohol') is-invalid @enderror" placeholder=" চোলাই মদ (লিটার) ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4" id="mim2" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="bidesh_alcohol" class="form-label"> বিদেশী মদ (লিটার)   </label>
-                                                    <input type="text" name="bidesh_alcohol"  value="{{old('bidesh_alcohol')}}" id="bidesh_alcohol" class="number form-control  @error('bidesh_alcohol') is-invalid @enderror" placeholder=" বিদেশী মদ (লিটার) ">
+                                                    <input type="number"  min="0"  name="bidesh_alcohol"  value="{{old('bidesh_alcohol')}}" id="bidesh_alcohol" class="number form-control  @error('bidesh_alcohol') is-invalid @enderror" placeholder=" বিদেশী মদ (লিটার) ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4" id="ain" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="lsd" class="form-label">  এলএসডি (মাইক্রোগ্রাম)  </label>
-                                                    <input type="text" name="lsd"  value="{{old('lsd')}}" id="lsd" class="form-control  @error('lsd') is-invalid @enderror" placeholder=" এলএসডি (মাইক্রোগ্রাম) ">
+                                                    <input type="number"  min="0"  name="lsd"  value="{{old('lsd')}}" id="lsd" class="number form-control  @error('lsd') is-invalid @enderror" placeholder=" এলএসডি (মাইক্রোগ্রাম) ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4" id="ain2" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="ice" class="form-label">  আইস (মাইক্রোগ্রাম)  </label>
-                                                    <input type="text" name="ice"  value="{{old('ice')}}" id="ice" class="number form-control  @error('ice') is-invalid @enderror" placeholder=" আইস (মাইক্রোগ্রাম) ">
+                                                    <input type="number"  min="0"  name="ice"  value="{{old('ice')}}" id="ice" class="number form-control  @error('ice') is-invalid @enderror" placeholder=" আইস (মাইক্রোগ্রাম) ">
                                                 </div>
                                             </div>
 

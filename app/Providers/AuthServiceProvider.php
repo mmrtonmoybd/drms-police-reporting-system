@@ -9,6 +9,8 @@ use App\Models\Warrant;
 use App\Models\Woman;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use JWT;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -36,7 +38,6 @@ class AuthServiceProvider extends ServiceProvider
             if (auth()->user()->getRoleNames()[0] !== $name) {
                 return true;
             }
-
             return false;
         });
 
@@ -44,7 +45,6 @@ class AuthServiceProvider extends ServiceProvider
             if (auth()->user()->id == $id) {
                 return true;
             }
-
             return false;
         });
 
@@ -83,6 +83,7 @@ class AuthServiceProvider extends ServiceProvider
 
             return false;
         });
+
 
         Gate::define('editdeletenarcotic', function (User $user, Narcotic $narcotic) {
             if ($user->hasAnyRole(['Super Admin', 'Admin'])) {

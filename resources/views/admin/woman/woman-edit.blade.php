@@ -263,7 +263,7 @@ font-size: 21px;"> নারী ও শিশু সংক্রান্ত ত
                                         <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="reference_no" class="form-label"> থানা রেজিস্টার নং </label>
-                                                    <input type="text" name="reference_no"  value="{{$woman->reference_no}}" id="reference_no" class="number form-control  @error('reference_no') is-invalid @enderror" placeholder="থানা রেজিস্টার নং">
+                                                    <input type="number"  min="0" name="reference_no"  value="{{$woman->reference_no}}" id="reference_no" class="number form-control  @error('reference_no') is-invalid @enderror" placeholder="থানা রেজিস্টার নং">
                                                 </div>
                                             </div>
 
@@ -447,7 +447,7 @@ font-size: 21px;"> নারী ও শিশু সংক্রান্ত ত
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="badi_phone" class="form-label">  বাদীর মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="badi_phone"  value="{{$woman->badi_phone}}" id="badi_phone" class="number form-control  @error('badi_phone') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
+                                                    <input type="number"  min="0"  minlength="11" maxlength="11" name="badi_phone"  value="{{$woman->badi_phone}}" id="badi_phone" class="number form-control  @error('badi_phone') is-invalid @enderror" placeholder=" বাদীর মোবাইল নং  " >
                                                 </div>
                                             </div>
 
@@ -482,14 +482,14 @@ font-size: 21px;"> নারী ও শিশু সংক্রান্ত ত
                                              <div class="col-sm-4" >
                                                 <div class="mb-3">
                                                   <label for="investigator_title" class="form-label">  তদন্তকারী কর্মকর্তার বিপি নাম্বার  </label>
-                                                    <input type="text" name="investigator_title"  value="{{$woman->investigator_title}}" id="investigator_title" class="number form-control  @error('investigator_title') is-invalid @enderror" placeholder="   তদন্তকারী কর্মকর্তার পদবী  ">
+                                                    <input type="number"  min="0" name="investigator_title"  value="{{$woman->investigator_title}}" id="investigator_title" class="number form-control  @error('investigator_title') is-invalid @enderror" placeholder="   তদন্তকারী কর্মকর্তার পদবী  ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label"> মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="mobile_no"  value="{{$woman->mobile_no}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " >
+                                                    <input type="number"  min="0" minlength="11" maxlength="11" name="mobile_no"  value="{{$woman->mobile_no}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " >
                                                 </div>
                                             </div>
                                             
@@ -769,7 +769,7 @@ function myFunctionxxc() {
                                              <div class="col-sm-4" id="ovi1"  {{$woman->action_taken=='অভিযোগ গ্রহণ' ? '' : 'style=display:none'}} >
                                                 <div class="mb-3">
                                                     <label for="complaint_no" class="form-label">অভিযোগ নং </label>
-                                                    <input type="text" name="complaint_no" value="{{$woman->complaint_no}}"  id="complaint_no" class="number form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
+                                                    <input type="number"  min="0" name="complaint_no" value="{{$woman->complaint_no}}"  id="complaint_no" class="number form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
                                                 </div>
                                             </div>
 
@@ -792,7 +792,7 @@ function myFunctionxxc() {
                                        <div class="col-sm-4" id="gd1"   {{$woman->action_taken=='জিডি' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="text" name="gd_no"  value="{{$woman->gd_no}}"  id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
+                                                    <input type="number"  min="0" name="gd_no"  value="{{$woman->gd_no}}"  id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -821,7 +821,7 @@ function myFunctionxxc() {
                                             <div class="col-sm-4" id="mam"   {{$woman->action_taken=='মামলা' ? '' : 'style=display:none'}}  >
                                                 <div class="mb-3">
                                                     <label for="mamla_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="mamla_no"  value="{{$woman->mamla_no}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
+                                                    <input type="number"  min="0" name="mamla_no"  value="{{$woman->mamla_no}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       

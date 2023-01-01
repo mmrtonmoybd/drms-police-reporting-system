@@ -3,18 +3,17 @@
 namespace App\Exports\Narcotic;
 
 use App\Models\Narcotic;
-use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
 {
     use Exportable;
-
     /**
-     * @return \Illuminate\Support\Collection
-     */
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
@@ -71,19 +70,19 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
             'মাদকের রিপোর্ট প্রাপ্তি	',
             'তদন্তের ফলাফল (CS নং)	',
             'তারিখ',
-            'মন্তব্য',
+            'মন্তব্য'
         ];
     }
 
     public function map($nar): array
     {
-        if (! empty($nar->sdate)) {
+        if (!empty($nar->sdate)) {
             $date1 = date('d/m/Y', strtotime($nar->sdate));
         } else {
             $date1 = '';
         }
 
-        if (! empty($nar->tdate)) {
+        if (!empty($nar->tdate)) {
             $date2 = date('d/m/Y', strtotime($nar->tdate));
         } else {
             $date2 = '';
@@ -120,7 +119,7 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
             $nar->narocotic_test_report,
             $nar->investigate_result,
             $date2,
-            $nar->comment,
+            $nar->comment
         ];
     }
 }

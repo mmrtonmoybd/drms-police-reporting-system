@@ -3,18 +3,17 @@
 namespace App\Exports\Woman;
 
 use App\Models\Woman;
-use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 class WomanListExport implements FromCollection, WithMapping, WithHeadings
 {
     use Exportable;
-
     /**
-     * @return \Illuminate\Support\Collection
-     */
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
@@ -70,31 +69,31 @@ class WomanListExport implements FromCollection, WithMapping, WithHeadings
             'গৃহীত ব্যবস্থা',
             'নিষ্পত্তি রিপোর্ট',
             'সন্তুষ্টির মান',
-            'মন্তব্য',
+            'মন্তব্য'
         ];
     }
 
     public function map($woman): array
     {
-        if (! empty($woman->wdate)) {
+        if (!empty($woman->wdate)) {
             $date1 = date('d/m/Y H:i', strtotime($woman->wdate));
         } else {
             $date1 = '';
         }
 
-        if (! empty($woman->gd_date)) {
+        if (!empty($woman->gd_date)) {
             $date2 = date('d/m/Y', strtotime($woman->gd_date));
         } else {
             $date2 = '';
         }
 
-        if (! empty($woman->mamla_date)) {
+        if (!empty($woman->mamla_date)) {
             $date3 = date('d/m/Y', strtotime($woman->mamla_date));
         } else {
             $date3 = '';
         }
 
-        if (! empty($woman->complaint_date)) {
+        if (!empty($woman->complaint_date)) {
             $date4 = date('d/m/Y', strtotime($woman->complaint_date));
         } else {
             $date4 = '';
@@ -131,7 +130,7 @@ class WomanListExport implements FromCollection, WithMapping, WithHeadings
             $woman->action_taken,
             $woman->nreport,
             $woman->satisfy_rate,
-            $woman->comment,
+            $woman->comment
         ];
     }
 }

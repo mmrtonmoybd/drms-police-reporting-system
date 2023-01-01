@@ -4,9 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -21,13 +22,12 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => $request->input('name')]);
 
+
         if ($role->givePermissionTo($arrper)) {
             $request->session()->flash('success_msg', 'Role created successfully and added permissions');
-
             return redirect('admin/users/role');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
-
             return redirect('admin/users/role/add');
         }
     }
@@ -58,7 +58,6 @@ class RoleController extends Controller
 
         if ($role->syncPermissions($arrper)) {
             $request->session()->flash('success_msg', 'Role updated successfully and updated permissions');
-
             return redirect('admin/users/role');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
@@ -75,11 +74,9 @@ class RoleController extends Controller
 
         if ($role->delete()) {
             $request->session()->flash('success_msg', 'Role deleted successfully and deleted permissions');
-
             return redirect('admin/users/role');
         } else {
             $request->session()->flash('error_msg', 'Something wrong. Please try again');
-
             return redirect('admin/users/role');
         }
     }

@@ -246,7 +246,7 @@ font-size: 21px;"> মামলা সংক্রান্ত তথ্যা�
                                                    <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="azahar_namio_victims" class="form-label"> এজাহার নামীয় আসামির সংখ্যা </label>
-                                                    <input type="text" name="azahar_namio_victims"  value="{{old('azahar_namio_victims')}}" id="azahar_namio_victims" class="number form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
+                                                    <input type="number"  min="0"  name="azahar_namio_victims"  value="{{old('azahar_namio_victims')}}" id="azahar_namio_victims" class="number form-control  @error('azahar_namio_victims') is-invalid @enderror" placeholder="এজাহার নামীয় আসামির সংখ্যা">
                                                 </div>
                                             </div>
 
@@ -750,7 +750,7 @@ var invalidChars = [
 
  var sbbtn = document.getElementById("sbbtn");
 
-   $(".number").keydown(function (e) {
+   $(".number").keypress(function (e) {
            if(invalidChars.includes(e.key) || e.which == 8 || event.key === 'Delete' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
             sbbtn.disabled = false;
   

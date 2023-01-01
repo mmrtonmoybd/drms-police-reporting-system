@@ -172,7 +172,7 @@ body{  /* background: #dfdfdf;*/
                 </marquee>
             </div>
             <div class="footer">
-                <strong>Developed By: Engineer BD Network; Designed by: MD Nayem Hossain  </strong> 
+                <strong>Developed By: Engineer BD Network; </strong> 
             </div>
            
            

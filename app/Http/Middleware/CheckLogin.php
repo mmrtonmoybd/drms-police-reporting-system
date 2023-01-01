@@ -17,10 +17,9 @@ class CheckLogin
     public function handle(Request $request, Closure $next)
     {
         $user = $request->session()->get('user');
-        if (! $user or ! isset($user['login']) or $user['login'] != true) {
+        if (!$user or !isset($user['login']) or $user['login']!=true) {
             return redirect('login');
         }
-
         return $next($request);
     }
 }

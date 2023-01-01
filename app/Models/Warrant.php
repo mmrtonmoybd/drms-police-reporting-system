@@ -10,10 +10,10 @@ class Warrant extends Model
     use HasFactory;
 
     protected $fillable = ['divisionID', 'districtID', 'thanaID',
-        'date', 'gr_recive', 'cr_recive',
-        'saja_gr_recive', 'saja_cr_recive', 'gr_tamil',
-        'cr_tamil', 'cr_tamil', 'saja_cr_tamil', 'saja_gr_tamil', 'recall_other', 'user_id', 'ucase_arrast', 'ruju_case', 'case_nispotti', 'narcotic_case_ruju', 'unnatural_death_case', 'unnatural_death_gd', 'bit_police', 'comunity_police', 'student_comunity_police', 'cims', 'narcotic_case_nispotti', 'status',
-    ];
+'date', 'gr_recive', 'cr_recive',
+'saja_gr_recive', 'saja_cr_recive', 'gr_tamil',
+'cr_tamil', 'cr_tamil', 'saja_cr_tamil', 'saja_gr_tamil', 'recall_other', 'user_id', 'ucase_arrast', 'ruju_case', 'case_nispotti', 'narcotic_case_ruju', 'unnatural_death_case', 'unnatural_death_gd', 'bit_police', 'comunity_police', 'student_comunity_police', 'cims', 'narcotic_case_nispotti', 'status'
+];
 
     public function district()
     {
@@ -28,7 +28,9 @@ class Warrant extends Model
     protected static function booted()
     {
         static::created(function ($row) {
+            
             if (auth()->user()->can('warrant.review')) {
+
                 $status = 'active';
             } else {
                 $status = 'inactive';

@@ -360,140 +360,140 @@ font-size: 21px;"> ওয়ারেন্ট সংক্রান্ত তথ�
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  জিআর রিসিভ  </label>
-                                                    <input type="text" name="gr_recive"  value="" id="gr_recive" class="number form-control  " placeholder="   জিআর রিসিভ " required>
+                                                    <input type="number"  min="0" name="gr_recive"  value="" id="gr_recive" class="number form-control  " placeholder="   জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  সিআর রিসিভ  </label>
-                                                    <input type="text" name="cr_recive"  value="" id="cr_recive" class="number form-control  " placeholder="   সিআর রিসিভ " required>
+                                                    <input type="number"  min="0" name="cr_recive"  value="" id="cr_recive" class="number form-control  " placeholder="   সিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর রিসিভ  </label>
-                                                    <input type="text" name="saja_gr_recive"  value="" id="saja_gr_recive" class="number form-control  " placeholder="   সাজা জিআর রিসিভ " required>
+                                                    <inputtype="number"  min="0" name="saja_gr_recive"  value="" id="saja_gr_recive" class="number form-control  " placeholder="   সাজা জিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা সিআর রিসিভ  </label>
-                                                    <input type="text" name="saja_cr_recive"  value="" id="saja_cr_recive" class="number form-control  " placeholder="   সাজা সিআর রিসিভ " required>
+                                                    <input type="number"  min="0" name="saja_cr_recive"  value="" id="saja_cr_recive" class="number form-control  " placeholder="   সাজা সিআর রিসিভ " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  জিআর তামিল  </label>
-                                                    <input type="text" name="gr_tamil"  value="" id="gr_tamil" class="number form-control  " placeholder="   জিআর তামিল " required>
+                                                    <input type="number"  min="0" name="gr_tamil"  value="" id="gr_tamil" class="number form-control  " placeholder="   জিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  সিআর তামিল  </label>
-                                                    <input type="text" name="cr_tamil"  value="" id="cr_tamil" class="number form-control  " placeholder="   সিআর তামিল " required>
+                                                    <input type="number"  min="0" name="cr_tamil"  value="" id="cr_tamil" class="number form-control  " placeholder="   সিআর তামিল " required>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা জিআর তামিল  </label>
-                                                    <input type="text" name="saja_gr_tamil"  value="" id="saja_gr_tamil" class="number form-control  " placeholder="   সাজা জিআর তামিল " required>
+                                                    <input type="number"  min="0" name="saja_gr_tamil"  value="" id="saja_gr_tamil" class="number form-control  " placeholder="   সাজা জিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> সাজা সিআর তামিল  </label>
-                                                    <input type="text" name="saja_cr_tamil"  value="" id="saja_cr_tamil" class="number form-control  " placeholder="   সাজা সিআর তামিল " required>
+                                                    <input type="number"  min="0" name="saja_cr_tamil"  value="" id="saja_cr_tamil" class="number form-control  " placeholder="   সাজা সিআর তামিল " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> রিকল ও অন্যান্য  </label>
-                                                    <input type="text" name="recall_other"  value="" id="recall_other" class="number form-control  " placeholder="   রিকল ও অন্যান্য " required>
+                                                    <input type="number"  min="0" name="recall_other"  value="" id="recall_other" class="number form-control  " placeholder="   রিকল ও অন্যান্য " required>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> নিয়মিত মামলায় গ্রেফতার  </label>
-                                                    <input type="text" name="ucase_arrast"  value="" id="ucase_arrast" class="number form-control  " placeholder="   নিয়মিত মামলায় গ্রেফতার " >
+                                                    <input type="number"  min="0"  name="ucase_arrast"  value="" id="ucase_arrast" class="number form-control  " placeholder="   নিয়মিত মামলায় গ্রেফতার " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  রুজুকৃত মামলা (মাদক ব্যাতিত) </label>
-                                                    <input type="text" name="ruju_case"  value="" id="ruju_case" class="number  form-control  " placeholder="   রুজুকৃত মামলা (মাদক ব্যাতিত) " >
+                                                    <input type="number"  min="0" name="ruju_case"  value="" id="ruju_case" class="number  form-control  " placeholder="   রুজুকৃত মামলা (মাদক ব্যাতিত) " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> মামলা নিষ্পত্তি (মাদক ব্যাতিত)  </label>
-                                                    <input type="text" name="case_nispotti"  value="" id="case_nispotti" class="number form-control  " placeholder="  মামলা নিষ্পত্তি (মাদক ব্যাতিত)  " >
+                                                    <input type="number"  min="0" name="case_nispotti"  value="" id="case_nispotti" class="number form-control  " placeholder="  মামলা নিষ্পত্তি (মাদক ব্যাতিত)  " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> মাদক মামলা রুজু </label>
-                                                    <input type="text" name="narcotic_case_ruju"  value="" id="narcotic_case_ruju" class="number form-control  " placeholder="  মাদক মামলা রুজু  " >
+                                                    <input type="number"  min="0" name="narcotic_case_ruju"  value="" id="narcotic_case_ruju" class="number form-control  " placeholder="  মাদক মামলা রুজু  " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  মাদক মালা নিষ্পত্তি </label>
-                                                    <input type="text" name="narcotic_case_nispotti"  value="" id="narcotic_case_nispotti" class="number form-control  " placeholder="  মাদক মামলা নিষ্পত্তি  " >
+                                                    <input type="number"  min="0" name="narcotic_case_nispotti"  value="" id="narcotic_case_nispotti" class="number form-control  " placeholder="  মাদক মামলা নিষ্পত্তি  " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> অপমৃত্যু মামলা  </label>
-                                                    <input type="text" name="unnatural_death_case"  value="" id="unnatural_death_case" class="number form-control  " placeholder="   অপমৃত্যু মামলা " >
+                                                    <input type="number"  min="0" name="unnatural_death_case"  value="" id="unnatural_death_case" class="number form-control  " placeholder="   অপমৃত্যু মামলা " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  অপমৃত্যু জিডি </label>
-                                                    <input type="text" name="unnatural_death_gd"  value="" id="unnatural_death_gd" class="number form-control  " placeholder=" অপমৃত্যু জিডি   " >
+                                                    <input type="number"  min="0" name="unnatural_death_gd"  value="" id="unnatural_death_gd" class="number form-control  " placeholder=" অপমৃত্যু জিডি   " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label"> বিট পুলিশিং  </label>
-                                                    <input type="text" name="bit_police"  value="" id="bit_police" class="number form-control  " placeholder="  বিট পুলিশিং  " >
+                                                    <input type="number"  min="0" name="bit_police"  value="" id="bit_police" class="number form-control  " placeholder="  বিট পুলিশিং  " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  কমিউনিটি পুলিশিং </label>
-                                                    <input type="text" name="comunity_police"  value="" id="comunity_police" class="number form-control  " placeholder="  কমিউনিটি পুলিশিং  " >
+                                                    <input type="number"  min="0" name="comunity_police"  value="" id="comunity_police" class="number form-control  " placeholder="  কমিউনিটি পুলিশিং  " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  Student কমিউনিটি পুলিশিং </label>
-                                                    <input type="text" name="student_comunity_police"  value="" id="student_comunity_police" class="number form-control  " placeholder="  Student কমিউনিটি পুলিশিং  " >
+                                                    <input type="number"  min="0" name="student_comunity_police"  value="" id="student_comunity_police" class="number form-control  " placeholder="  Student কমিউনিটি পুলিশিং  " >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="gr_recive" class="form-label">  সিআইএমএস এন্ট্রি </label>
-                                                    <input type="text" name="cims"  value="" id="cims" class="number form-control  " placeholder="  সিআইএমএস এন্ট্রি  " >
+                                                    <input type="number"  min="0" name="cims"  value="" id="cims" class="number form-control  " placeholder="  সিআইএমএস এন্ট্রি  " >
                                                 </div>
                                             </div>
 

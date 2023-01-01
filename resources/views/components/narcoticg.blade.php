@@ -182,8 +182,20 @@ $string1 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
          ['Thana', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          
          @foreach(session("numofcase") as $key => $value)
+         
+         @if (request()->has('thanaID'))
+         
+         @if ($value->thana->id == request()->input('thanaID'))
 
          ['{{$value->thana->bn_name}}', {{$value->totalcase}}, 'color: #663399', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+         
+         @endif
+         
+         @else
+         
+         ['{{$value->thana->bn_name}}', {{$value->totalcase}}, 'color: #663399', '{{$value->totalcase}}', '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+         
+         @endif
 
          @endforeach
         
@@ -272,7 +284,21 @@ $string2 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
         var data = google.visualization.arrayToDataTable([
           ['Arrest by unit', 'count', { role: 'link' }],
           @foreach(session("arrastbyu") as $key => $value)
+          
+          @if (request()->has('thanaID'))
+          
+          @if ($value->thana->id == request()->input('thanaID'))
+          
           ['{{$value->thana->bn_name}}', {{$value->totalarrast}}, '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+          
+          @endif
+          
+          @else
+          
+          
+          ['{{$value->thana->bn_name}}', {{$value->totalarrast}}, '@if (request()->is("admin/narcotic/dashboard")) {!!$string1 . "&thanaID=".$value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value->thana->id!!} @endif'],
+          
+          @endif
           @endforeach
         ]);
 

@@ -96,8 +96,21 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
          ['District', 'Incident', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
          
          @foreach(session("spthana") as $key => $value)
-
+         
+         @if (request()->has('thanaID'))
+         
+         @if ($value[2] == request()->input('thanaID'))
+         
+         
          ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2] . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+         
+         @endif
+
+
+         
+         @else
+         ['{{$value[1]}}', {{$value[0]}}, 'color: #9b0001', '{{$value[0]}}', '@if (request()->is("admin/qrrs/srcs")) {!!$string1 . "&thanaID=".$value[2] . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string1 . "&thanaID=".$value[2]!!} @endif'],
+         @endif
 
          @endforeach
         

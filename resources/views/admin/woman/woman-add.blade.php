@@ -254,7 +254,7 @@ font-size: 21px;"> নারী ও শিশু সংক্রান্ত ত
                                         <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="reference_no" class="form-label"> থানা রেজিস্টার নং </label>
-                                                    <input type="text" name="reference_no"  value="{{old('reference_no')}}" id="reference_no" class="number form-control  @error('reference_no') is-invalid @enderror" placeholder="থানা রেজিস্টার নং">
+                                                    <input type="number"  min="0" name="reference_no"  value="{{old('reference_no')}}" id="reference_no" class="number form-control  @error('reference_no') is-invalid @enderror" placeholder="থানা রেজিস্টার নং">
                                                 </div>
                                             </div>
 
@@ -456,7 +456,7 @@ font-size: 21px;"> নারী ও শিশু সংক্রান্ত ত
                                             <div class="col-sm-4" >
                                                 <div class="mb-3">
                                                     <label for="complaint_reson" class="form-label">অভিযুক্তের সংখ্যা</label>
-                                                    <input type="text" name="complaint_reson"  value="{{old('complaint_reson')}}" id="complaint_reson" class="number form-control  @error('complaint_reson') is-invalid @enderror" placeholder="   অভিযুক্তের সংখ্যা  ">
+                                                    <input type="number"  min="0" name="complaint_reson"  value="{{old('complaint_reson')}}" id="complaint_reson" class="number form-control  @error('complaint_reson') is-invalid @enderror" placeholder="   অভিযুক্তের সংখ্যা  ">
                                                 </div>
                                             </div>
 
@@ -470,14 +470,14 @@ font-size: 21px;"> নারী ও শিশু সংক্রান্ত ত
                                              <div class="col-sm-4"  >
                                                 <div class="mb-3">
                                                     <label for="investigator_title" class="form-label">  তদন্তকারী কর্মকর্তার বিপি নাম্বার  </label>
-                                                    <input type="text" name="investigator_title"  value="{{old('investigator_title')}}" id="investigator_title" class="number form-control  @error('investigator_title') is-invalid @enderror" placeholder="   তদন্তকারী কর্মকর্তার বিপি নাম্বার  ">
+                                                    <input type="number"  min="0" name="investigator_title"  value="{{old('investigator_title')}}" id="investigator_title" class="number form-control  @error('investigator_title') is-invalid @enderror" placeholder="   তদন্তকারী কর্মকর্তার বিপি নাম্বার  ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="mobile_no" class="form-label"> মোবাইল নং  </label>
-                                                    <input type="text" minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " >
+                                                    <input type="number"  min="0" minlength="11" maxlength="11" name="mobile_no"  value="{{old('mobile_no')}}" id="mobile_no" class="number form-control  @error('mobile_no') is-invalid @enderror" placeholder=" মোবাইল নং  " >
                                                 </div>
                                             </div>
                                             
@@ -639,7 +639,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                              <div class="col-sm-4" id="ovi1" style="display:none">
                                                 <div class="mb-3">
                                                     <label for="complaint_no" class="form-label">অভিযোগ নং </label>
-                                                    <input type="text" name="complaint_no"  value="{{old('complaint_no')}}" id="complaint_no" class="number form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
+                                                    <input type="number"  min="0" name="complaint_no"  value="{{old('complaint_no')}}" id="complaint_no" class="number form-control  @error('complaint_no') is-invalid @enderror" placeholder=" অভিযোগ নং">
                                                 </div>
                                             </div>
 
@@ -661,7 +661,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                        <div class="col-sm-4" id="gd1"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="gd_no" class="form-label">  জিডি নং   </label>
-                                                    <input type="text" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
+                                                    <input type="number"  min="0" name="gd_no"  value="{{old('gd_no')}}" id="gd_no" class="number form-control  @error('gd_no') is-invalid @enderror" placeholder="  জিডি নং  ">
                                                 </div>
                                             </div>
       
@@ -690,7 +690,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                             <div class="col-sm-4" id="mam"  style="display:none">
                                                 <div class="mb-3">
                                                     <label for="mamla_no" class="form-label">  মামলা নং   </label>
-                                                    <input type="text" name="mamla_no"  value="{{old('mamla_no')}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
+                                                    <input type="number"  min="0" name="mamla_no"  value="{{old('mamla_no')}}" id="mamla_no" class="number form-control  @error('mamla_no') is-invalid @enderror" placeholder="   মামলা নং ">
                                                 </div>
                                             </div>
       

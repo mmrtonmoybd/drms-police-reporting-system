@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Banglo;
-use App\Models\Contact;
-use App\Models\Gallery;
-use App\Models\Room;
-use App\Models\RoomCategory;
+use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Slider;
-use Illuminate\Http\Request;
+use App\Models\Room;
+use App\Models\Gallery;
+use App\Models\Banglo;
+use App\Models\Contact;
+use App\Models\RoomCategory;
+use Carbon\Carbon;
 use Validator;
 
 class API extends Controller
@@ -17,7 +18,7 @@ class API extends Controller
     //this method for return all data of website
     public function StoreContext()
     {
-        $data = [
+        $data=[
             'settings' => $this->settings(),
             'sliders' => $this->sliders(),
             'gallerys' => $this->gallerys(),
@@ -27,6 +28,7 @@ class API extends Controller
 
         return response()->json($data);
     }
+
 
     //this method for return all settings data
     public function settings()
@@ -46,35 +48,38 @@ class API extends Controller
         return $settings;
     }
 
+
+
+
     //this method for return services
     public function sliders()
     {
-        $slidersData = Slider::orderBy('order_by', 'ASC')->get(['title', 'sub_title', 'description', 'image']);
-        $sliders = [];
+        $slidersData = Slider::orderBy('order_by', 'ASC')->get(['title','sub_title','description', 'image']);
+        $sliders =[];
         if ($slidersData) {
             foreach ($slidersData as $slider) {
                 $slider->image = asset('storage/sliders'.$slider->image);
                 $sliders[] = $slider;
             }
         }
-
         return $sliders;
     }
+
 
     //this method for return services
     public function banglos()
     {
-        $banglosData = Banglo::orderBy('order_by', 'ASC')->get(['id', 'title', 'sub_title', 'total_room', 'address', 'description', 'image']);
-        $banglos = [];
+        $banglosData = Banglo::orderBy('order_by', 'ASC')->get(['id','title','sub_title','total_room','address','description', 'image']);
+        $banglos =[];
         if ($banglosData) {
             foreach ($banglosData as $banglo) {
                 $banglo->image = asset('storage/banglos'.$banglo->image);
                 $banglos[] = $banglo;
             }
         }
-
         return $banglos;
     }
+
 
     //this method for return services
     public function categories()
@@ -82,11 +87,12 @@ class API extends Controller
         return $categoryData = RoomCategory::orderBy('id', 'ASC')->get();
     }
 
+
     //this method for return services
     public function gallerys()
     {
-        $gallerysData = Gallery::orderBy('order_by', 'ASC')->get(['title', 'sub_title', 'description', 'image']);
-        $gallerys = [];
+        $gallerysData = Gallery::orderBy('order_by', 'ASC')->get(['title','sub_title','description', 'image']);
+        $gallerys =[];
         if ($gallerysData) {
             foreach ($gallerysData as $gallery) {
                 $gallery->src = asset('storage/gallerys'.$gallery->image);
@@ -96,21 +102,21 @@ class API extends Controller
                 $gallerys[] = $gallery;
             }
         }
-
         return $gallerys;
     }
 
+
+
     //This method for get single dakbanglo details
-    public function DakbangloByID(Request $request, $id = null)
+    public function DakbangloByID(Request $request, $id=null)
     {
-        $data = [];
+        $data = array();
         $data = Banglo::where('id', $id)->first();
         $data->image = asset('storage/banglos'.$data->image);
-
         return response()->json($data);
     }
 
-    public function Rooms(Request $request, $id = null)
+    public function Rooms(Request $request, $id=null)
     {
         $query = Room::query();
         $query->orderBy('order_by', 'ASC');
@@ -135,7 +141,7 @@ class API extends Controller
         }
 
         $roomsData = $query->get();
-        $rooms = [];
+        $rooms =[];
         if ($roomsData) {
             foreach ($roomsData as $room) {
                 $room->big_picture = asset('storage/rooms'.$room->big_picture);
@@ -148,12 +154,11 @@ class API extends Controller
                 $rooms[] = $room;
             }
         }
-
         return response()->json($rooms);
     }
 
     //this methdo for get single room details
-    public function RoomDetails(Request $request, $room_id = null)
+    public function RoomDetails(Request $request, $room_id=null)
     {
         $response = [];
         if ($room_id) {
@@ -167,14 +172,14 @@ class API extends Controller
                 $response = $room;
             }
         }
-
         return response()->json($response);
     }
+
 
     //this method for add new user
     public function AddContact(Request $request)
     {
-        $response = [];
+        $response = array();
 
         $validator = Validator::make($request->all(), [
             'full_name' => 'required',
@@ -183,35 +188,41 @@ class API extends Controller
             'message' => 'required',
         ]);
 
+
+
+
         $insertAttr = [
-            'full_name' => $request->input('full_name'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'message' => $request->input('message'),
+            'full_name'=>$request->input('full_name'),
+            'phone'=>$request->input('phone'),
+            'email'=>$request->input('email'),
+            'message'=>$request->input('message'),
 
         ];
 
         if ($validator->fails()) {
-            $response = [
-                'status' => 'ERROR',
+            $response=array(
+                'status'  => 'ERROR',
                 'message' => 'Something wrong in form fillup',
-                'errors' => $validator->errors(),
-            ];
+                'errors' => $validator->errors()
+            );
         } else {
             if (Contact::insert($insertAttr)) {
-                $response = [
-                    'status' => 'SUCCESS',
+                $response=array(
+                    'status'  => 'SUCCESS',
                     'message' => 'Your message successfully send to website admin.',
-                    'errors' => [],
-                ];
+                    'errors' => array()
+                );
             } else {
-                $response = [
-                    'status' => 'ERROR',
+                $response=array(
+                    'status'  => 'ERROR',
                     'message' => 'Something wrong please try again',
-                    'errors' => [],
-                ];
+                    'errors' => array()
+                );
             }
         }
+
+
+
 
         return response()->json($response);
     }

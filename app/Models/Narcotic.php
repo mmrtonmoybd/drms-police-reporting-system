@@ -24,7 +24,9 @@ class Narcotic extends Model
     protected static function booted()
     {
         static::created(function ($row) {
+            
             if (auth()->user()->can('narcotic.review')) {
+
                 $status = 'active';
             } else {
                 $status = 'inactive';

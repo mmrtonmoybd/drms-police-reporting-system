@@ -31,7 +31,7 @@ class User extends Authenticatable
         'picture',
         'designation',
         'bp_no',
-        'mobile',
+        'mobile'
     ];
 
     /**
