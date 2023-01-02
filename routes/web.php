@@ -39,6 +39,7 @@ Route::get('/clear', function () {
 });
 
 Route::get('/cache', function () {
+    $exitCode = Artisan::call('optimize');
     $exitCode = Artisan::call('config:cache');
     $exitCode = Artisan::call('route:cache');
     $exitCode = Artisan::call('view:cache');
