@@ -233,7 +233,7 @@ Route::prefix('admin')->group(function () {
                 Route::post('/add/oc', [UsersController::class, 'addoccreate']);
 
                 Route::get('/add/oc/op1', [UsersController::class, 'addocop1Show']);
-                Route::post('/add/oc/op1', [UsersController::class, 'addococ1create']);
+                Route::post('/add/oc/op1', [UsersController::class, 'addocop1create']);
 
                 Route::get('/add/oc/op2', [UsersController::class, 'addocop2Show']);
                 Route::post('/add/oc/op2', [UsersController::class, 'addococ2create']);

@@ -43,6 +43,14 @@
 
 <style>
 
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
+  overflow: auto;
+}
+
 
 th {
   position: sticky!important;
