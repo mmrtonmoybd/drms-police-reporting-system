@@ -16,8 +16,7 @@ class HtmlMifier
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -47,6 +46,7 @@ class HtmlMifier
         if (App::environment(['local', 'staging'])) {
             return $input;
         }
+
         return preg_replace($search, $replace, $input);
     }
 }
