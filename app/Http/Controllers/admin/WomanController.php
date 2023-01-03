@@ -280,7 +280,7 @@ class WomanController extends Controller
         }
     }
 
-    public function delete(Woman $woman)
+    public function delete(Request $request, Woman $woman)
     {
         Gate::authorize('editdeletwoman', $woman);
 
