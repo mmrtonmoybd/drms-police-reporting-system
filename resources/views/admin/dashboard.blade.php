@@ -141,6 +141,34 @@ background: #092756;
         </div>
       </div>
 
+      <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0 yajra-datatable" style="width: 100% !important;">
+
+<thead>
+    <tr>
+        <th > জেলা </th>
+        <th > Qrr </th>
+        <th > Case </th>
+        <th > Case nispotti </th>
+        <th > Narcotic case </th>
+        <th > UD case </th>
+        <th > Woman and childern </th>
+    </tr>
+</thead>
+<tbody>
+   @foreach ($qrrase as $data)
+   <tr>
+   <td>{{$data->bn_name}}</td>
+   <td>{{$data->qrrcount}}</td>
+   <td>{{$data->totalcase}}</td>
+   <td>{{$data->casenispotti}}</td>
+   <td>{{$data->narcoticcount}}</td>
+   <td>{{$data->udcase}}</td>
+   <td>{{$data->womancount}}</td>
+</tr>
+   @endforeach
+</tbody>
+</table>
+
 
 
 

@@ -1053,7 +1053,7 @@ class QrrsController extends Controller
             $data['spthanas'] = $spthana;
 
             foreach ($spthana as $key => $value) {
-                $dd = Qrr::where('thanaID', $value->id)->count();
+                $dd = Qrr::where('thanaID', $value->id)->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday])->count();
 
                 $data['spthana'][$key] = [($dd !== 0) ? $dd : '', $value->bn_name, $value->id];
             }
@@ -1065,7 +1065,7 @@ class QrrsController extends Controller
             $octhana = Thana::find(auth()->user()->thanaID);
             $data['octhana'] = $octhana;
 
-            $dd = Qrr::where('thanaID', $octhana->id)->count();
+            $dd = Qrr::where('thanaID', $octhana->id)->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday])->count();
 
             $val = ($dd !== 0) ? $dd : '';
 
