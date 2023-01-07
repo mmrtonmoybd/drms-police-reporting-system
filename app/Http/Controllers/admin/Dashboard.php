@@ -7,7 +7,6 @@ use App\Models\District;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use League\CommonMark\Node\Query;
 
 class Dashboard extends Controller
 {
@@ -31,47 +30,47 @@ class Dashboard extends Controller
        {
            //  $this->UpdateLogin($request);
 
-        $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
+           $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
-        $request->session()->flash('currentday', $currentday);
+           $request->session()->flash('currentday', $currentday);
 
-        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
+           $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
 
-        $request->session()->flash('agomonthday', $agomonthday);
+           $request->session()->flash('agomonthday', $agomonthday);
 
-        //$data = [];
+           //$data = [];
 
-        $data['qrrase'] = District::withCount([
-                'qrr AS qrrcount' => function ($query) use ($currentday, $agomonthday) {
-                    return $query->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday]);
-                },
+           $data['qrrase'] = District::withCount([
+               'qrr AS qrrcount' => function ($query) use ($currentday, $agomonthday) {
+                   return $query->where('status', 'active')->whereBetween('date_time_of_police_news', [$agomonthday, $currentday]);
+               },
 
-                'casedb AS casenispotti' => function ($query) use ($currentday, $agomonthday) {
-                    return $query->where('nispotti_or_multobi', 'নিস্পত্তি')->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday]);
-                },
+               'casedb AS casenispotti' => function ($query) use ($currentday, $agomonthday) {
+                   return $query->where('nispotti_or_multobi', 'নিস্পত্তি')->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday]);
+               },
 
-                'casedb AS totalcase' => function ($query) use ($currentday, $agomonthday) {
-                    return $query->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday]);
-                },
+               'casedb AS totalcase' => function ($query) use ($currentday, $agomonthday) {
+                   return $query->where('status', 'active')->whereBetween('case_date', [$agomonthday, $currentday]);
+               },
 
-                'narcotic AS narcoticcount' => function ($query) use ($currentday, $agomonthday) {
-                    return $query->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday]);
-                },
+               'narcotic AS narcoticcount' => function ($query) use ($currentday, $agomonthday) {
+                   return $query->where('status', 'active')->whereBetween('sdate', [$agomonthday, $currentday]);
+               },
 
-                'woman AS womancount' => function ($query) use ($currentday, $agomonthday) {
-                    return $query->whereBetween('wdate', [$agomonthday, $currentday])
-                        ->where('status', 'inactive');
-                }
-            ])
+               'woman AS womancount' => function ($query) use ($currentday, $agomonthday) {
+                   return $query->whereBetween('wdate', [$agomonthday, $currentday])
+                       ->where('status', 'inactive');
+               },
+           ])
 
-            ->withSum([ 'warrant AS udcase' => function ($query) use ($currentday, $agomonthday) {
-                    return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday]);
-                    }], 
-                    'unnatural_death_case'
-                 )
-                 ->where('division_id', 1)->groupBy('id')->get();
+               ->withSum(['warrant AS udcase' => function ($query) use ($currentday, $agomonthday) {
+               return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday]);
+           }],
+                   'unnatural_death_case'
+               )
+                    ->where('division_id', 1)->groupBy('id')->get();
 
-        //dd($data);
+           //dd($data);
 
            return view('admin/dashboard', $data);
        }
