@@ -596,10 +596,7 @@ class UsersController extends Controller
             return redirect('admin/users');
         }
 
-       
-
         if (User::where('id', $id)->delete()) {
-
             $modelhasrole = DB::table('model_has_roles')->where('model_id', $id)->delete();
 
             if ($modelhasrole) {
