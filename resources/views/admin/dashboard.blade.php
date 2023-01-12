@@ -17,7 +17,7 @@
 
 <div class="row">
 
-
+<h2>Report confirmation: {{$reportconfirmation}}</h2>
 	
  <div class="col-sm-6">
 
@@ -145,7 +145,11 @@ background: #092756;
 
 <thead>
     <tr>
-        <th > জেলা </th>
+    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                    <th > জেলা </th>
+                                                  @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    <th > থানা </th>
+                                                    @endif
         <th > Qrr </th>
         <th > Case </th>
         <th > Case nispotti </th>
@@ -168,6 +172,145 @@ background: #092756;
    @endforeach
 </tbody>
 </table>
+
+
+<span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+margin-bottom: -10px;"> 
+     
+     
+     ওয়ারেন্ট  এবং গ্রেফতার  </span>
+
+<table class="table table-bordered table-responsive table-striped table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                    <th > জেলা </th>
+                                                  @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    <th > থানা </th>
+                                                    @endif
+                                                    <th >  রিসিভ  </th>
+                                                    <th >  রিকল ও অন্যান্য </th>
+                                                     <th >  নিষ্পত্তি</th>
+                                                       <th >  বডি তামিল </th>
+                                                         <th >  নিস্পত্তি অনুপাতে বডি তামিল </th>
+                                                               <th >  নিয়মিত মামলায় গ্রেফতার  </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+@php
+use App\Models\District;
+use App\Models\Thana;
+
+function disna($id) {
+    $get = District::find($id);
+    return $get->bn_name;
+}
+
+function thana($id) {
+    $get = Thana::find($id);
+    return $get->bn_name;
+}
+@endphp
+                                            @if($warrantarrast)
+                                            @foreach ($warrantarrast as $war)
+                                                <tr>
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                    <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif</td>
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
+                                                    <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
+                                                    @endif
+                                                    <td > {{$war->total_recive}}</td>
+                                                  
+                                                   
+                                                    <td > {{$war->total_recall}}</td>
+                                                    <td > {{$war->total_nispotti}}</td>
+                                                    <td > {{$war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil }}</td>
+                                                    
+                                                    <?php $totalgrt= $war->total_gr_tamil + $war->total_cr_tamil + $war->total_saja_gr_tamil + $war->total_saja_cr_tamil; 
+                                                    
+                                                    if($totalgrt==0) {
+                                                        $totalcacl= '0';
+                                                    } else {
+                                                        $totalcacl= $war->total_nispotti/$totalgrt;
+                                                    }
+                                                    
+                                                    ?>
+                                                    <td > {{round($totalcacl, 2) }}</td>
+                                                    <td > {{$war->sumucase_arrast}}</td>
+                                            @endforeach
+                                            @endif
+
+
+                                            
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span>
+                                        
+                                        <br>
+
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                    <th > জেলা </th>
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    <th > থানা </th>
+                                                    @endif
+                                              
+                                                  
+                                                    <th>বিট পুলিশিং</th>
+                                                    <th>কমিউনিটি পুলিশিং</th>
+                                                    <th>Student কমিউনিটি পুলিশিং</th>
+                                                    <th>সিআইএমএস এন্ট্রি</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @if($datawarrantother)
+                                            @foreach ($datawarrantother as $war)
+                                                <tr>
+
+                                                    <td >@if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))    
+                                            {{$war->district->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
+                                            {{$war->thana->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$war->thana->bn_name}}
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$war->thana->bn_name}}
+                                            @endif</td>
+                                                    
+                                                   
+                                                    
+                                                    <td > {{$war->sumbit_police}}</td>
+                                                    <td > {{$war->sumcomunity_police}}</td>
+                                                    <td > {{$war->sumstudent_comunity_police}}</td>
+                                                    <td > {{$war->sumcims}}</td>
+                                                </tr>
+
+                                            @endforeach
+                                            @endif
+
+
+                                            
+
+                                            </tbody>
+                                        </table>
 
 
 

@@ -8,6 +8,7 @@ use App\Models\User;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -595,7 +596,16 @@ class UsersController extends Controller
             return redirect('admin/users');
         }
 
+       
+
         if (User::where('id', $id)->delete()) {
+
+            $modelhasrole = DB::table('model_has_roles')->where('model_id', $id)->delete();
+
+            if ($modelhasrole) {
+                $request->session()->flash('success_msg', 'Data updated successfully');
+            }
+
             $request->session()->flash('success_msg', 'Data updated successfully');
 
             return redirect('admin/users');
