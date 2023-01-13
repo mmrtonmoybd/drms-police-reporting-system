@@ -10,6 +10,7 @@ use App\Models\District;
 use App\Models\Thana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\DataTables\Casedb\CasedbDataTable;
 
 class CaseController extends Controller
 {
@@ -36,9 +37,11 @@ class CaseController extends Controller
             $tkey = '=';
         }
 
-        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
+        //$data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
 
-        return view('admin/case/cases', $data);
+        // return view('admin/case/cases', $data);
+        $datatable = new CasedbDataTable();
+        return $datatable->render('admin.case.cases');
     }
 
     public function reviewList()
