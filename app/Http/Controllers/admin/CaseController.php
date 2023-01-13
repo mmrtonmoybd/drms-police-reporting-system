@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\DataTables\Casedb\CasedbDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Casedb;
 use App\Models\CaseType;
@@ -10,7 +11,6 @@ use App\Models\District;
 use App\Models\Thana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\DataTables\Casedb\CasedbDataTable;
 
 class CaseController extends Controller
 {
@@ -41,6 +41,7 @@ class CaseController extends Controller
 
         // return view('admin/case/cases', $data);
         $datatable = new CasedbDataTable();
+
         return $datatable->render('admin.case.cases');
     }
 

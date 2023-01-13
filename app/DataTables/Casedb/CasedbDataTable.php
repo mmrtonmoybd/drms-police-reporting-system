@@ -5,9 +5,8 @@ namespace App\DataTables\Casedb;
 use App\Models\Casedb;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+
 //use App\Models\Casedb;
 
 class CasedbDataTable extends DataTable
@@ -15,15 +14,15 @@ class CasedbDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
+     * @param  mixed  $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('casesubtype.type', function($raw) {
-                return (empty($raw->casesubtype->type)) ? '' : $raw->casesubtype->type ;
+            ->editColumn('casesubtype.type', function ($raw) {
+                return (empty($raw->casesubtype->type)) ? '' : $raw->casesubtype->type;
             })
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
@@ -47,7 +46,7 @@ class CasedbDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \Casedb $model
+     * @param  \Casedb  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Casedb $model)
@@ -88,9 +87,9 @@ class CasedbDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    
+
                     ->buttons(
-                        
+
                         Button::make(['excel', 'csv']),
                         Button::make('print'),
                         Button::make('reset'),
@@ -105,7 +104,7 @@ class CasedbDataTable extends DataTable
                             });
                         });
                     }",
-                ]);
+                    ]);
     }
 
     /**
@@ -165,6 +164,6 @@ class CasedbDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Casedb_' . date('YmdHis');
+        return 'Casedb_'.date('YmdHis');
     }
 }
