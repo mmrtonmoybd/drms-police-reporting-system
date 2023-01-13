@@ -65,8 +65,8 @@ class Dashboard extends Controller
                ])
 
                   ->withSum(['warrant AS udcase' => function ($query) use ($currentday, $agomonthday) {
-                          return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday]);
-                      }],
+                      return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday]);
+                  }],
                       'unnatural_death_case'
                   )
                        ->where('division_id', 1)->groupBy('id')->get();
