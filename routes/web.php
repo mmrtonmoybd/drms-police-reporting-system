@@ -79,6 +79,7 @@ Route::prefix('admin')->group(function () {
             }
         });
         Route::get('/dashboard', [Dashboard::class, 'Index'])->name('home');
+        Route::get('/dashboard/search', [Dashboard::class, 'search']);
 
         Route::get('/districts/{division_id}', [AreaController::class, 'getDistricts']);
         Route::get('/upazilas/{district_id}', [AreaController::class, 'getUpazilas']);

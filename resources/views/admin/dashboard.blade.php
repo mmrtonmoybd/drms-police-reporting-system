@@ -17,7 +17,105 @@
 
 <div class="row">
 
-<h2>Report confirmation: {{$reportconfirmation}}</h2>
+<form  action="{{url('admin/dashboard/search')}}" method="get">
+               
+               <div class="" id="app">
+                                                                 <div class="row">
+                                          @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="districtID" class="form-label "></label>
+                                                    
+                                                    
+                                                    
+                                                    <select name="districtID" id="districtID" class="form-select form-control stylish "  v-model="district_id" @change="getUpozillasAndThana()">
+                                                        <option value="">জেলা</option>
+
+                                                        @php 
+                                                        if (request()->input('districtID') !== 'খালি') {
+                                                         $did = request()->input('districtID');
+                                                        } else {
+                                                         $did = 82625;
+                                                        }
+                                                        @endphp
+
+                                                        @if($districts)
+
+                                                        @foreach($districts as $district)
+                                                        <option value="{{$district->id}}" {{ ($district->id == $did) ? 'selected' : '' }} >{{$district->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control stylish" >
+                                                        <option value="">থানা</option>
+                                                        <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            @endif
+
+                                            @if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
+                                                      
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
+
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}"  {{ ($thnsp->id == request()->input('thanaID')) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                             @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            <div class="col-sm-2">
+                                                <div class="mb-3">
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish">
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @endif
+
+
+                                            <div class="col-sm-4 " > 
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                  <div class="input-group" id="timepicker-input-group2">
+                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                  </div>
+               </div>
+            </div>
+            
+            <div class="col-sm-2 " >
+               <div class="mb-3">
+                  <label for="source_of_info" class="form-label"></label>
+                 <button type="submit" name="submit" class="btn" style="width: 100%;"> সার্চ করুন </button>
+               </div>
+            </div>
+
+                                                      </form>
+
+<h2>Report confirmation pending: {{$reportconfirmation}}</h2>
 	
  <div class="col-sm-6">
 
@@ -145,8 +243,10 @@ background: #092756;
 
 <thead>
     <tr>
-    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
                                                     <th > জেলা </th>
+                                                    @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
+                                                    <th > থানা </th>
                                                   @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
@@ -188,8 +288,10 @@ margin-bottom: -10px;">
 <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
-                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
                                                     <th > জেলা </th>
+                                                    @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
+                                                    <th > থানা </th>
                                                   @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
@@ -219,11 +321,15 @@ function thana($id) {
                                             @if($warrantarrast)
                                             @foreach ($warrantarrast as $war)
                                                 <tr>
-                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
-                                                    <td > @if(null !== disna($war->districtID)) {{disna($war->districtID)}} @endif</td>
-                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
-                                                    <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
-                                                    @endif
+                                                <td >@if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))    
+                                            {{$war->district->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
+                                            {{$war->thana->bn_name}}
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{$war->thana->bn_name}}
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{$war->thana->bn_name}}
+                                            @endif</td>
                                                     <td > {{$war->total_recive}}</td>
                                                   
                                                    
@@ -266,9 +372,11 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                         <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                             <thead>
                                                 <tr>
-                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
                                                     <th > জেলা </th>
-                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
+                                                    @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
+                                                    <th > থানা </th>
+                                                  @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
                                               
@@ -402,5 +510,120 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
          </div>
          <!-- end col -->
          </div>
+
+
+         @php
+ $sdisn = request()->input('districtID');
+ $sthan = request()->input('thanaID');
+                
+                  $division_id = 1;
+                if(($sdisn !== 'খালি'))
+                    $district_id = $sdisn;
+                if(($sthan !== 'খালি'))
+                    $thana_id = $sthan;
+
+                @endphp
+    <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
+    <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
+
+  <script>
+    var app = new Vue({
+          el: '#app',
+          data: {
+            message: 'Hello Vue!',
+            ajax_url: '<?php echo url('admin'); ?>',
+           
+              
+            divisions:null,
+            districts:null,
+            upozillas:null,
+            thanas:null,
+            
+            division_id:'@if(isset($division_id) and $division_id){{$division_id}}@endif',
+            district_id:'@if(isset($district_id) and $district_id){{$district_id}}@endif',
+            upozilla_id:'@if(isset($upozilla_id) and $upozilla_id){{$upozilla_id}}@endif',
+            thana_id:'@if(isset($thana_id) and $thana_id){{$thana_id}}@endif',
+
+
+          },
+
+            created(){
+                
+                if(this.division_id!=""){
+                    this.getDistricts();
+                }
+                if(this.district_id!=""){
+                    this.getThanas();
+                }
+                
+            },
+
+
+            methods:{
+
+                
+                // send message to account customer
+                getDivisions(){
+                     axios.get(this.ajax_url+'/divisions')
+                    .then(res => {
+                        this.divisions = res.data;
+                    })
+                    .catch(err => {console.log(err); });
+                    
+                },
+                
+                
+                //this method for get districts
+                getDistricts(){
+                    if(this.division_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/districts/'+this.division_id)
+                        .then(res => {
+                            this.districts = res.data;
+                        })
+                        .catch(err => {console.log(err); });
+                      
+                   }
+                    
+                },
+
+                getUpozillasAndThana(){
+                    //this.getUpozillas();
+                    this.getThanas();
+                },
+                
+                //this method for get medicals
+                getUpozillas(){
+                    if(this.district_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/upazilas/'+this.district_id)
+                        .then(res => {
+                            this.upozillas = res.data;
+                        })
+                        .catch(err => {console.log(err); }); 
+                   }
+                    
+                },
+
+                
+                //this method for get medicals
+                getThanas(){
+                    if(this.district_id==""){
+                   }else{
+                        axios.get(this.ajax_url+'/thanas/'+this.district_id)
+                        .then(res => {
+                            this.thanas = res.data;
+                        })
+                        .catch(err => {console.log(err); }); 
+                   }
+                    
+                },
+                
+
+            }
+
+        });
+
+    </script>
 
 <x-admin-footer/>
