@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\DataTables\Woman\WomanDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\District;
 use App\Models\Thana;
@@ -9,7 +10,6 @@ use App\Models\Woman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\Woman\WomanDataTable;
 
 class WomanController extends Controller
 {

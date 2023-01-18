@@ -5,8 +5,6 @@ namespace App\DataTables\Narcotic;
 use App\Models\Narcotic;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class NarcoticDataTable extends DataTable
@@ -14,7 +12,7 @@ class NarcoticDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
+     * @param  mixed  $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
@@ -24,25 +22,25 @@ class NarcoticDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->can('narcotic.view')) {
-                    $actionBtn .= '<a href="' . url("admin/narcotic/view/$row->narcoticsid") . '" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/view/$row->narcoticsid").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                 }
                 if (auth()->user()->can('narcotic.edit')) {
-                    $actionBtn .= '<a href="' . url("admin/narcotic/edit/$row->narcoticsid") . '" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/edit/$row->narcoticsid").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                 }
                 if (auth()->user()->can('narcotic.review')) {
-                    $actionBtn .= '<a href="' . url("admin/narcotic/review/update/$row->narcoticsid") . '" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/review/update/$row->narcoticsid").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
                 }
                 if (auth()->user()->can('narcotic.delete')) {
-                    $actionBtn .= '<a href="' . url("admin/narcotic/delete/$row->narcoticsid") . '"  onclick="return confirm(\'Do you want to delete this narcotic?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/delete/$row->narcoticsid").'"  onclick="return confirm(\'Do you want to delete this narcotic?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                 }
 
                 return $actionBtn;
             })
             ->editColumn('created_at', function ($raw) {
-                return (!empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '' ;
+                return (! empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '';
             })
             ->editColumn('updated_at', function ($raw) {
-                return (!empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '' ;
+                return (! empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '';
             })
             ->editColumn('village_word', function ($raw) {
                 return \Illuminate\Support\Str::limit($raw->village_word, 10);
@@ -66,17 +64,17 @@ class NarcoticDataTable extends DataTable
                 return \Illuminate\Support\Str::limit($raw->comment, 5);
             })
             ->editColumn('sdate', function ($raw) {
-                return (!empty($raw->sdate)) ? date('d/m/Y', strtotime($raw->sdate)) : '' ;
+                return (! empty($raw->sdate)) ? date('d/m/Y', strtotime($raw->sdate)) : '';
             })
             ->editColumn('tdate', function ($raw) {
-                return (!empty($raw->tdate)) ? date('d/m/Y', strtotime($raw->tdate)) : '' ;
+                return (! empty($raw->tdate)) ? date('d/m/Y', strtotime($raw->tdate)) : '';
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Narcotic $model
+     * @param  \Narcotic  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Narcotic $model)
@@ -195,6 +193,6 @@ class NarcoticDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Narcotic_' . date('YmdHis');
+        return 'Narcotic_'.date('YmdHis');
     }
 }

@@ -27,16 +27,16 @@ class CasedbDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->can('case.view')) {
-                    $actionBtn .= '<a href="' . url("admin/case/view/$row->casid") . '" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/case/view/$row->casid").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                 }
                 if (auth()->user()->can('case.edit')) {
-                    $actionBtn .= '<a href="' . url("admin/case/edit/$row->casid") . '" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/case/edit/$row->casid").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                 }
                 if (auth()->user()->can('case.review')) {
-                    $actionBtn .= '<a href="' . url("admin/case/review/update/$row->casid") . '" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/case/review/update/$row->casid").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
                 }
                 if (auth()->user()->can('case.delete')) {
-                    $actionBtn .= '<a href="' . url("admin/case/delete/$row->casid") . '"  onclick="return confirm(\'Do you want to delete this case?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    $actionBtn .= '<a href="'.url("admin/case/delete/$row->casid").'"  onclick="return confirm(\'Do you want to delete this case?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                 }
 
                 return $actionBtn;
@@ -57,7 +57,7 @@ class CasedbDataTable extends DataTable
                 return \Illuminate\Support\Str::limit($raw->gr_no, 10);
             })
             ->editColumn('nispotti_type ', function ($raw) {
-                return ($raw->nispotti_type != 0) ? $raw->nispotti_type : '' ;
+                return ($raw->nispotti_type != 0) ? $raw->nispotti_type : '';
             })
             ->editColumn('cs_or_fr_no', function ($raw) {
                 return \Illuminate\Support\Str::limit($raw->cs_or_fr_no, 10);
@@ -66,19 +66,19 @@ class CasedbDataTable extends DataTable
                 return \Illuminate\Support\Str::limit($raw->comment, 10);
             })
             ->editColumn('case_date', function ($raw) {
-                return (!empty($raw->case_date)) ? date('d/m/Y', strtotime($raw->case_date)) : '' ;
+                return (! empty($raw->case_date)) ? date('d/m/Y', strtotime($raw->case_date)) : '';
             })
             ->editColumn('incident_date_time', function ($raw) {
-                return (!empty($raw->incident_date_time)) ? date('d/m/Y', strtotime($raw->incident_date_time)) : '' ;
+                return (! empty($raw->incident_date_time)) ? date('d/m/Y', strtotime($raw->incident_date_time)) : '';
             })
             ->editColumn('nispotti_date', function ($raw) {
-                return (!empty($raw->nispotti_date)) ? date('d/m/Y', strtotime($raw->nispotti_date)) : '' ;
+                return (! empty($raw->nispotti_date)) ? date('d/m/Y', strtotime($raw->nispotti_date)) : '';
             })
             ->editColumn('created_at', function ($raw) {
-                return (!empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '' ;
+                return (! empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '';
             })
             ->editColumn('updated_at', function ($raw) {
-                return (!empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '' ;
+                return (! empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '';
             });
     }
 

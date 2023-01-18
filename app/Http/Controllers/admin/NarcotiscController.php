@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\DataTables\Narcotic\NarcoticDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\District;
 use App\Models\Narcotic;
@@ -9,7 +10,6 @@ use App\Models\Thana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\Narcotic\NarcoticDataTable;
 
 class NarcotiscController extends Controller
 {

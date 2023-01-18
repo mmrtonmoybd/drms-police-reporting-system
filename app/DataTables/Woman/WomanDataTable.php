@@ -5,8 +5,6 @@ namespace App\DataTables\Woman;
 use App\Models\Woman;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class WomanDataTable extends DataTable
@@ -14,7 +12,7 @@ class WomanDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
+     * @param  mixed  $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
@@ -24,32 +22,32 @@ class WomanDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->can('woman.view')) {
-                    $actionBtn .= '<a href="' . url("admin/woman/view/$row->womanid") . '" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/woman/view/$row->womanid").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                 }
                 if (auth()->user()->can('woman.edit')) {
-                    $actionBtn .= '<a href="' . url("admin/woman/edit/$row->womanid") . '" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/woman/edit/$row->womanid").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                 }
                 if (auth()->user()->can('woman.review')) {
-                    $actionBtn .= '<a href="' . url("admin/woman/review/update/$row->womanid") . '" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/woman/review/update/$row->womanid").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
                 }
                 if (auth()->user()->can('woman.delete')) {
-                    $actionBtn .= '<a href="' . url("admin/woman/delete/$row->womanid") . '"  onclick="return confirm(\'Do you want to delete this womens?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    $actionBtn .= '<a href="'.url("admin/woman/delete/$row->womanid").'"  onclick="return confirm(\'Do you want to delete this womens?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                 }
 
                 return $actionBtn;
             })
             ->editColumn('created_at', function ($raw) {
-                return (!empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '' ;
+                return (! empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '';
             })
             ->editColumn('updated_at', function ($raw) {
-                return (!empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '' ;
+                return (! empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '';
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Woman $model
+     * @param  \Woman  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Woman $model)
@@ -170,6 +168,6 @@ class WomanDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Woman_' . date('YmdHis');
+        return 'Woman_'.date('YmdHis');
     }
 }
