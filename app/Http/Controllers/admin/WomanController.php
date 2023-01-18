@@ -9,11 +9,13 @@ use App\Models\Woman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
+use App\DataTables\Woman\WomanDataTable;
 
 class WomanController extends Controller
 {
     public function index()
     {
+        /*
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
@@ -33,7 +35,11 @@ class WomanController extends Controller
 
         $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
 
-        return view('admin/woman/womans', $data);
+        */
+
+        $datatable = new WomanDataTable();
+
+        return $datatable->render('admin.woman.womans');
     }
 
     public function reviewList(Request $request)
@@ -57,7 +63,7 @@ class WomanController extends Controller
 
         $data['womans'] = Woman::with(['district', 'thana'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'inactive')->orderBy('id', 'desc')->paginate(20);
 
-        return view('admin/woman/womans', $data);
+        return view('admin/woman/womans-review', $data);
     }
 
     public function reviewShow(Request $request, Woman $woman)

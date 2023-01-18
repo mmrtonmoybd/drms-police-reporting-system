@@ -9,6 +9,7 @@ use App\Models\Thana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
+use App\DataTables\Narcotic\NarcoticDataTable;
 
 class NarcotiscController extends Controller
 {
@@ -95,6 +96,7 @@ class NarcotiscController extends Controller
 
     public function index(Request $request)
     {
+        /*
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
@@ -113,7 +115,13 @@ class NarcotiscController extends Controller
             $data['narcotics'] = $query->where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->orderBy('id', 'desc')->paginate(20);
         }
 
-        return view('admin/narcotic/narcotic', $data);
+        */
+
+        $datatable = new NarcoticDataTable();
+
+        return $datatable->render('admin.narcotic.narcotic');
+
+        //return view('admin/narcotic/narcotic', $data);
     }
 
     public function reviewList(Request $request)

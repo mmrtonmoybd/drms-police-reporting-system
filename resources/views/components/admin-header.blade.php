@@ -51,6 +51,10 @@
   overflow: auto;
 }
 
+.greenraw {
+  background: #9afdc0de;
+}
+
 
 th {
   position: sticky!important;
