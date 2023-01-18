@@ -422,8 +422,8 @@ class Dashboard extends Controller
                    ])
 
                      ->withSum(['warrant AS udcase' => function ($query) use ($fvalue, $tovalue) {
-                             return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue]);
-                         }],
+                         return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue]);
+                     }],
                          'unnatural_death_case'
                      )
                           ->where('division_id', 1)->groupBy('id')->get();
@@ -720,8 +720,8 @@ class Dashboard extends Controller
                    ])
 
                       ->withSum(['warrant AS udcase' => function ($query) use ($fvalue, $tovalue) {
-                              return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereBetween('date', [$fvalue, $tovalue]);
-                          }],
+                          return $query->whereNotNull('unnatural_death_case')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereBetween('date', [$fvalue, $tovalue]);
+                      }],
                           'unnatural_death_case'
                       )->where('district_id', auth()->user()->districtID)->groupBy('id')->get();
 
