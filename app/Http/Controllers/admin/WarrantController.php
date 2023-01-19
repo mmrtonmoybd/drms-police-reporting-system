@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\DataTables\Warrant\WarrantDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\District;
 use App\Models\Thana;
@@ -9,7 +10,6 @@ use App\Models\Warrant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\DataTables\Warrant\WarrantDataTable;
 
 class WarrantController extends Controller
 {

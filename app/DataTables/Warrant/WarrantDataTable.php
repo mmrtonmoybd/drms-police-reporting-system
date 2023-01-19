@@ -5,8 +5,6 @@ namespace App\DataTables\Warrant;
 use App\Models\Warrant;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class WarrantDataTable extends DataTable
@@ -14,7 +12,7 @@ class WarrantDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
+     * @param  mixed  $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
@@ -24,16 +22,16 @@ class WarrantDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->can('warrant.view')) {
-                    $actionBtn .= '<a href="' . url("admin/warrant/view/$row->warrantid") . '" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/warrant/view/$row->warrantid").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                 }
                 if (auth()->user()->can('warrant.edit')) {
-                    $actionBtn .= '<a href="' . url("admin/warrant/edit/$row->warrantid") . '" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/warrant/edit/$row->warrantid").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                 }
                 if (auth()->user()->can('warrant.review')) {
-                    $actionBtn .= '<a href="' . url("admin/warrant/review/update/$row->warrantid") . '" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/warrant/review/update/$row->warrantid").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
                 }
                 if (auth()->user()->can('warrant.delete')) {
-                    $actionBtn .= '<a href="' . url("admin/warrant/delete/$row->warrantid") . '"  onclick="return confirm(\'Do you want to delete this warrant?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    $actionBtn .= '<a href="'.url("admin/warrant/delete/$row->warrantid").'"  onclick="return confirm(\'Do you want to delete this warrant?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                 }
 
                 return $actionBtn;
@@ -48,10 +46,11 @@ class WarrantDataTable extends DataTable
                 return $raw->gr_tamil + $raw->cr_tamil + $raw->saja_gr_tamil + $raw->saja_cr_tamil + $raw->recall_other;
             })
             ->addColumn('dayend', function ($raw) {
-                $get = \App\Models\Warrant::selectRaw("((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS day_endp")
+                $get = \App\Models\Warrant::selectRaw('((SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) - (SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other))) AS day_endp')
     ->where('districtID', $raw->districtID)
     ->where('id', '<=', $raw->warrantid)->first();
-    return (intval($get->day_endp) >= 0) ? intval($get->day_endp) : 0 ;
+
+                return (intval($get->day_endp) >= 0) ? intval($get->day_endp) : 0;
             })
             ->editColumn('created_at', function ($raw) {
                 return (! empty($raw->created_at)) ? date('d/m/Y H:i:s', strtotime($raw->created_at)) : '';
@@ -67,7 +66,7 @@ class WarrantDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \Warrant $model
+     * @param  \Warrant  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Warrant $model)
@@ -173,6 +172,6 @@ class WarrantDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Warrant_' . date('YmdHis');
+        return 'Warrant_'.date('YmdHis');
     }
 }

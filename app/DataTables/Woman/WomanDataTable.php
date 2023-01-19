@@ -87,7 +87,7 @@ class WomanDataTable extends DataTable
             ->editColumn('complaint_date', function ($raw) {
                 return (! empty($raw->complaint_date)) ? date('d/m/Y H:i', strtotime($raw->complaint_date)) : '';
             })->setRowClass(function ($raw) {
-                return (!$raw->satisfy_rate == '') ? 'greenraw' : '' ;
+                return (! $raw->satisfy_rate == '') ? 'greenraw' : '';
             })->setRowId('womanid');
     }
 
