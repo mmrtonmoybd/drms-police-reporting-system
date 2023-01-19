@@ -41,7 +41,54 @@ class WomanDataTable extends DataTable
             })
             ->editColumn('updated_at', function ($raw) {
                 return (! empty($raw->updated_at)) ? date('d/m/Y H:i:s', strtotime($raw->updated_at)) : '';
-            });
+            })
+            ->editColumn('short_dettails', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->short_dettails, 10);
+            })
+            ->editColumn('badi_name', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->badi_name, 10);
+            })
+            ->editColumn('badi_address', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->badi_address, 10);
+            })
+            ->editColumn('vbadi_name', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->vbadi_name, 10);
+            })
+            ->editColumn('vbadi_address', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->vbadi_address, 10);
+            })
+            ->editColumn('investigator_name', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->investigator_name, 10);
+            })
+            ->editColumn('gd_no', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->gd_no, 15);
+            })
+            ->editColumn('mamla_no', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->mamla_no, 15);
+            })
+            ->editColumn('complaint_no', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->complaint_no, 15);
+            })
+            ->editColumn('dhara', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->dhara, 10);
+            })
+            ->editColumn('comment', function ($raw) {
+                return \Illuminate\Support\Str::limit($raw->comment, 10);
+            })
+            ->editColumn('wdate', function ($raw) {
+                return (! empty($raw->wdate)) ? date('d/m/Y H:i', strtotime($raw->wdate)) : '';
+            })
+            ->editColumn('gd_date', function ($raw) {
+                return (! empty($raw->gd_date)) ? date('d/m/Y H:i', strtotime($raw->gd_date)) : '';
+            })
+            ->editColumn('mamla_date', function ($raw) {
+                return (! empty($raw->mamla_date)) ? date('d/m/Y H:i', strtotime($raw->mamla_date)) : '';
+            })
+            ->editColumn('complaint_date', function ($raw) {
+                return (! empty($raw->complaint_date)) ? date('d/m/Y H:i', strtotime($raw->complaint_date)) : '';
+            })->setRowClass(function ($raw) {
+                return (!$raw->satisfy_rate == '') ? 'greenraw' : '' ;
+            })->setRowId('womanid');
     }
 
     /**

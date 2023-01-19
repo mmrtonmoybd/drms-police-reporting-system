@@ -9,11 +9,13 @@ use App\Models\Warrant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\DataTables\Warrant\WarrantDataTable;
 
 class WarrantController extends Controller
 {
     public function index(Request $request)
     {
+        /*
         $disid = 9552;
         $disexp = '!=';
         $thaid = 8256;
@@ -44,6 +46,12 @@ class WarrantController extends Controller
         $mm = $data['disc'];
 
         return view('admin/warrant/warrant', $data);
+
+        */
+
+        $datatable = new WarrantDataTable();
+
+        return $datatable->render('admin.warrant.warrant');
     }
 
     public function reviewList(Request $request)
@@ -77,7 +85,7 @@ class WarrantController extends Controller
         $data['disc'] = District::where('division_id', 1)->get();
         $mm = $data['disc'];
 
-        return view('admin/warrant/warrant', $data);
+        return view('admin/warrant/warrant-review', $data);
     }
 
     public function reviewShow(Request $request, Warrant $war)
