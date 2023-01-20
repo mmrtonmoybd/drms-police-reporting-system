@@ -224,7 +224,7 @@
           ['Case type', 'count', 'number', { role: 'link' }],
           @if (!is_null(session("caseendingtypes")))
           @foreach(session("caseendingtypes") as $key => $value)
-          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?nispotti_type=". $value->nispotti_type . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+          ['{{$value->nispotti_type}}', {{intconber($value->countnispotti_type)}}, '{{$value->countnispotti_type}}', '{!! url("/admin/case/dashboard/chart/data") . "?nispotti_type=". $value->nispotti_type . "&form2=" . session("agomonthday") . "&to2=" . session("currentday")!!}'],
           @endforeach
           @endif
         ]);
