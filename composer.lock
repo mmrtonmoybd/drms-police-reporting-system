@@ -2045,16 +2045,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.11.2",
+            "version": "v2.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "e92233f31dc1b88fb1ac242b32afe1ab7525ee05"
+                "reference": "5ab6266a12c637f645d38a2f0f61f84182f6249d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/e92233f31dc1b88fb1ac242b32afe1ab7525ee05",
-                "reference": "e92233f31dc1b88fb1ac242b32afe1ab7525ee05",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/5ab6266a12c637f645d38a2f0f61f84182f6249d",
+                "reference": "5ab6266a12c637f645d38a2f0f61f84182f6249d",
                 "shasum": ""
             },
             "require": {
@@ -2106,7 +2106,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.11.2"
+                "source": "https://github.com/livewire/livewire/tree/v2.11.3"
             },
             "funding": [
                 {
@@ -2114,7 +2114,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-29T23:45:02+00:00"
+            "time": "2023-02-20T03:52:35+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -6553,16 +6553,16 @@
         },
         {
             "name": "yajra/laravel-datatables-export",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables-export.git",
-                "reference": "4e7cbcb2029fd52f9ff6a7ae5313a42f6ff0b379"
+                "reference": "8073cd2cf81f5eed4b3edb5e89ab28f981da0486"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables-export/zipball/4e7cbcb2029fd52f9ff6a7ae5313a42f6ff0b379",
-                "reference": "4e7cbcb2029fd52f9ff6a7ae5313a42f6ff0b379",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables-export/zipball/8073cd2cf81f5eed4b3edb5e89ab28f981da0486",
+                "reference": "8073cd2cf81f5eed4b3edb5e89ab28f981da0486",
                 "shasum": ""
             },
             "require": {
@@ -6614,7 +6614,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables-export/issues",
-                "source": "https://github.com/yajra/laravel-datatables-export/tree/v1.1.0"
+                "source": "https://github.com/yajra/laravel-datatables-export/tree/v1.2.0"
             },
             "funding": [
                 {
@@ -6630,7 +6630,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-01-18T02:07:57+00:00"
+            "time": "2023-02-20T01:52:33+00:00"
         },
         {
             "name": "yajra/laravel-datatables-html",
