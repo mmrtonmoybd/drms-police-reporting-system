@@ -130,8 +130,8 @@
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{request('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{request('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -181,7 +181,7 @@
       <div style="text-align: right;margin: 16px;">
                     
                                           
-  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a>
   <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-primary"><i class="fa fa-file-pdf"></i> PDF</a>
       
 											

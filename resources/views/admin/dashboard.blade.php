@@ -15,12 +15,11 @@
 
 
 
-<div class="row">
 
 <form  action="{{url('admin/dashboard/search')}}" method="get">
                
-               <div class="" id="app">
-                                                                 <div class="row">
+               <div id="app">
+                             <div class="row">
                                           @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
@@ -96,12 +95,12 @@
                                             @endif
 
 
-                                            <div class="col-sm-4 " > 
+               <div class="col-sm-4 " > 
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -109,17 +108,24 @@
             <div class="col-sm-2 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                 <button type="submit" name="submit" class="btn" style="width: 100%;"> সার্চ করুন </button>
+                 <button type="submit" name="submit" class="btn btn-primary" style="width: 100%;"> সার্চ করুন </button>
                </div>
             </div>
 
                                                       </form>
 
-<h2>Report confirmation pending: {{$reportconfirmation}}</h2>
+
+	</div>
 	
+	
+		
+</div>
+
+		    <div class="row">
+
  <div class="col-sm-6">
 
-   <div class="card">
+   <div class="card" >
       <div class="card-body  ">
         
         <center> 
@@ -207,14 +213,24 @@ background: #092756;
 
 
 </style>
-
-      <div class="card">
+      <div class="card" style="height: calc(100% - 20px);">
         <div class="card-img-top grabg"   style="height: 122px;"> </div>
         <div class="card-body text-center">
           <img class="avatar rounded-circle" src="{{ asset(auth()->user()->picture) }}" alt="Bologna">
-          <h4 class="card-title">{{auth()->user()->name}}</h4>
-          <h6 class="card-subtitle mb-2 text-muted">পদবি: {{auth()->user()->designation}}</h6>
-          <h6 class="card-subtitle mb-2 text-muted">Mobile: {{auth()->user()->mobile}}</h6>
+          <h4 class="card-title" style="color:blue; font-size:25px;">{{auth()->user()->name}}</h4>
+          <style>
+.card-body.text-center {
+  font-size: 16px;
+  color:#000;
+}
+          .card-subtitle  {
+              font-size:16px;
+                color:#000;
+          }
+          
+          </style>
+          <h6 class="card-subtitle mb-2">পদবি: {{auth()->user()->designation}}</h6>
+          <h6 class="card-subtitle mb-2 ">Mobile: {{auth()->user()->mobile}}</h6>
         
 		
 		          ইমেইল: {{auth()->user()->email}}<br>
@@ -233,13 +249,82 @@ background: #092756;
           থানা: {{auth()->user()->thana->name}}
          @endif
          <br>
-		
+		<!------
 		   Role: {{auth()->user()->type}}<br>  
-  
+  ---->
         </div>
       </div>
 
-      <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0 yajra-datatable" style="width: 100% !important;">
+
+
+
+
+
+
+
+
+          <style>
+          
+          #MyClockDisplay {
+  color: red;
+  font-weight: bold;
+  font-size: 21px;
+}
+
+
+          #MyDateDisplay {
+  color: red;
+  font-weight: bold;
+  font-size: 17px;
+}
+          </style>
+          
+
+
+	</div>
+	
+	</div>
+	
+	
+	
+	
+
+	
+	
+
+
+<br>
+
+
+
+<div class="row">
+    
+    <div class="col-sm-12">
+        
+
+ <div class="card">
+                <div class="card-body bg-danger">
+
+
+<h4 style="color:#fff;" >Report Confirmation Pending: {{$reportconfirmation}}</h4>
+
+
+
+</div>
+</div>
+</div>
+</div>
+<br>
+<div class="row">
+    
+    <div class="col-sm-12">
+        
+
+ <div class="card">
+               <div class="card-body">
+
+
+      <table class="table table-responsive  table-striped table-centered table-bordered " style="width: 100% !important;height:auto;">
 
 <thead>
     <tr>
@@ -274,18 +359,65 @@ background: #092756;
 </table>
 
 
+
+
+    </div> 
+    
+</div>
+    </div> 
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+<div class="row">
+    
+    <div class="col-sm-6">
+        
+
+ <div class="card">
+               <div class="card-body">
+
+
+
+
 <span style="background-color: #756bb1;
 padding: 3px;
 text-align: center;
 color: #fff;
 display: block;
 font-size: 16px;
-margin-bottom: -10px;"> 
+margin-bottom: 10px;"> 
      
      
      ওয়ারেন্ট  এবং গ্রেফতার  </span>
 
-<table class="table table-bordered table-responsive table-striped table-centered mb-0">
+  <table class="table table-striped table-centered  table-responsive   table-bordered " style="width: 100% !important;height:auto;">
                                             <thead>
                                                 <tr>
                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
@@ -359,6 +491,26 @@ function thana($id) {
 
 
 
+                                  
+
+
+    </div> 
+    
+</div>
+    </div> 
+    
+
+
+
+    <div class="col-sm-6">
+        
+
+ <div class="card">
+               <div class="card-body">
+
+
+
+
                                         <span style="background-color: #756bb1;
 padding: 3px;
 text-align: center;
@@ -369,7 +521,7 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                         
                                         <br>
 
-                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
+                                          <table class="table  table-striped  table-responsive   table-centered table-bordered " style="width: 100% !important;height:auto;">
                                             <thead>
                                                 <tr>
                                                 @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))
@@ -421,43 +573,52 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                         </table>
 
 
-
-
-
-
-          <style>
-          
-          #MyClockDisplay {
-  color: red;
-  font-weight: bold;
-  font-size: 21px;
-}
-
-
-          #MyDateDisplay {
-  color: red;
-  font-weight: bold;
-  font-size: 17px;
-}
-          </style>
-          
-
-
-	</div>
-	
-	
-	
-	
-
-	
-	
-	
+    </div> 
+    
+</div>
+    </div> 
+    
 </div>
 
-
-
-
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         <div style="display:none;">
@@ -512,6 +673,7 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
          </div>
 
 
+
          @php
  $sdisn = request()->input('districtID');
  $sthan = request()->input('thanaID');
@@ -523,7 +685,10 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                     $thana_id = $sthan;
 
                 @endphp
+                
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
+  
+    
     <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
 
   <script>

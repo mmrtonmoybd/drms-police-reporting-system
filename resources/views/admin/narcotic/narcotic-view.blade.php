@@ -179,7 +179,7 @@
                <div class="t m0 x0 h2 y2 ff1 fs0 fc0 sc0 ls0 ws0"> </div>
                <div class="t m0 x0 h3 y3 ff2 fs1 fc1 sc0 ls0 ws0">মাদক মামলা সংক্রান্ত রিপোর্ট</div>
                <div class="t m0 x0 h4 y4 ff3 fs2 fc2 sc0 ls0 ws0">বরিশাল রেঞ্জ, বরিশাল</div>
-               <div class="t m0 x0 h4 y5 ff3 fs2 fc2 sc0 ls0 ws0">ট্র্যাকিং নম্বরঃ  {{$nar->trakingID}}</div>
+               <div class="t m0 x0 h4 y5 ff3 fs2 fc2 sc0 ls0 ws0">ট্র্যাকিং নম্বরঃ  {{$nar->id}}</div>
                <div class="t m0 x0 h5 y6 ff3 fs3 fc0 sc0 ls0 ws0"> </div>
                <div class="t m0 x0 h6 y7 ff2 fs3 fc1 sc0 ls0 ws0">জেলাঃ  @if(isset($nar->district->name)){{$nar->district->bn_name}}@endif<span class="_ _1">  </span>                        <span class="_ _1"></span>                     <span class="_ _1"></span>   থানাঃ  @if(isset($nar->thana->name)){{$nar->thana->name}}@endif <span class="_ _2"> </span> </div>
                <div class="t m0 x0 h6 y8 ff2 fs3 fc1 sc0 ls0 ws0"> <span class="_ _3"> </span> <span class="_ _3"> </span> </div>
@@ -215,7 +215,7 @@
                   " 
                   onclick="window.print()">Print </button>
                <div  id="a" class="noprint" style="visibility:; position:absolute; left:2000px;"  > 
-               ট্র্যাকিং নম্বরঃ  {{$nar->trakingID}} <br>
+               ট্র্যাকিং নম্বরঃ  {{$nar->id}} <br>
                   তারিখঃ 	@if($nar->sdate) {{date('d/m/Y', strtotime($nar->sdate))}} @endif <br>
             জেলাঃ  @if(isset($nar->district->name)){{$nar->district->bn_name}}@endif <br>
          থানাঃ  @if(isset($nar->thana->name)){{$nar->thana->name}}@endif <br>
@@ -336,12 +336,47 @@
                      <div class="col-sm-3">
                         {{$nar->mobile_no}} 
                      </div>
+                     
+                     
                      <div class="col-sm-3" style="text-align:right;">
                         অভিযান পরিচালনাকারী সংস্থাঃ 
                      </div>
                      <div class="col-sm-3">
                         {{$nar->name_of_investigator_org}}  
                      </div>
+                     
+                     
+                     
+                         <div class="col-sm-3" style="text-align:right; ">
+                        অভিযুক্তদের নামঃ
+                     </div>
+                     <div class="col-sm-3" style="width: 73%;">
+                        {{$nar->accused}} 
+                     </div>
+                     
+                     
+                             
+                     <div class="col-sm-3" style="text-align:right;">
+                        অভিযুক্তদের সংখ্যাঃ
+                     </div>
+                     <div class="col-sm-3">
+                        {{$nar->number_of_accused}}    
+                     </div>
+                     
+                     
+                     
+                     
+                        <div class="col-sm-3" style="text-align:right;">
+                        গ্রেফতারকৃত আসামীর সংখ্যাঃ
+                     </div>
+                     <div class="col-sm-3">
+                        {{$nar->number_of_accused}} 
+                     </div>
+                     
+                     
+                     
+                     
+                     
                      @if($nar->heroine != '') 	
                      <div class="col-sm-3" style="text-align:right;">
                         হিরোইন (গ্রাম) :
@@ -365,9 +400,9 @@
                      <div class="col-sm-3">
                         {{$nar->gaza_tree}} 
                      </div>
-                                              @endif	                        	
+                                              @endif	                        	 
                        
-                     @if($nar->yaba != '') 
+                     @if($nar->gaza != '') 
                      <div class="col-sm-3" style="text-align:right;">
                         গাজা(গ্রাম):
                      </div>
@@ -439,23 +474,13 @@
                 
                      
                      
-                     <div class="col-sm-3" style="text-align:right; ">
-                        অভিযুক্তদের নামঃ
-                     </div>
-                     <div class="col-sm-3" style="width: 73%;">
-                        {{$nar->accused}} 
-                     </div>
-                     <div class="col-sm-3" style="text-align:right;">
-                        অভিযুক্তদের সংখ্যাঃ
-                     </div>
-                     <div class="col-sm-3">
-                     </div>
-                     <div class="col-sm-3" style="text-align:right;">
-                        গ্রেফতারকৃত আসামীর সংখ্যাঃ
-                     </div>
-                     <div class="col-sm-3">
-                        {{$nar->number_of_accused}} 
-                     </div>
+            
+                     
+                     
+                  
+                     
+                     
+                
                      <div class="col-sm-3" style="text-align:right;">
                         ছবি তোলা হয়েছে কিনাঃ
                      </div>

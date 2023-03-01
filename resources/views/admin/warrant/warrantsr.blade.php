@@ -69,8 +69,8 @@
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                    <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date start" >
-                    <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="date end" >
+                    <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="date start" >
+                    <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="date end" >
                   </div>
                </div>
             </div>
@@ -142,7 +142,7 @@
                             <div class="card-body text-center"><i class="i-Money-2"></i>
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট পেন্ডিং</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">@if (($trecive[0]['total_sum'] - $tnis[0]['total_sum']) >= 0) {{$trecive[0]['total_sum'] - $tnis[0]['total_sum']}} @else {{0}} @endif</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">@if ($totalpending >= 0) {{$totalpending}} @else {{0}} @endif</p>
                                 </div>
                             </div>
                         </div>
@@ -250,6 +250,7 @@ margin-bottom: -10px;">
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
+                                                     <th> পেন্ড </th>
                                                     <th >  রিসিভ  </th>
                                                   
                                                     <th >  জিআর তামিল </th>
@@ -278,6 +279,7 @@ margin-bottom: -10px;">
                                             @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
                                             {{$war->thana->bn_name}}
                                             @endif</td>
+                                            <td>@if (($war->total_recive - $war->total_nispotti) >= 0) {{$war->total_recive - $war->total_nispotti}} @else {{0}} @endif</td>
                                                     
                                                      <td > {{$war->total_recive}}</td>
                                                   

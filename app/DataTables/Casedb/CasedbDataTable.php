@@ -162,7 +162,8 @@ class CasedbDataTable extends DataTable
                   ->searchable(false)
                   ->width(60)
                   ->addClass('text-center')->name('casedbs.action'),
-            Column::make('casid')->title('রেফারেন্স নং'),
+            Column::make('casid')
+                  ->searchable(false)->title('রেফারেন্স নং'),
             Column::make('district.bn_name')->title('জেলা'),
             Column::make('circle.name')->title('সার্কেল'),
             Column::make('thana.name')->title('থানা'),

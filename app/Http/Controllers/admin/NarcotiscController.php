@@ -348,7 +348,7 @@ class NarcotiscController extends Controller
 
         $request->session()->flash('currentday', $currentday);
 
-        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
+        $agomonthday = Carbon::now()->startOfMonth()->format('Y-m-d').' 00:00:00';
 
         $request->session()->flash('agomonthday', $agomonthday);
 

@@ -7,6 +7,16 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <head>
     <meta charset="UTF-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XMGN1F8C5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XMGN1F8C5M');
+</script>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
           <title>{{ headertitle() . ' | ' . config('app.name') }}</title>
@@ -42,6 +52,11 @@
 
 
 <style>
+
+
+.table.table-bordered.table-responsive.table-striped.table-centered.mb-0.dataTable {
+  width: 100% !important;
+}
 
 .pagination {
   display: flex;

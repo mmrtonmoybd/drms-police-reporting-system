@@ -9,8 +9,8 @@
                   <label for="source_of_info" class="form-label"> Date range 1</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control searchdatepick  @error('form1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
-                     <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control searchdatepick  @error('to1') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
+                   <input type="text" name="form1"  value="{{request('form1')}}" id="date_time_response" class="form-control searchdatepick  @error('form1') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                     <input type="text" name="to1"  value="{{request('to1')}}" id="date_time_response" class="form-control searchdatepick  @error('to1') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
                   </div>
                </div>
             </div>
@@ -21,8 +21,8 @@
                   <label for="source_of_info" class="form-label"> Date range 2</label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
-                     <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
+                   <input type="text" name="form2"  value="{{request('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" required>
+                     <input type="text" name="to2"  value="{{request('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" required>
                   </div>
                </div>
             </div>

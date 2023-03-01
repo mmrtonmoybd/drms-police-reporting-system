@@ -17,7 +17,7 @@
       <div style="text-align: right;margin: 16px;">
                     
                                          
-  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/srcs/excel')}}" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a>
   <a target="_blank" href="{{url('admin/qrrs/srcs/pdf')}}" class="btn btn-primary"><i class="fa fa-file-pdf"></i> PDF</a>
       
 											

@@ -183,7 +183,7 @@ $string1 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
          
          @foreach(session("numofcase") as $key => $value)
          
-         @if (request()->has('thanaID'))
+         @if (request()->filled('thanaID'))
          
          @if ($value->thana->id == request()->input('thanaID'))
 
@@ -285,7 +285,7 @@ $string2 = url('/admin/narcotic/chart/data') .'?'. http_build_query($removarr);
           ['Arrest by unit', 'count', { role: 'link' }],
           @foreach(session("arrastbyu") as $key => $value)
           
-          @if (request()->has('thanaID'))
+          @if (request()->filled('thanaID'))
           
           @if ($value->thana->id == request()->input('thanaID'))
           

@@ -69,8 +69,8 @@
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                    <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="প্রথম তারিখ" >
-                                                        <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="দ্বিতীয় তারিখ" >
+                    <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="প্রথম তারিখ" >
+                                                        <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="দ্বিতীয় তারিখ" >
                   </div>
                </div>
             </div>
@@ -142,7 +142,7 @@
                             <div class="card-body text-center"><i class="i-Money-2"></i>
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0"> পেন্ডিং</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">@if (($trecive[0]['total_sum'] - $tnis[0]['total_sum']) >= 0) {{$trecive[0]['total_sum'] - $tnis[0]['total_sum']}} @else {{0}} @endif</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">@if ($totalpending >= 0) {{$totalpending}} @else {{0}} @endif</p>
                                 </div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@ margin-bottom: -10px;">
      ওয়ারেন্ট  এবং গ্রেফতার  </span>
      
      <br>
-                                            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
+                                            <table class="table table-bordered table-responsive table-striped table-centered mb-0" style="height: auto;">
                                             <thead>
                                                 <tr>
                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
@@ -245,6 +245,7 @@ margin-bottom: -10px;">
                                                   @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
+                                                    <th> পেন্ড </th>
                                                     <th >  রিসিভ  </th>
                                                     <th >  জিআর তামিল </th>
                                                     <th >  সিআর তামিল </th>
@@ -280,6 +281,7 @@ function thana($id) {
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
                                                     <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
                                                     @endif
+                                                    <td>@if (($war->total_recive - $war->total_nispotti) >= 0) {{$war->total_recive - $war->total_nispotti}} @else {{0}} @endif</td>
                                                     <td > {{$war->total_recive}}</td>
                                                   
                                                     <td > {{$war->total_gr_tamil}}</td>
@@ -324,7 +326,7 @@ margin-bottom: -10px;">   অন্যান্য রিপোর্ট  </span
                                         
                                         <br>
 
-                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0">
+                                        <table class="table table-bordered table-responsive table-striped table-centered mb-0" style="height: auto;">
                                             <thead>
                                                 <tr>
                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))

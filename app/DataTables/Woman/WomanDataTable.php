@@ -171,7 +171,8 @@ class WomanDataTable extends DataTable
                   ->orderable(false)
                   ->searchable(false)
                   ->addClass('text-center'),
-            Column::make('womanid')->title('ID'),
+            Column::make('womanid')
+                  ->searchable(false)->title('ID'),
             Column::make('reference_no')->title('রেফারেন্স নং'),
             Column::make('district.bn_name')->title('জেলা'),
             Column::make('thana.name')->title('থানা'),

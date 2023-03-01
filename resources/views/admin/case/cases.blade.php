@@ -22,19 +22,17 @@ use Illuminate\Support\Str;
                                               <div style="text-align: right;margin: 16px;">
                     
                                           
-  <!-- <a target="_blank" href="" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a> -->
+  <!-- <a target="_blank" href="" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a> -->
       
 											
 											</div>
                                         
                                         
-                                            {!! $dataTable->table(['class' => 'table table-responsive table-bordered table-striped table-centered mb-0'], true) !!}
+                                            {!! $dataTable->table(['class' => 'table table-bordered table-responsive table-responsive table-striped table-centered mb-0'], true) !!}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- end row -->
-                        <input type="hidden" name="shortable_url" id="shortable_url" value="{{url('admin/qrrs/short')}}">
 
                         @push('scripts')
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">

@@ -97,7 +97,7 @@ $string1 = url('/admin/qrrs/srcs/data') .'?'. http_build_query($removarr);
          
          @foreach(session("spthana") as $key => $value)
          
-         @if (request()->has('thanaID'))
+         @if (request()->filled('thanaID'))
          
          @if ($value[2] == request()->input('thanaID'))
          

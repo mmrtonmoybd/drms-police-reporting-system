@@ -154,8 +154,50 @@
          
          }
          
+         .h0{height:1900.400000px;}
+         
+         .printfixed {
+             position:fixed;
+          
+    width: 640.6px;
+    height: 534.6px;
+    bottom: inherit;
+    top: 52px;
+}
+         .printfixed2 {
+             position:fixed;
+          
+    width: 640.6px;
+
+    bottom: inherit;
+    top: -4px;
+}
+         .printfixed3 {
+             position:fixed;
+          
+    width: 640.6px;
+
+    bottom: inherit;
+    top: 68px;
+}
+         .printfixed4 {
+             position:fixed;
+          
+    width: 640.6px;
+
+    bottom: inherit;
+    top: 95px;
+}
+
+
          .y25 {
     bottom: -80px;
+    position:fixed;
+}
+         }
+         
+         .y25 {
+    bottom: 80px;
 }
 
          }
@@ -175,14 +217,20 @@
          <div class='copied'></div>
          <div id="pf1" class="pf w0 h0" data-page-no="1">
             <div class="pc pc1 w0 h0">
-               <img class="bi x0 y0 w1 h1" alt="" src="{{url('printbg.png')}}" >
-               <div class="t m0 x0 h2 y1 ff1 fs0 fc0 sc0 ls0 ws0"> </div>
-               <div class="t m0 x0 h2 y2 ff1 fs0 fc0 sc0 ls0 ws0"> </div>
-               <div class="t m0 x0 h3 y3 ff2 fs1 fc1 sc0 ls0 ws0">মামলা সংক্রান্ত রিপোর্ট</div>
-               <div class="t m0 x0 h4 y4 ff3 fs2 fc2 sc0 ls0 ws0">বরিশাল রেঞ্জ, বরিশাল</div>
-               <div class="t m0 x0 h4 y5 ff3 fs2 fc2 sc0 ls0 ws0">রেফারেন্স নম্বরঃ  {{$case->id}}</div>
+                
+             
+               <img class="printfixed bi x0 y0 w1 h1 " alt="" src="{{url('printbg.png')}}" >
+               <div class=" t m0 x0 h2 y1 ff1 fs0 fc0 sc0 ls0 ws0"> </div>
+               <div class=" t m0 x0 h2 y2 ff1 fs0 fc0 sc0 ls0 ws0"> </div>
+               <div class="printfixed2 t m0 x0 h3 y3 ff2 fs1 fc1 sc0 ls0 ws0">মামলা সংক্রান্ত রিপোর্ট</div>
+               <div class="printfixed3 t m0 x0 h4 y4 ff3 fs2 fc2 sc0 ls0 ws0">বরিশাল রেঞ্জ, বরিশাল</div>
+               <div class="printfixed4 t m0 x0 h4 y5 ff3 fs2 fc2 sc0 ls0 ws0">রেফারেন্স নম্বরঃ  {{$case->id}}</div>
                <div class="t m0 x0 h5 y6 ff3 fs3 fc0 sc0 ls0 ws0"> </div>
-               <div class="t m0 x0 h6 y7 ff2 fs3 fc1 sc0 ls0 ws0">জেলাঃ  @if(isset($case->district->name)){{$case->district->bn_name}}@endif<span class="_ _1">  </span>                        <span class="_ _1"></span>                     <span class="_ _1"></span>   থানাঃ  @if(isset($case->thana->name)){{$case->thana->name}}@endif <span class="_ _2"> </span> </div>
+            
+               
+               
+               
+            <div class="t m0 x0 h6 ff2 fs3 fc1 sc0 ls0 ws0" style=" top: 133px; left: 122px; ">জেলাঃ  @if(isset($case->district->name)){{$case->district->bn_name}}@endif<span class="_ _1">  </span>                        <span class="_ _1"></span>                     <span class="_ _1"></span>   থানাঃ  @if(isset($case->thana->name)){{$case->thana->name}}@endif <span class="_ _2"> </span> </div>
                <div class="t m0 x0 h6 y8 ff2 fs3 fc1 sc0 ls0 ws0"> <span class="_ _3"> </span> <span class="_ _3"> </span> </div>
                <div class="t m0 x0 h6 y9 ff2 fs3 fc1 sc0 ls0 ws0"> <span class="_ _3"> </span> <span class="_ _3"> </span> <span class="_ _3"> </span> <span class="_ _3"> </span> <span class="_ _3"> </span> <span class="_ _3"> </span> <span class="_ _3"> </span> <span class="_ _3"> </span> </div>
                <style>
@@ -291,7 +339,9 @@
                                                     
                                                     <div class="col-sm-3" style="text-align:right;"><b>ঘটনার তারিখ :</b></div>         <div class="col-sm-3" style="">@if (!empty($case->incident_date_time)) {{date('d/m/Y', strtotime($case->incident_date_time))}} @endif</div>
                                                    <div class="col-sm-3" style="text-align:right;"><b>এজাহার নামীয় আসামির সংখ্যা :</b></div>         <div class="col-sm-3" style="">{{$case->azahar_namio_victims}}</div>
-                                                    <div class="col-sm-3" style="text-align:right;"><b>মামলার সারসংক্ষেপ :</b></div>         <div class="col-sm-3" style="width: 72%;">{{$case->short_dettails}}</div>
+                                                    <div class="col-sm-3" style="text-align:right;"><b>মামলার সারসংক্ষেপ :</b></div>       
+                                                    
+                                                    <div class="col-sm-3" style="width: 72%;">{{$case->short_dettails}}</div>
                                                  
                                                     <div class="col-sm-3" style="text-align:right;"><b>নিস্পত্তি / মুলতবি :</b></div>         <div class="col-sm-3" style="">{{$case->nispotti_or_multobi}}</div>
                                                     

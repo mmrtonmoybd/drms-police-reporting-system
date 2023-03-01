@@ -27,15 +27,15 @@ use Illuminate\Support\Str;
                                                     Download
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 34px, 0px);">
-                                                    <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+                                                    <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a>
                                                   
-                                                  <!-- <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> PDF</a>
-                                                    <a  href="#" onclick="window.print()" class="btn btn-primary"><i class="fa fa-file-excel"></i> Print</a>
+                                                  <!-- <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-download"></i> PDF</a>
+                                                    <a  href="#" onclick="window.print()" class="btn btn-primary"><i class="fa fa-file-download"></i> Print</a>
                                          
                                                 </div>
                                             </div>                       
 ---->
-                                                      <!-- <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a> -->
+                                                       <a target="_blank" href="{{url('admin/narcotic/excel')}}" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a> 
                                                   
 											
 											</div>

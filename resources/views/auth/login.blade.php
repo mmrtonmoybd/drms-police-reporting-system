@@ -4,9 +4,19 @@
 
    <head> 
      <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XMGN1F8C5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XMGN1F8C5M');
+</script>
       <meta http-equiv="x-ua-compatible" content="IE=edge" />
       <meta charset="utf-8">
       <title>LOGIN</title>
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" integrity="sha512-QKC1UZ/ZHNgFzVKSAhV5v5j73eeL9EEN289eKAEFaAjgAiobVAnVv/AGuPbXsKl1dNoel3kNr6PYnSiTzVVBCw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -832,7 +842,9 @@ background: -moz-radial-gradient(top left, ellipse cover, rgba(105,155,200,1) 0%
                                                          </div>
                                                          <div class="t-Form-inputContainer col col-null">
                                                             <div class="t-Form-itemWrapper">
-                                                                <input type="number" name="bp_no"   id="P101_USERNAME" placeholder="BP No" class="password&#x20;apex-item-text&#x20;apex-item-has-icon" autofocus/><span class="apex-item-icon fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Form-itemText t-Form-itemText--post"></span></div>
+                                                                <input type="number" name="bp_no"   id="P101_USERNAME" placeholder="BP No" class="password&#x20;apex-item-text&#x20;apex-item-has-icon" autofocus/><span class="apex-item-icon fa&#x20;fa-key" aria-hidden="true"></span><span class="t-Form-itemText t-Form-itemText--post">
+                                                                    @csrf
+                                                                </span></div>
                                                             @error('bp_no')<span id="P101_PASSWORD_error_placeholder" class="a-Form-error" data-template-id="451245492123761504_ET"><h5 style="color:red;">{{ $message }}</h5></span>@enderror
                                                          </div>
                                                       </div>

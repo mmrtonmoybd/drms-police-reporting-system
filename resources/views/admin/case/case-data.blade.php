@@ -122,17 +122,6 @@
             </div>
 
 
-            <div class="col-sm-3 " > 
-               <div class="mb-3">
-                  <label for="source_of_info" class="form-label"></label>
-                  <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form2"  value="{{request()->input('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Nispotti তারিখ শুরু" >
-                     <input type="text" name="to2"  value="{{request()->input('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Nispotti তারিখ পর্যন্ত" >
-                  </div>
-               </div>
-            </div>
-
-
 
                            <div class="col-sm-2 " > 
                <div class="mb-3">

@@ -80,10 +80,10 @@
                                                     <label for="action_taken" class="form-label"></label>
                                                     <select name="action_taken" id="action_taken" class="droparrow form-select form-control stylish" >
                                                         <option value="">   গৃহীত ব্যবস্থা  </option>
-                                                        <option value="অভিযোগ গ্রহন">অভিযোগ গ্রহন</option>
-                                                        <option value="স্থানীয় মীমাংসা">স্থানীয় মীমাংসা</option>
+                                                        <option value="অভিযোগ গ্রহণ">অভিযোগ  গ্রহণ</option>
+                                                        <option value="স্থানীয় পর্যায়ে মীমাংসা">স্থানীয়  পর্যায়ে মীমাংসা</option>
                                                         <option value="মামলা">মামলা</option>
-                                                        <option value="জিডি">জিডি</option>
+                                                        <option value="জিডি">জিডি</option> 
                                                     </select>
                                                     
                                                 </div>
@@ -93,8 +93,8 @@
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  autocomplete="off" data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>

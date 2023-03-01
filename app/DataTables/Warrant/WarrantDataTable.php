@@ -143,7 +143,8 @@ class WarrantDataTable extends DataTable
                   ->searchable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('warrantid')->title('রেফারেন্স নং'),
+            Column::make('warrantid')
+                  ->searchable(false)->title('রেফারেন্স নং'),
             Column::make('district.bn_name')->title('জেলা'),
             Column::make('thana.name')->title('থানা'),
             Column::make('date')->title('তারিখ'),

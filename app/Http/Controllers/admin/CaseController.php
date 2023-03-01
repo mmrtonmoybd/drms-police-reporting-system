@@ -330,7 +330,7 @@ class CaseController extends Controller
         }
     }
 
-    public function dashboard(Request $request)
+   public function dashboard(Request $request)
     {
         $data['request'] = $request;
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
@@ -339,7 +339,7 @@ class CaseController extends Controller
 
         $request->session()->flash('currentday', $currentday);
 
-        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
+        $agomonthday = Carbon::now()->startOfMonth()->format('Y-m-d').' 00:00:00';
 
         $request->session()->flash('agomonthday', $agomonthday);
 
@@ -497,9 +497,6 @@ class CaseController extends Controller
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
-        $to2 = Carbon::parse($request->input('to2'))->toDateTimeString();
-        $from2 = Carbon::parse($request->input('form2'))->toDateTimeString();
-
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             if (! empty($request->input('districtID'))) {
                 $dkey = '=';
@@ -583,29 +580,6 @@ class CaseController extends Controller
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
-        }
-
-        if (! empty($request->input('form2'))) {
-            $fkey2 = '=';
-            $fvalue2 = $from2;
-
-            $date2 = Carbon::parse($fvalue2);
-            $fvalue2 = $date2->format('Y-m-d').' 00:00:00';
-        //dd($ggg);
-        } else {
-            $fkey2 = '=';
-            $fvalue2 = '1971-01-01 11:45:00';
-        }
-
-        if (! empty($request->input('to2'))) {
-            $tokey2 = '=';
-            $tovalue2 = $to2;
-
-            $date2 = Carbon::parse($tovalue2);
-            $tovalue2 = $date2->format('Y-m-d').' 23:59:59';
-        } else {
-            $tokey2 = '=';
-            $tovalue2 = Carbon::now()->toDateTimeString();
         }
 
         if (! empty($request->input('caseTypeID'))) {
@@ -630,11 +604,9 @@ class CaseController extends Controller
             if (empty($request->input('districtID')) && empty($request->input('thanaID')) && empty($request->input('circleID'))) {
                 // District wise case start
                 $diswisecase = Casedb::with('district')->selectRaw('COUNT(case_no) AS countcase, districtID')
-                    ->where('case_type', $caseTypeID_key, $caseTypeID)
-                    ->where('status', 'active')
-                    ->where('casesub_type', $casesubID_key, $casesubID)->whereNotNull('case_no')->whereBetween('case_date', [$fvalue, $tovalue])->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                        return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                    })->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
+                ->where('case_type', $caseTypeID_key, $caseTypeID)
+                ->where('status', 'active')
+                          ->where('casesub_type', $casesubID_key, $casesubID)->whereNotNull('case_no')->whereBetween('case_date', [$fvalue, $tovalue])->groupBy('districtID')->orderBy('districtID', 'ASC')->get();
 
                 //dd($diswisecase);
                 $request->session()->flash('diswisecase', $diswisecase);
@@ -649,9 +621,6 @@ class CaseController extends Controller
                                    ->where('case_type', $caseTypeID_key, $caseTypeID)
                                    ->where('casesub_type', $casesubID_key, $casesubID)
                                    ->whereBetween('case_date', [$fvalue, $tovalue])
-                                   ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                       return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                   })
                                    ->groupBy('circleID')
                                    ->orderBy('circleID', 'ASC')
                                    ->get();
@@ -669,9 +638,6 @@ class CaseController extends Controller
                                    ->where('case_type', $caseTypeID_key, $caseTypeID)
                                    ->where('casesub_type', $casesubID_key, $casesubID)
                                    ->whereBetween('case_date', [$fvalue, $tovalue])
-                                   ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                       return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                   })
                                    ->groupBy('thanaID')
                                    ->orderBy('thanaID', 'ASC')
                                    ->get();
@@ -691,9 +657,6 @@ class CaseController extends Controller
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                                ->where('casesub_type', $casesubID_key, $casesubID)
                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                               ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                   return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                               })
                                ->groupBy('thanaID')
                                ->orderBy('thanaID', 'ASC')
                                ->get();
@@ -715,9 +678,6 @@ class CaseController extends Controller
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                                   ->where('casesub_type', $casesubID_key, $casesubID)
                                   ->whereBetween('case_date', [$fvalue, $tovalue])
-                                  ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                      return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                  })
                                   ->whereNotNull('case_no')->groupBy('circleID')
                                   ->orderBy('circleID', 'ASC')
                                   ->get();
@@ -734,9 +694,6 @@ class CaseController extends Controller
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                                   ->where('casesub_type', $casesubID_key, $casesubID)
                                   ->whereBetween('case_date', [$fvalue, $tovalue])
-                                  ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                      return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                  })
                                   ->groupBy('thanaID')
                                   ->orderBy('thanaID', 'ASC')
                                   ->get();
@@ -754,9 +711,6 @@ class CaseController extends Controller
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                                ->where('casesub_type', $casesubID_key, $casesubID)
                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                               ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                   return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                               })
                                ->groupBy('thanaID')
                                ->orderBy('thanaID', 'ASC')
                                ->get();
@@ -779,9 +733,6 @@ class CaseController extends Controller
                            ->where('case_type', $caseTypeID_key, $caseTypeID)
                            ->where('casesub_type', $casesubID_key, $casesubID)
                            ->whereBetween('case_date', [$fvalue, $tovalue])
-                           ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                               return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                           })
                            ->groupBy('thanaID')
                            ->orderBy('thanaID', 'ASC')
                            ->get();
@@ -804,9 +755,6 @@ class CaseController extends Controller
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
                               ->where('casesub_type', $casesubID_key, $casesubID)
                               ->whereBetween('case_date', [$fvalue, $tovalue])
-                              ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                  return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                              })
         ->groupBy('case_type')
         ->orderBy('case_type', 'ASC')
         ->get();
@@ -824,9 +772,6 @@ class CaseController extends Controller
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
                               ->where('casesub_type', $casesubID_key, $casesubID)
                               ->whereBetween('case_date', [$fvalue, $tovalue])
-                              ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                  return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                              })
         ->where('casesub_type', '!=', 0)
         ->groupBy('casesub_type')
         ->orderBy('casesub_type', 'ASC')
@@ -844,10 +789,8 @@ class CaseController extends Controller
                               ->where('thanaID', $tkey, $tvalue)
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
                               ->where('casesub_type', $casesubID_key, $casesubID)
-                              ->whereBetween('case_date', [$fvalue, $tovalue])
-                              ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                  return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                              })
+                              ->whereNotNull('nispotti_date')
+                              ->whereBetween('nispotti_date', [$fvalue, $tovalue])
                               ->where('nispotti_type', '!=', '0')->groupBy('nispotti_type')->orderBy('nispotti_type', 'ASC')->get();
 
         $request->session()->flash('caseendingtypes', $caseendingtypes);
@@ -862,9 +805,6 @@ class CaseController extends Controller
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                               ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                   return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                               })
         ->count('case_no');
 
         // Total case end
@@ -879,10 +819,8 @@ class CaseController extends Controller
                                ->where('status', 'active')
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                               ->whereBetween('case_date', [$fvalue, $tovalue])
-                               ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                   return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                               })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->count('nispotti_or_multobi');
 
         // Total ending case end
@@ -896,9 +834,6 @@ class CaseController extends Controller
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                               ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                   return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                               })
         ->count('nispotti_or_multobi');
         // Total multobi case end
 
@@ -910,10 +845,8 @@ class CaseController extends Controller
                                   ->where('status', 'active')
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                  ->whereBetween('case_date', [$fvalue, $tovalue])
-                                  ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                      return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                  })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->avg('nispottisecond');
         // Avg case ending time end
 
@@ -927,9 +860,6 @@ class CaseController extends Controller
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
         ->sum('azahar_namio_victims');
 
         $data['accusedasami'] = Casedb::whereNotNull('number_of_accused')
@@ -939,10 +869,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->sum('number_of_accused');
 
         $data['jaminprapto'] = Casedb::whereNotNull('jamin_prapto')
@@ -952,10 +880,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->sum('jamin_prapto');
 
         $data['ovohotiprapto'] = Casedb::whereNotNull('ovohoti')
@@ -965,10 +891,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->sum('ovohoti');
 
         $data['azaharnewinvistigateprapto'] = Casedb::whereNotNull('azahar_vukto_invistigate')
@@ -978,10 +902,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->sum('azahar_vukto_invistigate');
 
         $data['nispottimamlaiazahar'] = Casedb::whereNotNull('azahar_namio_victims')
@@ -992,10 +914,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->where('nispotti_or_multobi', 'নিস্পত্তি')->sum('azahar_namio_victims');
 
         $data['onesixtyrecive'] = Casedb::whereNotNull('sixtyone_recive')
@@ -1005,10 +925,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })->sum('sixtyone_recive');
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])->sum('sixtyone_recive');
 
         $data['onesixtyfourrecive'] = Casedb::whereNotNull('sixtyfour_recive')
        ->where('districtID', $dkey, $dvalue)
@@ -1017,10 +935,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })->sum('sixtyfour_recive');
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])->sum('sixtyfour_recive');
 
         $data['policereportprapti'] = Casedb::whereNotNull('police_report_victim')
         ->where('districtID', $dkey, $dvalue)
@@ -1029,10 +945,8 @@ class CaseController extends Controller
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
         ->sum('police_report_victim');
         // Ak nojora case details end
 
@@ -1042,9 +956,6 @@ class CaseController extends Controller
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                                 ->where('casesub_type', $casesubID_key, $casesubID)
                                 ->whereBetween('case_date', [$fvalue, $tovalue])
-                                ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                                    return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                                })
                                  ->where('status', 'inactive')->count();
 
         //dd($lastthreemonthcase);
@@ -1057,9 +968,6 @@ class CaseController extends Controller
                           ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                           ->whereBetween('case_date', [$fvalue, $tovalue])
-                          ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                              return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                          })
                           ->orderBy('id', 'desc')
                           ->paginate(20);
 
@@ -1072,9 +980,6 @@ class CaseController extends Controller
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
-
-        $to2 = Carbon::parse($request->input('to2'))->toDateTimeString();
-        $from2 = Carbon::parse($request->input('form2'))->toDateTimeString();
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
@@ -1161,29 +1066,6 @@ class CaseController extends Controller
         } else {
             $tokey = '=';
             $tovalue = Carbon::now()->toDateTimeString();
-        }
-
-        if (! empty($request->input('form2'))) {
-            $fkey2 = '=';
-            $fvalue2 = $from2;
-
-            $date2 = Carbon::parse($fvalue2);
-            $fvalue2 = $date2->format('Y-m-d').' 00:00:00';
-        //dd($ggg);
-        } else {
-            $fkey2 = '=';
-            $fvalue2 = '1971-01-01 11:45:00';
-        }
-
-        if (! empty($request->input('to2'))) {
-            $tokey2 = '=';
-            $tovalue2 = $to2;
-
-            $date2 = Carbon::parse($tovalue2);
-            $tovalue2 = $date2->format('Y-m-d').' 23:59:59';
-        } else {
-            $tokey2 = '=';
-            $tovalue2 = Carbon::now()->toDateTimeString();
         }
 
         if (! empty($request->input('nispotti_type'))) {
@@ -1210,7 +1092,24 @@ class CaseController extends Controller
             $casesubID_key = '!=';
         }
 
-        $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
+        if ($request->filled('nispotti_type')) {
+
+            $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
+                          ->where('districtID', $dkey, $dvalue)
+                          ->where('circleID', $ckey, $cvalue)
+                          ->where('thanaID', $tkey, $tvalue)
+                          ->where('status', 'active')
+                          ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
+                          ->where('case_type', $caseTypeID_key, $caseTypeID)
+                          ->where('casesub_type', $casesubID_key, $casesubID)
+                          ->whereNotNull('nispotti_date')
+                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
+                          ->orderBy('id', 'desc')
+                          ->paginate(20);
+
+        } else {
+
+           $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                           ->where('districtID', $dkey, $dvalue)
                           ->where('circleID', $ckey, $cvalue)
                           ->where('thanaID', $tkey, $tvalue)
@@ -1219,11 +1118,12 @@ class CaseController extends Controller
                           ->where('case_type', $caseTypeID_key, $caseTypeID)
                           ->where('casesub_type', $casesubID_key, $casesubID)
                           ->whereBetween('case_date', [$fvalue, $tovalue])
-                          ->when(($request->filled('from2') || $request->filled('to2')), function ($query) use ($fvalue2, $tovalue2) {
-                              return $query->whereBetween('nispotti_date', [$fvalue2, $tovalue2]);
-                          })
                           ->orderBy('id', 'desc')
-                          ->paginate(20);
+                          ->paginate(20); 
+
+        }
+
+        
 
         return view('admin/case/case-data', $data);
     }

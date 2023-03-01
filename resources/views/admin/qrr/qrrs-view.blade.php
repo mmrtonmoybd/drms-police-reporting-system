@@ -216,10 +216,69 @@
                   " 
                   onclick="window.print()">Print </button>
               
-               <div  id="a" class="noprint" style="visibility:; position:absolute; left:2000px;"  > 
+                <div  id="a" class="noprint" style="visibility:; position:absolute; left:2000px;"  > 
            
- 
-                 </div>
+           
+           
+
+					রেফারেন্স নং :      {{$qrr->id}} <br>   
+                                                        জেলা :      @if(isset($qrr->district->name)){{$qrr->district->bn_name}}    @endif <br>
+                                                        থানা :      @if(isset($qrr->thana->name)){{$qrr->thana->name}}    @endif <br>   
+                                                    
+                                                         গ্রাম/ওয়ার্ড :      {{$qrr->village_word}} <br>   
+                                                        তথ্য প্রাপ্তির উৎস :      {{$qrr->source_of_info}} <br>   
+                                                        ঘটনার তারিখ ও সময় :      @if(!empty($qrr->date_time_of_incident)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_incident))}}   @endif <br>
+                                                    
+                                                         পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময়  :      @if(!empty($qrr->date_time_of_police_news)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_police_news))}}    @endif <br>
+                                                        
+                                                        রেসপন্সের তারিখ ও সময় :      @if(!empty($qrr->date_time_response)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_response))}}    @endif <br>
+                                                        
+                                                        
+                                                        @php
+function hms ($value) {
+    $cal = floor($value / 3600 );
+    return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
+}
+@endphp
+                                                        রেসপন্সে বিলম্ব :      
+                                                        {{hms($qrr->delay_in_response)}} <br>   
+                                                        
+                                                    
+                                                    
+                                                        মূল ঘটনা:         {{$qrr->main_event}} <br>   
+                                                        ঘটনার ধরণ:      {{$qrr->event_type}} <br>   
+                                                    ঘটনার সূত্রপাত:     			 {{$qrr->begening_of_event}} <br>     
+                                                    ঘটনার সংক্ষিপ্ত বিবরন:    		  {{$qrr->short_dettails}} <br>     
+                                                    
+                                                         গৃহীত ব্যবস্থা:     		    {{$qrr->action_taken}} <br>   
+                                                         জিডি নং:       			  {{$qrr->gd_no}} <br>   
+                                                        তারিখ:        			  @if(!empty($qrr->gd_date)) {{date('d/m/Y', strtotime($qrr->gd_date))}}   @endif <br> 
+                                                     মামলা নং :    			 {{$qrr->case_no}} <br>     
+                                                    
+                                                         তারিখ:      		 @if(!empty($qrr->case_date)) {{date('d/m/Y', strtotime($qrr->case_date))}} @endif <br>   
+                                                        
+                                                        ধারা:        			  {{$qrr->clause}} <br>   
+                                                      বাদীর/সংবাদদাতার নাম :     {{$qrr->nopc}} <br>     
+                                                    
+                                                          বাদীর মোবাইল নং:      {{$qrr->plaintiff_mobile}} <br>   
+                                                         ভিকটিমের সংখ্যা:       {{$qrr->number_of_victims}} <br>   
+                                                      এজাহারভুক্ত আসামীর সংখ্যা:     {{$qrr->number_of_accused}} <br>     
+                                                    
+                                                           রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম:      {{$qrr->name_of_investigator}} <br>   
+                                                          বিপি নং:       {{$qrr->bp_no}} <br>   
+                                                       মোবাইল নং:     {{$qrr->mobile_no}} <br>     
+                                                    
+                                                          ছবি/ভিডিও প্রাপ্তি:      {{$qrr->image_video}} <br>   
+                                                           সন্তুষ্টির মান:       {{$qrr->media_quality}} <br>   
+                                                        
+                                                    
+                                                         
+                                                           মন্তব্য:       {{$qrr->comments}} <br>   
+                                                        
+           
+           
+           
+               </div>
    
    
    
@@ -238,9 +297,7 @@
 
 
     <div class="col-sm-3" style="text-align:right;"> <b>রেফারেন্স নং : </b></div>         <div class="col-sm-3" style=""> {{$qrr->id}}   </div>
-                                                        <div class="col-sm-3" style="text-align:right;"> <b>জেলা : </b></div>         <div class="col-sm-3" style=""> @if(isset($qrr->district->name)){{$qrr->district->bn_name}}   </div>@endif
-                                                        <div class="col-sm-3" style="text-align:right;"> <b>থানা : </b></div>         <div class="col-sm-3" style=""> @if(isset($qrr->thana->name)){{$qrr->thana->name}}   </div>@endif
-                                                    
+                                                   
                                                         <div class="col-sm-3" style="text-align:right;"> <b> গ্রাম/ওয়ার্ড : </b></div>         <div class="col-sm-3" style=""> {{$qrr->village_word}}   </div>
                                                         <div class="col-sm-3" style="text-align:right;"> <b>তথ্য প্রাপ্তির উৎস : </b></div>         <div class="col-sm-3" style=""> {{$qrr->source_of_info}}   </div>
                                                         <div class="col-sm-3" style="text-align:right;"> <b>ঘটনার তারিখ ও সময় : </b></div>         <div class="col-sm-3" style=""> @if(!empty($qrr->date_time_of_incident)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_of_incident))}}   </div> @endif
@@ -249,12 +306,7 @@
                                                         
                                                         <div class="col-sm-3" style="text-align:right;"> <b>রেসপন্সের তারিখ ও সময় : </b></div>         <div class="col-sm-3" style=""> @if(!empty($qrr->date_time_response)) {{date('d/m/Y H:i:s', strtotime($qrr->date_time_response))}}   </div> @endif
                                                         
-                                                        @php
-function hms ($value) {
-    $cal = floor($value / 3600 );
-    return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
-}
-@endphp
+
                                                         <div class="col-sm-3" style="text-align:right;"> <b>রেসপন্সে বিলম্ব : </b></div>         <div class="col-sm-3" style=""> 
                                                         {{hms($qrr->delay_in_response)}}   </div>
                                                         

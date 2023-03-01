@@ -383,11 +383,11 @@ class WarrantController extends Controller
 
     public function dashs(Request $request)
     {
-        $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
+        $currentday = Carbon::now()->endOfMonth()->format('Y-m-d').' 23:59:59';
 
         $request->session()->flash('currentday', $currentday);
 
-        $agomonthday = Carbon::now()->subMonth()->format('Y-m-d').' 00:00:00';
+        $agomonthday = Carbon::now()->startOfMonth()->format('Y-m-d').' 00:00:00';
 
         $request->session()->flash('agomonthday', $agomonthday);
 
@@ -454,6 +454,14 @@ class WarrantController extends Controller
             $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
             ->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday])
                     ->get();
+                    
+            $totalrevive =   Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->get();
+            
+             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
             $data['pending'] = Warrant::where('status', 'inactive')->whereBetween('date', [$agomonthday, $currentday])
                     ->count();
@@ -561,6 +569,17 @@ class WarrantController extends Controller
                    ->where('status', 'active')
                    ->whereBetween('date', [$agomonthday, $currentday])
                     ->get();
+                    
+            $totalrevive =   Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('districtID', auth()->user()->districtID)
+            ->where('status', 'active')->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('districtID', auth()->user()->districtID)
+            ->where('status', 'active')->get();
+            
+             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
+            
 
             $data['pending'] = Warrant::where('status', 'inactive')->where('districtID', auth()->user()->districtID)->whereBetween('date', [$agomonthday, $currentday])
                     ->count();
@@ -637,6 +656,17 @@ class WarrantController extends Controller
                    ->where('status', 'active')
                    ->whereBetween('date', [$agomonthday, $currentday])
                     ->get();
+                    
+            
+            $totalrevive =   Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('thanaID', $octhana->id)
+            ->where('status', 'active')->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('thanaID', $octhana->id)
+            ->where('status', 'active')->get();
+            
+            $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
             $data['pending'] = Warrant::where('status', 'inactive')->where('thanaID', $octhana->id)->whereBetween('date', [$agomonthday, $currentday])
                     ->count();
@@ -784,6 +814,15 @@ class WarrantController extends Controller
                         ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
                 $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                         ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
+                        
+                        
+                $totalrevive =   Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                        ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                        ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
                 $data['pending'] = Warrant::where('status', 'inactive')
                       ->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])
@@ -890,6 +929,14 @@ class WarrantController extends Controller
                    ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
                 $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                         ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
+                        
+                $totalrevive =   Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+                   ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                        ->where('districtID', $dkey, $dvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
                 $data['pending'] = Warrant::where('status', 'inactive')
                       ->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])
@@ -970,6 +1017,14 @@ class WarrantController extends Controller
                ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
             $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                     ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
+                    
+            $totalrevive =  Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+               ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                    ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
             $data['pending'] = Warrant::where('status', 'inactive')
               ->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])
@@ -1046,6 +1101,14 @@ class WarrantController extends Controller
             $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
                    ->where('thanaID', $octhana->id)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])
                     ->get();
+                    
+            $totalrevive =  Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+              ->where('thanaID', $octhana->id)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+            $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+                   ->where('thanaID', $octhana->id)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+            
+             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
             $data['pending'] = Warrant::where('status', 'inactive')
                       ->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])

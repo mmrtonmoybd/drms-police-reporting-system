@@ -17,27 +17,23 @@ body {
   transition: 0.3s;
   padding: 10px 0px 10px 10px;
   width: 250px;
-
   text-decoration: none;
   font-size: 20px;
   color: white;
   border-radius: 5px 0px 0px 5px;
   z-index: 1000;
 }
-
 #about:hover {
-      height:230px;
+      height:250px;
   right: 0px;
   
 }
-
 #about {
       height:45px;
   top: 162px;
   background-color: #04AA6D;
   font-size: 14px !important;
 }
-
 #content  {
     position: relative;
   right:-80px;
@@ -45,13 +41,10 @@ body {
   margin-top: -40px;
   z-index: 1050;
 }
-
 #content:hover {
     position: relative;
   right:0px;
 }
-
-
 </style>
 
 
@@ -60,15 +53,16 @@ body {
 
 <div id="mySidenav" class="sidenav">
   <a href="#" id="about"><span id="htitile">একনজরে       </span>
-  <div id="content" style="width:100%; height: 300px">
-<br>
+  <div id="content" style="width:100%; height: 320px">
 <br>
 
- <b>নিস্পত্তি এজহার নামীয় আসামীঃ </b> {{$nispottimamlaiazahar}} <br>
+<br>
+নিষ্পত্তিকৃত মামলার তথ্যাদি<br>
+ <b>এজহার নামীয় আসামীঃ </b> {{$nispottimamlaiazahar}} <br>
   <b>পুলিশ রিপোর্ট প্রাপ্তিঃ </b> {{$policereportprapti}}<br>
    <b> গ্রেফতার সংখ্যাঃ </b>    {{$accusedasami}}</br>
     <b> জামিন সংখ্যাঃ  </b>   {{$jaminprapto}}      </br>
-  <b> এজহার বহিঃতদন্তঃ </b>       {{$azaharnewinvistigateprapto}}  </br>
+  <b> এজহার বহিঃ তদন্তে প্রাপ্তঃ </b>       {{$azaharnewinvistigateprapto}}  </br>
 
   <b> অব্যহতিপ্রাপ্ত সংখ্যাঃ</b> {{$ovohotiprapto}}     </br>
  
@@ -89,6 +83,85 @@ body {
 			
 			
 			
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dripicons/2.0.0/webfont.css" integrity="sha512-uws2d1mzntk5UyAzfDcNN9wAN3OoSsztsVfUzRvq+DOMZYgUZH6HJ97g4y2Nk6TvDlIdd0GBuDjaZ74DoASdig==" crossorigin="anonymous" referrerpolicy="no-referrer" />					
+   <style>
+.float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:40px;
+	right:40px;
+	background-color:#04c;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	transition: transform .2s;
+}
+
+
+.float2{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:100px;
+	right:40px;
+	background-color:#f44336;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	text-decoration:none;
+		transition: transform .2s;
+}
+
+.float:hover{
+transform: scale(1.1);
+}
+
+
+.float2:hover{
+transform: scale(1.1);
+}
+
+
+
+
+
+
+.my-float{
+	margin-top:22px;
+	font-size:37px;
+	text-decoration:none;
+}
+
+.my-float:hover {
+  color: #ddd;
+}
+   
+   .silverhover:hover {
+  color: #ddd;
+}
+
+</style>
+			
+
+@can('qrr.add')
+<a href="{{url('admin/case/add')}}" class="float2 silverhover">
+    
+<i class="dripicons-plus my-float"></i>
+</a>
+@endcan
+
+@can('qrr.view')
+
+<a href="{{url('admin/case')}}" class="float silverhover" style="padding: 7px;">
+<i style="font-size: 25px;" class="dripicons-view-list my-float"></i>
+</a>
+@endcan
+
 			
 			
             <div class="main-content pt-4">
@@ -200,20 +273,8 @@ body {
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ পর্যন্ত" >
-                  </div>
-               </div>
-            </div>
-
-
-
-            <div class="col-sm-3 " > 
-               <div class="mb-3">
-                  <label for="source_of_info" class="form-label"></label>
-                  <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form2"  value="{{old('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Nispotti তারিখ শুরু" >
-                     <input type="text" name="to2"  value="{{old('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Nispotti তারিখ পর্যন্ত" >
+                     <input type="text" name="form"  autocomplete="off" value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ শুরু" >
+                     <input type="text" name="to" autocomplete="off" value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -248,7 +309,7 @@ body {
                             <div class="card-body text-center">
                                 
                                 <!------- <i class="i-Add-User"></i>   --------->
-                            <a href="{{url('/admin/qrrs/srcs/data')}}">   
+                            <a href="{{url('/admin/case/')}}">   
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট   মামলা </p>
                                     <p class="text-primary text-24 line-height-1 mb-2"> {{$totalcase}}</p>
@@ -319,20 +380,14 @@ function hms ($value) {
     $cal = floor($value / 3600 );
     return  str_pad($cal, 2, '0', STR_PAD_LEFT) . gmdate(":i:s", $value % 3600);
 }
-
 function convert($seconds){
 $string = "";
-
 $days = intval(intval($seconds) / (3600*24));
-
 if($days> 0){
     $string .= "$days days ";
 }
-
 return $string;
 }
-
-
 @endphp
 
 			
@@ -460,7 +515,6 @@ return $string;
                 if($request->input('casesubID')) {
                     $casesub_id = $request->input('casesubID'); 
                 }
-
             } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
                 
                 if($request->input('circleID')) {
@@ -484,7 +538,6 @@ return $string;
                     $casesub_id = $request->input('casesubID'); 
                 } 
             }
-
                 @endphp
     <script src="{{ asset('my-assets/admin/js/vue.js') }}"></script>
     <script src="{{ asset('my-assets/admin/js/axios.min.js') }}"></script>
@@ -517,9 +570,7 @@ return $string;
             circle_id:'@if(isset($circle_id) and $circle_id){{$circle_id}}@endif',
             casetype_id:'@if(isset($casetype_id) and $casetype_id){{$casetype_id}}@endif',
             casesub_id:'@if(isset($casesub_id) and $casesub_id){{$casesub_id}}@endif',
-
           },
-
             created(){
                 
                 if(this.division_id!=""){
@@ -529,7 +580,6 @@ return $string;
                     this.getCircles();
                     this.getUpozillasAndThana();
                 }
-
                 if(this.circle_id!=""){
                     
                     this.getCircles();
@@ -538,19 +588,14 @@ return $string;
                  if(this.thana_id!=""){
                     
                     this.getUpozillasAndThana();
-
                 }
-
                 if(this.casetype_id!=""){
                     this.getCasesubtypes();
                 }
                 
                 
             },
-
-
             methods:{
-
                 
                 // send message to account customer
                 getDivisions(){
@@ -576,7 +621,6 @@ return $string;
                    }
                     
                 },
-
                 getUpozillasAndThana(){
                     //this.getUpozillas();
                     this.getThanas();
@@ -594,7 +638,6 @@ return $string;
                    }
                     
                 },
-
                 
                 //this method for get medicals
                 getThanas(){
@@ -608,8 +651,6 @@ return $string;
                    }
                     
                 },
-
-
                 getCircles(){
                     if(this.district_id==""){
                    }else{
@@ -621,7 +662,6 @@ return $string;
                    }
                     
                 },
-
                 getCasesubtypes(){
                     if(this.casetype_id==""){
                    }else{
@@ -634,11 +674,8 @@ return $string;
                     
                 },
                 
-
             }
-
         });
-
     </script>
 @elseif(auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
 
@@ -657,9 +694,7 @@ return $string;
             circle_id:'@if(isset($circle_id) and $circle_id){{$circle_id}}@endif',
             casetype_id:'@if(isset($casetype_id) and $casetype_id){{$casetype_id}}@endif',
             casesub_id:'@if(isset($casesub_id) and $casesub_id){{$casesub_id}}@endif',
-
           },
-
             created(){
                 
                 if(this.circle_id!=""){
@@ -670,16 +705,11 @@ return $string;
                 }
                 
             },
-
-
             methods:{
-
-
                 getUpozillasAndThana(){
                     //this.getUpozillas();
                     this.getThanas();
                 },
-
                 
                 //this method for get medicals
                 getThanas(){
@@ -693,8 +723,6 @@ return $string;
                    }
                     
                 },
-
-
                 getCasesubtypes(){
                     if(this.casetype_id==""){
                    }else{
@@ -707,11 +735,8 @@ return $string;
                     
                 },
                 
-
             }
-
         });
-
     </script>
 
 @else
@@ -729,9 +754,7 @@ return $string;
         
             casetype_id:'@if(isset($casetype_id) and $casetype_id){{$casetype_id}}@endif',
             casesub_id:'@if(isset($casesub_id) and $casesub_id){{$casesub_id}}@endif',
-
           },
-
             created(){
                 
                 if(this.casetype_id!=""){
@@ -739,11 +762,7 @@ return $string;
                 }
                 
             },
-
-
             methods:{
-
-
                 getCasesubtypes(){
                     if(this.casetype_id==""){
                    }else{
@@ -756,13 +775,9 @@ return $string;
                     
                 },
                 
-
             }
-
         });
-
     </script>
 
 @endif
 <x-admin-footer/>
-

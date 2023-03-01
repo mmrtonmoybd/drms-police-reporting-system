@@ -35,7 +35,7 @@ use Illuminate\Support\Str;
                                         <div style="text-align: right;margin: 16px;">
                     
                                           
-  <a target="_blank" href="{{url('admin/qrrs/excel')}}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Excel</a>
+  <a target="_blank" href="{{url('admin/qrrs/excel')}}" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a>
       
 											
 											</div>

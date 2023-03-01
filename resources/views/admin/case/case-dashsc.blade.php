@@ -5,6 +5,178 @@
 			
 			
 			
+<style>
+body {
+  overflow-x:hidden;
+  }
+#mySidenav a {
+  position: fixed;
+  right: -180px;
+  transition: 0.3s;
+  padding: 10px 0px 10px 10px;
+  width: 250px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 5px 0px 0px 5px;
+  z-index: 1000;
+}
+#about:hover {
+      height:250px;
+  right: 0px;
+  
+}
+#about {
+      height:45px;
+  top: 162px;
+  background-color: #04AA6D;
+  font-size: 14px !important;
+}
+#content  {
+    position: relative;
+  right:-80px;
+  width:100%;
+  margin-top: -40px;
+  z-index: 1050;
+}
+#content:hover {
+    position: relative;
+  right:0px;
+}
+</style>
+
+
+
+			
+<div id="mySidenav" class="sidenav">
+  <a href="#" id="about"><span id="htitile">একনজরে       </span>
+  <div id="content" style="width:100%; height: 320px">
+<br>
+
+<br>
+নিষ্পত্তিকৃত মামলার তথ্যাদি<br>
+ <b>এজহার নামীয় আসামীঃ </b> {{$nispottimamlaiazahar}} <br>
+  <b>পুলিশ রিপোর্ট প্রাপ্তিঃ </b> {{$policereportprapti}}<br>
+   <b> গ্রেফতার সংখ্যাঃ </b>    {{$accusedasami}}</br>
+    <b> জামিন সংখ্যাঃ  </b>   {{$jaminprapto}}      </br>
+   <b> এজহার বহিঃ তদন্তে প্রাপ্তঃ </b>       {{$azaharnewinvistigateprapto}}  </br>
+
+  <b> অব্যহতিপ্রাপ্ত সংখ্যাঃ</b> {{$ovohotiprapto}}     </br>
+ 
+ 
+  <b>১৬১ গ্রহনঃ</b>  {{$onesixtyrecive}} </br>
+  <b>১৬৪ গ্রহনঃ </b> {{$onesixtyfourrecive}}<br>
+ 
+  
+  <br>
+  
+  </div>
+   
+  </a>
+  
+</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dripicons/2.0.0/webfont.css" integrity="sha512-uws2d1mzntk5UyAzfDcNN9wAN3OoSsztsVfUzRvq+DOMZYgUZH6HJ97g4y2Nk6TvDlIdd0GBuDjaZ74DoASdig==" crossorigin="anonymous" referrerpolicy="no-referrer" />					
+   <style>
+.float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:40px;
+	right:40px;
+	background-color:#04c;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	transition: transform .2s;
+}
+
+
+.float2{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:100px;
+	right:40px;
+	background-color:#f44336;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	text-decoration:none;
+		transition: transform .2s;
+}
+
+.float:hover{
+transform: scale(1.1);
+}
+
+
+.float2:hover{
+transform: scale(1.1);
+}
+
+
+
+
+
+
+.my-float{
+	margin-top:22px;
+	font-size:37px;
+	text-decoration:none;
+}
+
+.my-float:hover {
+  color: #ddd;
+}
+   
+   .silverhover:hover {
+  color: #ddd;
+}
+
+</style>
+			
+
+@can('qrr.add')
+<a href="{{url('admin/case/add')}}" class="float2 silverhover">
+    
+<i class="dripicons-plus my-float"></i>
+</a>
+@endcan
+
+@can('qrr.view')
+
+<a href="{{url('admin/case')}}" class="float silverhover" style="padding: 7px;">
+<i style="font-size: 25px;" class="dripicons-view-list my-float"></i>
+</a>
+@endcan
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
             <div class="main-content pt-4">
                 <div class="selectbox">
@@ -115,19 +287,8 @@
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ পর্যন্ত" >
-                  </div>
-               </div>
-            </div>
-
-
-            <div class="col-sm-3 " > 
-               <div class="mb-3">
-                  <label for="source_of_info" class="form-label"></label>
-                  <div class="input-group" id="timepicker-input-group2">
-                     <input type="text" name="form2"  value="{{request()->input('form2')}}" id="date_time_response" class="form-control searchdatepick  @error('form2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Nispotti তারিখ শুরু" >
-                     <input type="text" name="to2"  value="{{request()->input('to2')}}" id="date_time_response" class="form-control searchdatepick  @error('to2') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Nispotti তারিখ পর্যন্ত" >
+                     <input type="text" name="form" autocomplete="off"  value="{{request()->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ শুরু" >
+                     <input type="text" name="to" autocomplete="off" value="{{request()->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="Case তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -162,7 +323,7 @@
                             <div class="card-body text-center">
                                 
                                 <!------- <i class="i-Add-User"></i>   --------->
-                            <a href="{{url('/admin/qrrs/srcs/data')}}">   
+                            <a href="{{url('/admin/case/')}}">   
 								<div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট   মামলা </p>
                                     <p class="text-primary text-24 line-height-1 mb-2"> {{$totalcase}}</p>

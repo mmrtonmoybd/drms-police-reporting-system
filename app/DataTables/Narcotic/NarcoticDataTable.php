@@ -151,7 +151,8 @@ class NarcoticDataTable extends DataTable
                   ->orderable(false)
                   ->searchable(false)
                   ->addClass('text-center'),
-            Column::make('narcoticsid')->title('ট্র্যাকিং নং'),
+            Column::make('narcoticsid')->data('narcoticsid')
+                  ->searchable(false)->title('ট্র্যাকিং নং'),
             Column::make('folder_no')->title('ফোল্ডার নং'),
             Column::make('district.bn_name')->title('জেলা'),
             Column::make('thana.name')->title('থানা'),

@@ -6,6 +6,90 @@
 			
 			
 			
+			
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dripicons/2.0.0/webfont.css" integrity="sha512-uws2d1mzntk5UyAzfDcNN9wAN3OoSsztsVfUzRvq+DOMZYgUZH6HJ97g4y2Nk6TvDlIdd0GBuDjaZ74DoASdig==" crossorigin="anonymous" referrerpolicy="no-referrer" />					
+   <style>
+.float{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:40px;
+	right:40px;
+	background-color:#04c;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	transition: transform .2s;
+}
+
+
+.float2{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:100px;
+	right:40px;
+	background-color:#f44336;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index:1000;
+	text-decoration:none;
+		transition: transform .2s;
+}
+
+.float:hover{
+transform: scale(1.1);
+}
+
+
+.float2:hover{
+transform: scale(1.1);
+}
+
+
+
+
+
+
+.my-float{
+	margin-top:22px;
+	font-size:37px;
+	text-decoration:none;
+}
+
+.my-float:hover {
+  color: #ddd;
+}
+   
+   .silverhover:hover {
+  color: #ddd;
+}
+
+</style>
+			
+
+@can('qrr.add')
+<a href="{{url('admin/narcotic/add')}}" class="float2 silverhover">
+    
+<i class="dripicons-plus my-float"></i>
+</a>
+@endcan
+
+@can('qrr.view')
+
+<a href="{{url('admin/narcotic')}}" class="float silverhover" style="padding: 7px;">
+<i style="font-size: 25px;" class="dripicons-view-list my-float"></i>
+</a>
+@endcan
+
+
+
+			
+			
             <div class="main-content pt-4">
                 <div class="selectbox">
                     
@@ -116,8 +200,8 @@
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                   <input type="text" name="form"  autocomplete="off" value="{{old('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to" autocomplete="off" value="{{old('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -125,7 +209,7 @@
             <div class="col-sm-2 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                 <button type="submit" name="submit" class="btn" style="width:100%;"> সার্চ করুন </button>
+                 <button type="submit" name="submit"   class="btn btn-primary" style="width:100%;"> সার্চ করুন </button>
                </div>
             </div>
                                 
@@ -159,7 +243,7 @@
 												 <div class="col-sm-2">
                                                <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish" required>
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish">
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -212,13 +296,13 @@
                   <label for="name_of_investigator_org" class="form-label"></label>
                                                     <select name="name_of_investigator_org" id="name_of_investigator_org" class="droparrow form-select form-control stylish" >
                                                         <option value="">সংস্থা</option>
-                                                        <option value="থানা পুলিশ"> থানা পুলিশ </option>
-                                                        <option value="ডিবি">ডিবি</option>
-                                                        <option value="র‍্যাব">র‍্যাব</option>
-                                                        <option value="এপিবিএন">এপিবিএন</option>
-                                                        <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর">মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
-                                                        <option value="কোস্টগার্ড">কোস্টগার্ড</option>
-                                                        <option value="অন্যান্য">অন্যান্য</option>
+                                                        <option value="থানা পুলিশ"  {{ request('name_of_investigator_org') =='থানা পুলিশ' ? 'selected' : ''  }}> থানা পুলিশ </option>
+<option value="ডিবি"  {{ request('name_of_investigator_org') =='ডিবি' ? 'selected' : '' }} >ডিবি</option>
+<option value="র‍্যাব"  {{ request('name_of_investigator_org') =='র‍্যাব' ? 'selected' : '' }} >র‍্যাব</option>
+<option value="এপিবিএন"  {{ request('name_of_investigator_org') =='এপিবিএন' ? 'selected' : '' }} >এপিবিএন</option>
+<option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ request('name_of_investigator_org') =='মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর' ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
+<option value="কোস্টগার্ড" {{ request('name_of_investigator_org') =='কোস্টগার্ড' ? 'selected' : '' }} >কোস্টগার্ড</option>
+<option value="অন্যান্য"  {{ request('name_of_investigator_org') =='অন্যান্য' ? 'selected' : '' }} >অন্যান্য</option>ion>
                                                     </select>
                </div>
             </div>
@@ -232,8 +316,8 @@
                   <label for="source_of_info" class="form-label"></label>
                   <div class="input-group" id="timepicker-input-group2">
                     
-                   <input type="text" name="form"  value="{{old('form')}}" id="date_time_response" class="form-control datepicker  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
-                     <input type="text" name="to"  value="{{old('to')}}" id="date_time_response" class="form-control datepicker  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
+                   <input type="text" name="form" autocomplete="off"  value="{{$request->input('form')}}" id="date_time_response" class="form-control searchdatepick  @error('form') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder=" তারিখ শুরু" >
+                     <input type="text" name="to" autocomplete="off" value="{{$request->input('to')}}" id="date_time_response" class="form-control searchdatepick  @error('to') is-invalid @enderror"  data-date-format="yyyy/mm/dd"  placeholder="তারিখ পর্যন্ত" >
                   </div>
                </div>
             </div>
@@ -241,7 +325,7 @@
             <div class="col-sm-2 " >
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
-                <button type="submit" name="submit" class="btn" style="width:100%;"> সার্চ করুন </button>
+                <button type="submit" name="submit"  class="btn btn-primary" style="width:100%;"> সার্চ করুন </button>
                </div>
             </div>
                                 
@@ -390,8 +474,14 @@
 
                                              -->
 
-                                             <caption>Amount of Narcotics recoverd by Unit</caption>
-                                            <table class="table table-bordered table-responsive table-striped table-centered mb-0">
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+">   Amount of Narcotics Recoverd by Unit </span>
+                                            <table class="table table-bordered table-responsive table-striped table-centered mb-0" style="height: auto;">
                                                
                                             <thead>
                                                 <tr>
@@ -449,11 +539,23 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <br><br>
+                                      
 
                                         @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
 
-                                         <caption>Amount of Narcotics recoverd by PS</caption>
+                                    
+
+
+
+                                    
+                                        <span style="background-color: #756bb1;
+padding: 3px;
+text-align: center;
+color: #fff;
+display: block;
+font-size: 16px;
+">   Amount of Narcotics Recoverd by PS  </span>
+
 
                                         <table class="table table-bordered table-responsive table-striped table-centered mb-0">
                                                
@@ -520,7 +622,7 @@
                                                     <th > রেফারেন্স নং </th>
                                                     <th > ট্র্যাকিং নং </th>
                                                     <th> ক্রমিক নং </th>
-                                                    <th > ফোল্ডার নং </th>
+                                                  <!------  <th > ফোল্ডার নং </th> <!------>
                                                     <th > জেলা </th>
                                                     <th > থানা </th>
                                                     <th > গ্রাম/ওয়ার্ড </th>
@@ -571,7 +673,7 @@
                                                     <td > {{$nar->id}}</td>
                                                     <td > {{$nar->trakingID}}</td>
                                                     <td> {{$nar->serial}}</td>
-                                                    <td > {{$nar->folder_no}}</td>
+                                                 <!------   <td > {{$nar->folder_no}}</td> <!------>
                                                     <td > @if(isset($nar->district->name)) {{$nar->district->bn_name}} @endif</td>
                                                     <td > @if(isset($nar->thana->name)) {{$nar->thana->name}} @endif</td>
                                                     <td > {{$nar->village_word}}</td>
