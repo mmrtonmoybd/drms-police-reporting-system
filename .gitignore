@@ -13,3 +13,4 @@ yarn-error.log
 /.vscode
 .env
 .php-cs-fixer.cache
+composer.lock
