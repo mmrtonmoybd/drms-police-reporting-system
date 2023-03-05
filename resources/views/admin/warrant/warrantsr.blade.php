@@ -250,7 +250,7 @@ margin-bottom: -10px;">
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                     <th> পেন্ড </th>
+                                                     <th> পেন্ডিং </th>
                                                     <th >  রিসিভ  </th>
                                                   
                                                     <th >  জিআর তামিল </th>
@@ -266,6 +266,63 @@ margin-bottom: -10px;">
                                             </thead>
                                             <tbody>
 
+                                            @php
+
+                                            function districtpending($id) {
+
+
+
+                                                if (! empty(request('to'))) {
+            $tokey = '=';
+            $tovalue = request('to');
+
+            $date = \Illuminate\Support\Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d').' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = \Illuminate\Support\Carbon::now()->toDateTimeString();
+        }
+
+
+$warrec = \App\Models\Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->where('districtID', $id)->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+
+$warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->where('districtID', $id)->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+
+            // return (($warrec[0]['total_sum'] - $warnis[0]['total_sum']) >= 0) ? $warrec[0]['total_sum'] - $warnis[0]['total_sum'] : 0;
+
+            return $warrec[0]['total_sum'] - $warnis[0]['total_sum'];
+
+}
+
+function thanapending($id) {
+
+    if (! empty(request('to'))) {
+            $tokey = '=';
+            $tovalue = request('to');
+
+            $date = \Illuminate\Support\Carbon::parse($tovalue);
+            $tovalue = $date->format('Y-m-d').' 23:59:59';
+        } else {
+            $tokey = '=';
+            $tovalue = \Illuminate\Support\Carbon::now()->toDateTimeString();
+        }
+
+        
+$warrec = \App\Models\Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->where('thanaID', $id)->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+
+$warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->where('thanaID', $id)->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
+
+    // return (($warrec[0]['total_sum'] - $warnis[0]['total_sum']) >= 0) ? $warrec[0]['total_sum'] - $warnis[0]['total_sum'] : 0;
+
+    return $warrec[0]['total_sum'] - $warnis[0]['total_sum'];
+
+}
+                                            @endphp
+
                                             @if($wars)
                                             @foreach ($wars as $war)
                                                 <tr>
@@ -279,7 +336,21 @@ margin-bottom: -10px;">
                                             @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
                                             {{$war->thana->bn_name}}
                                             @endif</td>
-                                            <td>@if (($war->total_recive - $war->total_nispotti) >= 0) {{$war->total_recive - $war->total_nispotti}} @else {{0}} @endif</td>
+                                            <td>
+
+
+                                            @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))    
+                                            {{districtpending($war->districtID)}}
+                                            @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
+                                            {{thanapending($war->thanaID)}}
+                                            @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
+                                            {{thanapending($war->thanaID)}}
+                                            @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
+                                            {{thanapending($war->thanaID)}}
+                                            @endif
+
+
+                                            </td>
                                                     
                                                      <td > {{$war->total_recive}}</td>
                                                   

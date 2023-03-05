@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \App\Http\Middleware\HtmlMifier::class,
         \App\Http\Middleware\TrustProxies::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
 
     ];
 

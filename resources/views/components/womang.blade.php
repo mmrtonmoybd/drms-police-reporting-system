@@ -295,6 +295,41 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
       chart.draw(view, options);
   }
 
+
+  google.charts.setOnLoadCallback(drawChart6);
+
+function drawChart6() {
+
+  var data = google.visualization.arrayToDataTable([
+    ['Satisfy rate', 'count', 'number', { role: 'link' }],
+    @foreach(session("satisfyrate") as $key => $value)
+    ['{{$value->satisfy_rate}}', {{$value->satisfyrate}}, '{{$value->satisfyrate}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&satisfy_rate=".$value->satisfy_rate . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string2 . "&satisfy_rate=".$value->satisfy_rate!!} @endif'],
+    @endforeach
+  ]);
+
+  var options = {
+    title: '',
+    is3D: true,
+  width: "98%",
+  height: "300",
+  pieSliceText: 'value',
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+  google.visualization.events.addListener(chart, 'select', function (e) {
+      var selection = chart.getSelection();
+          if (selection.length) {
+              var row = selection[0].row;
+              let link =data.getValue(row, 3);
+              location.href = link;
+          }
+  });
+  chart.draw(data, options);
+}
+
+
+
       @endif
 
       @if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
@@ -389,6 +424,39 @@ $string1 = url('/admin/woman/chart/data') .'?'. http_build_query($removarr);
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
       chart.draw(view, options);
   }
+
+
+  google.charts.setOnLoadCallback(drawChart6);
+
+      function drawChart6() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Satisfy rate', 'count', 'number', { role: 'link' }],
+          @foreach(session("satisfyrate") as $key => $value)
+          ['{{$value->satisfy_rate}}', {{$value->satisfyrate}}, '{{$value->satisfyrate}}', '@if (request()->is("admin/woman/dashboard")) {!!$string2 . "&satisfy_rate=".$value->satisfy_rate . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!} @else {!!$string2 . "&satisfy_rate=".$value->satisfy_rate!!} @endif'],
+          @endforeach
+        ]);
+
+        var options = {
+          title: '',
+          is3D: true,
+        width: "98%",
+        height: "300",
+        pieSliceText: 'value',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+        google.visualization.events.addListener(chart, 'select', function (e) {
+            var selection = chart.getSelection();
+                if (selection.length) {
+                    var row = selection[0].row;
+                    let link =data.getValue(row, 3);
+                    location.href = link;
+                }
+        });
+        chart.draw(data, options);
+      }
 
       @endif
 

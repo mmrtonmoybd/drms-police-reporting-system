@@ -449,6 +449,32 @@ function thana($id) {
     $get = Thana::find($id);
     return $get->bn_name;
 }
+
+function districtpending($id) {
+$warrec = \App\Models\Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->where('districtID', $id)->get();
+
+$warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->where('districtID', $id)->get();
+
+            // return (($warrec[0]['total_sum'] - $warnis[0]['total_sum']) >= 0) ? $warrec[0]['total_sum'] - $warnis[0]['total_sum'] : 0;
+
+            return $warrec[0]['total_sum'] - $warnis[0]['total_sum'];
+
+}
+
+function thanapending($id) {
+$warrec = \App\Models\Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->where('thanaID', $id)->get();
+
+$warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->where('thanaID', $id)->get();
+
+            // return (($warrec[0]['total_sum'] - $warnis[0]['total_sum']) >= 0) ? $warrec[0]['total_sum'] - $warnis[0]['total_sum'] : 0;
+
+            return $warrec[0]['total_sum'] - $warnis[0]['total_sum'];
+
+}
 @endphp
                                             @if($warrantarrast)
                                             @foreach ($warrantarrast as $war)

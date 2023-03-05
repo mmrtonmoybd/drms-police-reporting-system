@@ -737,7 +737,7 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                                     <label for="nreport" class="form-label">   নিষ্পত্তি রিপোর্ট    </label>
                                                     <select name="nreport" id="nreport" class="form-select form-control" >
                                                       
-                                                        <option selected value="নিষ্পত্তি">নিষ্পত্তি</option>
+                                                        <option selected value="মূলতবি">মূলতবি</option>
                                                
                                                     </select>
                                                     

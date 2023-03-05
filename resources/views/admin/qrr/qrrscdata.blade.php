@@ -114,15 +114,15 @@
 
 
                                     
-            <div class="col-sm-2 ">
+<div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="source_of_info" class="form-label"></label>
                   <select name="source_of_info" id="source_of_info" class="droparrow form-control stylish">
                      <option value="">উৎস</option>
-                     <option value="এলাকা"> এলাকা </option>
-                     <option value="কোর্ট">কোর্ট</option>
-                     <option value="থানা">থানা</option>
-                     <option value="৯৯৯">৯৯৯</option>
+                     <option value="এলাকা" {{ request('source_of_info') =='এলাকা' ? 'selected' : '' }}> এলাকা </option>
+                     <option value="কোর্ট" {{ request('source_of_info') =='কোর্ট' ? 'selected' : '' }}>কোর্ট</option>
+                     <option value="থানা" {{ request('source_of_info') =='থানা' ? 'selected' : '' }}>থানা</option>
+                     <option value="৯৯৯" {{ request('source_of_info') =='৯৯৯' ? 'selected' : '' }}>৯৯৯</option>
                   </select>
                </div>
             </div>

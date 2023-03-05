@@ -92,16 +92,16 @@
 												            <div class="col-sm-2 ">
                <div class="mb-3">
                   <label for="name_of_investigator_org" class="form-label"></label>
-                                                    <select name="name_of_investigator_org" id="name_of_investigator_org" class="form-select form-control stylish" >
-                                                        <option value="">সংস্থা</option>
-                                                        <option value="থানা পুলিশ" {{ ( 'থানা পুলিশ' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}> থানা পুলিশ </option>
-                                                        <option value="ডিবি" {{ ( 'ডিবি' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}>ডিবি</option>
-                                                        <option value="র‍্যাব" {{ ( 'র‍্যাব' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}>র‍্যাব</option>
-                                                        <option value="এপিবিএন" {{ ( 'এপিবিএন' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}>এপিবিএন</option>
-                                                        <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর" {{ ( 'মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}>মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
-                                                        <option value="কোস্টগার্ড" {{ ( 'কোস্টগার্ড' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}>কোস্টগার্ড</option>
-                                                        <option value="অন্যান্য" {{ ( 'অন্যান্য' == $request->input('name_of_investigator_org')) ? 'selected' : '' }}>অন্যান্য</option>
-                                                    </select>
+                  <select name="name_of_investigator_org[]" id="name_of_investigator_org" class="droparrow form-select form-control stylish" multiple>
+                                                        
+                                                        <option value="থানা পুলিশ"  {{ request('name_of_investigator_org') =='থানা পুলিশ' ? 'selected' : ''  }}> থানা পুলিশ </option>
+    <option value="ডিবি"  {{ request('name_of_investigator_org') =='ডিবি' ? 'selected' : '' }} >ডিবি</option>
+    <option value="র‍্যাব"  {{ request('name_of_investigator_org') =='র‍্যাব' ? 'selected' : '' }} >র‍্যাব</option>
+    <option value="এপিবিএন"  {{ request('name_of_investigator_org') =='এপিবিএন' ? 'selected' : '' }} >এপিবিএন</option>
+    <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ request('name_of_investigator_org') =='মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর' ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
+    <option value="কোস্টগার্ড" {{ request('name_of_investigator_org') =='কোস্টগার্ড' ? 'selected' : '' }} >কোস্টগার্ড</option>
+    <option value="অন্যান্য"  {{ request('name_of_investigator_org') =='অন্যান্য' ? 'selected' : '' }} >অন্যান্য</option>ion>
+                                                        </select>
                </div>
             </div>
 												

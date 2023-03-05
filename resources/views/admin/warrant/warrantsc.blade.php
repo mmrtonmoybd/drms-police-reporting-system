@@ -245,7 +245,7 @@ margin-bottom: -10px;">
                                                   @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])))
                                                     <th > থানা </th>
                                                     @endif
-                                                    <th> পেন্ড </th>
+                                                    <th> পেন্ডিং </th>
                                                     <th >  রিসিভ  </th>
                                                     <th >  জিআর তামিল </th>
                                                     <th >  সিআর তামিল </th>
@@ -272,6 +272,32 @@ function thana($id) {
     $get = Thana::find($id);
     return $get->bn_name;
 }
+
+function districtpending($id) {
+$warrec = \App\Models\Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->where('districtID', $id)->get();
+
+$warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->where('districtID', $id)->get();
+
+            // return (($warrec[0]['total_sum'] - $warnis[0]['total_sum']) >= 0) ? $warrec[0]['total_sum'] - $warnis[0]['total_sum'] : 0;
+
+            return $warrec[0]['total_sum'] - $warnis[0]['total_sum'];
+
+}
+
+function thanapending($id) {
+$warrec = \App\Models\Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('status', 'active')->where('thanaID', $id)->get();
+
+$warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('status', 'active')->where('thanaID', $id)->get();
+
+            // return (($warrec[0]['total_sum'] - $warnis[0]['total_sum']) >= 0) ? $warrec[0]['total_sum'] - $warnis[0]['total_sum'] : 0;
+
+            return $warrec[0]['total_sum'] - $warnis[0]['total_sum'];
+
+}
 @endphp
                                             @if($wars)
                                             @foreach ($wars as $war)
@@ -281,7 +307,15 @@ function thana($id) {
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
                                                     <td > @if(null !== thana($war->thanaID)) {{thana($war->thanaID)}} @endif</td>
                                                     @endif
-                                                    <td>@if (($war->total_recive - $war->total_nispotti) >= 0) {{$war->total_recive - $war->total_nispotti}} @else {{0}} @endif</td>
+                                                    
+
+                                                    @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
+                                                    <td > @if(null !== disna($war->districtID)) {{districtpending($war->districtID)}} @endif</td>
+                                                    @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
+                                                    <td > @if(null !== thana($war->thanaID)) {{thanapending($war->thanaID)}} @endif</td>
+                                                    @endif
+
+                                                    
                                                     <td > {{$war->total_recive}}</td>
                                                   
                                                     <td > {{$war->total_gr_tamil}}</td>
