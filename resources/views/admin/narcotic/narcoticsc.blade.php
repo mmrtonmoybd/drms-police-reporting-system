@@ -180,13 +180,13 @@ transform: scale(1.1);
                   <label for="name_of_investigator_org" class="form-label"></label>
                                                     <select name="name_of_investigator_org[]" id="name_of_investigator_org" class="droparrow form-select form-control stylish" multiple>
                                                         
-                                                    <option value="থানা পুলিশ"  {{ (in_array('থানা পুলিশ', request('name_of_investigator_org'))) ? 'selected' : ''  }}> থানা পুলিশ </option>
-    <option value="ডিবি"  {{ (in_array('ডিবি', request('name_of_investigator_org'))) ? 'selected' : '' }} >ডিবি</option>
-    <option value="র‍্যাব"  {{ (in_array('র‍্যাব', request('name_of_investigator_org'))) ? 'selected' : '' }} >র‍্যাব</option>
-    <option value="এপিবিএন"  {{ (in_array('এপিবিএন', request('name_of_investigator_org'))) ? 'selected' : '' }} >এপিবিএন</option>
-    <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ (in_array('মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর', request('name_of_investigator_org'))) ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
-    <option value="কোস্টগার্ড" {{ (in_array('কোস্টগার্ড', request('name_of_investigator_org'))) ? 'selected' : '' }} >কোস্টগার্ড</option>
-    <option value="অন্যান্য"  {{ (in_array('অন্যান্য', request('name_of_investigator_org'))) ? 'selected' : '' }} >অন্যান্য</option>
+                                                    <option value="থানা পুলিশ"  {{ (in_array('থানা পুলিশ', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : ''  }}> থানা পুলিশ </option>
+    <option value="ডিবি"  {{ (in_array('ডিবি', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >ডিবি</option>
+    <option value="র‍্যাব"  {{ (in_array('র‍্যাব', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >র‍্যাব</option>
+    <option value="এপিবিএন"  {{ (in_array('এপিবিএন', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >এপিবিএন</option>
+    <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ (in_array('মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
+    <option value="কোস্টগার্ড" {{ (in_array('কোস্টগার্ড', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >কোস্টগার্ড</option>
+    <option value="অন্যান্য"  {{ (in_array('অন্যান্য', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >অন্যান্য</option>
                                                     </select>
                </div>
             </div>
@@ -296,14 +296,14 @@ transform: scale(1.1);
                   <label for="name_of_investigator_org" class="form-label"></label>
                   <select name="name_of_investigator_org[]" id="name_of_investigator_org" class="droparrow form-select form-control stylish" multiple>
                                                         
-    <option value="থানা পুলিশ"  {{ (in_array('থানা পুলিশ', request('name_of_investigator_org'))) ? 'selected' : ''  }}> থানা পুলিশ </option>
-    <option value="ডিবি"  {{ (in_array('ডিবি', request('name_of_investigator_org'))) ? 'selected' : '' }} >ডিবি</option>
-    <option value="র‍্যাব"  {{ (in_array('র‍্যাব', request('name_of_investigator_org'))) ? 'selected' : '' }} >র‍্যাব</option>
-    <option value="এপিবিএন"  {{ (in_array('এপিবিএন', request('name_of_investigator_org'))) ? 'selected' : '' }} >এপিবিএন</option>
-    <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ (in_array('মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর', request('name_of_investigator_org'))) ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
-    <option value="কোস্টগার্ড" {{ (in_array('কোস্টগার্ড', request('name_of_investigator_org'))) ? 'selected' : '' }} >কোস্টগার্ড</option>
-    <option value="অন্যান্য"  {{ (in_array('অন্যান্য', request('name_of_investigator_org'))) ? 'selected' : '' }} >অন্যান্য</option>
-                                                        </select>
+                                                    <option value="থানা পুলিশ"  {{ (in_array('থানা পুলিশ', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : ''  }}> থানা পুলিশ </option>
+    <option value="ডিবি"  {{ (in_array('ডিবি', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >ডিবি</option>
+    <option value="র‍্যাব"  {{ (in_array('র‍্যাব', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >র‍্যাব</option>
+    <option value="এপিবিএন"  {{ (in_array('এপিবিএন', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >এপিবিএন</option>
+    <option value="মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর"  {{ (in_array('মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >মাদকদ্রব্য নিয়ন্ত্রণ অধিদপ্তর</option>
+    <option value="কোস্টগার্ড" {{ (in_array('কোস্টগার্ড', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >কোস্টগার্ড</option>
+    <option value="অন্যান্য"  {{ (in_array('অন্যান্য', (!empty(request('name_of_investigator_org')) ? request('name_of_investigator_org') : []))) ? 'selected' : '' }} >অন্যান্য</option>
+                                                    </select>
                </div>
             </div>
 												
