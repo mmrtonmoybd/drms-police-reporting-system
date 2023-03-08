@@ -83,6 +83,10 @@ class Dashboard extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+         SUM(cr_recive) AS totalcr_recive,
+         SUM(saja_gr_recive) AS totalsaja_gr_recive,
+         SUM(saja_cr_recive) AS totalsaja_cr_recive,
          
         districtID
         ')->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
@@ -181,6 +185,10 @@ class Dashboard extends Controller
          SUM(saja_cr_tamil) AS total_saja_cr_tamil,
          SUM(recall_other) AS total_recall,
           SUM(ucase_arrast) AS sumucase_arrast,
+          SUM(gr_recive) AS totalgr_recive,
+          SUM(cr_recive) AS totalcr_recive,
+          SUM(saja_gr_recive) AS totalsaja_gr_recive,
+          SUM(saja_cr_recive) AS totalsaja_cr_recive,
           
          districtID,
          thanaID
@@ -281,6 +289,10 @@ class Dashboard extends Controller
          SUM(saja_cr_tamil) AS total_saja_cr_tamil,
          SUM(recall_other) AS total_recall,
           SUM(ucase_arrast) AS sumucase_arrast,
+          SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
           
          districtID,
          thanaID
@@ -437,6 +449,10 @@ class Dashboard extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
          
         districtID
         ')->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
@@ -531,6 +547,10 @@ class Dashboard extends Controller
           SUM(saja_cr_tamil) AS total_saja_cr_tamil,
           SUM(recall_other) AS total_recall,
            SUM(ucase_arrast) AS sumucase_arrast,
+           SUM(gr_recive) AS totalgr_recive,
+           SUM(cr_recive) AS totalcr_recive,
+           SUM(saja_gr_recive) AS totalsaja_gr_recive,
+           SUM(saja_cr_recive) AS totalsaja_cr_recive,
            
           districtID,
           thanaID
@@ -629,6 +649,10 @@ class Dashboard extends Controller
           SUM(saja_cr_tamil) AS total_saja_cr_tamil,
           SUM(recall_other) AS total_recall,
            SUM(ucase_arrast) AS sumucase_arrast,
+           SUM(gr_recive) AS totalgr_recive,
+           SUM(cr_recive) AS totalcr_recive,
+           SUM(saja_gr_recive) AS totalsaja_gr_recive,
+           SUM(saja_cr_recive) AS totalsaja_cr_recive,
            
           districtID,
           thanaID
@@ -734,6 +758,10 @@ class Dashboard extends Controller
          SUM(saja_cr_tamil) AS total_saja_cr_tamil,
          SUM(recall_other) AS total_recall,
           SUM(ucase_arrast) AS sumucase_arrast,
+          SUM(gr_recive) AS totalgr_recive,
+          SUM(cr_recive) AS totalcr_recive,
+          SUM(saja_gr_recive) AS totalsaja_gr_recive,
+          SUM(saja_cr_recive) AS totalsaja_cr_recive,
           
          districtID,
          thanaID
@@ -832,6 +860,10 @@ class Dashboard extends Controller
           SUM(saja_cr_tamil) AS total_saja_cr_tamil,
           SUM(recall_other) AS total_recall,
            SUM(ucase_arrast) AS sumucase_arrast,
+           SUM(gr_recive) AS totalgr_recive,
+           SUM(cr_recive) AS totalcr_recive,
+           SUM(saja_gr_recive) AS totalsaja_gr_recive,
+           SUM(saja_cr_recive) AS totalsaja_cr_recive,
            
           districtID,
           thanaID
@@ -935,6 +967,10 @@ class Dashboard extends Controller
          SUM(saja_cr_tamil) AS total_saja_cr_tamil,
          SUM(recall_other) AS total_recall,
           SUM(ucase_arrast) AS sumucase_arrast,
+          SUM(gr_recive) AS totalgr_recive,
+          SUM(cr_recive) AS totalcr_recive,
+          SUM(saja_gr_recive) AS totalsaja_gr_recive,
+          SUM(saja_cr_recive) AS totalsaja_cr_recive,
           
          districtID,
          thanaID
