@@ -1366,6 +1366,7 @@ class QrrsController extends Controller
             'image_video' => $request->input('image_video'),
             'media_quality' => $request->input('media_quality'),
             'comments' => $request->input('comments'),
+            'short_dettails' => $request->input('short_dettails'),
             'action_taken' => $request->input('action_taken'),
 
         ];
