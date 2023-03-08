@@ -252,6 +252,11 @@ margin-bottom: -10px;">
                                                     @endif
                                                      <th> পেন্ডিং </th>
                                                     <th >  রিসিভ  </th>
+
+                                                    <th>জিআর রিসিভ</th>
+                                                    <th>সিআর রিসিভ</th>
+                                                    <th>সাজা জিআর রিসিভ</th>
+                                                    <th>সাজা সিআর রিসিভ</th>
                                                   
                                                     <th >  জিআর তামিল </th>
                                                     <th >  সিআর তামিল </th>
@@ -336,23 +341,28 @@ $warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(s
                                             @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
                                             {{$war->thana->bn_name}}
                                             @endif</td>
-                                            <td>
+                
 
 
                                             @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && empty(request()->input('districtID')))    
-                                            {{districtpending($war->districtID)}}
+                                           <td @if (districtpending($war->districtID) < 0) bgcolor="red" @endif> {{districtpending($war->districtID)}} </td>
                                             @elseif (auth()->user()->hasAnyRole(['Super Admin', 'Admin']) && !empty(request()->input('districtID')))
-                                            {{thanapending($war->thanaID)}}
+                                            <td @if (thanapending($war->thanaID) < 0) bgcolor="red" @endif> {{thanapending($war->thanaID)}} </td>
                                             @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
-                                            {{thanapending($war->thanaID)}}
+                                            <td @if (thanapending($war->thanaID) < 0) bgcolor="red" @endif> {{thanapending($war->thanaID)}} </td>
                                             @elseif(auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))
-                                            {{thanapending($war->thanaID)}}
+                                            <td @if (thanapending($war->thanaID) < 0) bgcolor="red" @endif> {{thanapending($war->thanaID)}} </td>
                                             @endif
 
 
-                                            </td>
+                                            
                                                     
                                                      <td > {{$war->total_recive}}</td>
+
+                                                     <td>{{$war->totalgr_recive}}</td>
+                                                    <td>{{$war->totalcr_recive}}</td>
+                                                    <td>{{$war->totalsaja_gr_recive}}</td>
+                                                    <td>{{$war->totalsaja_cr_recive}}</td>
                                                   
                                                     <td > {{$war->total_gr_tamil}}</td>
                                                     <td > {{$war->total_cr_tamil}}</td>

@@ -247,6 +247,10 @@ margin-bottom: -10px;">
                                                     @endif
                                                     <th> পেন্ডিং </th>
                                                     <th >  রিসিভ  </th>
+                                                    <th>জিআর রিসিভ</th>
+                                                    <th>সিআর রিসিভ</th>
+                                                    <th>সাজা জিআর রিসিভ</th>
+                                                    <th>সাজা সিআর রিসিভ</th>
                                                     <th >  জিআর তামিল </th>
                                                     <th >  সিআর তামিল </th>
                                                     <th >  সাজা জিআর তামিল </th>
@@ -310,14 +314,17 @@ $warnis = \App\Models\Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(s
                                                     
 
                                                     @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
-                                                    <td > @if(null !== disna($war->districtID)) {{districtpending($war->districtID)}} @endif</td>
+                                                    <td @if (districtpending($war->districtID) < 0) bgcolor="red" @endif> @if(null !== disna($war->districtID)) {{districtpending($war->districtID)}} @endif</td>
                                                     @elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']) || (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3']))) 
-                                                    <td > @if(null !== thana($war->thanaID)) {{thanapending($war->thanaID)}} @endif</td>
+                                                    <td @if (thanapending($war->thanaID) < 0) bgcolor="red" @endif> @if(null !== thana($war->thanaID)) {{thanapending($war->thanaID)}} @endif</td>
                                                     @endif
 
                                                     
                                                     <td > {{$war->total_recive}}</td>
-                                                  
+                                                    <td>{{$war->totalgr_recive}}</td>
+                                                    <td>{{$war->totalcr_recive}}</td>
+                                                    <td>{{$war->totalsaja_gr_recive}}</td>
+                                                    <td>{{$war->totalsaja_cr_recive}}</td>
                                                     <td > {{$war->total_gr_tamil}}</td>
                                                     <td > {{$war->total_cr_tamil}}</td>
                                                     <td > {{$war->total_saja_gr_tamil}}</td>

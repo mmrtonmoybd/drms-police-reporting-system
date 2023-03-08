@@ -477,7 +477,11 @@ class WarrantController extends Controller
         SUM(saja_gr_tamil) AS total_saja_gr_tamil,
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
-         SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(ucase_arrast) AS sumucase_arrast,
+        SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
          
         districtID
         ')->where('status', 'active')->whereBetween('date', [$agomonthday, $currentday])->orderBy('districtID', 'ASC')->groupBy('districtID')->get();
@@ -595,6 +599,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
         districtID,
         thanaID
         ')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereBetween('date', [$agomonthday, $currentday])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
@@ -681,6 +689,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
         districtID,
         
         thanaID
@@ -837,6 +849,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
         districtID,
         thanaID
         ')->where('status', 'active')->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->groupBy('districtID')->get();
@@ -954,6 +970,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
         districtID,
         thanaID
         ')->where('status', 'active')->where('districtID', $dkey, $dvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
@@ -1042,6 +1062,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
         districtID,
         thanaID
         ')->where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
@@ -1123,6 +1147,10 @@ class WarrantController extends Controller
         SUM(saja_cr_tamil) AS total_saja_cr_tamil,
         SUM(recall_other) AS total_recall,
          SUM(ucase_arrast) AS sumucase_arrast,
+         SUM(gr_recive) AS totalgr_recive,
+        SUM(cr_recive) AS totalcr_recive,
+        SUM(saja_gr_recive) AS totalsaja_gr_recive,
+        SUM(saja_cr_recive) AS totalsaja_cr_recive,
         districtID,
         thanaID
         ')->where('status', 'active')->where('thanaID', $octhana->id)->whereBetween('date', [$fvalue, $tovalue])->orderBy('thanaID', 'ASC')->groupBy('thanaID')->get();
