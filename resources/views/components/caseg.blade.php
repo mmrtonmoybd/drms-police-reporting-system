@@ -73,7 +73,7 @@
          @foreach(session("circlewise") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?circleID=". $value->circle->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!!url("/admin/case/dashboard/chart/data") . "?thanaID=". $value->thana->id . "&form=" . session("agomonthday") . "&to=" . session("currentday")!!}'],
          @endforeach
          @endif
         

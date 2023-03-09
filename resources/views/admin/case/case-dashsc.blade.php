@@ -186,15 +186,27 @@ transform: scale(1.1);
                <div class="" id="app">
                                         <div class="row">
                                                                          @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin']))
-                                            <div class="col-sm-1">
+                                                                         <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="districtID" class="form-label "></label>
-                                                    <select name="districtID" id="districtID" class="droparrow form-select form-control stylish @error('districtID') is-invalid @enderror"  v-model="district_id" @change="getCircles()" >
+                                                    
+                                                    
+                                                    
+                                                    <select name="districtID" id="districtID" class="form-select form-control stylish "  v-model="district_id" @change="getUpozillasAndThana()">
                                                         <option value="">জেলা</option>
+
+                                                        @php 
+                                                        if (request()->input('districtID') !== 'খালি') {
+                                                         $did = request()->input('districtID');
+                                                        } else {
+                                                         $did = 82625;
+                                                        }
+                                                        @endphp
+
                                                         @if($districts)
 
                                                         @foreach($districts as $district)
-                                                        <option value="{{$district->id}}" {{ ( $district->id == $request->input('districtID')) ? 'selected' : '' }}>{{$district->bn_name}}</option>
+                                                        <option value="{{$district->id}}" {{ ($district->id == $did) ? 'selected' : '' }} >{{$district->bn_name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
@@ -203,18 +215,8 @@ transform: scale(1.1);
 
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="circleID" class="form-label"></label>
-                                                    <select name="circleID" id="circleID"  v-model="circle_id" class="droparrow form-select form-control stylish @error('circleID') is-invalid @enderror" @change="getUpozillasAndThana()">
-                                                        <option value="">সার্কেল</option>
-                                                        <option v-for="(circle,key,index) in circles" v-bind:value="circle.id"> @php echo '{{ circle.name }}'; @endphp </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-1">
-                                                <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control  stylish @error('thanaID') is-invalid @enderror">
+                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="form-select form-control stylish" >
                                                         <option value="">থানা</option>
                                                         <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
                                                     </select>
@@ -223,35 +225,30 @@ transform: scale(1.1);
                                             @elseif(auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2']))
                                             <div class="col-sm-2">
                                                 <div class="mb-3">
-                                                    <label for="circleID" class="form-label"></label>
-                                                    <select name="circleID" id="circleID"  v-model="circle_id" class="droparrow form-select form-control stylish  @error('circleID') is-invalid @enderror" @change="getUpozillasAndThana()">
-                                                        <option value="">সার্কেল</option>
-                                                        @if($circledbs)
+                                                    <label for="thanaID" class="form-label"></label>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish" >
+                                                      
+                                                        <option value="">থানা</option>
+                                                        @if($spthanas)
 
-                                                        @foreach($circledbs as $circledb)
-                                                        <option value="{{$circledb->id}}" {{ ( $circledb->id == $request->input('circleID')) ? 'selected' : '' }}>{{$circledb->name}}</option>
+                                                        @foreach($spthanas as $thnsp)
+                                                        <option value="{{$thnsp->id}}"  {{ ($thnsp->id == request()->input('thanaID')) ? 'selected' : '' }}>{{$thnsp->bn_name}}</option>
                                                         @endforeach
                                                         @endif
                                                     </select>
                                                 </div>
                                             </div>
-
-                                            <div class="col-sm-1">
-                                                <div class="mb-3">
-                                                    <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID"  v-model="thana_id" class="droparrow form-select form-control stylish  @error('thanaID') is-invalid @enderror" >
-                                                        <option value="">থানা</option>
-                                                        <option v-for="(thana,key,index) in thanas" v-bind:value="thana.id"> @php echo '{{ thana.name }}'; @endphp </option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                             @else
-                                            <div class="col-sm-1">
+                                            <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="thanaID" class="form-label"></label>
-                                                    <select name="thanaID" id="thanaID" class="droparrow form-select form-control stylish @error('thanaID') is-invalid @enderror">
-                                                         <option value="">থানা</option>
-                                                        <option value="{{$thanades->id}}" selected>{{$thanades->bn_name}}</option>
+                                                    <select name="thanaID" id="thanaID" class="form-select form-control stylish">
+                                                        <option value="">থানা</option>
+                                                        @if($octhana)
+
+                                                        <option value="{{$octhana->id}}" selected>{{$octhana->bn_name}}</option>
+                                                        
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -376,6 +373,17 @@ transform: scale(1.1);
                     </div>
 
                     @endcan
+
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                            <div class="card-body text-center"><!------- <i class="i-Start"></i>   --------->
+                                <div class="content" style="max-width: 100%;">
+                                    <p class="text-muted mt-2 mb-0">Total case pending</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$casepending}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 					
 
                     <div class="col-lg-2 col-md-6 col-sm-6">
@@ -726,18 +734,12 @@ return $string;
                     this.getDistricts();
                 }
                 if(this.district_id!=""){
-                    this.getCircles();
-                    this.getUpozillasAndThana();
+                    this.getThanas();
                 }
 
-                if(this.circle_id!=""){
-                    
-                    this.getCircles();
-                    this.getUpozillasAndThana();
-                }
                  if(this.thana_id!=""){
                     
-                    this.getUpozillasAndThana();
+                    this.getThanas();
 
                 }
 
@@ -800,7 +802,7 @@ return $string;
                 getThanas(){
                     if(this.district_id==""){
                    }else{
-                        axios.get(this.ajax_url+'/circles/thanas/'+this.circle_id)
+                        axios.get(this.ajax_url+'/thanas/'+this.district_id)
                         .then(res => {
                             this.thanas = res.data;
                         })

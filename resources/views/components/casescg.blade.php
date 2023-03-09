@@ -28,7 +28,7 @@ function removeArr(...$arg)
         var data = google.visualization.arrayToDataTable([
          ['District', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
 
-         @if (empty(request()->input('districtID')) && empty(request()->input('thanaID')) && empty(request()->input('circleID')))
+         @if (empty(request()->input('districtID')) && empty(request()->input('thanaID')))
          
          @if (!is_null(session("diswisecase")))
          @foreach(session("diswisecase") as $key => $value)
@@ -38,25 +38,16 @@ function removeArr(...$arg)
          @endforeach
          @endif
 
-         @elseif(!empty(request()->input('districtID')) && (empty(request()->input('thanaID')) && empty(request()->input('circleID'))))
+         @elseif(!empty(request()->input('districtID')) && (empty(request()->input('thanaID'))))
         @if (!is_null(session("circlewisecase")))
          @foreach(session("circlewisecase") as $key => $value)
 
          
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID", "circleID") !!}&circleID={{$value->circle->id}}'],
+         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID", "circleID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
-         @elseif((!empty(request()->input('districtID')) && !empty(request()->input('circleID'))) && empty(request()->input('thanaID')))
-          @if (!is_null(session("circlewisethanacase")))
-        @foreach(session("circlewisethanacase") as $key => $value)
-
-         
-         ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
-         @endforeach
-         @endif
-
-         @elseif(!empty(request()->input('districtID')) && !empty(request()->input('circleID')) && !empty(request()->input('thanaID')))
+         @elseif(!empty(request()->input('districtID')) && !empty(request()->input('thanaID')))
          @if (!is_null(session("searchthanacase")))
          @foreach(session("searchthanacase") as $key => $value)
 
@@ -71,7 +62,7 @@ function removeArr(...$arg)
 
         // Set chart options
         var options = {
-        title: "Number of case",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},
@@ -106,25 +97,16 @@ function removeArr(...$arg)
         var data = google.visualization.arrayToDataTable([
          ['Circle', 'Case', { role: 'style' }, {role: 'annotation', type: 'string'}, { role: 'link' }],
 
-         @if (empty(request()->input('circleID')) && empty(request()->input('thanaID')))
+         @if (empty(request()->input('thanaID')))
          @if (!is_null(session("circlewisecase")))
          @foreach(session("circlewisecase") as $key => $value)
-
-         
-         ['{{$value->circle->name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("circleID") !!}&circleID={{$value->circle->id}}'],
-         @endforeach
-         @endif
-
-         @elseif(!empty(request()->input('circleID')) && empty(request()->input('thanaID')))
-         @if(!is_null(session("circlethanawisecase")))
-         @foreach(session("circlethanawisecase") as $key => $value)
 
          
          ['{{$value->thana->bn_name}}', {{$value->countcase}}, 'color: #756bb1', '{{$value->countcase}}', '{!! removeArr("thanaID") !!}&thanaID={{$value->thana->id}}'],
          @endforeach
          @endif
 
-         @elseif(!empty(request()->input('circleID')) && !empty(request()->input('thanaID')))
+         @elseif(!empty(request()->input('thanaID')))
          @if (!is_null(session("searchthanacase")))
          @foreach(session("searchthanacase") as $key => $value)
 
@@ -139,7 +121,7 @@ function removeArr(...$arg)
 
         // Set chart options
         var options = {
-        title: "Number of case",
+        title: "",
         width: "98%",
         height: 300,
         bar: {groupWidth: "55%"},

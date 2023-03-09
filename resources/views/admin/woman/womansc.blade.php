@@ -167,13 +167,13 @@
                     </div>
                     
                     
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                             <div class="card-body "><i class="i-Add-User"></i>
                           
-								<div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0"> পেন্ডিং </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$totalpending}}</p>
+								<div class="content" >
+                                    <p class="text-muted mt-2 mb-0"> Total পেন্ডিং </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$womanpending . '(' . $pendingpercen . '%)'}}</p>
                                 </div>
 
 

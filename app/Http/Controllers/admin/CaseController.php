@@ -361,6 +361,10 @@ class CaseController extends Controller
 
            $request->session()->flash('diswisecase', $diswisecase);
        } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+
+        $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
            $dvalue = auth()->user()->districtID;
            $dkey = '=';
            $tvalue = 'kkdk';
@@ -372,11 +376,14 @@ class CaseController extends Controller
 
            // Circle wise case start
 
-           $circlewise = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereNotNull('case_no')->whereBetween('case_date', [$agomonthday, $currentday])->groupBy('circleID')->orderBy('circleID', 'ASC')->get();
+           $circlewise = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereNotNull('case_no')->whereBetween('case_date', [$agomonthday, $currentday])->groupBy('thanaID')->orderBy('thanaID', 'ASC')->get();
            // Circle wise case end
 
            $request->session()->flash('circlewise', $circlewise);
        } else {
+
+        $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
            $dvalue = auth()->user()->districtID;
            $dkey = '=';
            $tvalue = auth()->user()->thanaID;
@@ -485,6 +492,18 @@ class CaseController extends Controller
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->whereBetween('case_date', [$agomonthday, $currentday])
                                 ->where('status', 'inactive')->count();
+
+        $totalcase = Casedb::where('districtID', $dkey, $dvalue)
+                      ->where('thanaID', $tkey, $tvalue)
+                      ->where('status', 'active')->count();
+
+        $nispotticase = Casedb::where('districtID', $dkey, $dvalue)
+                        ->where('thanaID', $tkey, $tvalue)
+                        ->where('status', 'active')
+                        ->where('nispotti_or_multobi', 'নিস্পত্তি')->count();
+
+        $data['casepending'] = $totalcase - $nispotticase;
+
        //dd($lastthreemonthcase);
 
        return view('admin/case/case-dashboard', $data);
@@ -524,6 +543,11 @@ class CaseController extends Controller
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
 
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+           $dvalue = auth()->user()->districtID;
+
             $dkey = '=';
             $dvalue = auth()->user()->districtID;
 
@@ -544,6 +568,9 @@ class CaseController extends Controller
             }
         } else {
             $data['thanades'] = Thana::find(auth()->user()->thanaID);
+
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
             // oc
 
             $dkey = '=';
@@ -601,7 +628,7 @@ class CaseController extends Controller
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $data['districts'] = District::where('division_id', 1)->get();
 
-            if (empty($request->input('districtID')) && empty($request->input('thanaID')) && empty($request->input('circleID'))) {
+            if (empty($request->input('districtID')) && empty($request->input('thanaID'))) {
                 // District wise case start
                 $diswisecase = Casedb::with('district')->selectRaw('COUNT(case_no) AS countcase, districtID')
                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -611,29 +638,12 @@ class CaseController extends Controller
                 //dd($diswisecase);
                 $request->session()->flash('diswisecase', $diswisecase);
             // District wise case end
-            } elseif (! empty($request->input('districtID')) && (empty($request->input('thanaID')) && empty($request->input('circleID')))) {
-                // Circle wise case start
+            } elseif (! empty($request->input('districtID')) && (empty($request->input('thanaID')))) {
+                // thana wise case start
 
-                $circlewisecase = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')
+                $circlewisecase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                    ->whereNotNull('case_no')
                                    ->where('districtID', $dkey, $dvalue)
-                                   ->where('status', 'active')
-                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
-                                   ->where('casesub_type', $casesubID_key, $casesubID)
-                                   ->whereBetween('case_date', [$fvalue, $tovalue])
-                                   ->groupBy('circleID')
-                                   ->orderBy('circleID', 'ASC')
-                                   ->get();
-
-                //dd($circlewisecase);
-                $request->session()->flash('circlewisecase', $circlewisecase);
-            // Circle wise case end
-            } elseif ((! empty($request->input('districtID')) && ! empty($request->input('circleID'))) && empty($request->input('thanaID'))) {
-                // Circle wise thana start
-                $circlewisethanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
-                                   ->whereNotNull('case_no')
-                                   ->where('districtID', $dkey, $dvalue)
-                                   ->where('circleID', $ckey, $cvalue)
                                    ->where('status', 'active')
                                    ->where('case_type', $caseTypeID_key, $caseTypeID)
                                    ->where('casesub_type', $casesubID_key, $casesubID)
@@ -642,16 +652,14 @@ class CaseController extends Controller
                                    ->orderBy('thanaID', 'ASC')
                                    ->get();
 
-                //dd($circlewisethanacase);
-
-                $request->session()->flash('circlewisethanacase', $circlewisethanacase);
-            // Circle wise thana end
-            } elseif (! empty($request->input('districtID')) && ! empty($request->input('circleID')) && ! empty($request->input('thanaID'))) {
+                //dd($circlewisecase);
+                $request->session()->flash('circlewisecase', $circlewisecase);
+            // Circle wise case end
+            } elseif (! empty($request->input('districtID')) && ! empty($request->input('thanaID'))) {
                 // Search thana case
                 $searchthanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                ->whereNotNull('case_no')
                                ->where('districtID', $dkey, $dvalue)
-                               ->where('circleID', $ckey, $cvalue)
                                ->where('status', 'active')
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -669,43 +677,25 @@ class CaseController extends Controller
                 // Search thana case
             }
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-            if (empty($request->input('circleID')) && empty($request->input('thanaID'))) {
-                $circlewisecase = Casedb::with('circle')->selectRaw('COUNT(case_no) AS countcase, circleID')
+            if (empty($request->input('thanaID'))) {
+                $circlewisecase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                   ->where('districtID', $dkey, $dvalue)
-                                  ->where('circleID', $ckey, $cvalue)
                                   ->where('thanaID', $tkey, $tvalue)
                                   ->where('status', 'active')
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
                                   ->where('casesub_type', $casesubID_key, $casesubID)
                                   ->whereBetween('case_date', [$fvalue, $tovalue])
-                                  ->whereNotNull('case_no')->groupBy('circleID')
-                                  ->orderBy('circleID', 'ASC')
-                                  ->get();
-
-                $request->session()->flash('circlewisecase', $circlewisecase);
-            } elseif (! empty($request->input('circleID')) && empty($request->input('thanaID'))) {
-                // Circle thana wise case
-
-                $circlethanawisecase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                   ->whereNotNull('case_no')
-                                  ->where('districtID', $dkey, $dvalue)
-                                  ->where('circleID', $ckey, $cvalue)
-                                  ->where('status', 'active')
-                                  ->where('case_type', $caseTypeID_key, $caseTypeID)
-                                  ->where('casesub_type', $casesubID_key, $casesubID)
-                                  ->whereBetween('case_date', [$fvalue, $tovalue])
                                   ->groupBy('thanaID')
                                   ->orderBy('thanaID', 'ASC')
                                   ->get();
 
-                $request->session()->flash('circlethanawisecase', $circlethanawisecase);
-            // Circle thana wise case
-            } elseif (! empty($request->input('circleID')) && ! empty($request->input('thanaID'))) {
+                $request->session()->flash('circlewisecase', $circlewisecase);
+            } elseif ( ! empty($request->input('thanaID'))) {
                 // Search thana case
                 $searchthanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                ->whereNotNull('case_no')
                                ->where('districtID', $dkey, $dvalue)
-                               ->where('circleID', $ckey, $cvalue)
                                ->where('status', 'active')
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -728,7 +718,6 @@ class CaseController extends Controller
                            ->whereNotNull('case_no')
                            ->where('districtID', $dkey, $dvalue)
                            ->where('status', 'active')
-                           ->where('circleID', $ckey, $cvalue)
                            ->where('thanaID', $tkey, $tvalue)
                            ->where('case_type', $caseTypeID_key, $caseTypeID)
                            ->where('casesub_type', $casesubID_key, $casesubID)
@@ -749,7 +738,6 @@ class CaseController extends Controller
 
         $casetypec = Casedb::with('casetype')->selectRaw('COUNT(case_type) AS countcase_type, case_type')
         ->where('districtID', $dkey, $dvalue)
-                              ->where('circleID', $ckey, $cvalue)
                               ->where('thanaID', $tkey, $tvalue)
                               ->where('status', 'active')
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -766,7 +754,6 @@ class CaseController extends Controller
 
         $casesubtypec = Casedb::with('casesubtype')->selectRaw('COUNT(casesub_type) AS countcasesub_type, casesub_type, case_type')
         ->where('districtID', $dkey, $dvalue)
-                              ->where('circleID', $ckey, $cvalue)
                               ->where('status', 'active')
                               ->where('thanaID', $tkey, $tvalue)
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -784,7 +771,6 @@ class CaseController extends Controller
 
         $caseendingtypes = Casedb::selectRaw('COUNT(nispotti_type) AS countnispotti_type, nispotti_type')
                               ->where('districtID', $dkey, $dvalue)
-                              ->where('circleID', $ckey, $cvalue)
                               ->where('status', 'active')
                               ->where('thanaID', $tkey, $tvalue)
                               ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -799,7 +785,6 @@ class CaseController extends Controller
         // Total case start
         $data['totalcase'] = Casedb::whereNotNull('case_no')
                                ->where('districtID', $dkey, $dvalue)
-                               ->where('circleID', $ckey, $cvalue)
                                ->where('status', 'active')
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -814,7 +799,6 @@ class CaseController extends Controller
         $data['totalendingcase'] = Casedb::whereNotNull('case_no')->where('nispotti_or_multobi', 'নিস্পত্তি')
 
         ->where('districtID', $dkey, $dvalue)
-                               ->where('circleID', $ckey, $cvalue)
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('status', 'active')
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -828,7 +812,6 @@ class CaseController extends Controller
         // Total multobi case start
         $data['totalmultobicase'] = Casedb::whereNotNull('case_no')->where('nispotti_or_multobi', 'মুলতবি')
         ->where('districtID', $dkey, $dvalue)
-                               ->where('circleID', $ckey, $cvalue)
                                ->where('thanaID', $tkey, $tvalue)
                                ->where('status', 'active')
                                ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -840,7 +823,6 @@ class CaseController extends Controller
         // Avg case ending time
         $data['avgendingcasetime'] = Casedb::whereNotNull('nispottisecond')
         ->where('districtID', $dkey, $dvalue)
-                                  ->where('circleID', $ckey, $cvalue)
                                   ->where('thanaID', $tkey, $tvalue)
                                   ->where('status', 'active')
                                   ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -854,7 +836,6 @@ class CaseController extends Controller
 
         $data['azaharnamioasami'] = Casedb::whereNotNull('azahar_namio_victims')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('status', 'active')
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -864,7 +845,6 @@ class CaseController extends Controller
 
         $data['accusedasami'] = Casedb::whereNotNull('number_of_accused')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -875,7 +855,6 @@ class CaseController extends Controller
 
         $data['jaminprapto'] = Casedb::whereNotNull('jamin_prapto')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -886,7 +865,6 @@ class CaseController extends Controller
 
         $data['ovohotiprapto'] = Casedb::whereNotNull('ovohoti')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -897,7 +875,6 @@ class CaseController extends Controller
 
         $data['azaharnewinvistigateprapto'] = Casedb::whereNotNull('azahar_vukto_invistigate')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -909,7 +886,6 @@ class CaseController extends Controller
         $data['nispottimamlaiazahar'] = Casedb::whereNotNull('azahar_namio_victims')
 
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -920,7 +896,6 @@ class CaseController extends Controller
 
         $data['onesixtyrecive'] = Casedb::whereNotNull('sixtyone_recive')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -930,7 +905,6 @@ class CaseController extends Controller
 
         $data['onesixtyfourrecive'] = Casedb::whereNotNull('sixtyfour_recive')
        ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -940,7 +914,6 @@ class CaseController extends Controller
 
         $data['policereportprapti'] = Casedb::whereNotNull('police_report_victim')
         ->where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('status', 'active')
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -951,7 +924,6 @@ class CaseController extends Controller
         // Ak nojora case details end
 
         $data['reviewpending'] = Casedb::where('districtID', $dkey, $dvalue)
-                                ->where('circleID', $ckey, $cvalue)
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                                 ->where('casesub_type', $casesubID_key, $casesubID)
@@ -962,7 +934,6 @@ class CaseController extends Controller
 
         $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                           ->where('districtID', $dkey, $dvalue)
-                          ->where('circleID', $ckey, $cvalue)
                           ->where('thanaID', $tkey, $tvalue)
                           ->where('status', 'active')
                           ->where('case_type', $caseTypeID_key, $caseTypeID)
@@ -970,6 +941,24 @@ class CaseController extends Controller
                           ->whereBetween('case_date', [$fvalue, $tovalue])
                           ->orderBy('id', 'desc')
                           ->paginate(20);
+                          
+
+          $totalcase = Casedb::where('districtID', $dkey, $dvalue)
+          ->where('thanaID', $tkey, $tvalue)
+          ->where('status', 'active')
+          ->where('case_type', $caseTypeID_key, $caseTypeID)
+          ->where('casesub_type', $casesubID_key, $casesubID)
+          ->whereBetween('case_date', ['1971-01-01 11:45:00', $tovalue])->count();
+    
+            $nispotticase = Casedb::where('districtID', $dkey, $dvalue)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('status', 'active')
+            ->where('case_type', $caseTypeID_key, $caseTypeID)
+            ->where('casesub_type', $casesubID_key, $casesubID)
+            ->whereBetween('case_date', ['1971-01-01 11:45:00', $tovalue])
+                            ->where('nispotti_or_multobi', 'নিস্পত্তি')->count();
+    
+            $data['casepending'] = $totalcase - $nispotticase;
 
         return view('admin/case/case-dashsc', $data);
     }
@@ -1010,6 +999,10 @@ class CaseController extends Controller
         } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $data['circledbs'] = Circle::where('district_id', auth()->user()->districtID)->get();
 
+            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
+
+            $data['spthanas'] = $spthana;
+
             $dkey = '=';
             $dvalue = auth()->user()->districtID;
 
@@ -1030,6 +1023,9 @@ class CaseController extends Controller
             }
         } else {
             $data['thanades'] = Thana::find(auth()->user()->thanaID);
+
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
             // oc
 
             $dkey = '=';
@@ -1095,7 +1091,6 @@ class CaseController extends Controller
         if ($request->filled('nispotti_type')) {
             $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                           ->where('districtID', $dkey, $dvalue)
-                          ->where('circleID', $ckey, $cvalue)
                           ->where('thanaID', $tkey, $tvalue)
                           ->where('status', 'active')
                           ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
@@ -1108,7 +1103,6 @@ class CaseController extends Controller
         } else {
             $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                            ->where('districtID', $dkey, $dvalue)
-                           ->where('circleID', $ckey, $cvalue)
                            ->where('thanaID', $tkey, $tvalue)
                            ->where('status', 'active')
                            ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
