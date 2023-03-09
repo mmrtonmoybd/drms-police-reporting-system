@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\DataTables\Qrr\QrrDatatables;
 use App\Exports\Qrr\QrrscExport;
 use App\Exports\Qrr\QrrsviewExport;
 use App\Http\Controllers\Controller;
 use App\Models\District;
-use App\Models\Qrr;
 //use Carbon\Carbon;
+use App\Models\Qrr;
 use App\Models\Thana;
 use DataTables;
 use Illuminate\Http\Request;
@@ -15,8 +16,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-
-use App\DataTables\Qrr\QrrDatatables;
 
 class QrrsController extends Controller
 {
@@ -56,7 +55,6 @@ class QrrsController extends Controller
 
         $data['disc'] = District::where('division_id', 1)->get();
         $mm = $data['disc'];
-
 
         $datatable = new QrrDatatables();
 

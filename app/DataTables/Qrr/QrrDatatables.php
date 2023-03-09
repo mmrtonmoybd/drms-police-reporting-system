@@ -3,17 +3,17 @@
 namespace App\DataTables\Qrr;
 
 use App\Models\Qrr;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Support\Str;
 
 class QrrDatatables extends DataTable
 {
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
+     * @param  mixed  $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
@@ -118,12 +118,12 @@ class QrrDatatables extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \Qrr $model
+     * @param  \Qrr  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Qrr $model)
     {
-         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
+        if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
             $tvalue = 'kkdk';
@@ -235,6 +235,6 @@ class QrrDatatables extends DataTable
      */
     protected function filename()
     {
-        return 'Qrr' . date('YmdHis');
+        return 'Qrr'.date('YmdHis');
     }
 }
