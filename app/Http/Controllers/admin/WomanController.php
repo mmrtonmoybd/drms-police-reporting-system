@@ -385,7 +385,7 @@ class WomanController extends Controller
             $nispottiwoman = Woman::where('status', 'active')->where('nreport', 'নিষ্পত্তি')->count();
 
             $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
-            
+
             $data['womanpending'] = $totalwoman - $nispottiwoman;
         }
 
@@ -441,13 +441,13 @@ class WomanController extends Controller
             $data['reviewpending'] = Woman::where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])
                                  ->where('status', 'inactive')->count();
 
-                                 $totalwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->count();
+            $totalwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->count();
 
-                                 $nispottiwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('nreport', 'নিষ্পত্তি')->count();
-                     
-                                 $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
-                                 
-                                 $data['womanpending'] = $totalwoman - $nispottiwoman;
+            $nispottiwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('nreport', 'নিষ্পত্তি')->count();
+
+            $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
+
+            $data['womanpending'] = $totalwoman - $nispottiwoman;
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -501,13 +501,13 @@ class WomanController extends Controller
             $data['reviewpending'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])
                                  ->where('status', 'inactive')->count();
 
-                                 $totalwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->count();
+            $totalwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->count();
 
-                                 $nispottiwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', 'নিষ্পত্তি')->count();
-                     
-                                 $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
-                                 
-                                 $data['womanpending'] = $totalwoman - $nispottiwoman;
+            $nispottiwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->where('nreport', 'নিষ্পত্তি')->count();
+
+            $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
+
+            $data['womanpending'] = $totalwoman - $nispottiwoman;
         }
 
         return view('admin/woman/womansc', $data);
@@ -666,22 +666,21 @@ class WomanController extends Controller
         ->whereBetween('wdate', [$fvalue, $tovalue])
                                  ->where('status', 'inactive')->count();
 
+            $totalwoman = Woman::where('districtID', $dkey, $dvalue)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('action_taken', $akey, $avalue)
+            ->where('status', 'active')
+            ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->count();
 
-                                 $totalwoman = Woman::where('districtID', $dkey, $dvalue)
-                                 ->where('thanaID', $tkey, $tvalue)
-                                 ->where('action_taken', $akey, $avalue)
-                                 ->where('status', 'active')
-                                 ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->count();
+            $nispottiwoman = Woman::where('districtID', $dkey, $dvalue)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('action_taken', $akey, $avalue)
+            ->where('status', 'active')
+            ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
 
-                                 $nispottiwoman = Woman::where('districtID', $dkey, $dvalue)
-                                 ->where('thanaID', $tkey, $tvalue)
-                                 ->where('action_taken', $akey, $avalue)
-                                 ->where('status', 'active')
-                                 ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->where('nreport', 'নিষ্পত্তি')->count();
-                     
-                                 $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
-                                 
-                                 $data['womanpending'] = $totalwoman - $nispottiwoman;
+            $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
+
+            $data['womanpending'] = $totalwoman - $nispottiwoman;
 
             //show data
 

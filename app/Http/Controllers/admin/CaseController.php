@@ -361,10 +361,9 @@ class CaseController extends Controller
 
            $request->session()->flash('diswisecase', $diswisecase);
        } elseif (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
+           $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
-        $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
-
-            $data['spthanas'] = $spthana;
+           $data['spthanas'] = $spthana;
            $dvalue = auth()->user()->districtID;
            $dkey = '=';
            $tvalue = 'kkdk';
@@ -381,9 +380,8 @@ class CaseController extends Controller
 
            $request->session()->flash('circlewise', $circlewise);
        } else {
-
-        $octhana = Thana::find(auth()->user()->thanaID);
-            $data['octhana'] = $octhana;
+           $octhana = Thana::find(auth()->user()->thanaID);
+           $data['octhana'] = $octhana;
            $dvalue = auth()->user()->districtID;
            $dkey = '=';
            $tvalue = auth()->user()->thanaID;
@@ -493,16 +491,16 @@ class CaseController extends Controller
                                 ->whereBetween('case_date', [$agomonthday, $currentday])
                                 ->where('status', 'inactive')->count();
 
-        $totalcase = Casedb::where('districtID', $dkey, $dvalue)
-                      ->where('thanaID', $tkey, $tvalue)
-                      ->where('status', 'active')->count();
+       $totalcase = Casedb::where('districtID', $dkey, $dvalue)
+                     ->where('thanaID', $tkey, $tvalue)
+                     ->where('status', 'active')->count();
 
-        $nispotticase = Casedb::where('districtID', $dkey, $dvalue)
-                        ->where('thanaID', $tkey, $tvalue)
-                        ->where('status', 'active')
-                        ->where('nispotti_or_multobi', 'নিস্পত্তি')->count();
+       $nispotticase = Casedb::where('districtID', $dkey, $dvalue)
+                       ->where('thanaID', $tkey, $tvalue)
+                       ->where('status', 'active')
+                       ->where('nispotti_or_multobi', 'নিস্পত্তি')->count();
 
-        $data['casepending'] = $totalcase - $nispotticase;
+       $data['casepending'] = $totalcase - $nispotticase;
 
        //dd($lastthreemonthcase);
 
@@ -546,7 +544,7 @@ class CaseController extends Controller
             $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
 
             $data['spthanas'] = $spthana;
-           $dvalue = auth()->user()->districtID;
+            $dvalue = auth()->user()->districtID;
 
             $dkey = '=';
             $dvalue = auth()->user()->districtID;
@@ -691,7 +689,7 @@ class CaseController extends Controller
                                   ->get();
 
                 $request->session()->flash('circlewisecase', $circlewisecase);
-            } elseif ( ! empty($request->input('thanaID'))) {
+            } elseif (! empty($request->input('thanaID'))) {
                 // Search thana case
                 $searchthanacase = Casedb::with('thana')->selectRaw('COUNT(case_no) AS countcase, thanaID')
                                ->whereNotNull('case_no')
@@ -941,24 +939,23 @@ class CaseController extends Controller
                           ->whereBetween('case_date', [$fvalue, $tovalue])
                           ->orderBy('id', 'desc')
                           ->paginate(20);
-                          
 
-          $totalcase = Casedb::where('districtID', $dkey, $dvalue)
-          ->where('thanaID', $tkey, $tvalue)
-          ->where('status', 'active')
-          ->where('case_type', $caseTypeID_key, $caseTypeID)
-          ->where('casesub_type', $casesubID_key, $casesubID)
-          ->whereBetween('case_date', ['1971-01-01 11:45:00', $tovalue])->count();
-    
-            $nispotticase = Casedb::where('districtID', $dkey, $dvalue)
-            ->where('thanaID', $tkey, $tvalue)
-            ->where('status', 'active')
-            ->where('case_type', $caseTypeID_key, $caseTypeID)
-            ->where('casesub_type', $casesubID_key, $casesubID)
-            ->whereBetween('case_date', ['1971-01-01 11:45:00', $tovalue])
-                            ->where('nispotti_or_multobi', 'নিস্পত্তি')->count();
-    
-            $data['casepending'] = $totalcase - $nispotticase;
+        $totalcase = Casedb::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
+        ->where('case_type', $caseTypeID_key, $caseTypeID)
+        ->where('casesub_type', $casesubID_key, $casesubID)
+        ->whereBetween('case_date', ['1971-01-01 11:45:00', $tovalue])->count();
+
+        $nispotticase = Casedb::where('districtID', $dkey, $dvalue)
+        ->where('thanaID', $tkey, $tvalue)
+        ->where('status', 'active')
+        ->where('case_type', $caseTypeID_key, $caseTypeID)
+        ->where('casesub_type', $casesubID_key, $casesubID)
+        ->whereBetween('case_date', ['1971-01-01 11:45:00', $tovalue])
+                        ->where('nispotti_or_multobi', 'নিস্পত্তি')->count();
+
+        $data['casepending'] = $totalcase - $nispotticase;
 
         return view('admin/case/case-dashsc', $data);
     }
