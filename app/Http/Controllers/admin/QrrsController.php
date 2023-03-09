@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
+use App\DataTables\Qrr\QrrDatatables;
+
 class QrrsController extends Controller
 {
     public function __construct()
@@ -55,7 +57,12 @@ class QrrsController extends Controller
         $data['disc'] = District::where('division_id', 1)->get();
         $mm = $data['disc'];
 
-        return view('admin/qrr/qrrs', $data);
+
+        $datatable = new QrrDatatables();
+
+        return $datatable->render('admin/qrr/qrrs');
+
+        //return view('admin/qrr/qrrs', $data);
     }
 
     public function qrrinajax(Request $request)

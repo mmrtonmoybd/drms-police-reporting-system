@@ -39,53 +39,7 @@ use Illuminate\Support\Str;
       
 											
 											</div>
-                                        <table class="table table-bordered table-responsive table-responsive table-striped table-centered mb-0 yajra-datatable" style="width: 100% !important;">
-
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 86px">Action</th>
-                                                    <th > রেফারেন্স নং </th>
-                                                    <th > জেলা </th>
-                                                    <th > থানা </th>
-                                                    <th > গ্রাম/ওয়ার্ড </th>
-                                                    <th > তথ্য প্রাপ্তির উৎস </th>
-                                                    <th > ঘটনার তারিখ ও সময় </th>
-                                                    <th > পুলিশের সংবাদ প্রাপ্তির তারিখ ও সময় </th>
-                                                    <th > রেসপন্সের তারিখ ও সময় </th>
-                                                    <th > রেসপন্সে বিলম্ব  </th>
-                                                    <!-------------
-                                                    <th > মূল ঘটনা</th>
-                                                    -->
-                                                    <th > ঘটনার ধরণ </th>
-                                                    <th > ঘটনার সূত্রপাত </th>
-                                                    <th>  ঘটনার সংক্ষিপ্ত বিবরন</th>
-                                                    <th>  গৃহীত ব্যবস্থা</th>
-                                                    <th > জিডি নং </th>
-                                                    <th > তারিখ </th>
-                                                    <th > মামলা নং </th>
-                                                    <th > তারিখ </th>
-                                                    <th style="width:100px;"> ধারা </th>
-                                                    <th > বাদীর/ সংবাদদাতার নাম </th>
-                                                    <th > বাদীর মোবাইল নং </th>
-                                                    <th > ভিকটিমের সংখ্যা </th>
-                                                    <th > এজাহারভুক্ত আসামীর সংখ্যা </th>
-                                                    <th > রেসপন্সকারী/ তদন্তকারী কর্মকর্তার নাম </th>
-                                                    <th > বিপি নং </th>
-                                                    <th > মোবাইল নং </th>
-                                                    <th > ছবি/ভিডিও প্রাপ্তি  </th>
-                                                    <th > সন্তুষ্টির মান </th>
-                                                    <th > মন্তব্য </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                             
-
-
-                                            
-
-                                            </tbody>
-                                        </table>
+                                            {!! $dataTable->table(['class' => 'table table-responsive table-bordered table-striped table-centered mb-0'], true) !!}
                                     </div>
                                 </div>
                             </div>
@@ -93,61 +47,11 @@ use Illuminate\Support\Str;
                         
 
 
-@push('scripts')
-
-<script type="text/javascript">
-  $(function () {
-    
-    var table = $('.yajra-datatable').DataTable({
-        order: [ [1, 'desc'] ],
-        processing: true,
-        serverSide: true,
-        ajax: "{!! url('/admin/qrrs/index/ajax') !!}",
-        columns: [
-            {
-                data: 'action', 
-                name: 'action', 
-                orderable: false, 
-                searchable: false
-            },
-            {data: 'id', orderable: true},
-            {defaultContent: '', data: 'district.bn_name', searchable: true, orderable: false},
-            {defaultContent: '', data: 'thana.name', searchable: true, orderable: false},
-            {defaultContent: '', data: 'village_word', searchable: true, orderable: false},
-            {defaultContent: '', data: 'source_of_info', searchable: true, orderable: false},
-            {defaultContent: '', data: 'date_time_of_incident', searchable: true, orderable: true},
-            {defaultContent: '', data: 'date_time_of_police_news', searchable: true, orderable: true},
-            {defaultContent: '', data: 'date_time_response', searchable: true, orderable: true},
-            {defaultContent: '', data: 'delay_in_response', searchable: true, orderable: true},
-            
-          //  {defaultContent: '', data: 'main_event', searchable: true, orderable: false},
-            
-            {defaultContent: '', data: 'event_type', searchable: true, orderable: false},
-            {defaultContent: '', data: 'begening_of_event', searchable: true, orderable: false},
-            {defaultContent: '', data: 'short_dettails', searchable: false, orderable: false},
-            {defaultContent: '', data: 'action_taken', searchable: true, orderable: false},
-            {defaultContent: '', data: 'gd_no', searchable: true, orderable: true},
-            {defaultContent: '', data: 'gd_date', searchable: true, orderable: true},
-            {defaultContent: '', data: 'case_no', searchable: true, orderable: true},
-            {defaultContent: '', data: 'case_date', searchable: true, orderable: true},
-            {defaultContent: '', data: 'clause', searchable: true, orderable: false},
-            {defaultContent: '', data: 'nopc', searchable: true, orderable: false},
-            {defaultContent: '', data: 'plaintiff_mobile', searchable: true, orderable: false},
-            {defaultContent: '', data: 'number_of_victims', searchable: true, orderable: true},
-            {defaultContent: '', data: 'number_of_accused', searchable: true, orderable: true},
-            {defaultContent: '', data: 'name_of_investigator', searchable: true, orderable: false},
-            {defaultContent: '', data: 'bp_no', searchable: true, orderable: true},
-            {defaultContent: '', data: 'mobile_no', searchable: true, orderable: false},
-            {defaultContent: '', data: 'image_video', searchable: false, orderable: false},
-            {defaultContent: '', data: 'media_quality', searchable: false, orderable: false},
-            {defaultContent: '', data: 'comments', searchable: false, orderable: false},
-        ]
-    });
-    
-  });
-</script>
-
-@endpush   
-
+                        @push('scripts')
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+<script src="/vendor/datatables/buttons.server-side.js"></script>
+{!! $dataTable->scripts() !!}
+@endpush       
                      
 <x-admin-footer/>
