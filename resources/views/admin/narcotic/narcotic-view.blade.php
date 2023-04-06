@@ -427,7 +427,7 @@
                         চোলাই মদ (লিটার): 
                      </div>
                      <div class="col-sm-3">
-                        {{$nar->cholai_alcohol}} 
+                        {{(int) $nar->cholai_alcohol / 1000}} 
                      </div>
                                               @endif	                        	
                      @if($nar->bidesh_alcohol != '') 
@@ -437,7 +437,7 @@
                         বিদেশী মদ (লিটার):
                      </div>
                      <div class="col-sm-3">
-                        {{$nar->bidesh_alcohol}} 
+                        {{(int) $nar->bidesh_alcohol / 1000}} 
                      </div>
                                               @endif	                        	
                      @if($nar->lsd != '') 

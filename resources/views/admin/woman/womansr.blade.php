@@ -92,10 +92,11 @@
                                                     <label for="action_taken" class="form-label"></label>
                                                     <select name="action_taken" id="action_taken" class="droparrow form-select form-control stylish" >
                                                         <option value="">   গৃহীত ব্যবস্থা  </option>
-                                                        <option value="অভিযোগ গ্রহণ">অভিযোগ  গ্রহণ</option>
-                                                        <option value="স্থানীয় পর্যায়ে মীমাংসা">স্থানীয়  পর্যায়ে মীমাংসা</option>
-                                                        <option value="মামলা">মামলা</option>
-                                                        <option value="জিডি">জিডি</option> 
+                                                        <option value="অভিযোগ গ্রহণ" {{ request('action_taken') =='অভিযোগ গ্রহণ' ? 'selected' : '' }}>অভিযোগ  গ্রহণ</option>
+                                                        <option value="স্থানীয় পর্যায়ে মীমাংসা" {{ request('action_taken') =='স্থানীয় পর্যায়ে মীমাংসা' ? 'selected' : '' }}>স্থানীয়  পর্যায়ে মীমাংসা</option>
+                                                        <option value="মামলা" {{ request('action_taken') =='মামলা' ? 'selected' : '' }}>মামলা</option>
+                                                        <option value="আইনগত পরামর্শ" {{ request('action_taken') =='আইনগত পরামর্শ' ? 'selected' : '' }}>আইনগত পরামর্শ</option>
+                                                        <option value="জিডি" {{ request('action_taken') =='জিডি' ? 'selected' : '' }}>জিডি</option> 
                                                     </select>
                                                     
                                                 </div>

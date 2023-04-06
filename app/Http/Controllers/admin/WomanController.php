@@ -353,7 +353,7 @@ class WomanController extends Controller
 
             // Number of satisfy rate start
 
-            $satisfyrate = Woman::selectRaw('COUNT(id) AS satisfyrate, satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->where('status', 'active')->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $satisfyrate = Woman::selectRaw('COUNT(id) AS satisfyrate, satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->where('status', 'active')->whereNotNull('satisfy_rate')->where('satisfy_rate', '!=', '')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
             $request->session()->flash('satisfyrate', $satisfyrate);
             // Number of satisfy rate end
 
@@ -377,8 +377,7 @@ class WomanController extends Controller
             $data['totalfidback'] = Woman::whereNotNull('satisfy_rate')->where('status', 'active')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // Fidback taken
 
-            $data['reviewpending'] = Woman::whereBetween('wdate', [$agomonthday, $currentday])
-                                 ->where('status', 'inactive')->count();
+            $data['reviewpending'] = Woman::where('status', 'inactive')->count();
 
             $totalwoman = Woman::where('status', 'active')->count();
 
@@ -414,7 +413,7 @@ class WomanController extends Controller
 
             // Number of satisfy rate start
 
-            $satisfyrate = Woman::selectRaw('COUNT(id) AS satisfyrate, satisfy_rate')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $satisfyrate = Woman::selectRaw('COUNT(id) AS satisfyrate, satisfy_rate')->where('status', 'active')->where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->where('satisfy_rate', '!=', '')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
             $request->session()->flash('satisfyrate', $satisfyrate);
             // Number of satisfy rate end
 
@@ -438,8 +437,7 @@ class WomanController extends Controller
             $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)->where('status', 'active')->whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // Fidback taken
 
-            $data['reviewpending'] = Woman::where('districtID', auth()->user()->districtID)->whereBetween('wdate', [$agomonthday, $currentday])
-                                 ->where('status', 'inactive')->count();
+            $data['reviewpending'] = Woman::where('districtID', auth()->user()->districtID)->where('status', 'inactive')->count();
 
             $totalwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->count();
 
@@ -474,7 +472,7 @@ class WomanController extends Controller
 
             // Number of satisfy rate start
 
-            $satisfyrate = Woman::selectRaw('COUNT(id) AS satisfyrate, satisfy_rate')->where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            $satisfyrate = Woman::selectRaw('COUNT(id) AS satisfyrate, satisfy_rate')->where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])->whereNotNull('satisfy_rate')->where('satisfy_rate', '!=', '')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
             $request->session()->flash('satisfyrate', $satisfyrate);
             // Number of satisfy rate end
 
@@ -498,7 +496,7 @@ class WomanController extends Controller
             $data['totalfidback'] = Woman::where('districtID', auth()->user()->districtID)->where('status', 'active')->where('thanaID', auth()->user()->thanaID)->whereNotNull('satisfy_rate')->whereBetween('wdate', [$agomonthday, $currentday])->count();
             // Fidback taken
 
-            $data['reviewpending'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->whereBetween('wdate', [$agomonthday, $currentday])
+            $data['reviewpending'] = Woman::where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)
                                  ->where('status', 'inactive')->count();
 
             $totalwoman = Woman::where('status', 'active')->where('districtID', auth()->user()->districtID)->where('thanaID', auth()->user()->thanaID)->count();
@@ -618,7 +616,7 @@ class WomanController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('status', 'active')
         ->where('action_taken', $akey, $avalue)
-            ->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            ->whereNotNull('satisfy_rate')->where('satisfy_rate', '!=', '')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
             $request->session()->flash('satisfyrate', $satisfyrate);
             // Number of satisfy rate end
 
@@ -663,7 +661,6 @@ class WomanController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('action_taken', $akey, $avalue)
         ->where('status', 'active')
-        ->whereBetween('wdate', [$fvalue, $tovalue])
                                  ->where('status', 'inactive')->count();
 
             $totalwoman = Woman::where('districtID', $dkey, $dvalue)
@@ -736,7 +733,7 @@ class WomanController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('status', 'active')
         ->where('action_taken', $akey, $avalue)
-            ->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            ->whereNotNull('satisfy_rate')->where('satisfy_rate', '!=', '')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
             $request->session()->flash('satisfyrate', $satisfyrate);
             // Number of satisfy rate end
 
@@ -781,7 +778,6 @@ class WomanController extends Controller
         ->where('thanaID', $tkey, $tvalue)
         ->where('status', 'active')
         ->where('action_taken', $akey, $avalue)
-        ->whereBetween('wdate', [$fvalue, $tovalue])
                                  ->where('status', 'inactive')->count();
 
             //show data
@@ -837,7 +833,7 @@ class WomanController extends Controller
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
         ->where('status', 'active')
-            ->whereNotNull('satisfy_rate')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
+            ->whereNotNull('satisfy_rate')->where('satisfy_rate', '!=', '')->groupBy('satisfy_rate')->orderBy('satisfy_rate', 'ASC')->get();
             $request->session()->flash('satisfyrate', $satisfyrate);
             // Number of satisfy rate end
 
@@ -882,7 +878,6 @@ class WomanController extends Controller
         ->where('thanaID', auth()->user()->thanaID)
         ->where('action_taken', $akey, $avalue)
         ->where('status', 'active')
-        ->whereBetween('wdate', [$fvalue, $tovalue])
                                  ->where('status', 'inactive')->count();
 
             //show data

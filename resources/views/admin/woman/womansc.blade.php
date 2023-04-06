@@ -83,6 +83,7 @@
                                                         <option value="অভিযোগ গ্রহণ">অভিযোগ  গ্রহণ</option>
                                                         <option value="স্থানীয় পর্যায়ে মীমাংসা">স্থানীয়  পর্যায়ে মীমাংসা</option>
                                                         <option value="মামলা">মামলা</option>
+                                                        <option value="আইনগত পরামর্শ">আইনগত পরামর্শ</option>
                                                         <option value="জিডি">জিডি</option> 
                                                     </select>
                                                     
@@ -172,8 +173,8 @@
                             <div class="card-body "><i class="i-Add-User"></i>
                           
 								<div class="content" >
-                                    <p class="text-muted mt-2 mb-0"> Total পেন্ডিং </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$womanpending . '(' . $pendingpercen . '%)'}}</p>
+                                    <p class="text-muted mt-2 mb-0"> পেন্ডিং </p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$womanpending}}</p>
                                 </div>
 
 

@@ -432,7 +432,8 @@ font-size: 21px;"> QRR সংক্রান্ত তথ্যাদি ইন�
                                                         <option value="মাদক">মাদক</option>
                                                         <option value="সাইবার">সাইবার</option>
                                                         <option value="প্রতারণা">প্রতারণা</option>
-                                                        <option value="রাজনৈতিক">দুর্ঘটনা</option>
+                                                        <option value="দুর্ঘটনা">দুর্ঘটনা</option>
+                                                        <option value="বাল্য বিবাহ">বাল্য বিবাহ</option>
                                                         <option value="অন্যান্য">অন্যান্য</option>
                                                     </select>
                                                     
@@ -647,7 +648,7 @@ function myFunction() {
                                             <div class="col-sm-4">
                                                 <div class="mb-3">
                                                     <label for="nopc" class="form-label"> বাদীর/ সংবাদদাতার নাম </label>
-                                                    <input type="text" name="nopc"  value="{{old('nopc')}}" id="nopc" class="form-control  @error('nopc') is-invalid @enderror" placeholder="বাদীর/ সংবাদদাতার নাম ">
+                                                    <input type="text" name="nopc"  value="{{old('nopc')}}" id="nopc" class="form-control  @error('nopc') is-invalid @enderror" placeholder="বাদীর/ সংবাদদাতার নাম " required>
                                                 </div>
                                             </div>
       

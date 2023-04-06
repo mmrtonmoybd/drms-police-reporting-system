@@ -706,17 +706,17 @@ var checkBoxovi = document.getElementById("myCheckovi");
                                    
 
                                          
-                                             <div class="col-sm-4" id="mim" style="display:none">
+                                            <div class="col-sm-4" id="mim" style="display:none">
                                                 <div class="mb-3">
-                                                    <label for="cholai_alcohol" class="form-label"> চোলাই মদ (লিটার)   </label>
-                                                    <input type="number"  min="0"  name="cholai_alcohol"  value="{{old('cholai_alcohol')}}" id="cholai_alcohol" class="number form-control  @error('cholai_alcohol') is-invalid @enderror" placeholder=" চোলাই মদ (লিটার) ">
+                                                    <label for="cholai_alcohol" class="form-label"> চোলাই মদ (মিলিলিটার)   </label>
+                                                    <input type="number"  min="0"  name="cholai_alcohol"  value="{{old('cholai_alcohol')}}" id="cholai_alcohol" class="number form-control  @error('cholai_alcohol') is-invalid @enderror" placeholder=" চোলাই মদ (মিলিলিটার) ">
                                                 </div>
                                             </div>
 
                                              <div class="col-sm-4" id="mim2" style="display:none">
                                                 <div class="mb-3">
-                                                    <label for="bidesh_alcohol" class="form-label"> বিদেশী মদ (লিটার)   </label>
-                                                    <input type="number"  min="0"  name="bidesh_alcohol"  value="{{old('bidesh_alcohol')}}" id="bidesh_alcohol" class="number form-control  @error('bidesh_alcohol') is-invalid @enderror" placeholder=" বিদেশী মদ (লিটার) ">
+                                                    <label for="bidesh_alcohol" class="form-label"> বিদেশী মদ (মিলিলিটার)   </label>
+                                                    <input type="number"  min="0"  name="bidesh_alcohol"  value="{{old('bidesh_alcohol')}}" id="bidesh_alcohol" class="number form-control  @error('bidesh_alcohol') is-invalid @enderror" placeholder=" বিদেশী মদ (মিলিলিটার) ">
                                                 </div>
                                             </div>
 

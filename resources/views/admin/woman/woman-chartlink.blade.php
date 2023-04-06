@@ -92,12 +92,13 @@
            <div class="col-sm-2">
                                                 <div class="mb-3">
                                                     <label for="action_taken" class="form-label"></label>
-                                                    <select name="action_taken" id="action_taken" class="form-select form-control stylish" >
+                                                    <select name="action_taken" id="action_taken" class="droparrow form-select form-control stylish" >
                                                         <option value="">   গৃহীত ব্যবস্থা  </option>
-                                                        <option value="অভিযোগ গ্রহন" {{ ( request()->input('action_taken') == 'অভিযোগ গ্রহন') ? 'selected' : '' }}>অভিযোগ গ্রহন</option>
-                                                        <option value="স্থানীয় মীমাংসা" {{ ( request()->input('action_taken') == 'অভিযোগ গ্রহন') ? 'selected' : '' }}>স্থানীয় মীমাংসা</option>
-                                                        <option value="মামলা" {{ ( request()->input('action_taken') == 'মামলা') ? 'selected' : '' }}>মামলা</option>
-                                                        <option value="জিডি" {{ ( request()->input('action_taken') == 'জিডি') ? 'selected' : '' }}>জিডি</option>
+                                                        <option value="অভিযোগ গ্রহণ" {{ request('action_taken') =='অভিযোগ গ্রহণ' ? 'selected' : '' }}>অভিযোগ  গ্রহণ</option>
+                                                        <option value="স্থানীয় পর্যায়ে মীমাংসা" {{ request('action_taken') =='স্থানীয় পর্যায়ে মীমাংসা' ? 'selected' : '' }}>স্থানীয়  পর্যায়ে মীমাংসা</option>
+                                                        <option value="মামলা" {{ request('action_taken') =='মামলা' ? 'selected' : '' }}>মামলা</option>
+                                                        <option value="আইনগত পরামর্শ" {{ request('action_taken') =='আইনগত পরামর্শ' ? 'selected' : '' }}>আইনগত পরামর্শ</option>
+                                                        <option value="জিডি" {{ request('action_taken') =='জিডি' ? 'selected' : '' }}>জিডি</option> 
                                                     </select>
                                                     
                                                 </div>

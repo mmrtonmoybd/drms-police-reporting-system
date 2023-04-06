@@ -1052,6 +1052,9 @@ class NarcotiscController extends Controller
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
             $data['request'] = $request;
 
+            $octhana = Thana::find(auth()->user()->thanaID);
+            $data['octhana'] = $octhana;
+
             $data['narcotics2'] = Narcotic::with(['district', 'thana'])->where('thanaID', auth()->user()->thanaID)->whereIn('name_of_investigator_org', $svalue)
             ->whereBetween('sdate', [$fvalue, $tovalue])->where('status', 'active')->orderBy('id', 'desc')->paginate(20);
         }

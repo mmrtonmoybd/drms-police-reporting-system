@@ -63,8 +63,8 @@ body{
                                                     </tr>
                                                     <tr>
                                                         <td> <b> ফেনসিডিল (বোতল): </b> {{$nar->fansdel}}</td>
-                                                        <td> <b>চোলাই মদ (লিটার): </b> {{$nar->cholai_alcohol}}</td>
-                                                        <td>  <b>  বিদেশী মদ (লিটার) : {{$nar->bidesh_alcohol}}</b>  </td>
+                                                        <td> <b>চোলাই মদ (লিটার): </b> {{(int) $nar->cholai_alcohol / 1000}}</td>
+                                                        <td>  <b>  বিদেশী মদ (লিটার) : {{(int) $nar->bidesh_alcohol / 1000}}</b>  </td>
                                                     </tr>
                                                     <tr>
                                                         <td> <b>  এলএসডি (মাইক্রোগ্রাম): </b> {{$nar->lsd}}</td>

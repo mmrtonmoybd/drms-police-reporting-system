@@ -68,6 +68,12 @@ class NarcoticDataTable extends DataTable
             })
             ->editColumn('tdate', function ($raw) {
                 return (! empty($raw->tdate)) ? date('d/m/Y', strtotime($raw->tdate)) : '';
+            })
+            ->editColumn('cholai_alcohol', function ($raw) {
+                return (int) $raw->cholai_alcohol / 1000;
+            })
+            ->editColumn('bidesh_alcohol', function ($raw) {
+                return (int) $raw->bidesh_alcohol / 1000;
             });
     }
 

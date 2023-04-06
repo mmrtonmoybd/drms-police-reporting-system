@@ -128,8 +128,8 @@
                                                     <td >{{$narcotic->yabac}}</td>
                                                     <td >{{$narcotic->heroinec}}</td>
                                                     <td >{{$narcotic->fansdelc}}</td>
-                                                    <td >{{$narcotic->cholai_alcoholc}}</td>
-                                                    <td >{{$narcotic->bidesh_alcoholc}}</td>
+                                                    <td >{{(int) $narcotic->cholai_alcoholc / 1000}}</td>
+                                                    <td >{{(int) $narcotic->bidesh_alcoholc / 1000}}</td>
                                                     <td >{{$narcotic->lsdc}}</td>
                                                     <td >{{$narcotic->icec}}</td>
                                                     <td >{{$narcotic->otherdc}}</td>
@@ -144,8 +144,8 @@
                                                     <td >{{$gtyaba1}}</td>
                                                     <td >{{$gtheroine1}}</td>
                                                     <td >{{$gtfansdel1}}</td>
-                                                    <td >{{$gtcholai_alcohol1}}</td>
-                                                    <td >{{$gtbidesh_alcohol1}}</td>
+                                                    <td >{{(int) $gtcholai_alcohol1 / 1000}}</td>
+                                                    <td >{{(int) $gtbidesh_alcohol1 / 1000}}</td>
                                                     <td >{{$gtlsd1}}</td>
                                                     <td >{{$gtice1}}</td>
                                                     <td >{{$gtotherd1}}</td>
@@ -197,8 +197,8 @@
                                                     <td >{{$narcotic->yabac}}</td>
                                                     <td >{{$narcotic->heroinec}}</td>
                                                     <td >{{$narcotic->fansdelc}}</td>
-                                                    <td >{{$narcotic->cholai_alcoholc}}</td>
-                                                    <td >{{$narcotic->bidesh_alcoholc}}</td>
+                                                    <td >{{(int) $narcotic->cholai_alcoholc / 1000}}</td>
+                                                    <td >{{(int) $narcotic->bidesh_alcoholc / 1000}}</td>
                                                     <td >{{$narcotic->lsdc}}</td>
                                                     <td >{{$narcotic->icec}}</td>
                                                     <td >{{$narcotic->otherdc}}</td>
@@ -212,8 +212,8 @@
                                                     <td >{{$gtyaba2}}</td>
                                                     <td >{{$gtheroine2}}</td>
                                                     <td >{{$gtfansdel2}}</td>
-                                                    <td >{{$gtcholai_alcohol2}}</td>
-                                                    <td >{{$gtbidesh_alcohol2}}</td>
+                                                    <td >{{(int) $gtcholai_alcohol2 / 1000}}</td>
+                                                    <td >{{(int) $gtbidesh_alcohol2 / 1000}}</td>
                                                     <td >{{$gtlsd2}}</td>
                                                     <td >{{$gtice2}}</td>
                                                     <td >{{$gtotherd2}}</td>
@@ -306,8 +306,8 @@
                                                     <td > {{$nar->yaba}}</td>
                                                     <td > {{$nar->heroine}}</td>
                                                     <td > {{$nar->fansdel}}</td>
-                                                    <td > {{$nar->cholai_alcohol}}</td>
-                                                    <td > {{$nar->bidesh_alcohol}}</td>
+                                                    <td > {{(int) $nar->cholai_alcohol / 1000}}</td>
+                                                    <td > {{(int) $nar->bidesh_alcohol / 1000}}</td>
                                                     <td > {{$nar->lsd}}</td>
                                                     <td > {{$nar->ice}}</td>
                                                     <td > {{$nar->otherd}}</td>

@@ -488,7 +488,6 @@ class CaseController extends Controller
 
        $data['reviewpending'] = Casedb::where('districtID', $dkey, $dvalue)
                                 ->where('thanaID', $tkey, $tvalue)
-                                ->whereBetween('case_date', [$agomonthday, $currentday])
                                 ->where('status', 'inactive')->count();
 
        $totalcase = Casedb::where('districtID', $dkey, $dvalue)
@@ -925,7 +924,6 @@ class CaseController extends Controller
                                 ->where('thanaID', $tkey, $tvalue)
                                 ->where('case_type', $caseTypeID_key, $caseTypeID)
                                 ->where('casesub_type', $casesubID_key, $casesubID)
-                                ->whereBetween('case_date', [$fvalue, $tovalue])
                                  ->where('status', 'inactive')->count();
 
         //dd($lastthreemonthcase);

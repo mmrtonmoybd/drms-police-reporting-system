@@ -235,8 +235,8 @@
                                                     <td > {{$nar->yaba}}</td>
                                                     <td > {{$nar->heroine}}</td>
                                                     <td > {{$nar->fansdel}}</td>
-                                                    <td > {{$nar->cholai_alcohol}}</td>
-                                                    <td > {{$nar->bidesh_alcohol}}</td>
+                                                    <td > {{(int) $nar->cholai_alcohol / 1000}}</td>
+                                                    <td > {{(int) $nar->bidesh_alcohol / 1000}}</td>
                                                     <td > {{$nar->lsd}}</td>
                                                     <td > {{$nar->ice}}</td>
                                                     <td > {{$nar->otherd}}</td>

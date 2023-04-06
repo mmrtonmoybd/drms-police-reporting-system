@@ -345,17 +345,6 @@ transform: scale(1.1);
                     </div>
 
                     @endcan
-
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                            <div class="card-body text-center"><!------- <i class="i-Start"></i>   --------->
-                                <div class="content" style="max-width: 100%;">
-                                    <p class="text-muted mt-2 mb-0">Total case pending</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$casepending}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 					
 
                     <div class="col-lg-2 col-md-6 col-sm-6">
@@ -363,7 +352,7 @@ transform: scale(1.1);
                             <div class="card-body text-center"><!------- <i class="i-Start"></i>   --------->
                                 <div class="content" style="max-width: 100%;">
                                     <p class="text-muted mt-2 mb-0">মোট মুলতবি</p>
-                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$totalmultobicase}}</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2"> {{$casepending}}</p>
                                 </div>
                             </div>
                         </div>
