@@ -191,7 +191,7 @@
                           
 								<div class="content" >
                                     <p class="text-muted mt-2 mb-0"> Total পেন্ডিং </p>
-                                    <p class="text-primary text-24 line-height-1 mb-2">{{$womanpending . '(' . $pendingpercen . '%)'}}</p>
+                                    <p class="text-primary text-24 line-height-1 mb-2">{{$womanpending}}</p>
                                 </div>
 
 
