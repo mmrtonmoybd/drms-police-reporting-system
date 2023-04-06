@@ -329,7 +329,7 @@ z-index: 20000;
                       
 
                      	<div class="namefield" style="">
-					  <span style="font-weight:bold; font-size:13px;"> {{auth()->user()->name}} </span> <br>{{auth()->user()->type}}
+					  <span style="font-weight:bold; font-size:13px;"> {{auth()->user()->name}} </span> <br>{{auth()->user()->designation}}
 					  
 						    </a>
 						   
