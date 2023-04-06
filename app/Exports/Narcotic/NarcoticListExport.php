@@ -108,7 +108,7 @@ class NarcoticListExport implements FromCollection, WithMapping, WithHeadings
             $nar->yaba,
             $nar->heroine,
             $nar->fansdel,
-            (int)  $nar->cholai_alcohol / 1000,
+            (int) $nar->cholai_alcohol / 1000,
             (int) $nar->bidesh_alcohol / 1000,
             $nar->lsd,
             $nar->ice,
