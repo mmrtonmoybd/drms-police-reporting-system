@@ -788,11 +788,11 @@ class WomanController extends Controller
         ->where('status', 'active')
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
 
-        $totalwoman = Woman::where('districtID', auth()->user()->districtID)
-        ->where('thanaID', $tkey, $tvalue)
-        ->where('action_taken', $akey, $avalue)
-        ->where('status', 'active')
-            ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->count();
+            $totalwoman = Woman::where('districtID', auth()->user()->districtID)
+            ->where('thanaID', $tkey, $tvalue)
+            ->where('action_taken', $akey, $avalue)
+            ->where('status', 'active')
+                ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->count();
 
             $nispottiwoman = Woman::where('districtID', auth()->user()->districtID)
             ->where('thanaID', $tkey, $tvalue)
@@ -803,8 +803,6 @@ class WomanController extends Controller
             $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
 
             $data['womanpending'] = $totalwoman - $nispottiwoman;
-
-
         }
 
         if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
@@ -906,11 +904,11 @@ class WomanController extends Controller
         ->where('status', 'active')
         ->whereBetween('wdate', [$fvalue, $tovalue])->paginate(20);
 
-        $totalwoman = Woman::where('districtID', auth()->user()->districtID)
-        ->where('thanaID', auth()->user()->thanaID)
-        ->where('action_taken', $akey, $avalue)
-        ->where('status', 'active')
-            ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->count();
+            $totalwoman = Woman::where('districtID', auth()->user()->districtID)
+            ->where('thanaID', auth()->user()->thanaID)
+            ->where('action_taken', $akey, $avalue)
+            ->where('status', 'active')
+                ->whereBetween('wdate', ['1971-01-01 11:45:00', $tovalue])->count();
 
             $nispottiwoman = Woman::where('districtID', auth()->user()->districtID)
             ->where('thanaID', auth()->user()->thanaID)
@@ -921,8 +919,6 @@ class WomanController extends Controller
             $data['pendingpercen'] = round(($nispottiwoman / $totalwoman) * 100, 2);
 
             $data['womanpending'] = $totalwoman - $nispottiwoman;
-
-
         }
 
         return view('admin/woman/womansr', $data);
