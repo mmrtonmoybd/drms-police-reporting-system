@@ -195,11 +195,15 @@
 
 
 
+@php 
+$currentdate = \Carbon\Carbon::now()->format('Y-m-d');
+@endphp
 <script>
 $(function() {
     $( ".datepicker" ).datepicker({   format: 'mm-dd-yyyy',
-        endDate: '+0d',
+        
         format: 'dd/mm/yyyy',
+        endDate: new Date('{{ $currentdate }}'),
         autoclose: true });
   }
   );
@@ -207,8 +211,9 @@ $(function() {
 
 $(function() {
     $( ".searchdatepick" ).datepicker({   format: 'yyyy-mm-dd',
-        endDate: '+0d',
+        
         format: 'yyyy/mm/dd',
+        endDate: new Date('{{ $currentdate }}'),
         autoclose: true });
   }
   );
