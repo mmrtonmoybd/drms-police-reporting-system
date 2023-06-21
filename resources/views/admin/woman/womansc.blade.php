@@ -1,5 +1,6 @@
 
 			<x-admin-header/>
+            <x-admin-validation-errors :errors="$errors->all()"/>
 			
 			<!-- ============ Body content start ============= -->
 			

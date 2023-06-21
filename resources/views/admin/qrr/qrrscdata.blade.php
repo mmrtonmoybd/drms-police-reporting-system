@@ -1,5 +1,6 @@
 
 			<x-admin-header/>
+            <x-admin-validation-errors :errors="$errors->all()"/>
 			
 			<!-- ============ Body content start ============= -->
 			
@@ -174,7 +175,6 @@
 
 
 
-
 <div class="row">
   <div class="card card-body table-responsive">
 
@@ -186,6 +186,8 @@
       
 											
 											</div>
+
+                                            
     
    
                                 <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">

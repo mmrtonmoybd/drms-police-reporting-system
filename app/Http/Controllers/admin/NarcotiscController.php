@@ -117,6 +117,8 @@ class NarcotiscController extends Controller
 
         */
 
+        $request->session()->put("url_return", $request->fullUrl());
+
         $datatable = new NarcoticDataTable();
 
         return $datatable->render('admin.narcotic.narcotic');
@@ -126,6 +128,8 @@ class NarcotiscController extends Controller
 
     public function reviewList(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $query = Narcotic::query();
             $query->with(['district', 'thana']);
@@ -267,25 +271,26 @@ class NarcotiscController extends Controller
         $request->request->remove('submit');
 
         if (Narcotic::where('id', $id)->update($request->all())) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
 
-            return redirect('admin/narcotic');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
+            } else {
+                return redirect('admin/narcotic')->with('success_msg', 'Data updated successfully');
+            }
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/narcotic')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
-
-        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
-
-            $data['spthanas'] = $spthana;
-        }
-
-        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-            $octhana = Thana::find(auth()->user()->thanaID);
-            $data['octhana'] = $octhana;
-        }
-
-        return view('admin/narcotic/narcotic-edit', $data);
     }
 
     public function delete(Request $request, $id)
@@ -298,16 +303,24 @@ class NarcotiscController extends Controller
         Gate::authorize('editdeletenarcotic', $nar);
 
         if (Narcotic::where('id', $id)->delete()) {
-            $request->session()->flash('success_msg', 'Data deleted successfully');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect('admin/narcotic');
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
+            } else {
+                return redirect('admin/narcotic')->with('success_msg', 'Data deleted successfully');
+            }
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect('admin/narcotic');
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/narcotic')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
-
-        return redirect('admin/narcotic');
     }
 
     public function pView(Request $request, $id)
@@ -344,6 +357,8 @@ class NarcotiscController extends Controller
 
     public function dashp(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
         $request->session()->flash('currentday', $currentday);
@@ -542,6 +557,8 @@ class NarcotiscController extends Controller
 
     public function dashsc(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $data['request'] = $request;
 
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
@@ -976,6 +993,8 @@ class NarcotiscController extends Controller
 
     public function chartlink(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $data['request'] = $request;
 
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
@@ -1076,6 +1095,8 @@ class NarcotiscController extends Controller
 
     public function tcsrc(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $request->validate([
             'to1' => 'required|date',
             'form1' => 'required|date',
@@ -1340,6 +1361,7 @@ class NarcotiscController extends Controller
 
     public function narrecoversrc(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
         $request->validate([
             'to1' => 'required|date',
             'form1' => 'required|date',

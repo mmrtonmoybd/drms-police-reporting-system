@@ -31,6 +31,8 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
             $disexp = '=';
@@ -182,6 +184,8 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
             $disexp = '=';
@@ -236,6 +240,8 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
             $disexp = '=';
@@ -269,6 +275,8 @@ class QrrsController extends Controller
         $disexp = '!=';
         $thaid = 8256;
         $thaexp = '!=';
+
+        $request->session()->put("url_return", $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
@@ -778,6 +786,8 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
             $disexp = '=';
@@ -1026,6 +1036,8 @@ class QrrsController extends Controller
         $disexp = '!=';
         $thaid = 8256;
         $thaexp = '!=';
+
+        $request->session()->put("url_return", $request->fullUrl());
 
         $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
@@ -1417,28 +1429,27 @@ class QrrsController extends Controller
         }
 
         if (qrr::where('id', $id)->update($insertAttr)) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
 
-            return redirect('admin/qrrs');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
+            } else {
+                return redirect('admin/qrrs')->with('success_msg', 'Data updated successfully');
+            }
+            
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/qrrs')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
-
-        $data['districts'] = District::where('division_id', 1)->get();
-        $data['request'] = $request;
-
-        if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
-            $spthana = Thana::where('district_id', auth()->user()->districtID)->get();
-
-            $data['spthanas'] = $spthana;
-        }
-
-        if (auth()->user()->hasAnyRole(['OC', 'OC-Operator 1', 'OC-Operator 2', 'OC-Operator 3'])) {
-            $octhana = Thana::find(auth()->user()->thanaID);
-            $data['octhana'] = $octhana;
-        }
-
-        return view('admin/qrr/qrrs-edit', $data);
     }
 
     //this method for  user delete
@@ -1452,16 +1463,26 @@ class QrrsController extends Controller
         Gate::authorize('editdeleteqrr', $qrrf);
 
         if (qrr::where('id', $id)->delete()) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
 
-            return redirect('admin/qrrs');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
+            } else {
+                return redirect('admin/qrrs')->with('success_msg', 'Data deleted successfully');
+            }
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
 
-            return redirect('admin/qrrs');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/qrrs')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
-
-        return redirect('admin/qrrs');
     }
 
     //this method for short Services

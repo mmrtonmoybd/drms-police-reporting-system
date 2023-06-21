@@ -14,8 +14,10 @@ use Illuminate\Support\Carbon;
 
 class CaseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
@@ -45,8 +47,10 @@ class CaseController extends Controller
         return $datatable->render('admin.case.cases');
     }
 
-    public function reviewList()
+    public function reviewList(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
@@ -297,9 +301,24 @@ class CaseController extends Controller
         $request->request->remove('submit');
 
         if ($casedb->update($request->all())) {
-            return redirect('admin/case')->with('success_msg', 'Data updated successfully');
+            
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
+            } else {
+                return redirect('admin/case')->with('success_msg', 'Data updated successfully');
+            }
         } else {
-            return redirect()->back()->with('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/case')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
 
         //dd($request->all());
@@ -321,17 +340,33 @@ class CaseController extends Controller
         return view('admin/case/case-print', $data);
     }
 
-    public function delete(Casedb $casedb)
+    public function delete(Request $request, Casedb $casedb)
     {
         if ($casedb->delete()) {
-            return redirect('admin/case')->with('success_msg', 'Data deleted successfully');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
+            } else {
+                return redirect('admin/case')->with('success_msg', 'Data deleted successfully');
+            }
         } else {
-            return redirect()->back()->with('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/case')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
     }
 
    public function dashboard(Request $request)
    {
+    $request->session()->put("url_return", $request->fullUrl());
+
        $data['request'] = $request;
        $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
 
@@ -508,6 +543,7 @@ class CaseController extends Controller
 
     public function dashboardsc(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
         $data['request'] = $request;
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
@@ -960,6 +996,8 @@ class CaseController extends Controller
 
     public function chartdata(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $data['request'] = $request;
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
         $to = Carbon::parse($request->input('to'))->toDateTimeString();

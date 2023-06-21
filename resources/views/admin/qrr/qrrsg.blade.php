@@ -1,5 +1,6 @@
 
 			<x-admin-header/>
+            <x-admin-validation-errors :errors="$errors->all()"/>
 			
 			<!-- ============ Body content start ============= -->
 			
@@ -354,7 +355,7 @@ function hms ($value) {
       
 											
 											</div>
-    
+                                           
    
                                 <table id="customer_data" class="table table-bordered table-striped table-centered mb-0">
                                             <thead>

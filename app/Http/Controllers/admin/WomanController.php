@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Gate;
 
 class WomanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
         /*
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
@@ -44,6 +45,8 @@ class WomanController extends Controller
 
     public function reviewList(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
             $dkey = '!=';
@@ -276,13 +279,24 @@ class WomanController extends Controller
         $request->request->remove('submit');
 
         if ($woman->update($request->all())) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
 
-            return redirect('admin/woman');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
+            } else {
+                return redirect('admin/woman')->with('success_msg', 'Data updated successfully');
+            }
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect()->back();
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/woman')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
     }
 
@@ -291,13 +305,23 @@ class WomanController extends Controller
         Gate::authorize('editdeletwoman', $woman);
 
         if ($woman->delete()) {
-            $request->session()->flash('success_msg', 'Data deleted successfully');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect('admin/woman');
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
+            } else {
+                return redirect('admin/woman')->with('success_msg', 'Data deleted successfully');
+            }
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect()->back();
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/woman')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
     }
 
@@ -319,6 +343,8 @@ class WomanController extends Controller
 
     public function dashboard(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 
@@ -513,6 +539,10 @@ class WomanController extends Controller
 
     public function dashboardsc(Request $request)
     {
+
+        $request->session()->put("url_return", $request->fullUrl());
+
+
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 
@@ -926,6 +956,10 @@ class WomanController extends Controller
 
     public function womancclick(Request $request)
     {
+
+        $request->session()->put("url_return", $request->fullUrl());
+
+
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
 

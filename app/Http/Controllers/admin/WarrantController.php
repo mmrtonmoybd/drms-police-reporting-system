@@ -49,6 +49,8 @@ class WarrantController extends Controller
 
         */
 
+        $request->session()->put("url_return", $request->fullUrl());
+
         $datatable = new WarrantDataTable();
 
         return $datatable->render('admin.warrant.warrant');
@@ -56,6 +58,7 @@ class WarrantController extends Controller
 
     public function reviewList(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
         $disid = 9552;
         $disexp = '!=';
         $thaid = 8256;
@@ -301,16 +304,26 @@ class WarrantController extends Controller
         ]);
 
         if (Warrant::where('id', $id)->update($request->all())) {
-            $request->session()->flash('success_msg', 'Data updated successfully');
 
-            return redirect('admin/warrant');
+            if (!empty($request->session()->get('url_return'))) {
+
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
+            } else {
+                return redirect('admin/warrant')->with('success_msg', 'Data updated successfully');
+            }
+
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect()->back();
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/warrant')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
-
-        return view('admin/warrant/warrant-edit', $data);
     }
 
     public function delete(Request $request, $id)
@@ -322,16 +335,24 @@ class WarrantController extends Controller
         }
 
         if (Warrant::where('id', $id)->delete()) {
-            $request->session()->flash('success_msg', 'Data deleted successfully');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect('admin/warrant');
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
+            } else {
+                return redirect('admin/warrant')->with('success_msg', 'Data deleted successfully');
+            }
         } else {
-            $request->session()->flash('error_msg', 'Something wrong. Please try again');
+            if (!empty($request->session()->get('url_return'))) {
 
-            return redirect('admin/warrant');
+                //$request->session()->put('qrrparam', $request->all());
+
+                return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
+            } else {
+                return redirect('admin/warrant')->with('error_msg', 'Something wrong. Please try again');
+            }
         }
-
-        return redirect('admin/warrant');
     }
 
     public function pView(Request $request, $id)
@@ -383,6 +404,8 @@ class WarrantController extends Controller
 
     public function dashs(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $currentday = Carbon::now()->endOfMonth()->format('Y-m-d').' 23:59:59';
 
         $request->session()->flash('currentday', $currentday);
@@ -720,6 +743,8 @@ class WarrantController extends Controller
 
     public function dashsp(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
@@ -1179,6 +1204,8 @@ class WarrantController extends Controller
 
     public function chartlink(Request $request)
     {
+        $request->session()->put("url_return", $request->fullUrl());
+
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
 
