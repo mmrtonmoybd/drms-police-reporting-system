@@ -10,6 +10,4 @@ class FuckDistrict extends Model
     use HasFactory;
 
     public $table = 'fuck_districts';
-
-
 }
