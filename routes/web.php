@@ -2,6 +2,7 @@
 
 use App\Exports\Narcotic\NarcoticListExport;
 use App\Exports\Qrr\QrrListExport;
+use App\Exports\Casedb\CasescExport;
 use App\Exports\Woman\WomanListExport;
 use App\Http\Controllers\admin\AreaController;
 use App\Http\Controllers\admin\CaseController;
@@ -192,6 +193,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/case/dashboard', [CaseController::class, 'dashboard'])->middleware('permission:case.dashboard');
         Route::get('/case/dashboard/search', [CaseController::class, 'dashboardsc'])->middleware('permission:case.dashboard');
         Route::get('/case/dashboard/chart/data', [CaseController::class, 'chartdata'])->middleware('permission:case.dashboard');
+        Route::get('/case/chart/excel', function () {
+            $name = uniqid('CaseChart_');
+
+            return (new CasescExport())->download($name.'.xlsx');
+        });
 
         // User and Role router
         Route::group(['prefix' => 'users', 'middleware' => 'password.confirm'], function () {

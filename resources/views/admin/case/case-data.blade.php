@@ -1,6 +1,8 @@
 
 			<x-admin-header/>
             <x-admin-validation-errors :errors="$errors->all()"/>
+
+            
 			
 			<!-- ============ Body content start ============= -->
 			
@@ -148,6 +150,12 @@
 				}
 				</style>
                 
+
+                @php 
+
+    $fullquest =  str_replace($request->url(), '',$request->fullUrl());
+
+                @endphp
            
 
 
@@ -155,6 +163,14 @@
    <div class="card card-body table-responsive">
 
       <div style="text-align: right;margin: 16px;">
+
+      <div style="text-align: right;margin: 16px;">
+                    
+                                          
+  <a target="_blank" href="{{url('admin/case/chart/excel') . $fullquest}}" class="btn btn-primary"><i class="fa fa-file-download"></i> Download</a>
+      
+											
+											</div>
                     
 
       
