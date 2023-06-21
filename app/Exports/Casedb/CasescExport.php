@@ -3,15 +3,14 @@
 namespace App\Exports\Casedb;
 
 use App\Models\Casedb;
+use App\Models\Circle;
+use App\Models\District;
+use App\Models\Thana;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Illuminate\Support\Carbon;
-use App\Models\CaseType;
-use App\Models\Circle;
-use App\Models\District;
-use App\Models\Thana;
 
 class CasescExport implements FromCollection, WithMapping, WithHeadings
 {
@@ -142,68 +141,68 @@ class CasescExport implements FromCollection, WithMapping, WithHeadings
         }
 
         if ($request->filled('nispotti_type')) {
-           return  $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
-                          ->where('districtID', $dkey, $dvalue)
-                          ->where('thanaID', $tkey, $tvalue)
-                          ->where('status', 'active')
-                          ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
-                          ->where('case_type', $caseTypeID_key, $caseTypeID)
-                          ->where('casesub_type', $casesubID_key, $casesubID)
-                          ->whereNotNull('nispotti_date')
-                          ->whereBetween('nispotti_date', [$fvalue, $tovalue])
-                          ->orderBy('id', 'desc')
-                          ->get();
-        } else {
-           return $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
+            return  $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
                            ->where('districtID', $dkey, $dvalue)
                            ->where('thanaID', $tkey, $tvalue)
                            ->where('status', 'active')
                            ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
                            ->where('case_type', $caseTypeID_key, $caseTypeID)
                            ->where('casesub_type', $casesubID_key, $casesubID)
-                           ->whereBetween('case_date', [$fvalue, $tovalue])
+                           ->whereNotNull('nispotti_date')
+                           ->whereBetween('nispotti_date', [$fvalue, $tovalue])
                            ->orderBy('id', 'desc')
                            ->get();
+        } else {
+            return $data['cases'] = Casedb::with(['district', 'thana', 'circle', 'casetype', 'casesubtype'])
+                            ->where('districtID', $dkey, $dvalue)
+                            ->where('thanaID', $tkey, $tvalue)
+                            ->where('status', 'active')
+                            ->where('nispotti_type', $nispotti_type_key, $nispotti_type)
+                            ->where('case_type', $caseTypeID_key, $caseTypeID)
+                            ->where('casesub_type', $casesubID_key, $casesubID)
+                            ->whereBetween('case_date', [$fvalue, $tovalue])
+                            ->orderBy('id', 'desc')
+                            ->get();
         }
     }
 
-    public function headings(): array {
-
+    public function headings(): array
+    {
         return [
             'রেফারেন্স নং',
             'জেলা',
             'সার্কেল',
             'থানা',
-            'মামলার কোড (CDMS)', 
-            'উৎস', 
-            'জি আর নং', 
+            'মামলার কোড (CDMS)',
+            'উৎস',
+            'জি আর নং',
             'মামলা নং',
-            'ধারা', 
+            'ধারা',
             'তারিখ',
-            'মামলার ধরন', 
+            'মামলার ধরন',
             'উপধরন',
             'ঘটনার তারিখ',
             'মামলার সারসংক্ষেপ',
             'এজাহার নামীয় আসামির সংখ্যা',
             'নিস্পত্তি / মুলতবি',
-            'নিস্পত্তির ধরন', 
+            'নিস্পত্তির ধরন',
             'সিএক্স/এফ আর নং',
             'তারিখ',
-            'পুলিশ রিপোর্ট আসামির সংখ্যা', 
-            'গ্রেফতারকৃত আসামির সংখ্যা', 
-            'জামিন প্রাপ্ত', 
+            'পুলিশ রিপোর্ট আসামির সংখ্যা',
+            'গ্রেফতারকৃত আসামির সংখ্যা',
+            'জামিন প্রাপ্ত',
             'পলাতক',
             'এজাহার বহির্ভুত তদন্তে প্রাপ্ত',
-            'অব্যহিত প্রাপ্ত', 
-            '১৬১ গ্রহন (পাবলিক)', 
-            '১৬১ গ্রহন (পাবলিক)', 
-            'তদন্তের মান', 
+            'অব্যহিত প্রাপ্ত',
+            '১৬১ গ্রহন (পাবলিক)',
+            '১৬১ গ্রহন (পাবলিক)',
+            'তদন্তের মান',
             'মন্তব্য',
         ];
     }
 
-    public function map($casesc): array {
-
+    public function map($casesc): array
+    {
         if (! empty($casesc->case_date)) {
             $date1 = date('d/m/Y', strtotime($casesc->case_date));
         } else {
@@ -265,6 +264,5 @@ class CasescExport implements FromCollection, WithMapping, WithHeadings
             $casesc->invistigate_rate,
             $casesc->comment,
         ];
-
     }
 }
