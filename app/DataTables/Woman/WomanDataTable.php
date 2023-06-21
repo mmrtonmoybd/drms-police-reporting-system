@@ -22,16 +22,16 @@ class WomanDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->can('woman.view')) {
-                    $actionBtn .= '<a href="'.url("admin/woman/view/$row->womanid").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/woman/view/$row->id").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                 }
                 if (auth()->user()->can('woman.edit')) {
-                    $actionBtn .= '<a href="'.url("admin/woman/edit/$row->womanid").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/woman/edit/$row->id").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                 }
                 if (auth()->user()->can('woman.review')) {
-                    $actionBtn .= '<a href="'.url("admin/woman/review/update/$row->womanid").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/woman/review/update/$row->id").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
                 }
                 if (auth()->user()->can('woman.delete')) {
-                    $actionBtn .= '<a href="'.url("admin/woman/delete/$row->womanid").'"  onclick="return confirm(\'Do you want to delete this womens?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    $actionBtn .= '<a href="'.url("admin/woman/delete/$row->id").'"  onclick="return confirm(\'Do you want to delete this womens?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                 }
 
                 return $actionBtn;
@@ -120,7 +120,7 @@ class WomanDataTable extends DataTable
             $tkey = '=';
         }
 
-        return $model->with(['district', 'thana'])->selectRaw('*, womens.id AS womanid')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active');
+        return $model->with(['fdistrict', 'fthana'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active');
     }
 
     /**
@@ -171,11 +171,10 @@ class WomanDataTable extends DataTable
                   ->orderable(false)
                   ->searchable(false)
                   ->addClass('text-center'),
-            Column::make('womanid')
-                  ->searchable(false)->title('ID'),
+            Column::make('id')->title('ID'),
             Column::make('reference_no')->title('রেফারেন্স নং'),
-            Column::make('district.bn_name')->title('জেলা'),
-            Column::make('thana.name')->title('থানা'),
+            Column::make('fdistrict.dbn_name', 'fdistrict.dbn_name')->title('জেলা'),
+            Column::make('fthana.tname', 'fthana.tname')->title('থানা'),
             Column::make('village_word')->title('গ্রাম/ওয়ার্ড'),
             Column::make('wdate')->title('আগমনের তারিখ ও সময়'),
             Column::make('event_type')->title('ঘটনার ধরণ'),

@@ -22,16 +22,16 @@ class NarcoticDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $actionBtn = '';
                 if (auth()->user()->can('narcotic.view')) {
-                    $actionBtn .= '<a href="'.url("admin/narcotic/view/$row->narcoticsid").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/view/$row->id").'" class="action-icon text-primary"><i class="mdi mdi-eye"></i></a> ';
                 }
                 if (auth()->user()->can('narcotic.edit')) {
-                    $actionBtn .= '<a href="'.url("admin/narcotic/edit/$row->narcoticsid").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/edit/$row->id").'" class="action-icon">  <i class="mdi mdi-square-edit-outline"></i></a> ';
                 }
                 if (auth()->user()->can('narcotic.review')) {
-                    $actionBtn .= '<a href="'.url("admin/narcotic/review/update/$row->narcoticsid").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/review/update/$row->id").'" class="action-icon">  <i class="fas fa-unlock-alt"></i></a> ';
                 }
                 if (auth()->user()->can('narcotic.delete')) {
-                    $actionBtn .= '<a href="'.url("admin/narcotic/delete/$row->narcoticsid").'"  onclick="return confirm(\'Do you want to delete this narcotic?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
+                    $actionBtn .= '<a href="'.url("admin/narcotic/delete/$row->id").'"  onclick="return confirm(\'Do you want to delete this narcotic?\')" class="action-icon"> <i class="mdi mdi-delete"></i></a>';
                 }
 
                 return $actionBtn;
@@ -106,7 +106,7 @@ class NarcoticDataTable extends DataTable
             $tkey = '=';
         }
 
-        return $model->with(['district', 'thana'])->selectRaw('*, narcotics.id AS narcoticsid')->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active');
+        return $model->with(['fdistrict', 'fthana'])->where('districtID', $dkey, $dvalue)->where('thanaID', $tkey, $tvalue)->where('status', 'active');
     }
 
     /**
@@ -157,11 +157,10 @@ class NarcoticDataTable extends DataTable
                   ->orderable(false)
                   ->searchable(false)
                   ->addClass('text-center'),
-            Column::make('narcoticsid')->data('narcoticsid')
-                  ->searchable(false)->title('ট্র্যাকিং নং'),
+            Column::make('id')->title('ট্র্যাকিং নং'),
             Column::make('folder_no')->title('ফোল্ডার নং'),
-            Column::make('district.bn_name')->title('জেলা'),
-            Column::make('thana.name')->title('থানা'),
+            Column::make('fdistrict.dbn_name', 'fdistrict.dbn_name')->title('জেলা'),
+            Column::make('fthana.tname', 'fthana.tname')->title('থানা'),
             Column::make('village_word')->title('গ্রাম/ওয়ার্ড'),
             Column::make('sdate')->title('মামলার তারিখ'),
             Column::make('case_no')->title('মামলা নং'),

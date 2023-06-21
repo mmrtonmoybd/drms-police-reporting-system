@@ -21,6 +21,16 @@ class Narcotic extends Model
         return $this->hasOne('App\Models\Thana', 'id', 'thanaID');
     }
 
+    public function fdistrict()
+    {
+        return $this->hasOne('App\Models\FuckDistrict', 'fuck_id', 'districtID');
+    }
+
+    public function fthana()
+    {
+        return $this->hasOne('App\Models\FuckThana', 'fuck_id', 'thanaID');
+    }
+
     protected static function booted()
     {
         static::created(function ($row) {
