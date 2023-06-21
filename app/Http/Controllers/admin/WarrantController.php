@@ -49,7 +49,7 @@ class WarrantController extends Controller
 
         */
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $datatable = new WarrantDataTable();
 
@@ -58,7 +58,7 @@ class WarrantController extends Controller
 
     public function reviewList(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
         $disid = 9552;
         $disexp = '!=';
         $thaid = 8256;
@@ -304,19 +304,15 @@ class WarrantController extends Controller
         ]);
 
         if (Warrant::where('id', $id)->update($request->all())) {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
             } else {
                 return redirect('admin/warrant')->with('success_msg', 'Data updated successfully');
             }
-
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
@@ -335,8 +331,7 @@ class WarrantController extends Controller
         }
 
         if (Warrant::where('id', $id)->delete()) {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
@@ -344,8 +339,7 @@ class WarrantController extends Controller
                 return redirect('admin/warrant')->with('success_msg', 'Data deleted successfully');
             }
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
@@ -404,7 +398,7 @@ class WarrantController extends Controller
 
     public function dashs(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $currentday = Carbon::now()->endOfMonth()->format('Y-m-d').' 23:59:59';
 
@@ -743,7 +737,7 @@ class WarrantController extends Controller
 
     public function dashsp(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();
@@ -1204,7 +1198,7 @@ class WarrantController extends Controller
 
     public function chartlink(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
         $from = Carbon::parse($request->input('form'))->toDateTimeString();

@@ -117,7 +117,7 @@ class NarcotiscController extends Controller
 
         */
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $datatable = new NarcoticDataTable();
 
@@ -128,7 +128,7 @@ class NarcotiscController extends Controller
 
     public function reviewList(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $query = Narcotic::query();
@@ -271,9 +271,7 @@ class NarcotiscController extends Controller
         $request->request->remove('submit');
 
         if (Narcotic::where('id', $id)->update($request->all())) {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
@@ -281,9 +279,7 @@ class NarcotiscController extends Controller
                 return redirect('admin/narcotic')->with('success_msg', 'Data updated successfully');
             }
         } else {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
@@ -303,8 +299,7 @@ class NarcotiscController extends Controller
         Gate::authorize('editdeletenarcotic', $nar);
 
         if (Narcotic::where('id', $id)->delete()) {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
@@ -312,8 +307,7 @@ class NarcotiscController extends Controller
                 return redirect('admin/narcotic')->with('success_msg', 'Data deleted successfully');
             }
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
@@ -357,7 +351,7 @@ class NarcotiscController extends Controller
 
     public function dashp(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
@@ -557,7 +551,7 @@ class NarcotiscController extends Controller
 
     public function dashsc(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $data['request'] = $request;
 
@@ -993,7 +987,7 @@ class NarcotiscController extends Controller
 
     public function chartlink(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $data['request'] = $request;
 
@@ -1095,7 +1089,7 @@ class NarcotiscController extends Controller
 
     public function tcsrc(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $request->validate([
             'to1' => 'required|date',
@@ -1361,7 +1355,7 @@ class NarcotiscController extends Controller
 
     public function narrecoversrc(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
         $request->validate([
             'to1' => 'required|date',
             'form1' => 'required|date',

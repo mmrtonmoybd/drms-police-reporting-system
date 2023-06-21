@@ -31,7 +31,7 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
@@ -184,7 +184,7 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
@@ -240,7 +240,7 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
@@ -276,7 +276,7 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
@@ -786,7 +786,7 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['SP', 'SP-Operator 1', 'SP-Operator 2'])) {
             $disid = auth()->user()->districtID;
@@ -1037,7 +1037,7 @@ class QrrsController extends Controller
         $thaid = 8256;
         $thaexp = '!=';
 
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $currentday = Carbon::now()->format('Y-m-d').' 23:59:59';
 
@@ -1429,20 +1429,15 @@ class QrrsController extends Controller
         }
 
         if (qrr::where('id', $id)->update($insertAttr)) {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
             } else {
                 return redirect('admin/qrrs')->with('success_msg', 'Data updated successfully');
             }
-            
         } else {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
@@ -1463,9 +1458,7 @@ class QrrsController extends Controller
         Gate::authorize('editdeleteqrr', $qrrf);
 
         if (qrr::where('id', $id)->delete()) {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
@@ -1473,9 +1466,7 @@ class QrrsController extends Controller
                 return redirect('admin/qrrs')->with('success_msg', 'Data deleted successfully');
             }
         } else {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');

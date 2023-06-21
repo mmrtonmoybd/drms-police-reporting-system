@@ -15,7 +15,7 @@ class WomanController extends Controller
 {
     public function index(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
         /*
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
@@ -45,7 +45,7 @@ class WomanController extends Controller
 
     public function reviewList(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
@@ -279,9 +279,7 @@ class WomanController extends Controller
         $request->request->remove('submit');
 
         if ($woman->update($request->all())) {
-
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
@@ -289,8 +287,7 @@ class WomanController extends Controller
                 return redirect('admin/woman')->with('success_msg', 'Data updated successfully');
             }
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
@@ -305,8 +302,7 @@ class WomanController extends Controller
         Gate::authorize('editdeletwoman', $woman);
 
         if ($woman->delete()) {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
@@ -314,8 +310,7 @@ class WomanController extends Controller
                 return redirect('admin/woman')->with('success_msg', 'Data deleted successfully');
             }
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
@@ -343,7 +338,7 @@ class WomanController extends Controller
 
     public function dashboard(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -539,9 +534,7 @@ class WomanController extends Controller
 
     public function dashboardsc(Request $request)
     {
-
-        $request->session()->put("url_return", $request->fullUrl());
-
+        $request->session()->put('url_return', $request->fullUrl());
 
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;
@@ -956,9 +949,7 @@ class WomanController extends Controller
 
     public function womancclick(Request $request)
     {
-
-        $request->session()->put("url_return", $request->fullUrl());
-
+        $request->session()->put('url_return', $request->fullUrl());
 
         $data['districts'] = District::where('division_id', 1)->get();
         $data['request'] = $request;

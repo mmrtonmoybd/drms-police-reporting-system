@@ -16,7 +16,7 @@ class CaseController extends Controller
 {
     public function index(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
@@ -49,7 +49,7 @@ class CaseController extends Controller
 
     public function reviewList(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         if (auth()->user()->hasAnyRole(['Super Admin', 'Admin'])) {
             $dvalue = 'kglf';
@@ -301,9 +301,7 @@ class CaseController extends Controller
         $request->request->remove('submit');
 
         if ($casedb->update($request->all())) {
-            
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data updated successfully');
@@ -311,8 +309,7 @@ class CaseController extends Controller
                 return redirect('admin/case')->with('success_msg', 'Data updated successfully');
             }
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('error_msg', 'Something wrong. Please try again');
@@ -343,8 +340,7 @@ class CaseController extends Controller
     public function delete(Request $request, Casedb $casedb)
     {
         if ($casedb->delete()) {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('url_return'))->with('success_msg', 'Data deleted successfully');
@@ -352,8 +348,7 @@ class CaseController extends Controller
                 return redirect('admin/case')->with('success_msg', 'Data deleted successfully');
             }
         } else {
-            if (!empty($request->session()->get('url_return'))) {
-
+            if (! empty($request->session()->get('url_return'))) {
                 //$request->session()->put('qrrparam', $request->all());
 
                 return redirect($request->session()->get('error_msg'))->with('error_msg', 'Something wrong. Please try again');
@@ -365,7 +360,7 @@ class CaseController extends Controller
 
    public function dashboard(Request $request)
    {
-    $request->session()->put("url_return", $request->fullUrl());
+       $request->session()->put('url_return', $request->fullUrl());
 
        $data['request'] = $request;
        $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
@@ -543,7 +538,7 @@ class CaseController extends Controller
 
     public function dashboardsc(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
         $data['request'] = $request;
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
         $to = Carbon::parse($request->input('to'))->toDateTimeString();
@@ -996,7 +991,7 @@ class CaseController extends Controller
 
     public function chartdata(Request $request)
     {
-        $request->session()->put("url_return", $request->fullUrl());
+        $request->session()->put('url_return', $request->fullUrl());
 
         $data['request'] = $request;
         $data['caseparenttypes'] = CaseType::where('parent_id', 0)->get();
