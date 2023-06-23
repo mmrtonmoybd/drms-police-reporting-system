@@ -297,7 +297,7 @@ background: #092756;
 
 
 
-<div class="row">
+<!--<div class="row">
     
     <div class="col-sm-12">
         
@@ -315,6 +315,7 @@ background: #092756;
 </div>
 </div>
 <br>
+--->
 <div class="row">
     
     <div class="col-sm-12">
