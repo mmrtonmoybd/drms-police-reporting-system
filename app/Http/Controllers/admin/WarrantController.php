@@ -1050,19 +1050,24 @@ class WarrantController extends Controller
             $request->session()->flash('spthanap', $data['spthanap']);
 
             $data['trecive'] = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('districtID', auth()->user()->districtID)
                ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
             $data['tnis'] = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('districtID', auth()->user()->districtID)
                     ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', [$fvalue, $tovalue])->get();
 
             $totalrevive = Warrant::selectRaw('(SUM(gr_recive) + SUM(cr_recive) + SUM(saja_gr_recive) + SUM(saja_cr_recive)) AS total_sum')
+            ->where('districtID', auth()->user()->districtID)
                ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
 
             $totalnis = Warrant::selectRaw('(SUM(gr_tamil) + SUM(cr_tamil) + SUM(saja_gr_tamil) + SUM(saja_cr_tamil) + SUM(recall_other)) AS total_sum')
+            ->where('districtID', auth()->user()->districtID)
                     ->where('thanaID', $tkey, $tvalue)->where('status', 'active')->whereBetween('date', ['1971-01-01 11:45:00', $tovalue])->get();
 
             $data['totalpending'] = $totalrevive[0]['total_sum'] - $totalnis[0]['total_sum'];
 
             $data['pending'] = Warrant::where('status', 'inactive')
+            ->where('districtID', auth()->user()->districtID)
               ->where('thanaID', $tkey, $tvalue)->whereBetween('date', [$fvalue, $tovalue])
             ->count();
 
