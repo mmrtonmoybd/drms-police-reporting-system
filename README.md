@@ -1,145 +1,72 @@
-<br/>
 <p align="center">
-  <a href="https://github.com/mmrtonmoybd/police-db">
-    <img src="public/logo-drms.jpg" alt="Logo" width="80" height="80">
-  </a>
+  <img src="public/logo-drms.jpg" alt="DRMS logo" width="80" height="80">
+</p>
 
-  <h3 align="center">DRMS</h3>
+# DRMS — Digital Reporting and Monitoring System
 
-  <p align="center">
-    Digital Reporting and Monitoring System of Bangladesh police. With the helps of DRMS they could easily organize and manage there daily official needs.
-    <br/>
-    <br/>
-    <a href="https://drmsbslrange.com">View Demo</a>
-    .
-    <a href="https://github.com/mmrtonmoybd/police-db/issues">Report Bug</a>
-    .
-    <a href="https://github.com/mmrtonmoybd/police-db/issues">Request Feature</a>
-  </p>
-</p> 
+A reporting and monitoring system for Bangladesh Police. Police stations enter cases, QRR records, narcotics recoveries, warrants, and women and children cases, and senior officers review and track them on dashboards and charts by division, district, and police station.
 
-## About The Project
+Live site: [drmsbslrange.com](https://drmsbslrange.com)
 
-Case:
+Built with Laravel 9.
 
-      1. Case Dashboard
-      2. Case add 
-      3. Case index 
-      4. Case edit 
-      5. Case delete 
-      6. Case view 
-      7. OC review 
-      8. Chart link 
+## Modules
 
-Qrr:
+Each module has a dashboard, add / edit / delete / view screens, a searchable table, OC (Officer-in-Charge) review, and charts.
 
-     1. Qrr Dashboard 
-     2. Qrr add 
-     3. Qrr index (Datatable) 
-     4. Qrr edit 
-     5. Qrr delete 
-     6. Qrr view 
-     7. OC review 
-     8. Chart link 
-     
-Narcotic: 
+- **Cases:** case register with type, location, and status, exportable to Excel
+- **QRR:** QRR records with summary reports and PDF details
+- **Narcotics:** narcotics cases with case number, investigator, and recovered items (ganja, yaba, heroin, phensedyl, alcohol, LSD, and more), plus recovery and case-number reports
+- **Warrants:** GR and CR warrants received and executed, recalls, arrests, and case disposals
+- **Women and children:** complaints with complainant and accused details, GD and case numbers, sections of law, and investigator
+- **Areas:** division, district, circle, police station (thana), and upazila
+- **Users and roles:** role-based permissions per module and action, assigned from the admin screen
+- **Authentication:** login, password reset, email verification, password confirmation, and profile editing
+- Excel exports (Laravel Excel) and printable PDF views
 
-     1. Narcotic Dashboard 
-     2. Narcotic add
-     3. Narcotic edit 
-     4. Narcotic delete
-     5. Narcotic Index
-     6. Narcotic Case number 
-     7. Narcotic recover 
-     8. OC review 
-     9. Chart link 
+## Tech stack
 
-Warrant:
+| Layer    | Packages                                                     |
+| -------- | ------------------------------------------------------------ |
+| Backend  | PHP 8.0+, Laravel 9, Laravel UI, Sanctum                     |
+| Access   | Spatie Laravel Permission                                    |
+| Tables   | Yajra DataTables (with buttons and export)                   |
+| Exports  | Maatwebsite Excel                                            |
 
-     1. Warrant Dashboard 
-     2. Warrant Index 
-     3. Warrant add
-     4. Warrant edit 
-     5. Warrant delete 
-     6. Warrant view 
-     7. OC review 
-     8. Chart link 
+## Getting started
 
-Women and children: 
+### Requirements
 
-     1. W & C Dashboard 
-     2. W & C add 
-     3. W & C Index 
-     4. W & C edit 
-     5. W & C delete 
-     6. W & C view 
-     7. OC review 
-     8. Chart link 
-
-User management: 
-
-    1. Role index 
-    2. Role edit 
-    3. Role assign permission dynamicly 
-    4. Role remove permission dynamicly 
-    5. Role view 
-    6. User index (Datatable) 
-    7. User add 
-    8. User edit 
-    9. User delete 
-    10. User view  
-
-User authentication:
-
-    1. Login 
-    2. Forget password 
-    3. Email verification 
-    4. Password confirmation
-    5. Dashboard redirect after login
-    6. Beautiful dashboard & authenticaticate user information
-    7. Authenticaticate user profile edit 
-
-## Built With
-
-Software framework: Laravel 8
-Software language: php 8.1
-Architecture structure: MVC
-
-## Getting Started
-
-Step by step fellow this instruction to install this project.
-
-### Prerequisites
-
-Requirement: 
-
-* php => 7.4
-* Composer
+- PHP 8.0+
+- Composer
+- MySQL
 
 ### Installation
 
-1. Clone the repo
+```bash
+git clone https://github.com/mmrtonmoybd/drms-police-reporting-system.git
+cd drms-police-reporting-system
 
-```sh
-git clone https://github.com/mmrtonmoybd/police-db.git police
-```
-2. Open police folder in cmd
-
-```sh
-cd police
-```
-
-3. Install Composer packages
-
-```sh
 composer install
+cp .env.example .env
+php artisan key:generate
+# set the DB_* and MAIL_* values in .env
 ```
 
-4.  Rename `.env.example` to  `.env` and update.
+The migrations in this repo only create the users, sessions, and permission tables. The module tables (cases, QRR, narcotics, warrants, women and children, and areas) come from a SQL dump that is **not** in the repository. Import that dump into your database with phpMyAdmin or the `mysql` client, then run:
 
-5. Import SQL file in phpmyadmin.
+```bash
+php artisan migrate
+php artisan storage:link
+```
+
+### Run locally
+
+```bash
+php artisan serve
+```
 
 ## Authors
 
-* **Moshiur Rahman Tonmoy** - *php and Laravel Developer* - [Moshiur Rahman Tonmoy](https://www.facebook.com/mmrtonmoy) - *Backend*
-* **Shoaib Bin Habib Rashad** - *Frontend Developer* - [Shoaib Bin Habib Rashad](https://www.facebook.com/sbhrashad) - *Frontend*
+- **Moshiur Rahman Tonmoy** — backend, PHP and Laravel ([rmedha037@gmail.com](mailto:rmedha037@gmail.com))
+- **Shoaib Bin Habib Rashad** — frontend
